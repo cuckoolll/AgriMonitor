@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<!-- Google Chrome Frame也可以让IE用上Chrome的引擎: -->
+		<meta name="renderer" content="webkit">
+		<!--国产浏览器高速模式-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>刚查农业信息管理系统</title>
+
+		<!-- 公共样式 开始 -->
+		<link rel="shortcut icon" th:href="@{temp/images/favicon.ico}"/>
+		<link rel="bookmark" th:href="@{temp/images/favicon.ico}"/>
+		
+		<link rel="stylesheet" type="text/css" th:href="@{temp/css/base.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{temp/css/iconfont.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{temp/layui/css/layui.css}">
+		<!-- 滚动条插件 -->
+		<link rel="stylesheet" type="text/css" th:href="@{temp/css/jquery.mCustomScrollbar.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{temp/css/frameStyle.css}">
+	    <!--[if lt IE 9]>
+	      	<script src="framework/html5shiv.min.js"></script>
+	      	<script src="framework/respond.min.js"></script>
+	    <![endif]-->
+		<script type="text/javascript" th:src="@{temp/framework/jquery-1.11.3.min.js}" ></script>
+		<script type="text/javascript" th:src="@{temp/layui/layui.js}"></script>
+		<script th:src="@{temp/framework/jquery-ui-1.10.4.min.js}"></script>
+		<script th:src="@{temp/framework/jquery.mousewheel.min.js}"></script>
+		<script th:src="@{temp/framework/jquery.mCustomScrollbar.min.js}"></script>
+		<script th:src="@{temp/framework/cframe.js}"></script><!-- 仅供所有子页面使用 -->
+		<!-- 公共样式 结束 -->
+		
+		<script type="text/javascript" th:src="@{js/workbench.js}" ></script>
+		
+	</head>
+
+	<body>
+		<!-- 头部栏 - 开始 -->
+		<div class="frameTop">
+			<div style="font-size: 41px;font-weight: bold;float: left">刚查农业信息管理系统 </div>
+			<div class="topMenu">
+				<ul>
+					<li><a href="javascript:void(0)"><i class="iconfont icon-yonghu1"></i>张三(管理员)</a></li>
+					<li><a href="javascript:void(0)" onclick="menuCAClick('tgls/modify_password.html',this)"><i class="iconfont icon-xiugaimima"></i>修改密码</a></li>
+					<li><a href="login.html"><i class="iconfont icon-084tuichu"></i>注销</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- 头部栏 - 结束 -->
+		<!-- 左侧菜单 - 开始 -->
+		<div class="frameMenu">
+		    <div class="menu">
+		        <ul>
+		        	<li>
+		                <a class="menuFA" href="javascript:void(0)" onclick="menuCAClick('tgls/qdAPI.html',this)"><i class="iconfont icon-shouye left"></i>数据总览</a>
+		            </li>
+		        	<li>
+		                <a class="menuFA" href="javascript:void(0)"><i class="iconfont icon-caigoudan left"></i>数据管理<i class="iconfont icon-dajiantouyou right"></i></a>
+		                <dl>
+		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('tgls/agent/agent_add.html',this)">数据分类1</a></dt>
+		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('tgls/agent/agent_list.html',this)">数据分类2</a></dt>
+		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('tgls/agent/agent_list.html',this)">某报表导入</a></dt>
+		                </dl>
+		            </li>
+		        	<li>
+		                <a class="menuFA" href="javascript:void(0)"><i class="iconfont icon-icon left"></i>统计分析<i class="iconfont icon-dajiantouyou right"></i></a>
+		                <dl>
+		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('tgls/goodsManage/goodsType_list.html',this)">统计分析1</a></dt>
+		                </dl>
+		            </li>
+		        	<li>
+		                <a class="menuFA" href="javascript:void(0)"><i class="iconfont icon-zhuyidapx left"></i>检测报警<i class="iconfont icon-dajiantouyou right"></i></a>
+		                <dl>
+		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('tgls/base/base_add.html',this)">报警阀值</a></dt>
+		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('tgls/base/base_list.html',this)">报警记录</a></dt>
+		                </dl>
+		           	</li>
+		        	<li>
+		                <a class="menuFA" href="javascript:void(0)"><i class="iconfont icon-shezhi left"></i>系统管理<i class="iconfont icon-dajiantouyou right"></i></a>
+		                <dl>
+		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('tgls/print/outPrintData.html',this)">用户管理</a></dt>
+		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('tgls/print/outPrintData.html',this)">权限管理</a></dt>
+		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('tgls/print/outPrintData.html',this)">参数设置</a></dt>
+		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('tgls/print/outPrintData.html',this)">系统日志</a></dt>
+		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('tgls/print/outPrintData.html',this)">关于我们</a></dt>
+		                </dl>
+		           	</li>
+		        </ul>
+		    </div>
+		</div>
+		<!-- 左侧菜单 - 结束 -->
+		
+		<div class="main">
+			<!-- 核心区域 - 开始 -->
+			<div class="frameMain">
+				<div class="title" id="frameMainTitle">
+					<span><i class="iconfont icon-xianshiqi"></i>数据总览</span>
+				</div>
+				<div class="con">
+					<iframe id="mainIframe" src="dataview.html" scrolling="no"></iframe>
+				</div>
+			</div>
+			<!-- 核心区域 - 结束 -->
+		</div>
+	</body>
+
+</html>
