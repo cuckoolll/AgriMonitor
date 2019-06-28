@@ -2,70 +2,61 @@ package com.agri.monitor.entity;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="t_user_info")
 public class UserInfo {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "user_id")
-	private Integer id;
+	private Integer user_id;
 	
-	@Column(name = "user_name")
-	private String username;
+	private String user_name;
 	
-	@Column(name = "user_password")
-	private String password;
+	private String user_password;
 	
-	@Column(name = "user_role")
-	private Integer role;
+	private Integer user_role;
 	
-	@Column(name = "create_time")
-	private Date ctime;
+	private Date create_time;
 	
 	private Integer creator;
 	
 	private Integer modifier;
 	
-	@Column(name = "last_time")
-	private Date ltime;
+	private Date last_time;
 
-	public Integer getId() {
-		return id;
+	public Integer getUser_id() {
+		return user_id;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setUser_id(Integer user_id) {
+		this.user_id = user_id;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getUser_name() {
+		return user_name;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 
-	public Integer getRole() {
-		return role;
+	public String getUser_password() {
+		return user_password;
 	}
 
-	public void setRole(Integer role) {
-		this.role = role;
+	public void setUser_password(String user_password) {
+		this.user_password = user_password;
 	}
 
-	public Date getCtime() {
-		return ctime;
+	public Integer getUser_role() {
+		return user_role;
 	}
 
-	public void setCtime(Date ctime) {
-		this.ctime = ctime;
+	public void setUser_role(Integer user_role) {
+		this.user_role = user_role;
+	}
+
+	public Date getCreate_time() {
+		return create_time;
+	}
+
+	public void setCreate_time(Date create_time) {
+		this.create_time = create_time;
 	}
 
 	public Integer getCreator() {
@@ -84,20 +75,12 @@ public class UserInfo {
 		this.modifier = modifier;
 	}
 
-	public Date getLtime() {
-		return ltime;
+	public Date getLast_time() {
+		return last_time;
 	}
 
-	public void setLtime(Date ltime) {
-		this.ltime = ltime;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
+	public void setLast_time(Date last_time) {
+		this.last_time = last_time;
 	}
 
 }

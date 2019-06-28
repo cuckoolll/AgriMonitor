@@ -26,12 +26,6 @@ public class UserController {
 		return "user/userlist1";
 	}
 	
-	@ResponseBody
-	@RequestMapping("/findForLogin.do")
-	public boolean findForLogin(UserInfo user) {
-		return loginService.isFind(user.getUsername(), user.getPassword());
-	}
-	
 	@RequestMapping("/findAll.do")
 	@IgnoreSession
 	public String findAll(UserInfo user, Model model) {
