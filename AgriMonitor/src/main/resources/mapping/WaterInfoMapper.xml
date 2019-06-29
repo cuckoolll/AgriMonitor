@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agri.monitor.mapper.water.WaterInfoMapper">
+    <select id="findAll" resultType="com.agri.monitor.entity.WaterInfo">
+        select * from t_water_quality
+    </select>
+    
+    <select id="queryInfoByCountryAndTime" resultType="com.agri.monitor.entity.WaterInfo">
+        SELECT * 
+          FROM T_WATER_QUALITY 
+         WHERE COUNTY = #{county} 
+           AND QUALITY_TIME = DATE_FORMAT(#{time}, '%Y-%m-%d') 
+    </select>
+</mapper>
