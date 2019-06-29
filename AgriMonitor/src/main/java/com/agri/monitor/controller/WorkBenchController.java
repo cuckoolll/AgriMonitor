@@ -6,17 +6,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class WorkBenchController {
 	
-	@RequestMapping("/workbench.html")
+	@RequestMapping("/workbench")
 	public String index() {
 		return "workbench";
 	}
 	
-	@RequestMapping("/components.html")
+	@RequestMapping("/components")
 	public String components() {
 		return "components";
 	}
 	
-	@RequestMapping("/dataview.html")
+	@RequestMapping("/dataview")
 	public String dataview() {
 		return "/dataview/dataview";
 	}

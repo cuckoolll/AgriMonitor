@@ -21,12 +21,12 @@ public class UserController {
 	@Autowired
 	private UserService loginService;
 	
-	@RequestMapping("/userlist1.do")
+	@RequestMapping("/userlist1")
 	public String userlist1(Model model) {
 		return "user/userlist1";
 	}
 	
-	@RequestMapping("/findAll.do")
+	@RequestMapping("/findAll")
 	@IgnoreSession
 	public String findAll(UserInfo user, Model model) {
 		List<UserInfo> list = loginService.findAll();
@@ -35,7 +35,7 @@ public class UserController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/findAll1.do")
+	@RequestMapping("/findAll1")
 	@IgnoreSession
 	public Map findAll1(Model model) {
 		Map m = new HashMap();

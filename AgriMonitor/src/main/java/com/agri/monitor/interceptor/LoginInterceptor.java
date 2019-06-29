@@ -28,7 +28,6 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
-        
     	HandlerMethod handlerMethod = (HandlerMethod) handler;
     	Method method = handlerMethod.getMethod();
     	//忽略session是否有效
