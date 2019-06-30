@@ -247,3 +247,10 @@ i.bt{
 	margin-right: 3px;
 }
 /***table操作iconfont - 结束***/
+/**顶部查询区域***/
+.queryArea .layui-form-label{
+	padding: 9px 0px;
+}
+.queryArea .text-left{
+	text-align: left;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<!-- Google Chrome Frame也可以让IE用上Chrome的引擎: -->
+		<meta name="renderer" content="webkit">
+		<!--国产浏览器高速模式-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- 公共样式 开始 -->
+		<link rel="stylesheet" type="text/css" href="../temp/css/base.css">
+		<link rel="stylesheet" type="text/css" href="../temp/css/iconfont.css">
+		<script type="text/javascript" src="../temp/framework/jquery-1.11.3.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="../temp/layui/css/layui.css">
+		<script type="text/javascript" src="../temp/layui/layui.js"></script>
+		<!-- 滚动条插件 -->
+		<link rel="stylesheet" type="text/css" href="../temp/css/jquery.mCustomScrollbar.css">
+		<script src="../temp/framework/jquery-ui-1.10.4.min.js"></script>
+		<script src="../temp/framework/jquery.mousewheel.min.js"></script>
+		<script src="../temp/framework/jquery.mCustomScrollbar.min.js"></script>
+		<script src="../temp/framework/cframe.js"></script><!-- 仅供所有子页面使用 -->
+		<!-- 公共样式 结束 -->
+
+		<script type="text/javascript" src="/js/waterinfo/waterinfo.js" ></script>
+
+	</head>
+
+	<body>
+		<div class="cBody">
+			<div class="console">
+				<form class="layui-form" action="">
+					<div class="layui-form-item">
+						<div class="layui-input-inline">
+							<input id="county" type="text" class="layui-input">
+						</div>
+						<button id="query" class="layui-btn">检索</button>
+					</div>
+				</form>
+			</div>
+			
+			<table id="grid" lay-filter="test"></table>
+			
+		</div>
+	</body>
+
+</html>
