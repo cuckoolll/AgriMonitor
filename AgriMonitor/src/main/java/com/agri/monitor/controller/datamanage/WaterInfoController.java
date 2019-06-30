@@ -15,7 +15,6 @@ import com.agri.monitor.annotation.IgnoreSession;
 import com.agri.monitor.service.datamanage.WaterInfoService;
 
 @Controller
-@RequestMapping("/water")
 public class WaterInfoController {
 	
 	@Autowired
@@ -25,9 +24,9 @@ public class WaterInfoController {
 	 * 水质监测页面 .
 	 * @return .
 	 */
-	@RequestMapping("/waterinfo.html")
+	@RequestMapping("/waterinfo")
 	public String waterMonitor() {
-		return "/waterinfo/waterinfo";
+		return "/datamanage/waterinfo/waterinfo";
 	}
 	
 	/**
