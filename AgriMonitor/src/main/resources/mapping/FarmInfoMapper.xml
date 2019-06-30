@@ -13,4 +13,13 @@
 	    </if>
 	    order by a.create_time desc
     </select>
+    
+    <insert id="batchInsert" parameterType="java.util.List">
+    	insert into t_farm_info(county,towns,village,farm_name,farm_address,legal_person,phone_num,animals_type,animals_size,remarks,creator,modifier)
+    	values
+    	<foreach collection="list" item="item" index="index" separator=",">
+		   (#{item.county},#{item.towns},#{item.village},#{item.farm_name},#{item.farm_address},#{item.legal_person},#{item.phone_num},
+		   #{item.animals_type},#{item.animals_size},#{item.remarks},#{item.creator},#{item.modifier})
+		</foreach>
+    </insert>
 </mapper>

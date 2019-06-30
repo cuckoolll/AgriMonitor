@@ -30,7 +30,18 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 		    accept: 'file',
 		    exts: 'xls|xlsx',
 		    done: function(res){
-		      console.log(res)
+		    	debugger;
+		    	if(res){
+		    		if(res.code==0){
+				    	  datatable.reload({//表格数据重新加载
+							  where: {
+								  farmname: $("#farmname").val(),type: $("#type").val()
+							  },page: {curr: 1}
+				    	  });
+				      }else{
+				    	  layer.msg(res.msg);
+				      }
+		    	}
 		    }
 		});
 	}

@@ -1,6 +1,5 @@
 package com.agri.monitor.service.datamanage;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +8,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -68,7 +66,8 @@ public class FarmInfoService {
 	        	   farminfo.setFarm_address(row.getCell(1).getStringCellValue());
 	        	   farminfo.setLegal_person(row.getCell(2).getStringCellValue());
 	        	   farminfo.setPhone_num(row.getCell(3).getStringCellValue());
-	        	   //认定畜种从缓存中获取GID
+	        	   //TODO 认定畜种从缓存中获取GID
+	        	   farminfo.setAnimals_type(1);
 	        	   farminfo.setAnimals_size(Integer.valueOf(row.getCell(5).getStringCellValue()));
 	        	   farminfo.setRemarks(row.getCell(6).getStringCellValue());
 	        	   farminfo.setCreator(user.getUser_id());
@@ -79,7 +78,7 @@ public class FarmInfoService {
 	           }
 	           i++;
 	        }
-	        System.out.println(list);
+	        farmInfoMapper.batchInsert(list);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result.put("code", -1);
