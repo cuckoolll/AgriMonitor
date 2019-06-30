@@ -63,7 +63,7 @@ body{
 	line-height: 50px;
 	color: #c2c2c2;
 	padding: 0 10px 0 20px;
-	border-left: 0px solid #15A848;
+	border-left: 0px solid rgb(0, 150, 136);
 	box-sizing:border-box;
 	-moz-box-sizing:border-box; /* Firefox */
 	-webkit-box-sizing:border-box; /* Safari */

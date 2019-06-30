@@ -1,13 +1,30 @@
-
 <!DOCTYPE html>
 <html>
 
-<head>
-<meta charset="utf-8" />
-<title>页面出错啦</title>
-</head>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<!-- Google Chrome Frame也可以让IE用上Chrome的引擎: -->
+		<meta name="renderer" content="webkit">
+		<!--国产浏览器高速模式-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>维护中页面</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/base.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/error.css}">
+	</head>
 
-<body>
-<img alt="" th:src="@{/temp/images/other/maintain_pic.png}">
-</body>
+	<body>
+		<div class="midd">
+			<img th:src="@{/temp/images/other/maintain_pic.png}" />
+			<p>您访问的页面正在升级维护中...</p>
+		</div>
+		<script type="text/javascript" th:src="@{/temp/framework/jquery-1.11.3.min.js}"></script>
+		<script>
+			$(function(){
+				var win_h = $(window).height();
+				$("body").height(win_h);
+			})
+		</script>
+	</body>
+
 </html>

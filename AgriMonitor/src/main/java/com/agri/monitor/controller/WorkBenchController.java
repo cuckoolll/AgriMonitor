@@ -8,16 +8,12 @@ public class WorkBenchController {
 	
 	@RequestMapping("/workbench")
 	public String index() {
-		return "workbench";
-	}
-	
-	@RequestMapping("/components")
-	public String components() {
-		return "components";
+		return "/workbench";
 	}
 	
 	@RequestMapping("/dataview")
 	public String dataview() {
 		return "/dataview/dataview";
 	}
+	
 }

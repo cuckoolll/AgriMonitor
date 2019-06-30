@@ -1,0 +1,31 @@
+@charset "UTF-8";
+body{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	background: url(../temp/images/other/maintain_bottom.png) no-repeat center bottom;
+	background-size: 100% auto;
+}
+.midd{
+	width: 500px;
+	height: 320px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-top: -250px;
+	margin-left: -250px;
+}
+.midd img{
+	width: 500px;
+	height: 243px;
+}
+.midd p{
+	width: 100%;
+	height: 77px;
+	line-height: 77px;
+	text-align: center;
+	font-size: 24px;
+	color: #00bfb4;
+	background: url(../temp/images/other/maintain_pic_bg.png) no-repeat center bottom;
+	background-size: 80% auto;
+}

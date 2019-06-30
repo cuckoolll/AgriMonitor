@@ -10,25 +10,24 @@
 		<title>刚查农业信息管理系统</title>
 
 		<!-- 公共样式 开始 -->
-		<link rel="shortcut icon" th:href="@{temp/images/favicon.ico}"/>
-		<link rel="bookmark" th:href="@{temp/images/favicon.ico}"/>
+		<link rel="shortcut icon" th:href="@{/temp/images/favicon.ico}"/>
+		<link rel="bookmark" th:href="@{/temp/images/favicon.ico}"/>
 		
-		<link rel="stylesheet" type="text/css" th:href="@{temp/css/base.css}">
-		<link rel="stylesheet" type="text/css" th:href="@{temp/css/iconfont.css}">
-		<link rel="stylesheet" type="text/css" th:href="@{temp/layui/css/layui.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/base.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/iconfont.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
 		<!-- 滚动条插件 -->
-		<link rel="stylesheet" type="text/css" th:href="@{temp/css/jquery.mCustomScrollbar.css}">
-		<link rel="stylesheet" type="text/css" th:href="@{temp/css/frameStyle.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/jquery.mCustomScrollbar.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/frameStyle.css}">
 	    <!--[if lt IE 9]>
 	      	<script src="framework/html5shiv.min.js"></script>
 	      	<script src="framework/respond.min.js"></script>
 	    <![endif]-->
-		<script type="text/javascript" th:src="@{temp/framework/jquery-1.11.3.min.js}" ></script>
-		<script type="text/javascript" th:src="@{temp/layui/layui.js}"></script>
-		<script th:src="@{temp/framework/jquery-ui-1.10.4.min.js}"></script>
-		<script th:src="@{temp/framework/jquery.mousewheel.min.js}"></script>
-		<script th:src="@{temp/framework/jquery.mCustomScrollbar.min.js}"></script>
-		<script th:src="@{temp/framework/cframe.js}"></script><!-- 仅供所有子页面使用 -->
+		<script type="text/javascript" th:src="@{/temp/framework/jquery-1.11.3.min.js}" ></script>
+		<script type="text/javascript" th:src="@{/temp/layui/layui.js}"></script>
+		<script th:src="@{/temp/framework/jquery-ui-1.10.4.min.js}"></script>
+		<script th:src="@{/temp/framework/jquery.mousewheel.min.js}"></script>
+		<script th:src="@{/temp/framework/jquery.mCustomScrollbar.min.js}"></script>
 		<!-- 公共样式 结束 -->
 		
 		<script type="text/javascript" th:src="@{js/workbench.js}" ></script>
@@ -58,7 +57,7 @@
 		        	<li>
 		                <a class="menuFA" href="javascript:void(0)"><i class="iconfont icon-caigoudan left"></i>数据管理<i class="iconfont icon-dajiantouyou right"></i></a>
 		                <dl>
-		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('tgls/agent/agent_add.html',this)">数据分类1</a></dt>
+		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/farminfo/datalist',this)">养殖场基本信息</a></dt>
 		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('tgls/agent/agent_list.html',this)">数据分类2</a></dt>
 		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('tgls/agent/agent_list.html',this)">某报表导入</a></dt>
 		                </dl>
@@ -98,7 +97,7 @@
 					<span><i class="iconfont icon-xianshiqi"></i>数据总览</span>
 				</div>
 				<div class="con">
-					<iframe id="mainIframe" src="dataview.html" scrolling="no"></iframe>
+					<iframe id="mainIframe" src="/dataview" scrolling="no"></iframe>
 				</div>
 			</div>
 			<!-- 核心区域 - 结束 -->
