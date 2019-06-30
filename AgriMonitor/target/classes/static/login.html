@@ -17,14 +17,25 @@
 	<div class="wel">刚查农业信息管理系统</div>
 	<div class="user">
 		<div id="yonghu" style=""><img src="images/login_yhm.png" /></div>
-		<input type="text" name="" placeholder="用户名" />
+		<input id="username" type="text" name="" placeholder="用户名" />
 	</div>			
 	<div class="password">
 		<div id="yonghu"><img src="images/login_mm.png" /></div>
-		<input type="password" name="密码" placeholder="●●●●●●"/>
+		<input id="password" type="password" name="密码" placeholder="●●●●●●"/>
 	</div>
-	<input class="btn" type="button" name="登录" value="登录" />
+	<input id="loginBtn" class="btn" type="button" name="登录" value="登录" />
 </div>
-
+<script type="text/javascript" src="temp/framework/jquery-1.11.3.min.js" ></script>
+<script type="text/javascript">
+	if (window != top){
+		top.location.href = location.href;
+	}
+	$('#loginBtn').click(function(){
+		$.post("/doLogin", {username: $("#username").val(), password: $("#password").val()},function(data){
+	          console.log(data);
+	          window.location.href="/workbench"; 
+        });
+	});
+</script>
 </body>
 </html>

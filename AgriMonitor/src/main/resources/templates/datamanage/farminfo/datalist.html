@@ -34,16 +34,16 @@
 					<div class="layui-form-item">
 						<label style="width: 90px" class="layui-form-label text-left">养殖场名称：</label>
 						<div class="layui-input-inline">
-							<input type="text" name="name" placeholder="输入养殖场名称" autocomplete="off" class="layui-input">
+							<input type="text" id="farmname" placeholder="输入养殖场名称" autocomplete="off" class="layui-input">
 						</div>
 						<label class="layui-form-label">认定畜种：</label>
 						<div class="layui-input-inline">
-					      <select name="city">
+					      <select id="type">
 					        <option value=""></option>
 					      </select>
 					      </div>
-						<a class="layui-btn">检索</a>
-						<a id="dataImportBtn" class="layui-btn">导入商品</a>
+						<a id="queryBtn" class="layui-btn">检索</a>
+						<a type="button" class="layui-btn" id="dataImportBtn"><i class="layui-icon"></i>导入数据</a>
 					</div>
 				</form>
 			</div>

@@ -7,6 +7,8 @@ public class UserInfo {
 	
 	private String user_name;
 	
+	private String user_showname;
+	
 	private String user_password;
 	
 	private Integer user_role;
@@ -18,6 +20,8 @@ public class UserInfo {
 	private Integer modifier;
 	
 	private Date last_time;
+	
+	private RoleInfo roleinfo;
 
 	public Integer getUser_id() {
 		return user_id;
@@ -83,4 +87,19 @@ public class UserInfo {
 		this.last_time = last_time;
 	}
 
+	public RoleInfo getRoleinfo() {
+		return roleinfo;
+	}
+
+	public void setRoleinfo(RoleInfo roleinfo) {
+		this.roleinfo = roleinfo;
+	}
+
+	public String getUser_showname() {
+		return user_showname;
+	}
+
+	public void setUser_showname(String user_showname) {
+		this.user_showname = user_showname;
+	}
 }

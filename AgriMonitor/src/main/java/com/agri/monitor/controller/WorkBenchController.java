@@ -11,9 +11,9 @@ public class WorkBenchController {
 		return "/workbench";
 	}
 	
-	@RequestMapping("/dataview")
+	@RequestMapping("/dataoverview")
 	public String dataview() {
-		return "/dataview/dataview";
+		return "/dataoverview";
 	}
 	
 }

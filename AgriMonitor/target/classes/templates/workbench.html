@@ -30,7 +30,7 @@
 		<script th:src="@{/temp/framework/jquery.mCustomScrollbar.min.js}"></script>
 		<!-- 公共样式 结束 -->
 		
-		<script type="text/javascript" th:src="@{js/workbench.js}" ></script>
+		<script type="text/javascript" th:src="@{/js/workbench.js}" ></script>
 		
 	</head>
 
@@ -40,7 +40,7 @@
 			<div style="font-size: 41px;font-weight: bold;float: left">刚查农业信息管理系统 </div>
 			<div class="topMenu">
 				<ul>
-					<li><a href="javascript:void(0)"><i class="iconfont icon-yonghu1"></i>张三(管理员)</a></li>
+					<li><a href="javascript:void(0)"><i class="iconfont icon-yonghu1"></i><span th:text="${session.userinfo.user_showname}"></span>(<span th:text="${session.userinfo.roleinfo.role_showname}"></span>)</a></li>
 					<li><a href="javascript:void(0)" onclick="menuCAClick('tgls/modify_password.html',this)"><i class="iconfont icon-xiugaimima"></i>修改密码</a></li>
 					<li><a href="login.html"><i class="iconfont icon-084tuichu"></i>注销</a></li>
 				</ul>
@@ -52,12 +52,12 @@
 		    <div class="menu">
 		        <ul>
 		        	<li>
-		                <a class="menuFA" href="javascript:void(0)" onclick="menuCAClick('tgls/qdAPI.html',this)"><i class="iconfont icon-shouye left"></i>数据总览</a>
+		                <a class="menuFA" href="javascript:void(0)" onclick="menuCAClick('/dataoverview',this)"><i class="iconfont icon-shouye left"></i>数据总览</a>
 		            </li>
 		        	<li>
 		                <a class="menuFA" href="javascript:void(0)"><i class="iconfont icon-caigoudan left"></i>数据管理<i class="iconfont icon-dajiantouyou right"></i></a>
 		                <dl>
-		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/farminfo/datalist',this)">养殖场基本信息</a></dt>
+		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/farminfo',this)">养殖场基本信息</a></dt>
 		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('tgls/agent/agent_list.html',this)">数据分类2</a></dt>
 		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('tgls/agent/agent_list.html',this)">某报表导入</a></dt>
 		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('water/waterinfo.html',this)">水质监测</a></dt>
@@ -98,7 +98,7 @@
 					<span><i class="iconfont icon-xianshiqi"></i>数据总览</span>
 				</div>
 				<div class="con">
-					<iframe id="mainIframe" src="/dataview" scrolling="no"></iframe>
+					<iframe id="mainIframe" src="/dataoverview" scrolling="no"></iframe>
 				</div>
 			</div>
 			<!-- 核心区域 - 结束 -->

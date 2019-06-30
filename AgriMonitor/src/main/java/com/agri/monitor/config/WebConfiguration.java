@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.agri.monitor.interceptor.LoginInterceptor;
 
-//@Configuration
+@Configuration
 public class WebConfiguration implements WebMvcConfigurer {
 
 /*	@Bean
@@ -31,11 +31,10 @@ public class WebConfiguration implements WebMvcConfigurer {
         // 注册拦截器
         InterceptorRegistration loginRegistry = registry.addInterceptor(new LoginInterceptor());
         // 拦截路径
-        // 拦截路径
         loginRegistry.addPathPatterns("/**");
         // 排除路径
         loginRegistry.excludePathPatterns("/");
-        loginRegistry.excludePathPatterns("/login");
+        loginRegistry.excludePathPatterns("/doLogin");
         loginRegistry.excludePathPatterns("/loginout");
         loginRegistry.excludePathPatterns("/error");
         // 排除资源请求

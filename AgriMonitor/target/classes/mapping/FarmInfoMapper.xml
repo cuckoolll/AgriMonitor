@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agri.monitor.mapper.FarmInfoMapper">
+    <select id="findAll" parameterType="map" resultType="map">
+        select a.gid,a.county,a.farm_name,a.farm_address,a.legal_person,a.phone_num,b.type_name animals_name,a.animals_size,a.remarks 
+        from t_farm_info a,t_animals_type b where a.animals_type=b.gid
+        <if test="farmname != null and farmname != ''">
+        	<bind name="farm_name" value="'%' + farmname + '%'"/>
+	        and a.farm_name like #{farm_name}
+	    </if>
+	    <if test="type != null and type != ''">
+	    	and b.gid=#{type}
+	    </if>
+	    order by a.create_time desc
+    </select>
+</mapper>

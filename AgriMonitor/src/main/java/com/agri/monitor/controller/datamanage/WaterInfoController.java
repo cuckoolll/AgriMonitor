@@ -1,4 +1,4 @@
-package com.agri.monitor.controller.watermonitor;
+package com.agri.monitor.controller.datamanage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.agri.monitor.annotation.IgnoreSession;
-import com.agri.monitor.service.water.WaterInfoService;
+import com.agri.monitor.service.datamanage.WaterInfoService;
 
 @Controller
 @RequestMapping("/water")

@@ -1,4 +1,4 @@
-package com.agri.monitor.mapper.water;
+package com.agri.monitor.mapper;
 
 import java.util.List;
 

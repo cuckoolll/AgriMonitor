@@ -25,22 +25,22 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
     	// 如果不是映射到方法直接通过
-//        if (!(handler instanceof HandlerMethod)) {
-//            return true;
-//        }
-//    	HandlerMethod handlerMethod = (HandlerMethod) handler;
-//    	Method method = handlerMethod.getMethod();
-//    	//忽略session是否有效
-//    	if (method.isAnnotationPresent(IgnoreSession.class)) {
-//            return true;
-//        }
-//        // 检查每个到来的请求对应的session域中是否有登录标识
-//        Object userinfo = request.getSession().getAttribute("userinfo");
-//        if (null == userinfo || !(userinfo instanceof UserInfo)) {
-//            // 未登录，重定向到登录页
-//            response.sendRedirect(request.getContextPath()+"/login.html");
-//            return false;
-//        }
+        if (!(handler instanceof HandlerMethod)) {
+            return true;
+        }
+    	HandlerMethod handlerMethod = (HandlerMethod) handler;
+    	Method method = handlerMethod.getMethod();
+    	//忽略session是否有效
+    	if (method.isAnnotationPresent(IgnoreSession.class)) {
+            return true;
+        }
+        // 检查每个到来的请求对应的session域中是否有登录标识
+        Object userinfo = request.getSession().getAttribute("userinfo");
+        if (null == userinfo || !(userinfo instanceof UserInfo)) {
+            // 未登录，重定向到登录页
+            response.sendRedirect(request.getContextPath()+"/login.html");
+            return false;
+        }
         return true;
     }
 
