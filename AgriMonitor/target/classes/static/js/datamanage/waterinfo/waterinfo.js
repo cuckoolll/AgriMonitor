@@ -18,11 +18,12 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 			 where: {"county":$("#county").val(),"time":$("#time").val()},
 		     page: true, //开启分页
 		     cols: [[ //表头
-		    	 {field: 'quality_address', title: '采样地点', width:'20%'},
-		    	 {field: 'quality_time', title: '采样时间', width:'20%', sort: true},
-		    	 {field: 'quality_type', title: '分析项目', width:'20%'}, 
-		    	 {field: 'quality_result', title: '分析结果（mg/L）', width:'20%'},
-		    	 {field: 'remarks', title: '备注', width:'20%'}
+		    	 {field: 'quality_address', title: '采样地点'},
+		    	 {field: 'quality_time', title: '采样时间', sort: true},
+		    	 {field: 'quality_type', title: '分析项目'}, 
+		    	 {field: 'quality_result', title: '分析结果（mg/L）'},
+		    	 {field: 'remarks', title: '备注'},
+		    	 {title: '操作', align:'center', toolbar: '#barDemo'}
 			 ]]
 		  });
 		
@@ -37,11 +38,12 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    	if(res){
 		    		if(res.code==0){
 		    			dataTable.reload({//表格数据重新加载
-		  				  where: {"county":$("#county").val(),"time":$("#time").val()},
-		  				  page: {curr: 1}
+		    				where: {"county":$("#county").val(),"time":$("#time").val()},
+		  				  	page: {curr: 1}
 		    			});
+		    			layer.msg(res.msg);
 				      }else{
-				    	  layer.msg(res.msg);
+				    	layer.msg(res.msg);
 				      }
 		    	}
 		    }
@@ -49,6 +51,26 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 	}
 	
 	function bindEvent() {
+		//监听工具条
+		table.on('tool(datalist)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+		  var data = obj.data; //获得当前行数据
+		  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+		  var tr = obj.tr; //获得当前行 tr 的DOM对象
+		  if(layEvent === 'del'){ //删除
+		    layer.confirm('真的删除行么', function(index){
+		      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+		      layer.close(index);
+		      //向服务端发送删除指令
+		    });
+		  } else if(layEvent === 'edit'){ //编辑
+		    //do something
+		    //同步更新缓存对应的值
+		    obj.update({
+		      username: '123'
+		      ,title: 'xxx'
+		    });
+		  }
+		});
 		//查询数据
 		$("#queryBtn").click(function(){
 			dataTable.reload({//表格数据重新加载
