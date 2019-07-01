@@ -10,7 +10,13 @@ import com.agri.monitor.entity.FarmInfo;
 @Repository
 public interface FarmInfoMapper {
 	
-	List<Map> findAll(Map map);
+	FarmInfo findById(Integer gid);
+	
+	List<Map> findAll(FarmInfo farminfo);
 	
 	void batchInsert(List<FarmInfo> list);
+	
+	void insert(FarmInfo farmInfo);
+	
+	void update(FarmInfo farmInfo);
 }

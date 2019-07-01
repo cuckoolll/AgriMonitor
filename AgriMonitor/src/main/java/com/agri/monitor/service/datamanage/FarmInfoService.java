@@ -12,6 +12,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,14 +24,50 @@ import com.agri.monitor.mapper.FarmInfoMapper;
 
 @Service
 public class FarmInfoService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(FarmInfoService.class);
+	
 	@Autowired
 	private FarmInfoMapper farmInfoMapper;
 	
-	public List<Map> findAll(Map map) {
-		return farmInfoMapper.findAll(map);
+	public FarmInfo findById(Integer gid) {
+		if (logger.isInfoEnabled()) {
+			logger.info("获取养殖信息，GID=" + gid);
+		}
+		return farmInfoMapper.findById(gid);
+	}
+	
+	public Map saveOrUpdate(FarmInfo farminfo) {
+		if (logger.isInfoEnabled()) {
+			logger.info("养殖场数据更新开始：" + farminfo);
+		}
+		final Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", 0);
+		try {
+			//更新
+			if(null != farminfo.getGid()) {
+				farmInfoMapper.update(farminfo);
+			}else {//新增
+				farmInfoMapper.insert(farminfo);
+			}
+		} catch (Exception e) {
+			result.put("code", -1);
+			logger.equals("保存养殖场信息异常" + e);
+		}
+		return result;
+	}
+	
+	public List<Map> findAll(FarmInfo farminfo) {
+		if (logger.isInfoEnabled()) {
+			logger.info("查询所有养殖场数据开始：" + farminfo);
+		}
+		return farmInfoMapper.findAll(farminfo);
 	}
 	
 	public Map dataImport(MultipartFile file, HttpServletRequest request) {
+		if (logger.isInfoEnabled()) {
+			logger.info("养殖场数据导入开始");
+		}
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0);
 		result.put("msg", "成功");
@@ -39,12 +77,17 @@ public class FarmInfoService {
 	        String filename=file.getOriginalFilename();
 	        // 获取文件后缀
 	        String prefix=filename.substring(filename.lastIndexOf(".")+1);
-
+	        if (logger.isInfoEnabled()) {
+				logger.info("养殖场数据导入，文件名：" + filename);
+			}
 	        if (prefix.equals("xlsx")) {
 	        	wb = new XSSFWorkbook(file.getInputStream());
 	        } else if (prefix.equals("xls")) {
 	        	wb = new HSSFWorkbook(file.getInputStream());
 	        } else {
+	        	if (logger.isInfoEnabled()) {
+					logger.info("养殖场数据导入，不支持的文件类型");
+				}
 	        	result.put("code", -1);
 	    		result.put("msg", "不支持的文件类型");
 	        }
@@ -80,7 +123,9 @@ public class FarmInfoService {
 	        }
 	        farmInfoMapper.batchInsert(list);
 		} catch (Exception e) {
-			e.printStackTrace();
+			if (logger.isErrorEnabled()) {
+				logger.error("养殖场数据导入，解析文件异常", e);
+			}
 			result.put("code", -1);
     		result.put("msg", "解析文件失败");
 		}
