@@ -46,7 +46,7 @@
 						</div>
 						
 						<a id="queryBtn" class="layui-btn">检索</a>
-						<a class="layui-btn" id="importBtn">导入数据</a>
+						<a th:if="${session.userinfo.roleinfo.role_name=='admin'}" class="layui-btn" id="importBtn">导入数据</a>
 						<a class="layui-btn" th:href="@{/excel/水质监测数据导入模板.xlsx}" style="margin-left:10px">导入模板下载</a>
 					</div>
 				</form>
@@ -54,8 +54,15 @@
 			
 			<table id="grid" lay-filter="datalist"></table>
 			<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name=='admin'}">
-  			 	<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
- 			 	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  				<div class="layui-inline" lay-event="add">
+			 		<i class="layui-icon layui-icon-add-1"></i>
+			 	</div>
+				<div class="layui-inline" lay-event="update">
+					<i class="layui-icon layui-icon-edit"></i>
+				</div>
+				<div class="layui-inline" lay-event="delete">	
+					<i class="layui-icon layui-icon-delete"></i>
+				</div>
 			</script>
 		</div>
 	</body>

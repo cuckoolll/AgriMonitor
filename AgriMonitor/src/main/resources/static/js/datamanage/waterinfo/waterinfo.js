@@ -13,6 +13,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		
 		dataTable = table.render({
 			 elem: '#grid',
+			 toolbar: '#barDemo',
 			 url: '/waterinfo/queryWaterInfo', //数据接口
 			 method: 'post',
 			 where: {"county":$("#county").val(),"time":$("#time").val()},
@@ -22,8 +23,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    	 {field: 'quality_time', title: '采样时间', sort: true},
 		    	 {field: 'quality_type', title: '分析项目'}, 
 		    	 {field: 'quality_result', title: '分析结果（mg/L）'},
-		    	 {field: 'remarks', title: '备注'},
-		    	 {title: '操作', align:'center', toolbar: '#barDemo'}
+		    	 {field: 'remarks', title: '备注'}
 			 ]]
 		  });
 		
@@ -52,25 +52,44 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 	
 	function bindEvent() {
 		//监听工具条
-		table.on('tool(datalist)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-		  var data = obj.data; //获得当前行数据
-		  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-		  var tr = obj.tr; //获得当前行 tr 的DOM对象
-		  if(layEvent === 'del'){ //删除
-		    layer.confirm('真的删除行么', function(index){
-		      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-		      layer.close(index);
-		      //向服务端发送删除指令
-		    });
-		  } else if(layEvent === 'edit'){ //编辑
-		    //do something
-		    //同步更新缓存对应的值
-		    obj.update({
-		      username: '123'
-		      ,title: 'xxx'
-		    });
-		  }
-		});
+		table.on('toolbar(datalist)', function(obj){
+		    var checkStatus = table.checkStatus(obj.config.id)
+		    ,data = checkStatus.data; //获取选中的数据
+		    switch(obj.event){
+		      case 'add':
+		    	  layer.open({
+              		    title: "新增养殖场信息",
+						type: 2,
+						area: ['800px', '500px'],
+						scrollbar: true,
+						content: '/farminfo/add'/*,
+						btn: ['保存','关闭'],
+				        yes: function(){
+				            layer.closeAll();
+				        },
+				        btn2: function(){
+				            layer.close();
+				        }*/
+					});
+		      break;
+		      case 'update':
+		        if(data.length === 0){
+		          layer.msg('请选择一行');
+		        } else if(data.length > 1){
+		          layer.msg('只能同时编辑一个');
+		        } else {
+		          layer.alert('编辑 [id]：'+ checkStatus.data[0].id);
+		        }
+		      break;
+		      case 'delete':
+		        if(data.length === 0){
+		          layer.msg('请选择一行');
+		        } else {
+		          layer.msg('删除');
+		        }
+		      break;
+		    };
+		  });
 		//查询数据
 		$("#queryBtn").click(function(){
 			dataTable.reload({//表格数据重新加载
