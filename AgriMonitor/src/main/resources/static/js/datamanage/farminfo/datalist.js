@@ -7,20 +7,20 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 		datatable=table.render({
 		    elem: '#datalist',
 		    method:'post',
+		    toolbar: '#barDemo',
 		    url: '/farminfo/datalist', //数据接口，
 		    height:winH-80,
 		    page: true, //开启分页
 		    cols: [[ //表头
 		      {field: 'gid', title: 'ID',hide: true,align:'center'},
-		      {field: 'user_name', title: '区（县、市）',align:'center',width:120},
+		      {field: 'county', title: '区（县、市）',align:'center',width:120},
 		      {field: 'farm_name', title: '养殖场名称',align:'center'},
 		      {field: 'farm_address', title: '地址',align:'center'},
 		      {field: 'legal_person', title: '法人',align:'center',width:100},
 		      {field: 'phone_num', title: '联系电话',align:'center',width:150},
 		      {field: 'animals_name', title: '认定畜种',align:'center'},
 		      {field: 'animals_size', title: '牲畜存栏（头、只）',align:'center'},
-		      {field: 'remarks', title: '备注',align:'center'},
-		      {title: '操作', align:'center', toolbar: '#barDemo'}
+		      {field: 'remarks', title: '备注',align:'center'}
 		    ]]
 		});
 		//文件上传
@@ -48,30 +48,49 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 	
 	function bindEvent(){
 		//监听工具条
-		table.on('tool(datalist)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-		  var data = obj.data; //获得当前行数据
-		  var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-		  var tr = obj.tr; //获得当前行 tr 的DOM对象
-		  if(layEvent === 'del'){ //删除
-		    layer.confirm('真的删除行么', function(index){
-		      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-		      layer.close(index);
-		      //向服务端发送删除指令
-		    });
-		  } else if(layEvent === 'edit'){ //编辑
-		    //do something
-		    //同步更新缓存对应的值
-		    obj.update({
-		      username: '123'
-		      ,title: 'xxx'
-		    });
-		  }
-		});
+		table.on('toolbar(datalist)', function(obj){
+		    var checkStatus = table.checkStatus(obj.config.id)
+		    ,data = checkStatus.data; //获取选中的数据
+		    switch(obj.event){
+		      case 'add':
+		    	  layer.open({
+              		    title: "新增养殖场信息",
+						type: 2,
+						area: ['800px', '500px'],
+						scrollbar: true,
+						content: '/farminfo/add'/*,
+						btn: ['保存','关闭'],
+				        yes: function(){
+				            layer.closeAll();
+				        },
+				        btn2: function(){
+				            layer.close();
+				        }*/
+					});
+		      break;
+		      case 'update':
+		        if(data.length === 0){
+		          layer.msg('请选择一行');
+		        } else if(data.length > 1){
+		          layer.msg('只能同时编辑一个');
+		        } else {
+		          layer.alert('编辑 [id]：'+ checkStatus.data[0].id);
+		        }
+		      break;
+		      case 'delete':
+		        if(data.length === 0){
+		          layer.msg('请选择一行');
+		        } else {
+		          layer.msg('删除');
+		        }
+		      break;
+		    };
+		  });
 		//查询数据
 		$("#queryBtn").click(function(){
 			datatable.reload({//表格数据重新加载
 				  where: {
-					  farmname: $("#farmname").val(),type: $("#type").val()
+					  farm_name: $("#farmname").val(),animals_type: $("#type").val()
 				  },page: {curr: 1}
 			});
 		});

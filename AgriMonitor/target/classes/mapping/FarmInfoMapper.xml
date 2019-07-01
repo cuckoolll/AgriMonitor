@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.agri.monitor.mapper.FarmInfoMapper">
-    <select id="findAll" parameterType="map" resultType="map">
+	<select id="findById" parameterType="int" resultType="com.agri.monitor.entity.FarmInfo">
+		select * from t_farm_info where gid=#{gid}
+	</select>
+    <select id="findAll" parameterType="com.agri.monitor.entity.FarmInfo" resultType="map">
         select a.gid,a.county,a.farm_name,a.farm_address,a.legal_person,a.phone_num,b.type_name animals_name,a.animals_size,a.remarks 
         from t_farm_info a,t_animals_type b where a.animals_type=b.gid
-        <if test="farmname != null and farmname != ''">
-        	<bind name="farm_name" value="'%' + farmname + '%'"/>
+        <if test="farm_name != null and farm_name != ''">
+        	<bind name="farm_name" value="'%' + farm_name + '%'"/>
 	        and a.farm_name like #{farm_name}
 	    </if>
-	    <if test="type != null and type != ''">
-	    	and b.gid=#{type}
+	    <if test="animals_type != null and animals_type != ''">
+	    	and b.gid=#{animals_type}
 	    </if>
 	    order by a.create_time desc
     </select>
@@ -22,4 +25,17 @@
 		   #{item.animals_type},#{item.animals_size},#{item.remarks},#{item.creator},#{item.modifier})
 		</foreach>
     </insert>
+    
+    <insert id="insert" parameterType="com.agri.monitor.entity.FarmInfo">
+    	insert into t_farm_info(county,towns,village,farm_name,farm_address,legal_person,phone_num,animals_type,animals_size,remarks,creator,modifier)
+    	values
+	   (#{county},#{towns},#{village},#{farm_name},#{farm_address},#{legal_person},#{phone_num},
+	   #{animals_type},#{animals_size},#{remarks},#{creator},#{modifier})
+    </insert>
+    
+    <update id="update" parameterType="com.agri.monitor.entity.FarmInfo">
+    	update t_farm_info set county=#{county},towns=#{towns},village=#{village},farm_name=#{farm_name},
+    	farm_address=#{farm_address},#{legal_person},#{phone_num},#{animals_type},#{animals_size},
+	    remarks=#{remarks},modifier=#{modifier},last_time=#{last_time} where gid=#{gid}
+    </update>
 </mapper>

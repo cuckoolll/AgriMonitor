@@ -40,34 +40,21 @@
 						<div class="layui-input-inline">
 					      <select id="type">
 					        <option value=""></option>
+					        <option th:each="type:${animalstype}" th:value="${type.gid}" th:text="${type.type_name}"></option>
 					      </select>
 					      </div>
 						<a id="queryBtn" class="layui-btn">检索</a>
-						<a type="button" class="layui-btn" id="dataImportBtn"><i class="layui-icon"></i>导入数据</a>
+						<a th:if="${session.userinfo.roleinfo.role_name=='admin'}" type="button" class="layui-btn" id="dataImportBtn"><i class="layui-icon"></i>导入数据</a>
+						<a th:href="@{/excel/刚察县规模养殖场基本统计表.xlsx}" class="layui-btn"><i class="layui-icon"></i>模板下载</a>
 					</div>
 				</form>
 			</div>
 			<table id="datalist"  lay-filter="datalist"></table>
-			<script type="text/html" id="barDemo">
-  			 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
- 			 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+			
+			<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name=='admin'}">
+  			 <div class="layui-inline" lay-event="add"><i class="layui-icon layui-icon-add-1"></i></div><div class="layui-inline" lay-event="update"><i class="layui-icon layui-icon-edit"></i></div><div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
 			</script>
 		</div>
 		<script th:src="@{/js/datamanage/farminfo/datalist.js}"></script>
 	</body>
-	<div id="dataImportDiv" style="display: none;padding: 10px" class="layui-upload">
-  <button type="button" class="layui-btn layui-btn-normal" id="selFileBtn">选择多文件</button> 
-  <button type="button" class="layui-btn" id="fileUploadBtn">开始上传</button>
-  <div class="layui-upload-list">
-    <table class="layui-table">
-      <thead>
-        <tr><th>文件名</th>
-        <th>大小</th>
-        <th>状态</th>
-        <th>操作</th>
-      </tr></thead>
-      <tbody id="fileList"></tbody>
-    </table>
-  </div>
-</div>
 </html>
