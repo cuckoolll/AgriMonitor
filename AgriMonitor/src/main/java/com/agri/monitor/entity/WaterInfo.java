@@ -13,6 +13,8 @@ public class WaterInfo {
 	private Date create_time;
 	private String creator;
 	private Date last_time;
+	private String modifier;
+
 	public Integer getGid() {
 		return gid;
 	}
@@ -73,7 +75,12 @@ public class WaterInfo {
 	public void setLast_time(Date last_time) {
 		this.last_time = last_time;
 	}
-
+	public String getModifier() {
+		return modifier;
+	}
+	public void setModifier(String modifier) {
+		this.modifier = modifier;
+	}
 	
 	
 }

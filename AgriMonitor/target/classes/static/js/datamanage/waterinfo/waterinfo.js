@@ -1,12 +1,21 @@
-layui.use(['table', 'form'], function(table, form) {
-		  var table;
-		  
-	function render(obj) {
-		 table.render({
+layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form, laydate, layer, upload) {
+	var dataTable;
+	var timeControl;	  
+	
+	/**
+	 * 表格渲染 .
+	 */
+	function render() {
+		timeControl = laydate.render({
+			elem: '#time',
+			value: new Date()
+		}); 
+		
+		dataTable = table.render({
 			 elem: '#grid',
-			 url: '/queryWaterInfo', //数据接口
+			 url: '/waterinfo/queryWaterInfo', //数据接口
 			 method: 'post',
-			 where: obj,
+			 where: {"county":$("#county").val(),"time":$("#time").val()},
 		     page: true, //开启分页
 		     cols: [[ //表头
 		    	 {field: 'quality_address', title: '采样地点', width:'20%'},
@@ -16,17 +25,43 @@ layui.use(['table', 'form'], function(table, form) {
 		    	 {field: 'remarks', title: '备注', width:'20%'}
 			 ]]
 		  });
+		
+		//文件上传
+		upload.render({
+		    elem: '#importBtn',
+		    url: '/waterinfo/dataImport',
+		    accept: 'file',
+		    exts: 'xls|xlsx',
+		    done: function(res){
+		    	debugger;
+		    	if(res){
+		    		if(res.code==0){
+		    			dataTable.reload({//表格数据重新加载
+		  				  where: {"county":$("#county").val(),"time":$("#time").val()},
+		  				  page: {curr: 1}
+		    			});
+				      }else{
+				    	  layer.msg(res.msg);
+				      }
+		    	}
+		    }
+		});
 	}
 	
 	function bindEvent() {
-		$("#query").click(function(){
-			gridRender({"county":$("#county").val(),"time":"2019-06-29"});
+		//查询数据
+		$("#queryBtn").click(function(){
+			dataTable.reload({//表格数据重新加载
+				  where: {"county":$("#county").val(),"time":$("#time").val()},
+				  page: {curr: 1}
+			});
 		});
 	}
 	
 	function init() {
 		$("#county").val("刚察县");
-		render({"county":$("#county").val(),"time":"2019-06-29"});
+		
+		render();
 		bindEvent();
 	}
 	

@@ -9,12 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.annotation.IgnoreSession;
 import com.agri.monitor.service.datamanage.WaterInfoService;
 
 @Controller
+@RequestMapping("/waterinfo")
 public class WaterInfoController {
 	
 	@Autowired
@@ -24,7 +27,7 @@ public class WaterInfoController {
 	 * 水质监测页面 .
 	 * @return .
 	 */
-	@RequestMapping("/waterinfo")
+	@RequestMapping("")
 	public String waterMonitor() {
 		return "/datamanage/waterinfo/waterinfo";
 	}
@@ -46,5 +49,11 @@ public class WaterInfoController {
 		result.put("msg", "成功");
 		result.put("data", waterInfoService.queryInfoByCountryAndTime(county, time));
 		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/dataImport",method=RequestMethod.POST)
+	public Map dataImport(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+		return waterInfoService.dataImport(file, request);
 	}
 }

@@ -12,4 +12,6 @@ public interface WaterInfoMapper {
 	List<WaterInfo> findAll();
 	
 	List<WaterInfo> queryInfoByCountryAndTime(final String county, final String time);
+	
+	void batchInsert(List<WaterInfo> list);
 }

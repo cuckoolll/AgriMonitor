@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.agri.monitor.mapper.water.WaterInfoMapper">
+<mapper namespace="com.agri.monitor.mapper.WaterInfoMapper">
     <select id="findAll" resultType="com.agri.monitor.entity.WaterInfo">
         select * from t_water_quality
     </select>
     
     <select id="queryInfoByCountryAndTime" resultType="com.agri.monitor.entity.WaterInfo">
-        SELECT * 
+        SELECT GID,
+			   QUALITY_ADDRESS,
+			   COUNTY,
+			   QUALITY_TIME,
+			   QUALITY_TYPE,
+			   QUALITY_RESULT,
+			   REMARKS
           FROM T_WATER_QUALITY 
-         WHERE COUNTY = #{county} 
-           AND QUALITY_TIME = DATE_FORMAT(#{time}, '%Y-%m-%d') 
+    	<if test="county != null and county != ''">
+        	WHERE COUNTY = #{county} 
+        </if>
+        <if test="county == null or county == ''">
+        	<if test="time != null and time != ''">
+        		WHERE QUALITY_TIME = #{time}
+        	</if>
+        </if>
+        <if test="time != null and time != ''">
+        	AND QUALITY_TIME = #{time}
+       	</if>
+       	 ORDER BY QUALITY_TIME DESC
     </select>
+    
+    <insert id="batchInsert" parameterType="java.util.List">
+    	INSERT INTO T_WATER_QUALITY
+    		(QUALITY_ADDRESS,
+			 COUNTY,
+			 QUALITY_TIME,
+			 QUALITY_TYPE,
+			 QUALITY_RESULT,
+			 REMARKS,
+			 CREATE_TIME,
+			 CREATOR,
+			 MODIFIER)
+    	values
+    	<foreach collection="list" item="item" index="index" separator=",">
+		   (#{item.quality_address},
+		    #{item.county},
+		    #{item.quality_time},
+		    #{item.quality_type},
+		    #{item.quality_result},
+		    #{item.remarks},
+		    #{item.create_time},
+		    #{item.creator},
+		    #{item.modifier})
+		</foreach>
+    </insert>
 </mapper>
