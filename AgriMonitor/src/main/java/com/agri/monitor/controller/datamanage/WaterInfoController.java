@@ -1,5 +1,6 @@
 package com.agri.monitor.controller.datamanage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,9 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.annotation.IgnoreSession;
+import com.agri.monitor.entity.FarmInfo;
+import com.agri.monitor.entity.UserInfo;
+import com.agri.monitor.entity.WaterInfo;
 import com.agri.monitor.enums.CacheTypeEnum;
 import com.agri.monitor.service.datamanage.WaterInfoService;
 import com.agri.monitor.utils.CacheUtil;
+import com.agri.monitor.vo.WaterQueryVO;
 
 @Controller
 @RequestMapping("/waterinfo")
@@ -43,15 +49,9 @@ public class WaterInfoController {
 	@RequestMapping(value="/queryWaterInfo", method = RequestMethod.POST)
 	@ResponseBody
 	@IgnoreSession
-	public Map quertWaterInfo(HttpServletRequest request) {
-		final String county = request.getParameter("county");
-		final String time = request.getParameter("time");
-		
-		final Map<String, Object> result = new HashMap<String, Object>();
-		result.put("code", 0);
-		result.put("msg", "成功");
-		result.put("data", waterInfoService.queryInfoByCountryAndTime(county, time));
-		return result;
+	public Map queryWaterInfo(WaterQueryVO queryVo, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		return waterInfoService.queryInfoByCountryAndTimeForPage(queryVo, user.getUser_id());
 	}
 	
 	@ResponseBody
@@ -61,9 +61,29 @@ public class WaterInfoController {
 	}
 	
 	@IgnoreSession
-	@RequestMapping("add")
+	@RequestMapping("/update")
 	public String add(Model model) {
-		return "/datamanage/waterinfo/add";
+		return "/datamanage/waterinfo/update";
+	}
+
+	@ResponseBody
+	@RequestMapping(value="/save",method=RequestMethod.POST)
+	public Map doUpdate(WaterInfo waterinfo,HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		return waterInfoService.saveOrUpdate(waterinfo, user.getUser_id());
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/delInfoByGid",method=RequestMethod.POST)
+	public Map delInfoByGid(@RequestBody ArrayList<Integer> gids, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		return waterInfoService.delInfoByGid(gids, user.getUser_id());
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/findById",method=RequestMethod.POST)
+	public FarmInfo findById(Integer gid, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		return waterInfoService.findById(gid, user.getUser_id());
+	}
 }

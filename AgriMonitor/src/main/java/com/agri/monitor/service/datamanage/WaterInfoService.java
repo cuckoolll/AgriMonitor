@@ -24,9 +24,14 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.ApplicationRunnerImpl;
+import com.agri.monitor.entity.FarmInfo;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.entity.WaterInfo;
+import com.agri.monitor.enums.LogOptSatusEnum;
+import com.agri.monitor.enums.LogOptTypeEnum;
 import com.agri.monitor.mapper.WaterInfoMapper;
+import com.agri.monitor.utils.LogUtil;
+import com.agri.monitor.vo.WaterQueryVO;
 
 @Service
 @Transactional
@@ -36,19 +41,77 @@ public class WaterInfoService {
 	
 	@Autowired
 	private WaterInfoMapper waterInfoMapper;
-	
-	@Value("${spring.profiles.active}")  
-	private String active;  
-	
-	public List<WaterInfo> findAll() {
-		return waterInfoMapper.findAll();
+	 
+	public Map queryInfoByCountryAndTimeForPage(WaterQueryVO queryVo, Integer userid) {
+		if (logger.isInfoEnabled()) {
+			logger.info("获取水质监测信息，入参=county:" + queryVo.getCounty() + ", quality_time:" + queryVo.getQuality_time());
+		}
+
+		final Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", 0);
+		result.put("msg", "成功");
+		result.put("data", waterInfoMapper.queryInfoByCountryAndTimeForPage(queryVo));
+		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, 
+				"获取水质监测信息，入参=county:" + queryVo.getCounty() + ", quality_time:" + queryVo.getQuality_time());
+		return result;
 	}
 	
-	public List<WaterInfo> queryInfoByCountryAndTime(final String county, final String time) {
-		return waterInfoMapper.queryInfoByCountryAndTime(county, time);
+	public FarmInfo findById(Integer gid, Integer userid) {
+		if (logger.isInfoEnabled()) {
+			logger.info("获取水质监测信息，GID=" + gid);
+		}
+		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, "查询水质监测信息，GID="+gid);
+		return waterInfoMapper.findById(gid);
+	}
+	
+	public Map saveOrUpdate(WaterInfo waterinfo, Integer userid) {
+		if (logger.isInfoEnabled()) {
+			logger.info("水质监测数据更新开始：" + waterinfo);
+		}
+		final Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", 0);
+		try {
+			waterinfo.setModifier(String.valueOf(userid));
+			//更新
+			if(!StringUtils.isEmpty(waterinfo.getGid())) {
+				waterinfo.setLast_time(new Date());
+				waterInfoMapper.updateWaterInfo(waterinfo);
+				LogUtil.log(LogOptTypeEnum.UPDATE, LogOptSatusEnum.SUCESS, userid, "水质监测数据更新"+waterinfo);
+			}else {//新增
+				waterinfo.setCreator(String.valueOf(userid));
+				waterInfoMapper.insertWaterInfo(waterinfo);
+				LogUtil.log(LogOptTypeEnum.ADD, LogOptSatusEnum.SUCESS, userid, "新增水质监测数据"+waterinfo);
+			}
+		} catch (Exception e) {
+			result.put("code", -1);
+			logger.error("保存养殖场信息异常" + e);
+			LogUtil.log(LogOptTypeEnum.SAVE, LogOptSatusEnum.FAIL, userid, "保存水质监测数据异常："+e.getMessage());
+		}
+		return result;
+	}
+	
+	public Map delInfoByGid(List<Integer> gids, Integer userid) {
+		if (logger.isInfoEnabled()) {
+			logger.info("水质监测数据删除开始：" + gids);
+		}
+		final Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", 0);
+		try {
+			waterInfoMapper.delInfoByGid(gids);
+			LogUtil.log(LogOptTypeEnum.DEL, LogOptSatusEnum.SUCESS, userid, "水质监测数据删除，GID="+gids);
+		} catch (Exception e) {
+			result.put("code", -1);
+			logger.error("删除水质监测信息异常" + e);
+			LogUtil.log(LogOptTypeEnum.DEL, LogOptSatusEnum.FAIL, userid, "水质监测数据删除异常："+e.getMessage());
+		}
+		return result;
 	}
 	
 	public Map dataImport(MultipartFile file, HttpServletRequest request) {
+		if (logger.isInfoEnabled()) {
+			logger.info("导入水质监测信息-----------------开始");
+		}
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0);
 		result.put("msg", "成功");
@@ -56,6 +119,10 @@ public class WaterInfoService {
 		try {
 			//获取文件名
 	        String filename=file.getOriginalFilename();
+	        if (logger.isInfoEnabled()) {
+				logger.info("导入水质监测信息，文件名：" + filename);
+			}
+	        
 	        // 获取文件后缀
 	        String prefix=filename.substring(filename.lastIndexOf(".")+1);
 
@@ -66,13 +133,17 @@ public class WaterInfoService {
 	        } else {
 	        	result.put("code", -1);
 	    		result.put("msg", "不支持的文件类型");
+	    		if (logger.isInfoEnabled()) {
+	 				logger.info("导入水质监测信息，不支持的文件类型");
+	 			}
+	    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(),"不支持的文件类型");
+	    		return result;
 	        }
 	        
 	        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	        
 	        Sheet sheet1 = wb.getSheetAt(0);
 	        int i = 0;
-	        UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 	        String county = null;
         	String quality_address = null;
         	String quality_time = null;
@@ -98,21 +169,32 @@ public class WaterInfoService {
 	        	   waterinfo.setCreate_time(new Date());
 	        	   
 	        	   String gid = waterInfoMapper.queryGid(county, quality_time, row.getCell(0).getStringCellValue());
+	        	   LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, user.getUser_id(), "查询水质监测GID=" + gid);
 	        	   
-	        	   if (StringUtils.isEmpty(gid)) {
-	        		   waterInfoMapper.insertWaterInfo(waterinfo);
-	        	   } else {
-	        		   waterinfo.setGid(Integer.valueOf(gid));
-	        		   waterInfoMapper.updateWaterInfo(waterinfo);
-	        	   }
+	        	   try {
+		        	   if (StringUtils.isEmpty(gid)) {
+	        			   waterInfoMapper.insertWaterInfo(waterinfo);
+		        	   } else {
+		        		   waterinfo.setGid(Integer.valueOf(gid));
+		        		   waterInfoMapper.updateWaterInfo(waterinfo);
+		        	   }
+	        	   } catch(Exception e) {
+        			   if (logger.isErrorEnabled()) {
+        					logger.error("水质监测插入数据失败", e);
+        				}
+        				result.put("code", -1);
+        	    		result.put("msg", "水质监测插入数据失败");
+        	    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(), "导入水质监测信息异常："+e.getMessage());
+        		   }
 	           }
 	           i++;
 	        }
-	        
+	        LogUtil.log(LogOptTypeEnum.ADD, LogOptSatusEnum.SUCESS, user.getUser_id(), "导入水质监测信息成功");
 		} catch (Exception e) {
 			e.printStackTrace();
 			result.put("code", -1);
     		result.put("msg", "解析文件失败");
+    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(), "导入水质监测信息异常："+e.getMessage());
 		}
 		return result;
 	}
