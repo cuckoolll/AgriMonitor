@@ -109,5 +109,13 @@ public class FarmInfo {
 	public void setLast_time(Date last_time) {
 		this.last_time = last_time;
 	}
+	@Override
+	public String toString() {
+		return "FarmInfo [gid=" + gid + ", county=" + county + ", towns=" + towns + ", village=" + village
+				+ ", farm_name=" + farm_name + ", farm_address=" + farm_address + ", legal_person=" + legal_person
+				+ ", phone_num=" + phone_num + ", animals_type=" + animals_type + ", animals_size=" + animals_size
+				+ ", remarks=" + remarks + ", create_time=" + create_time + ", creator=" + creator + ", modifier="
+				+ modifier + ", last_time=" + last_time + "]";
+	}
 	
 }

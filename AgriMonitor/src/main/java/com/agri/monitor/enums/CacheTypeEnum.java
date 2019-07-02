@@ -1,4 +1,4 @@
-package com.agri.monitor.utils;
+package com.agri.monitor.enums;
 
 public enum CacheTypeEnum {
 	/**

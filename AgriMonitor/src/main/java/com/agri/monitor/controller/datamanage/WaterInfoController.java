@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.annotation.IgnoreSession;
+import com.agri.monitor.enums.CacheTypeEnum;
 import com.agri.monitor.service.datamanage.WaterInfoService;
-import com.agri.monitor.utils.CacheTypeEnum;
 import com.agri.monitor.utils.CacheUtil;
 
 @Controller

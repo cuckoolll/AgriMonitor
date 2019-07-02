@@ -7,8 +7,8 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import com.agri.monitor.enums.CacheTypeEnum;
 import com.agri.monitor.mapper.AnimalsTypeMapper;
-import com.agri.monitor.utils.CacheTypeEnum;
 import com.agri.monitor.utils.CacheUtil;
 
 @Component

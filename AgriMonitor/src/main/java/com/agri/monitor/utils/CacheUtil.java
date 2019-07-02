@@ -3,6 +3,8 @@ package com.agri.monitor.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.agri.monitor.enums.CacheTypeEnum;
+
 public class CacheUtil {
 	private CacheUtil() {}
 	

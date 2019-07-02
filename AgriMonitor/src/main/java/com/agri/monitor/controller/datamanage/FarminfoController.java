@@ -18,8 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.annotation.IgnoreSession;
 import com.agri.monitor.entity.FarmInfo;
+import com.agri.monitor.entity.UserInfo;
+import com.agri.monitor.enums.CacheTypeEnum;
 import com.agri.monitor.service.datamanage.FarmInfoService;
-import com.agri.monitor.utils.CacheTypeEnum;
 import com.agri.monitor.utils.CacheUtil;
 import com.agri.monitor.vo.FarmQueryVO;
 
@@ -45,29 +46,33 @@ public class FarminfoController {
 	
 	@ResponseBody
 	@RequestMapping(value="/doDel",method=RequestMethod.POST)
-	public Map doDel(@RequestBody ArrayList<Integer> gids) {
-		return farmInfoService.doDel(gids);
+	public Map doDel(@RequestBody ArrayList<Integer> gids, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		return farmInfoService.doDel(gids, user.getUser_id());
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/doSave",method=RequestMethod.POST)
 	public Map doUpdate(FarmInfo farminfo,HttpServletRequest request) {
-		return farmInfoService.saveOrUpdate(farminfo,request);
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		return farmInfoService.saveOrUpdate(farminfo,user.getUser_id());
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/findById",method=RequestMethod.POST)
-	public FarmInfo findById(Integer gid) {
-		return farmInfoService.findById(gid);
+	public FarmInfo findById(Integer gid, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		return farmInfoService.findById(gid, user.getUser_id());
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/datalist",method=RequestMethod.POST)
-	public Map datalist(FarmQueryVO farmQueryVO) {
+	public Map datalist(FarmQueryVO farmQueryVO, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0);
 		result.put("msg", "成功");
-		result.put("data", farmInfoService.findAllForPage(farmQueryVO));
+		result.put("data", farmInfoService.findAllForPage(farmQueryVO, user.getUser_id()));
 		result.put("count", farmInfoService.findAllCount(farmQueryVO));
 		return result;
 	}
