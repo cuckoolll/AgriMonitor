@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.annotation.IgnoreSession;
 import com.agri.monitor.service.datamanage.WaterInfoService;
+import com.agri.monitor.utils.CacheTypeEnum;
+import com.agri.monitor.utils.CacheUtil;
 
 @Controller
 @RequestMapping("/waterinfo")
@@ -56,4 +59,11 @@ public class WaterInfoController {
 	public Map dataImport(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
 		return waterInfoService.dataImport(file, request);
 	}
+	
+	@IgnoreSession
+	@RequestMapping("add")
+	public String add(Model model) {
+		return "/datamanage/waterinfo/add";
+	}
+	
 }

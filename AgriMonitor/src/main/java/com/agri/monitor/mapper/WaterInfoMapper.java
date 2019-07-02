@@ -13,5 +13,9 @@ public interface WaterInfoMapper {
 	
 	List<WaterInfo> queryInfoByCountryAndTime(final String county, final String time);
 	
-	void batchInsert(List<WaterInfo> list);
+	void insertWaterInfo(WaterInfo waterinfo);
+	
+	void updateWaterInfo(WaterInfo waterinfo);
+	
+	String queryGid(final String county, final String time, final String type);
 }

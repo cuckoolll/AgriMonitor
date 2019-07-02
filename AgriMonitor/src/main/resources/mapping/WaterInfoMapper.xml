@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.agri.monitor.mapper.WaterInfoMapper">
     <select id="findAll" resultType="com.agri.monitor.entity.WaterInfo">
-        select * from t_water_quality
+        SELECT * FROM T_WATER_QUALITY
     </select>
     
     <select id="queryInfoByCountryAndTime" resultType="com.agri.monitor.entity.WaterInfo">
@@ -28,7 +28,7 @@
        	 ORDER BY QUALITY_TIME DESC
     </select>
     
-    <insert id="batchInsert" parameterType="java.util.List">
+    <insert id="insertWaterInfo" parameterType="com.agri.monitor.entity.WaterInfo">
     	INSERT INTO T_WATER_QUALITY
     		(QUALITY_ADDRESS,
 			 COUNTY,
@@ -39,17 +39,31 @@
 			 CREATE_TIME,
 			 CREATOR,
 			 MODIFIER)
-    	values
-    	<foreach collection="list" item="item" index="index" separator=",">
-		   (#{item.quality_address},
-		    #{item.county},
-		    #{item.quality_time},
-		    #{item.quality_type},
-		    #{item.quality_result},
-		    #{item.remarks},
-		    #{item.create_time},
-		    #{item.creator},
-		    #{item.modifier})
-		</foreach>
+    	VALUES
+		   (#{quality_address},
+			#{county},
+			#{quality_time},
+			#{quality_type},
+			#{quality_result},
+			#{remarks},
+			#{create_time},
+			#{creator},
+			#{modifier})
     </insert>
+    
+    <update id="updateWaterInfo" parameterType="com.agri.monitor.entity.WaterInfo">
+    	UPDATE T_WATER_QUALITY
+    	   SET QUALITY_RESULT = #{quality_result},
+    	   	   REMARKS = #{remarks},
+    	   	   MODIFIER = #{modifier}
+    	 WHERE GID = #{gid}
+    </update>
+    
+    <select id="queryGid" resultType="java.lang.String">
+   		SELECT GID
+     	  FROM T_WATER_QUALITY
+     	 WHERE COUNTY = #{county}
+     	   AND QUALITY_TIME = #{time}
+     	   AND QUALITY_TYPE = #{type}
+     </select>
 </mapper>

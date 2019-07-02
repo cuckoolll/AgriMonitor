@@ -12,13 +12,16 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		}); 
 		
 		dataTable = table.render({
-			 elem: '#grid',
+			 id:'datalist',
+			 elem: '#datalist',
 			 toolbar: '#barDemo',
 			 url: '/waterinfo/queryWaterInfo', //数据接口
 			 method: 'post',
 			 where: {"county":$("#county").val(),"time":$("#time").val()},
 		     page: true, //开启分页
 		     cols: [[ //表头
+		    	 {type: 'checkbox', fixed: 'left'},
+		    	 {field: 'gid', title: 'gid',hide: true,align:'center'},
 		    	 {field: 'quality_address', title: '采样地点'},
 		    	 {field: 'quality_time', title: '采样时间', sort: true},
 		    	 {field: 'quality_type', title: '分析项目'}, 
@@ -34,7 +37,6 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    accept: 'file',
 		    exts: 'xls|xlsx',
 		    done: function(res){
-		    	debugger;
 		    	if(res){
 		    		if(res.code==0){
 		    			dataTable.reload({//表格数据重新加载
@@ -58,11 +60,11 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    switch(obj.event){
 		      case 'add':
 		    	  layer.open({
-              		    title: "新增养殖场信息",
+              		    title: "新增水质监测采样信息",
 						type: 2,
 						area: ['800px', '500px'],
 						scrollbar: true,
-						content: '/farminfo/add'/*,
+						content: '/waterinfo/add'/*,
 						btn: ['保存','关闭'],
 				        yes: function(){
 				            layer.closeAll();
@@ -78,7 +80,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		        } else if(data.length > 1){
 		          layer.msg('只能同时编辑一个');
 		        } else {
-		          layer.alert('编辑 [id]：'+ checkStatus.data[0].id);
+		          layer.alert('编辑 [id]：'+ checkStatus.data[0].gid);
 		        }
 		      break;
 		      case 'delete':

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<!-- Google Chrome Frame也可以让IE用上Chrome的引擎: -->
+		<meta name="renderer" content="webkit">
+		<!--国产浏览器高速模式-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>养殖场基本信息</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
+	    <!--[if lt IE 9]>
+	      	<script src="framework/html5shiv.min.js"></script>
+	      	<script src="framework/respond.min.js"></script>
+	    <![endif]-->
+		<script type="text/javascript" th:src="@{/temp/framework/jquery-1.11.3.min.js}" ></script>
+		<script type="text/javascript" th:src="@{/temp/layui/layui.js}"></script>
+		<!-- 公共样式 结束 -->
+	</head>
+
+	<body>
+		<div class="cBody" style="height: 450px">
+			<form id="addForm" class="layui-form" action="">
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">所属区域：</label>
+	                <div class="layui-input-inline">
+	                    <input type="text" name="county" readonly="readonly" class="layui-input" value="刚察县">
+	                </div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 140px">采样地点：</label>
+					<div class="layui-input-block">
+						<input type="text" name="quality_address" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">采样时间：</label>
+					<div class="layui-input-block">
+						<input id="quality_time" type="text" name="quality_time" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 150px" readonly="readonly">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">分析项目：</label>
+					<div class="layui-input-block">
+						<input type="text" name="quality_type" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">分析结果（mg/L）：</label>
+					<div class="layui-input-block">
+						<input type="text" name="quality_result" autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">备注：</label>
+					<div class="layui-input-block">
+						<textarea name="remarks" class="layui-textarea" style="width: 560px"></textarea>
+					</div>
+				</div>
+				
+				<div style="" class="layui-form-item">
+					<div class="layui-input-block" style="text-align: center">
+						<button class="layui-btn" lay-submit lay-filter="submitBut">保存</button>
+					</div>
+				</div>
+			</form>
+			
+			<script>
+				layui.use(['form', 'laydate'], function(form, laydate) {
+					//日期控件渲染
+					laydate.render({
+						elem: '#quality_time',
+						value: new Date()
+					}); 
+					
+					//监听提交
+					form.on('submit(submitBut)', function(data) {
+						 $.ajax({
+					            //请求方式
+					            type : "POST",
+					            //请求的媒体类型
+					            contentType: "application/json;charset=UTF-8",
+					            //请求地址
+					            url : "/waterinfo/doSave",
+					            //数据，json字符串
+					            data : JSON.stringify(data.field),
+					            //请求成功
+					            success : function(result) {
+					                console.log(result);
+					            },
+					            //请求失败，包含具体的错误信息
+					            error : function(e){
+					                console.log(e.status);
+					                console.log(e.responseText);
+					            }
+					        });
+					});
+				});
+			</script>
+
+		</div>
+	</body>
+
+</html>

@@ -14,12 +14,16 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.agri.monitor.ApplicationRunnerImpl;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.entity.WaterInfo;
 import com.agri.monitor.mapper.WaterInfoMapper;
@@ -27,6 +31,9 @@ import com.agri.monitor.mapper.WaterInfoMapper;
 @Service
 @Transactional
 public class WaterInfoService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(WaterInfoService.class);
+	
 	@Autowired
 	private WaterInfoMapper waterInfoMapper;
 	
@@ -69,7 +76,6 @@ public class WaterInfoService {
 	        String county = null;
         	String quality_address = null;
         	String quality_time = null;
-	        List<WaterInfo> list = new ArrayList<>();
 	        
 	        for (Row row : sheet1) {
 	        	//解析所属乡镇
@@ -90,11 +96,19 @@ public class WaterInfoService {
 	        	   waterinfo.setCreator(String.valueOf(user.getUser_id()));
 	        	   waterinfo.setModifier(String.valueOf(user.getUser_id()));
 	        	   waterinfo.setCreate_time(new Date());
-	        	   list.add(waterinfo);
+	        	   
+	        	   String gid = waterInfoMapper.queryGid(county, quality_time, row.getCell(0).getStringCellValue());
+	        	   
+	        	   if (StringUtils.isEmpty(gid)) {
+	        		   waterInfoMapper.insertWaterInfo(waterinfo);
+	        	   } else {
+	        		   waterinfo.setGid(Integer.valueOf(gid));
+	        		   waterInfoMapper.updateWaterInfo(waterinfo);
+	        	   }
 	           }
 	           i++;
 	        }
-	        waterInfoMapper.batchInsert(list);
+	        
 		} catch (Exception e) {
 			e.printStackTrace();
 			result.put("code", -1);

@@ -52,7 +52,7 @@
 				</form>
 			</div>
 			
-			<table id="grid" lay-filter="datalist"></table>
+			<table id="datalist" lay-filter="datalist" lay-data="{id: 'datalist'}"></table>
 			<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name=='admin'}">
   				<div class="layui-inline" lay-event="add">
 			 		<i class="layui-icon layui-icon-add-1"></i>
