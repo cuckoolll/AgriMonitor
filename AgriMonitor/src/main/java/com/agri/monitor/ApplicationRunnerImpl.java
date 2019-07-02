@@ -24,7 +24,9 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 		if (logger.isInfoEnabled()) {
 			logger.info("项目启动完成，开始加装缓存数据");
 		}
+		//缓存认定畜种
 		CacheUtil.putCache(CacheTypeEnum.ANIMALSTYPE, animalsTypeMapper.findAll());
+		//TODO 其他缓存数据，先定义枚举类型
 	}
 
 }

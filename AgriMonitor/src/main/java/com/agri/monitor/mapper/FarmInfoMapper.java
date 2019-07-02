@@ -6,17 +6,22 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 import com.agri.monitor.entity.FarmInfo;
+import com.agri.monitor.vo.FarmQueryVO;
 
 @Repository
 public interface FarmInfoMapper {
 	
 	FarmInfo findById(Integer gid);
 	
-	List<Map> findAll(FarmInfo farminfo);
+	List<Map> findAllForPage(FarmQueryVO farmQueryVO);
+	
+	int findAllCount(FarmQueryVO farmQueryVO);
 	
 	void batchInsert(List<FarmInfo> list);
 	
 	void insert(FarmInfo farmInfo);
 	
 	void update(FarmInfo farmInfo);
+	
+	void delete(List<Integer> gids);
 }

@@ -5,13 +5,17 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 	function render(){
 		//表格渲染
 		datatable=table.render({
+			id:"datalist",
 		    elem: '#datalist',
 		    method:'post',
 		    toolbar: '#barDemo',
 		    url: '/farminfo/datalist', //数据接口，
 		    height:winH-80,
 		    page: true, //开启分页
+		    limit:20,
+		    limits:[20,40,60,100],
 		    cols: [[ //表头
+		    	{type:'checkbox'},
 		      {field: 'gid', title: 'ID',hide: true,align:'center'},
 		      {field: 'county', title: '区（县、市）',align:'center',width:120},
 		      {field: 'farm_name', title: '养殖场名称',align:'center'},
@@ -30,7 +34,6 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 		    accept: 'file',
 		    exts: 'xls|xlsx',
 		    done: function(res){
-		    	debugger;
 		    	if(res){
 		    		if(res.code==0){
 				    	  datatable.reload({//表格数据重新加载
@@ -58,14 +61,7 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 						type: 2,
 						area: ['800px', '500px'],
 						scrollbar: true,
-						content: '/farminfo/add'/*,
-						btn: ['保存','关闭'],
-				        yes: function(){
-				            layer.closeAll();
-				        },
-				        btn2: function(){
-				            layer.close();
-				        }*/
+						content: '/farminfo/update'
 					});
 		      break;
 		      case 'update':
@@ -74,14 +70,45 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 		        } else if(data.length > 1){
 		          layer.msg('只能同时编辑一个');
 		        } else {
-		          layer.alert('编辑 [id]：'+ checkStatus.data[0].id);
+		        	layer.open({
+              		    title: "修改养殖场信息",
+						type: 2,
+						area: ['800px', '500px'],
+						scrollbar: true,
+						content: '/farminfo/update?gid='+checkStatus.data[0].gid
+					});
 		        }
 		      break;
 		      case 'delete':
 		        if(data.length === 0){
 		          layer.msg('请选择一行');
 		        } else {
-		          layer.msg('删除');
+		        	layer.confirm('确定要删除选择的养殖场信息吗？', function(index){
+		        	        layer.close(index);
+		        	        var gids=[];
+				        	$.each(data,function(index,item){
+				        		gids.push(item.gid);
+				        	});
+				        	$.ajax({
+				        		type:"post",
+				        		url:"/farminfo/doDel",
+				        		contentType:"application/json",
+				        		data: JSON.stringify(gids),
+				        		dataType:"json",
+				        		success:function(res){
+				        			if(res && res.code==0){
+							        	  layer.msg('删除养殖场数据成功');
+							        	  debugger;
+							        	  obj.config.index;
+							          }else{
+							        	  layer.msg('删除养殖场数据失败');
+							          }
+				        		},
+				        		error:function(){
+				        			layer.msg('删除养殖场数据失败');
+				        		}
+				        	});
+		        	});
 		        }
 		      break;
 		    };

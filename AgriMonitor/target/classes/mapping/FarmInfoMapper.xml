@@ -4,7 +4,7 @@
 	<select id="findById" parameterType="int" resultType="com.agri.monitor.entity.FarmInfo">
 		select * from t_farm_info where gid=#{gid}
 	</select>
-    <select id="findAll" parameterType="com.agri.monitor.entity.FarmInfo" resultType="map">
+    <select id="findAllForPage" parameterType="com.agri.monitor.vo.FarmQueryVO" resultType="map">
         select a.gid,a.county,a.farm_name,a.farm_address,a.legal_person,a.phone_num,b.type_name animals_name,a.animals_size,a.remarks 
         from t_farm_info a,t_animals_type b where a.animals_type=b.gid
         <if test="farm_name != null and farm_name != ''">
@@ -14,9 +14,18 @@
 	    <if test="animals_type != null and animals_type != ''">
 	    	and b.gid=#{animals_type}
 	    </if>
-	    order by a.create_time desc
+	    order by a.gid desc limit #{currIndex},#{limit}
     </select>
-    
+    <select id="findAllCount" parameterType="com.agri.monitor.vo.FarmQueryVO" resultType="int">
+        select count(a.gid) from t_farm_info a,t_animals_type b where a.animals_type=b.gid
+        <if test="farm_name != null and farm_name != ''">
+        	<bind name="farm_name" value="'%' + farm_name + '%'"/>
+	        and a.farm_name like #{farm_name}
+	    </if>
+	    <if test="animals_type != null and animals_type != ''">
+	    	and b.gid=#{animals_type}
+	    </if>
+    </select>
     <insert id="batchInsert" parameterType="java.util.List">
     	insert into t_farm_info(county,towns,village,farm_name,farm_address,legal_person,phone_num,animals_type,animals_size,remarks,creator,modifier)
     	values
@@ -35,7 +44,15 @@
     
     <update id="update" parameterType="com.agri.monitor.entity.FarmInfo">
     	update t_farm_info set county=#{county},towns=#{towns},village=#{village},farm_name=#{farm_name},
-    	farm_address=#{farm_address},#{legal_person},#{phone_num},#{animals_type},#{animals_size},
-	    remarks=#{remarks},modifier=#{modifier},last_time=#{last_time} where gid=#{gid}
+    	farm_address=#{farm_address},legal_person=#{legal_person},phone_num=#{phone_num},
+    	animals_type=#{animals_type},animals_size=#{animals_size},remarks=#{remarks},
+    	modifier=#{modifier},last_time=#{last_time} where gid=#{gid}
     </update>
+    
+    <delete id="delete" parameterType="java.util.List">
+    	delete from t_farm_info where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
 </mapper>

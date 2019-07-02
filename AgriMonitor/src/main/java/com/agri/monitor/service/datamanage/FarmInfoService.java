@@ -1,6 +1,7 @@
 package com.agri.monitor.service.datamanage;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,11 +17,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.entity.FarmInfo;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.mapper.FarmInfoMapper;
+import com.agri.monitor.vo.FarmQueryVO;
 
 @Service
 public class FarmInfoService {
@@ -37,31 +40,54 @@ public class FarmInfoService {
 		return farmInfoMapper.findById(gid);
 	}
 	
-	public Map saveOrUpdate(FarmInfo farminfo) {
+	public Map doDel(List<Integer> gids) {
+		if (logger.isInfoEnabled()) {
+			logger.info("养殖场数据删除开始：" + gids);
+		}
+		final Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", 0);
+		try {
+			farmInfoMapper.delete(gids);
+		} catch (Exception e) {
+			result.put("code", -1);
+			logger.error("删除养殖场信息异常" + e);
+		}
+		return result;
+	}
+	
+	public Map saveOrUpdate(FarmInfo farminfo,HttpServletRequest request) {
 		if (logger.isInfoEnabled()) {
 			logger.info("养殖场数据更新开始：" + farminfo);
 		}
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0);
 		try {
+			UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+			farminfo.setModifier(user.getUser_id());
 			//更新
-			if(null != farminfo.getGid()) {
+			if(!StringUtils.isEmpty(farminfo.getGid())) {
+				farminfo.setLast_time(new Date());
 				farmInfoMapper.update(farminfo);
 			}else {//新增
+				farminfo.setCreator(user.getUser_id());
 				farmInfoMapper.insert(farminfo);
 			}
 		} catch (Exception e) {
 			result.put("code", -1);
-			logger.equals("保存养殖场信息异常" + e);
+			logger.error("保存养殖场信息异常" + e);
 		}
 		return result;
 	}
 	
-	public List<Map> findAll(FarmInfo farminfo) {
+	public List<Map> findAllForPage(FarmQueryVO farmQueryVO) {
 		if (logger.isInfoEnabled()) {
-			logger.info("查询所有养殖场数据开始：" + farminfo);
+			logger.info("查询所有养殖场数据开始：" + farmQueryVO);
 		}
-		return farmInfoMapper.findAll(farminfo);
+		return farmInfoMapper.findAllForPage(farmQueryVO);
+	}
+	
+	public int findAllCount(FarmQueryVO farmQueryVO) {
+		return farmInfoMapper.findAllCount(farmQueryVO);
 	}
 	
 	public Map dataImport(MultipartFile file, HttpServletRequest request) {

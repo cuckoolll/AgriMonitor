@@ -1,5 +1,6 @@
 package com.agri.monitor.controller.datamanage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +21,7 @@ import com.agri.monitor.entity.FarmInfo;
 import com.agri.monitor.service.datamanage.FarmInfoService;
 import com.agri.monitor.utils.CacheTypeEnum;
 import com.agri.monitor.utils.CacheUtil;
+import com.agri.monitor.vo.FarmQueryVO;
 
 @Controller
 @RequestMapping("/farminfo")
@@ -34,16 +37,22 @@ public class FarminfoController {
 	}
 	
 	@IgnoreSession
-	@RequestMapping("add")
+	@RequestMapping("update")
 	public String add(Model model) {
 		model.addAttribute("animalstype", CacheUtil.getCache(CacheTypeEnum.ANIMALSTYPE));
-		return "/datamanage/farminfo/add";
+		return "/datamanage/farminfo/update";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/doDel",method=RequestMethod.POST)
+	public Map doDel(@RequestBody ArrayList<Integer> gids) {
+		return farmInfoService.doDel(gids);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/doSave",method=RequestMethod.POST)
-	public Map doUpdate(FarmInfo farminfo) {
-		return farmInfoService.saveOrUpdate(farminfo);
+	public Map doUpdate(FarmInfo farminfo,HttpServletRequest request) {
+		return farmInfoService.saveOrUpdate(farminfo,request);
 	}
 	
 	@ResponseBody
@@ -54,11 +63,12 @@ public class FarminfoController {
 	
 	@ResponseBody
 	@RequestMapping(value="/datalist",method=RequestMethod.POST)
-	public Map datalist(FarmInfo farminfo) {
+	public Map datalist(FarmQueryVO farmQueryVO) {
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0);
 		result.put("msg", "成功");
-		result.put("data", farmInfoService.findAll(farminfo));
+		result.put("data", farmInfoService.findAllForPage(farmQueryVO));
+		result.put("count", farmInfoService.findAllCount(farmQueryVO));
 		return result;
 	}
 	

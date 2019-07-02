@@ -18,6 +18,7 @@ public class FarmInfo {
 	private Integer creator;
 	private Integer modifier;
 	private Date last_time;
+	
 	public Integer getGid() {
 		return gid;
 	}
@@ -107,21 +108,6 @@ public class FarmInfo {
 	}
 	public void setLast_time(Date last_time) {
 		this.last_time = last_time;
-	}
-	@Override
-	public String toString() {
-		return "FarmInfo [gid=" + gid + ", county=" + county + ", towns=" + towns + ", village=" + village
-				+ ", farm_name=" + farm_name + ", farm_address=" + farm_address + ", legal_person=" + legal_person
-				+ ", phone_num=" + phone_num + ", animals_type=" + animals_type + ", animals_size=" + animals_size
-				+ ", remarks=" + remarks + ", create_time=" + create_time + ", creator=" + creator + ", modifier="
-				+ modifier + ", last_time=" + last_time + ", getGid()=" + getGid() + ", getCounty()=" + getCounty()
-				+ ", getTowns()=" + getTowns() + ", getVillage()=" + getVillage() + ", getFarm_name()=" + getFarm_name()
-				+ ", getFarm_address()=" + getFarm_address() + ", getLegal_person()=" + getLegal_person()
-				+ ", getPhone_num()=" + getPhone_num() + ", getAnimals_type()=" + getAnimals_type()
-				+ ", getAnimals_size()=" + getAnimals_size() + ", getRemarks()=" + getRemarks() + ", getCreate_time()="
-				+ getCreate_time() + ", getCreator()=" + getCreator() + ", getModifier()=" + getModifier()
-				+ ", getLast_time()=" + getLast_time() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
 	}
 	
 }
