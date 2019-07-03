@@ -98,8 +98,11 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 				        		success:function(res){
 				        			if(res && res.code==0){
 							        	  layer.msg('删除养殖场数据成功');
-							        	  debugger;
-							        	  obj.config.index;
+							        	  datatable.reload({//表格数据重新加载
+											  where: {
+												  farm_name: $("#farmname").val(),animals_type: $("#type").val()
+											  },page: {curr: 1}
+							        	  });
 							          }else{
 							        	  layer.msg('删除养殖场数据失败');
 							          }

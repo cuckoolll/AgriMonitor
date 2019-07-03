@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.agri.monitor.entity.Animalstype;
+import com.agri.monitor.entity.AnimalsType;
 import com.agri.monitor.entity.FarmInfo;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.enums.CacheTypeEnum;
@@ -185,11 +185,11 @@ public class FarmInfoService {
 		if (StringUtils.isEmpty(name)) {
 			return null;
 		}
-		List<Animalstype> list = (List<Animalstype>) CacheUtil.getCache(CacheTypeEnum.ANIMALSTYPE);
+		List<AnimalsType> list = (List<AnimalsType>) CacheUtil.getCache(CacheTypeEnum.ANIMALSTYPE);
 		if (list == null || list.size() == 0) {
 			return null;
 		}
-		for (Animalstype animalstype : list) {
+		for (AnimalsType animalstype : list) {
 			if(name.equals(animalstype.getType_name())) {
 				return animalstype.getGid();
 			}

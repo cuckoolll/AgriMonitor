@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.agri.monitor.enums.CacheTypeEnum;
 import com.agri.monitor.mapper.AnimalsTypeMapper;
 import com.agri.monitor.utils.CacheUtil;
+import com.agri.monitor.vo.AnimalsTypeQueryVO;
 
 @Component
 public class ApplicationRunnerImpl implements ApplicationRunner {
@@ -25,7 +26,10 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 			logger.info("项目启动完成，开始加装缓存数据");
 		}
 		//缓存认定畜种
-		CacheUtil.putCache(CacheTypeEnum.ANIMALSTYPE, animalsTypeMapper.findAll());
+		AnimalsTypeQueryVO queryVO = new AnimalsTypeQueryVO();
+		queryVO.setPage(1);
+		queryVO.setLimit(Integer.MAX_VALUE);
+		CacheUtil.putCache(CacheTypeEnum.ANIMALSTYPE, animalsTypeMapper.findAllForPage(queryVO));
 		//TODO 其他缓存数据，先定义枚举类型
 	}
 

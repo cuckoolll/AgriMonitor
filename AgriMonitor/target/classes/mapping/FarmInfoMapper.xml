@@ -55,4 +55,11 @@
     		#{item}
     	</foreach>
     </delete>
+    
+    <select id="findByAnimalsType" parameterType="java.util.List" resultType="int">
+    	select count(gid) from t_farm_info where animals_type in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </select>
 </mapper>

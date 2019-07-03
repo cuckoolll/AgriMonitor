@@ -2,13 +2,15 @@ package com.agri.monitor.entity;
 
 import java.util.Date;
 
-public class Animalstype {
+public class AnimalsType {
 	private Integer gid;
 	private String type_name;
 	private Date create_time;
 	private Integer creator;
 	private Integer modifier;
 	private Date last_time;
+	private Integer stopflag;
+	
 	public Integer getGid() {
 		return gid;
 	}
@@ -44,6 +46,17 @@ public class Animalstype {
 	}
 	public void setLast_time(Date last_time) {
 		this.last_time = last_time;
+	}
+	public Integer getStopflag() {
+		return stopflag;
+	}
+	public void setStopflag(Integer stopflag) {
+		this.stopflag = stopflag;
+	}
+	@Override
+	public String toString() {
+		return "AnimalsType [gid=" + gid + ", type_name=" + type_name + ", creator=" + creator + ", modifier="
+				+ modifier + ", stopflag=" + stopflag + "]";
 	}
 	
 }

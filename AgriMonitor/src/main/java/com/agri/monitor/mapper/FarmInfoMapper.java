@@ -24,4 +24,6 @@ public interface FarmInfoMapper {
 	void update(FarmInfo farmInfo);
 	
 	void delete(List<Integer> gids);
+	
+	int findByAnimalsType(List<Integer> typeGids);
 }
