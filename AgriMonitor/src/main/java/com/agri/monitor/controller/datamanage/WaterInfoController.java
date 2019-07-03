@@ -63,7 +63,7 @@ public class WaterInfoController {
 	@IgnoreSession
 	@RequestMapping("/update")
 	public String add(Model model) {
-		return "/datamanage/waterinfo/update";
+		return "/datamanage/waterinfo/waterupdate";
 	}
 
 	@ResponseBody
