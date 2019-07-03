@@ -1,24 +1,22 @@
 package com.agri.monitor.entity;
 
-import java.util.Date;
-
 public class WaterInfo {
-	private Integer gid;
+	private String gid;
 	private String quality_address; 
 	private String county;
-	private Date quality_time;
+	private String quality_time;
 	private String quality_type;
 	private String quality_result;
 	private String remarks;
-	private Date create_time;
+	private String create_time;
 	private String creator;
-	private Date last_time;
+	private String last_time;
 	private String modifier;
 
-	public Integer getGid() {
+	public String getGid() {
 		return gid;
 	}
-	public void setGid(Integer gid) {
+	public void setGid(String gid) {
 		this.gid = gid;
 	}
 	public String getQuality_address() {
@@ -33,10 +31,10 @@ public class WaterInfo {
 	public void setCounty(String county) {
 		this.county = county;
 	}
-	public Date getQuality_time() {
+	public String getQuality_time() {
 		return quality_time;
 	}
-	public void setQuality_time(Date quality_time) {
+	public void setQuality_time(String quality_time) {
 		this.quality_time = quality_time;
 	}
 	public String getQuality_type() {
@@ -57,10 +55,10 @@ public class WaterInfo {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-	public Date getCreate_time() {
+	public String getCreate_time() {
 		return create_time;
 	}
-	public void setCreate_time(Date create_time) {
+	public void setCreate_time(String create_time) {
 		this.create_time = create_time;
 	}
 	public String getCreator() {
@@ -69,10 +67,10 @@ public class WaterInfo {
 	public void setCreator(String creator) {
 		this.creator = creator;
 	}
-	public Date getLast_time() {
+	public String getLast_time() {
 		return last_time;
 	}
-	public void setLast_time(Date last_time) {
+	public void setLast_time(String last_time) {
 		this.last_time = last_time;
 	}
 	public String getModifier() {

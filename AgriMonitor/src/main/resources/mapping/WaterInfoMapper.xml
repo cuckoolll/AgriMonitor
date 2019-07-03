@@ -1,45 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.agri.monitor.mapper.WaterInfoMapper">
-    <select id="findAll" resultType="com.agri.monitor.entity.WaterInfo">
-        SELECT * FROM T_WATER_QUALITY
-    </select>
-    
-    <select id="queryInfoByCountryAndTime" resultType="com.agri.monitor.entity.WaterInfo">
-        SELECT GID,
-			   QUALITY_ADDRESS,
-			   COUNTY,
-			   QUALITY_TIME,
-			   QUALITY_TYPE,
-			   QUALITY_RESULT,
-			   REMARKS
-          FROM T_WATER_QUALITY 
-    	<if test="county != null and county != ''">
-        	WHERE COUNTY = #{county} 
+	<select id="findById" parameterType="int" resultType="com.agri.monitor.entity.WaterInfo">
+		select gid,
+			   quality_address,
+			   county,
+			   date_format(quality_time, '%Y-%m-%d') quality_time,
+			   quality_type,
+			   quality_result,
+			   remarks
+		  from t_water_quality 
+		 where gid = #{gid}
+	</select>
+
+    <select id="queryInfoByCountryAndTimeForPage" parameterType="com.agri.monitor.vo.WaterQueryVO" resultType="map">
+        select gid,
+			   quality_address,
+			   county,
+			   date_format(quality_time, '%Y-%m-%d') quality_time,
+			   quality_type,
+			   quality_result,
+			   remarks
+          from t_water_quality 
+    	<if test="quality_address != null and quality_address != ''">
+    		<bind name="quality_address" value="'%' + quality_address + '%'"/>
+        	where quality_address like #{quality_address} 
         </if>
-        <if test="county == null or county == ''">
-        	<if test="time != null and time != ''">
-        		WHERE QUALITY_TIME = #{time}
+        <if test="quality_address == null or quality_address == ''">
+        	<if test="quality_time != null and quality_time != ''">
+        		where quality_time = #{quality_time}
         	</if>
         </if>
-        <if test="time != null and time != ''">
-        	AND QUALITY_TIME = #{time}
+        <if test="quality_time != null and quality_time != ''">
+        	and quality_time = #{quality_time}
        	</if>
-       	 ORDER BY QUALITY_TIME DESC
+       	 order by quality_time desc limit #{currIndex},#{limit}
+    </select>
+    
+    <select id="queryGid" parameterType="com.agri.monitor.vo.WaterQueryVO" resultType="java.lang.String">
+   		select gid
+     	  from t_water_quality
+     	 where county = #{county}
+     	   and quality_time = #{quality_time}
+     	   and quality_type = #{quality_type}
     </select>
     
     <insert id="insertWaterInfo" parameterType="com.agri.monitor.entity.WaterInfo">
-    	INSERT INTO T_WATER_QUALITY
-    		(QUALITY_ADDRESS,
-			 COUNTY,
-			 QUALITY_TIME,
-			 QUALITY_TYPE,
-			 QUALITY_RESULT,
-			 REMARKS,
-			 CREATE_TIME,
-			 CREATOR,
-			 MODIFIER)
-    	VALUES
+    	insert into t_water_quality
+    		(quality_address,
+			 county,
+			 quality_time,
+			 quality_type,
+			 quality_result,
+			 remarks,
+			 create_time,
+			 creator,
+			 modifier)
+    	values
 		   (#{quality_address},
 			#{county},
 			#{quality_time},
@@ -52,18 +69,17 @@
     </insert>
     
     <update id="updateWaterInfo" parameterType="com.agri.monitor.entity.WaterInfo">
-    	UPDATE T_WATER_QUALITY
-    	   SET QUALITY_RESULT = #{quality_result},
-    	   	   REMARKS = #{remarks},
-    	   	   MODIFIER = #{modifier}
-    	 WHERE GID = #{gid}
+    	update t_water_quality
+    	   set quality_result = #{quality_result},
+    	   	   remarks = #{remarks},
+    	   	   modifier = #{modifier}
+    	 where gid = #{gid}
     </update>
     
-    <select id="queryGid" resultType="java.lang.String">
-   		SELECT GID
-     	  FROM T_WATER_QUALITY
-     	 WHERE COUNTY = #{county}
-     	   AND QUALITY_TIME = #{time}
-     	   AND QUALITY_TYPE = #{type}
-     </select>
+    <delete id="delInfoByGid" parameterType="java.util.List">
+    	delete from t_water_quality where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
 </mapper>

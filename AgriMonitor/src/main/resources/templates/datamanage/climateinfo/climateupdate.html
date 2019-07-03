@@ -8,7 +8,7 @@
 		<meta name="renderer" content="webkit">
 		<!--国产浏览器高速模式-->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>养殖场基本信息</title>
+		<title>水质监测基本信息</title>
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
 	    <!--[if lt IE 9]>
 	      	<script src="framework/html5shiv.min.js"></script>
@@ -22,6 +22,7 @@
 	<body>
 		<div class="cBody" style="height: 450px">
 			<form id="addForm" class="layui-form" action="">
+				<input type="hidden" name="gid"/>
 				<div class="layui-form-item">
 					<label class="layui-form-label" style="width: 140px">所属区域：</label>
 	                <div class="layui-input-inline">
@@ -67,39 +68,7 @@
 				</div>
 			</form>
 			
-			<script>
-				layui.use(['form', 'laydate'], function(form, laydate) {
-					//日期控件渲染
-					laydate.render({
-						elem: '#quality_time',
-						value: new Date()
-					}); 
-					
-					//监听提交
-					form.on('submit(submitBut)', function(data) {
-						 $.ajax({
-					            //请求方式
-					            type : "POST",
-					            //请求的媒体类型
-					            contentType: "application/json;charset=UTF-8",
-					            //请求地址
-					            url : "/waterinfo/doSave",
-					            //数据，json字符串
-					            data : JSON.stringify(data.field),
-					            //请求成功
-					            success : function(result) {
-					                console.log(result);
-					            },
-					            //请求失败，包含具体的错误信息
-					            error : function(e){
-					                console.log(e.status);
-					                console.log(e.responseText);
-					            }
-					        });
-					});
-				});
-			</script>
-
+			<script th:src="@{/js/datamanage/waterinfo/update.js}"></script>
 		</div>
 	</body>
 

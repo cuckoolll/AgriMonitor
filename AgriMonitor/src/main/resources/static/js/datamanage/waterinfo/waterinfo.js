@@ -1,24 +1,28 @@
 layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form, laydate, layer, upload) {
 	var dataTable;
 	var timeControl;	  
+	var winH=$(window).height();
 	
 	/**
 	 * 表格渲染 .
 	 */
 	function render() {
 		timeControl = laydate.render({
-			elem: '#time',
+			elem: '#quality_time',
 			value: new Date()
 		}); 
 		
 		dataTable = table.render({
 			 id:'datalist',
 			 elem: '#datalist',
+			 height:winH-80,
 			 toolbar: '#barDemo',
 			 url: '/waterinfo/queryWaterInfo', //数据接口
 			 method: 'post',
-			 where: {"county":$("#county").val(),"time":$("#time").val()},
+			 where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
 		     page: true, //开启分页
+		     limit:20,
+			 limits:[20,40,60,100],
 		     cols: [[ //表头
 		    	 {type: 'checkbox', fixed: 'left'},
 		    	 {field: 'gid', title: 'gid',hide: true,align:'center'},
@@ -40,7 +44,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    	if(res){
 		    		if(res.code==0){
 		    			dataTable.reload({//表格数据重新加载
-		    				where: {"county":$("#county").val(),"time":$("#time").val()},
+		    				where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
 		  				  	page: {curr: 1}
 		    			});
 		    			layer.msg(res.msg);
@@ -64,30 +68,59 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 						type: 2,
 						area: ['800px', '500px'],
 						scrollbar: true,
-						content: '/waterinfo/add'/*,
-						btn: ['保存','关闭'],
-				        yes: function(){
-				            layer.closeAll();
-				        },
-				        btn2: function(){
-				            layer.close();
-				        }*/
+						content: '/waterinfo/update'
+					}, function(a){
+						alert(a);
 					});
 		      break;
 		      case 'update':
 		        if(data.length === 0){
-		          layer.msg('请选择一行');
+		        	layer.msg('请选择一行');
 		        } else if(data.length > 1){
-		          layer.msg('只能同时编辑一个');
+		        	layer.msg('只能同时编辑一个');
 		        } else {
-		          layer.alert('编辑 [id]：'+ checkStatus.data[0].gid);
+		        	layer.open({
+              		    title: "修改水质监测采样信息",
+						type: 2,
+						area: ['800px', '500px'],
+						scrollbar: true,
+						content: '/waterinfo/update?gid='+checkStatus.data[0].gid
+					});
 		        }
 		      break;
 		      case 'delete':
 		        if(data.length === 0){
-		          layer.msg('请选择一行');
+		        	layer.msg('至少选择一行数据删除');
 		        } else {
-		          layer.msg('删除');
+		        	layer.confirm('确定要删除选择的信息吗？', function(index){
+	        	        layer.close(index);
+	        	        var gids=[];
+			        	$.each(data,function(index,item){
+			        		gids.push(item.gid);
+			        	});
+			        	$.ajax({
+			        		type:"post",
+			        		url:"/waterinfo/delInfoByGid",
+			        		contentType:"application/json",
+			        		data: JSON.stringify(gids),
+			        		dataType:"json",
+			        		success:function(res){
+			        			if(res && res.code==0){
+			        				dataTable.reload({//表格数据重新加载
+					    				where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
+					  				  	page: {curr: 1}
+					    			});
+			        				layer.msg('删除成功');
+							        obj.config.index;
+			        			}else{
+			        				layer.msg('删除失败');
+			        			}
+			        		},
+			        		error:function(){
+			        			layer.msg('删除失败');
+			        		}
+			        	});
+		        	});
 		        }
 		      break;
 		    };
@@ -95,15 +128,13 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		//查询数据
 		$("#queryBtn").click(function(){
 			dataTable.reload({//表格数据重新加载
-				  where: {"county":$("#county").val(),"time":$("#time").val()},
+				  where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
 				  page: {curr: 1}
 			});
 		});
 	}
 	
 	function init() {
-		$("#county").val("刚察县");
-		
 		render();
 		bindEvent();
 	}

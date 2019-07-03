@@ -24,93 +24,96 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.ApplicationRunnerImpl;
+import com.agri.monitor.entity.ClimateInfo;
 import com.agri.monitor.entity.FarmInfo;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.entity.WaterInfo;
 import com.agri.monitor.enums.LogOptSatusEnum;
 import com.agri.monitor.enums.LogOptTypeEnum;
+import com.agri.monitor.mapper.ClimateInfoMapper;
 import com.agri.monitor.mapper.WaterInfoMapper;
 import com.agri.monitor.utils.LogUtil;
+import com.agri.monitor.vo.ClimateQueryVO;
 import com.agri.monitor.vo.WaterQueryVO;
 
 @Service
 @Transactional
-public class WaterInfoService {
+public class ClimateInfoService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(WaterInfoService.class);
+	private static final Logger logger = LoggerFactory.getLogger(ClimateInfoService.class);
 	
 	private SimpleDateFormat yyyyMMddHHmmss = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	@Autowired
-	private WaterInfoMapper waterInfoMapper;
+	private ClimateInfoMapper climateInfoMapper;
 	 
-	public Map queryInfoByCountryAndTimeForPage(WaterQueryVO queryVo, Integer userid) {
+	public Map queryInfoForPage(ClimateQueryVO queryVo, Integer userid) {
 		if (logger.isInfoEnabled()) {
-			logger.info("获取水质监测信息，入参=quality_address:" + queryVo.getQuality_address() + ", quality_time:" + queryVo.getQuality_time());
+			logger.info("获取气候监测信息，入参=date_year:" + queryVo.getDate_year());
 		}
 
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0);
 		result.put("msg", "成功");
-		result.put("data", waterInfoMapper.queryInfoByCountryAndTimeForPage(queryVo));
+		result.put("data", climateInfoMapper.queryInfoForPage(queryVo));
 		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, 
-				"获取水质监测信息，入参=quality_address:" + queryVo.getQuality_address() + ", quality_time:" + queryVo.getQuality_time());
+				"获取气候监测信息，入参=date_year:" + queryVo.getDate_year());
 		return result;
 	}
 	
-	public WaterInfo findById(Integer gid, Integer userid) {
+	public ClimateInfo findById(Integer gid, Integer userid) {
 		if (logger.isInfoEnabled()) {
-			logger.info("获取水质监测信息，GID=" + gid);
+			logger.info("获取气候监测信息，GID=" + gid);
 		}
-		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, "查询水质监测信息，GID="+gid);
-		return waterInfoMapper.findById(gid);
+		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, "查询气候监测信息，GID="+gid);
+		return climateInfoMapper.findById(gid);
 	}
 	
-	public Map saveOrUpdate(WaterInfo waterinfo, Integer userid) {
+	public Map saveOrUpdate(ClimateInfo climateinfo, Integer userid) {
 		if (logger.isInfoEnabled()) {
-			logger.info("水质监测数据更新开始：" + waterinfo);
+			logger.info("气候监测数据更新开始：" + climateinfo);
 		}
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0);
 		try {
-			waterinfo.setModifier(String.valueOf(userid));
+			climateinfo.setModifier(String.valueOf(userid));
 			//更新
-			if(!StringUtils.isEmpty(waterinfo.getGid())) {
-				waterInfoMapper.updateWaterInfo(waterinfo);
-				LogUtil.log(LogOptTypeEnum.UPDATE, LogOptSatusEnum.SUCESS, userid, "水质监测数据更新"+waterinfo);
+			if(!StringUtils.isEmpty(climateinfo.getGid())) {
+				climateInfoMapper.updateInfo(climateinfo);
+				LogUtil.log(LogOptTypeEnum.UPDATE, LogOptSatusEnum.SUCESS, userid, "气候监测数据更新"+climateinfo);
 			}else {//新增
-				waterinfo.setCreator(String.valueOf(userid));
-				waterInfoMapper.insertWaterInfo(waterinfo);
-				LogUtil.log(LogOptTypeEnum.ADD, LogOptSatusEnum.SUCESS, userid, "新增水质监测数据"+waterinfo);
+				climateinfo.setCreator(String.valueOf(userid));
+				climateInfoMapper.insertInfo(climateinfo);
+				LogUtil.log(LogOptTypeEnum.ADD, LogOptSatusEnum.SUCESS, userid, "新增气候监测数据"+climateinfo);
 			}
 		} catch (Exception e) {
 			result.put("code", -1);
-			logger.error("保存水质监测数据异常" + e);
-			LogUtil.log(LogOptTypeEnum.SAVE, LogOptSatusEnum.FAIL, userid, "保存水质监测数据异常："+e.getMessage());
+			logger.error("保存气候监测数据异常" + e);
+			LogUtil.log(LogOptTypeEnum.SAVE, LogOptSatusEnum.FAIL, userid, "保存气候监测数据异常："+e.getMessage());
 		}
 		return result;
 	}
 	
 	public Map delInfoByGid(List<Integer> gids, Integer userid) {
 		if (logger.isInfoEnabled()) {
-			logger.info("水质监测数据删除开始：" + gids);
+			logger.info("气候监测数据删除开始：" + gids);
 		}
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0);
 		try {
-			waterInfoMapper.delInfoByGid(gids);
-			LogUtil.log(LogOptTypeEnum.DEL, LogOptSatusEnum.SUCESS, userid, "水质监测数据删除，GID="+gids);
+			climateInfoMapper.delInfoByGid(gids);
+			LogUtil.log(LogOptTypeEnum.DEL, LogOptSatusEnum.SUCESS, userid, "气候监测数据删除，GID="+gids);
 		} catch (Exception e) {
 			result.put("code", -1);
-			logger.error("删除水质监测信息异常" + e);
-			LogUtil.log(LogOptTypeEnum.DEL, LogOptSatusEnum.FAIL, userid, "水质监测数据删除异常："+e.getMessage());
+			logger.error("删除气候监测信息异常" + e);
+			LogUtil.log(LogOptTypeEnum.DEL, LogOptSatusEnum.FAIL, userid, "气候监测数据删除异常："+e.getMessage());
 		}
 		return result;
 	}
 	
 	public Map dataImport(MultipartFile file, HttpServletRequest request) {
 		if (logger.isInfoEnabled()) {
-			logger.info("导入水质监测信息-----------------开始");
+			logger.info("导入气候监测信息-----------------开始");
 		}
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 		final Map<String, Object> result = new HashMap<String, Object>();
@@ -121,7 +124,7 @@ public class WaterInfoService {
 			//获取文件名
 	        String filename=file.getOriginalFilename();
 	        if (logger.isInfoEnabled()) {
-				logger.info("导入水质监测信息，文件名：" + filename);
+				logger.info("导入气候监测信息，文件名：" + filename);
 			}
 	        
 	        // 获取文件后缀
@@ -135,9 +138,9 @@ public class WaterInfoService {
 	        	result.put("code", -1);
 	    		result.put("msg", "不支持的文件类型");
 	    		if (logger.isInfoEnabled()) {
-	 				logger.info("导入水质监测信息，不支持的文件类型");
+	 				logger.info("导入气候监测信息，不支持的文件类型");
 	 			}
-	    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(),"导入水质监测信息，不支持的文件类型");
+	    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(),"导入气候监测数据，不支持的文件类型");
 	    		return result;
 	        }
 	        
@@ -146,54 +149,54 @@ public class WaterInfoService {
 	        String county = null;
         	String quality_address = null;
         	String quality_time = null;
-	        
+	        String date_year = null;
+        	
 	        for (Row row : sheet1) {
 	        	//解析所属乡镇
 	           if (i == 1) {
+	        	   
 	        	   county = row.getCell(0).getStringCellValue();
 	        	   quality_address = row.getCell(1).getStringCellValue();
 	        	   quality_time = row.getCell(2).getStringCellValue();
 	        	   //TODO 与缓存中乡镇信息对比
 	           }
 	           if (i >= 4) {
-	        	   WaterInfo waterinfo = new WaterInfo();
-	        	   waterinfo.setQuality_address(quality_address);
-	        	   waterinfo.setCounty(county);
-	        	   waterinfo.setQuality_time(quality_time);
-	        	   waterinfo.setQuality_type(row.getCell(0).getStringCellValue());
-	        	   waterinfo.setQuality_result(row.getCell(1).getStringCellValue());
-	        	   waterinfo.setRemarks(row.getCell(2).getStringCellValue());
-	        	   waterinfo.setCreator(String.valueOf(user.getUser_id()));
-	        	   waterinfo.setModifier(String.valueOf(user.getUser_id()));
-	        	   waterinfo.setCreate_time(yyyyMMddHHmmss.format(new Date()));
-	        	   
-	        	   String gid = waterInfoMapper.queryGid(county, quality_time, row.getCell(0).getStringCellValue());
-	        	   LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, user.getUser_id(), "查询水质监测GID=" + gid);
-	        	   
+	        	   ClimateInfo climateinfo = new ClimateInfo();
+//	        	   climateinfo.setQuality_address(quality_address);
+//	        	   climateinfo.setCounty(county);
+//	        	   climateinfo.setQuality_time(quality_time);
+//	        	   climateinfo.setQuality_type(row.getCell(0).getStringCellValue());
+//	        	   climateinfo.setQuality_result(row.getCell(1).getStringCellValue());
+//	        	   climateinfo.setRemarks(row.getCell(2).getStringCellValue());
+//	        	   climateinfo.setCreator(String.valueOf(user.getUser_id()));
+//	        	   climateinfo.setModifier(String.valueOf(user.getUser_id()));
+//	        	   climateinfo.setCreate_time(yyyyMMddHHmmss.format(new Date()));
+	        	  
 	        	   try {
+	        		   String gid = climateInfoMapper.queryGid(county, date_year);
 		        	   if (StringUtils.isEmpty(gid)) {
-	        			   waterInfoMapper.insertWaterInfo(waterinfo);
+		        		   climateInfoMapper.insertInfo(climateinfo);
 		        	   } else {
-		        		   waterinfo.setGid(gid);
-		        		   waterInfoMapper.updateWaterInfo(waterinfo);
+		        		   climateinfo.setGid(gid);
+		        		   climateInfoMapper.updateInfo(climateinfo);
 		        	   }
 	        	   } catch(Exception e) {
         			   if (logger.isErrorEnabled()) {
-        					logger.error("水质监测插入数据失败", e);
+        					logger.error("气候监测插入数据失败", e);
         				}
         				result.put("code", -1);
-        	    		result.put("msg", "水质监测插入数据失败");
-        	    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(), "导入水质监测信息异常："+e.getMessage());
+        	    		result.put("msg", "气候监测插入数据失败");
+        	    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(), "导入气候监测信息异常："+e.getMessage());
         		   }
 	           }
 	           i++;
 	        }
-	        LogUtil.log(LogOptTypeEnum.ADD, LogOptSatusEnum.SUCESS, user.getUser_id(), "导入水质监测信息成功");
+	        LogUtil.log(LogOptTypeEnum.ADD, LogOptSatusEnum.SUCESS, user.getUser_id(), "导入气候监测信息成功");
 		} catch (Exception e) {
 			e.printStackTrace();
 			result.put("code", -1);
     		result.put("msg", "解析文件失败");
-    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(), "导入水质监测信息异常："+e.getMessage());
+    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(), "导入气候监测信息异常："+e.getMessage());
 		}
 		return result;
 	}

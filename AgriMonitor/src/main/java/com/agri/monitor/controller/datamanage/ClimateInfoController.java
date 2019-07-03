@@ -1,7 +1,6 @@
 package com.agri.monitor.controller.datamanage;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,28 +16,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.annotation.IgnoreSession;
-import com.agri.monitor.entity.FarmInfo;
+import com.agri.monitor.entity.ClimateInfo;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.entity.WaterInfo;
-import com.agri.monitor.enums.CacheTypeEnum;
-import com.agri.monitor.service.datamanage.WaterInfoService;
-import com.agri.monitor.utils.CacheUtil;
-import com.agri.monitor.vo.WaterQueryVO;
+import com.agri.monitor.service.datamanage.ClimateInfoService;
+import com.agri.monitor.vo.ClimateQueryVO;
 
 @Controller
-@RequestMapping("/waterinfo")
-public class WaterInfoController {
+@RequestMapping("/climateinfo")
+public class ClimateInfoController {
 	
 	@Autowired
-	private WaterInfoService waterInfoService;
+	private ClimateInfoService climateInfoService;
 	
 	/**
 	 * 水质监测页面 .
 	 * @return .
 	 */
 	@RequestMapping("")
-	public String waterMonitor() {
-		return "/datamanage/waterinfo/waterinfo";
+	public String climateInfo() {
+		return "/datamanage/climateinfo/climateinfo";
 	}
 	
 	/**
@@ -46,18 +43,18 @@ public class WaterInfoController {
 	 * @param request .
 	 * @return .
 	 */
-	@RequestMapping(value="/queryWaterInfo", method = RequestMethod.POST)
+	@RequestMapping(value="/queryInfo", method = RequestMethod.POST)
 	@ResponseBody
 	@IgnoreSession
-	public Map queryWaterInfo(WaterQueryVO queryVo, HttpServletRequest request) {
+	public Map queryInfo(ClimateQueryVO queryVo, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return waterInfoService.queryInfoByCountryAndTimeForPage(queryVo, user.getUser_id());
+		return climateInfoService.queryInfoForPage(queryVo, user.getUser_id());
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/dataImport",method=RequestMethod.POST)
 	public Map dataImport(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-		return waterInfoService.dataImport(file, request);
+		return climateInfoService.dataImport(file, request);
 	}
 	
 	@IgnoreSession
@@ -68,22 +65,22 @@ public class WaterInfoController {
 
 	@ResponseBody
 	@RequestMapping(value="/save",method=RequestMethod.POST)
-	public Map doUpdate(WaterInfo waterinfo,HttpServletRequest request) {
+	public Map doUpdate(ClimateInfo climateinfo, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return waterInfoService.saveOrUpdate(waterinfo, user.getUser_id());
+		return climateInfoService.saveOrUpdate(climateinfo, user.getUser_id());
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/delInfoByGid",method=RequestMethod.POST)
 	public Map delInfoByGid(@RequestBody ArrayList<Integer> gids, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return waterInfoService.delInfoByGid(gids, user.getUser_id());
+		return climateInfoService.delInfoByGid(gids, user.getUser_id());
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/findById",method=RequestMethod.POST)
-	public WaterInfo findById(Integer gid, HttpServletRequest request) {
+	public ClimateInfo findById(Integer gid, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return waterInfoService.findById(gid, user.getUser_id());
+		return climateInfoService.findById(gid, user.getUser_id());
 	}
 }

@@ -8,8 +8,8 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 	 */
 	function render() {
 		timeControl = laydate.render({
-			elem: '#quality_time',
-			value: new Date()
+			elem: '#date_year',
+			type: 'year'
 		}); 
 		
 		dataTable = table.render({
@@ -17,9 +17,9 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 			 elem: '#datalist',
 			 height:winH-80,
 			 toolbar: '#barDemo',
-			 url: '/waterinfo/queryWaterInfo', //数据接口
+			 url: '/climateinfo/queryInfo', //数据接口
 			 method: 'post',
-			 where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
+			 where: {"date_year":$("#date_year").val()},
 		     page: true, //开启分页
 		     limit:20,
 			 limits:[20,40,60,100],
@@ -37,14 +37,14 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		//文件上传
 		upload.render({
 		    elem: '#importBtn',
-		    url: '/waterinfo/dataImport',
+		    url: '/climateinfo/dataImport',
 		    accept: 'file',
 		    exts: 'xls|xlsx',
 		    done: function(res){
 		    	if(res){
 		    		if(res.code==0){
 		    			dataTable.reload({//表格数据重新加载
-		    				where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
+		    				where: {"date_year":$("#date_year").val()},
 		  				  	page: {curr: 1}
 		    			});
 		    			layer.msg(res.msg);
@@ -68,7 +68,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 						type: 2,
 						area: ['800px', '500px'],
 						scrollbar: true,
-						content: '/waterinfo/update'
+						content: '/climateinfo/update'
 					}, function(a){
 						alert(a);
 					});
@@ -84,7 +84,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 						type: 2,
 						area: ['800px', '500px'],
 						scrollbar: true,
-						content: '/waterinfo/update?gid='+checkStatus.data[0].gid
+						content: '/climateinfo/update?gid='+checkStatus.data[0].gid
 					});
 		        }
 		      break;
@@ -100,14 +100,14 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 			        	});
 			        	$.ajax({
 			        		type:"post",
-			        		url:"/waterinfo/delInfoByGid",
+			        		url:"/climateinfo/delInfoByGid",
 			        		contentType:"application/json",
 			        		data: JSON.stringify(gids),
 			        		dataType:"json",
 			        		success:function(res){
 			        			if(res && res.code==0){
 			        				dataTable.reload({//表格数据重新加载
-					    				where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
+					    				where: {"date_year":$("#date_year").val()},
 					  				  	page: {curr: 1}
 					    			});
 			        				layer.msg('删除成功');
@@ -128,7 +128,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		//查询数据
 		$("#queryBtn").click(function(){
 			dataTable.reload({//表格数据重新加载
-				  where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
+				  where: {"date_year":$("#date_year").val()},
 				  page: {curr: 1}
 			});
 		});
