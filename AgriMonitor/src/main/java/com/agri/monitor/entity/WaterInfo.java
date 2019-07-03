@@ -1,7 +1,5 @@
 package com.agri.monitor.entity;
 
-import java.util.Date;
-
 public class WaterInfo {
 	private String gid;
 	private String quality_address; 
