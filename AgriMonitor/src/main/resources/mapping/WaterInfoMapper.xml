@@ -2,22 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.agri.monitor.mapper.WaterInfoMapper">
 	<select id="findById" parameterType="int" resultType="com.agri.monitor.entity.WaterInfo">
-		select * from t_water_quality where gid = #{gid}
+		select gid,
+			   quality_address,
+			   county,
+			   date_format(quality_time, '%Y-%m-%d') quality_time,
+			   quality_type,
+			   quality_result,
+			   remarks
+		  from t_water_quality 
+		 where gid = #{gid}
 	</select>
 
     <select id="queryInfoByCountryAndTimeForPage" parameterType="com.agri.monitor.vo.WaterQueryVO" resultType="map">
         select gid,
 			   quality_address,
 			   county,
-			   quality_time,
+			   date_format(quality_time, '%Y-%m-%d') quality_time,
 			   quality_type,
 			   quality_result,
 			   remarks
           from t_water_quality 
-    	<if test="county != null and county != ''">
-        	where county = #{county} 
+    	<if test="quality_address != null and quality_address != ''">
+    		<bind name="quality_address" value="'%' + quality_address + '%'"/>
+        	where quality_address like #{quality_address} 
         </if>
-        <if test="county == null or county == ''">
+        <if test="quality_address == null or quality_address == ''">
         	<if test="quality_time != null and quality_time != ''">
         		where quality_time = #{quality_time}
         	</if>

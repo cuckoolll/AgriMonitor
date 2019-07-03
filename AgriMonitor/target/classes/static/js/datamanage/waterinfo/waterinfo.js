@@ -19,7 +19,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 			 toolbar: '#barDemo',
 			 url: '/waterinfo/queryWaterInfo', //数据接口
 			 method: 'post',
-			 where: {"county":$("#county").val(),"quality_time":$("#quality_time").val()},
+			 where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
 		     page: true, //开启分页
 		     limit:20,
 			 limits:[20,40,60,100],
@@ -44,7 +44,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    	if(res){
 		    		if(res.code==0){
 		    			dataTable.reload({//表格数据重新加载
-		    				where: {"county":$("#county").val(),"quality_time":$("#quality_time").val()},
+		    				where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
 		  				  	page: {curr: 1}
 		    			});
 		    			layer.msg(res.msg);
@@ -69,6 +69,8 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 						area: ['800px', '500px'],
 						scrollbar: true,
 						content: '/waterinfo/update'
+					}, function(a){
+						alert(a);
 					});
 		      break;
 		      case 'update':
@@ -126,15 +128,13 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		//查询数据
 		$("#queryBtn").click(function(){
 			dataTable.reload({//表格数据重新加载
-				  where: {"county":$("#county").val(),"quality_time":$("#quality_time").val()},
+				  where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
 				  page: {curr: 1}
 			});
 		});
 	}
 	
 	function init() {
-		$("#county").val("刚察县");
-		
 		render();
 		bindEvent();
 	}

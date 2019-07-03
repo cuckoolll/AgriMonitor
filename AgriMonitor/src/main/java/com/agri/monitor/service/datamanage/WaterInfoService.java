@@ -39,12 +39,14 @@ public class WaterInfoService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(WaterInfoService.class);
 	
+	private SimpleDateFormat yyyyMMddHHmmss = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	
 	@Autowired
 	private WaterInfoMapper waterInfoMapper;
 	 
 	public Map queryInfoByCountryAndTimeForPage(WaterQueryVO queryVo, Integer userid) {
 		if (logger.isInfoEnabled()) {
-			logger.info("获取水质监测信息，入参=county:" + queryVo.getCounty() + ", quality_time:" + queryVo.getQuality_time());
+			logger.info("获取水质监测信息，入参=quality_address:" + queryVo.getQuality_address() + ", quality_time:" + queryVo.getQuality_time());
 		}
 
 		final Map<String, Object> result = new HashMap<String, Object>();
@@ -52,11 +54,11 @@ public class WaterInfoService {
 		result.put("msg", "成功");
 		result.put("data", waterInfoMapper.queryInfoByCountryAndTimeForPage(queryVo));
 		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, 
-				"获取水质监测信息，入参=county:" + queryVo.getCounty() + ", quality_time:" + queryVo.getQuality_time());
+				"获取水质监测信息，入参=quality_address:" + queryVo.getQuality_address() + ", quality_time:" + queryVo.getQuality_time());
 		return result;
 	}
 	
-	public FarmInfo findById(Integer gid, Integer userid) {
+	public WaterInfo findById(Integer gid, Integer userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("获取水质监测信息，GID=" + gid);
 		}
@@ -74,7 +76,6 @@ public class WaterInfoService {
 			waterinfo.setModifier(String.valueOf(userid));
 			//更新
 			if(!StringUtils.isEmpty(waterinfo.getGid())) {
-				waterinfo.setLast_time(new Date());
 				waterInfoMapper.updateWaterInfo(waterinfo);
 				LogUtil.log(LogOptTypeEnum.UPDATE, LogOptSatusEnum.SUCESS, userid, "水质监测数据更新"+waterinfo);
 			}else {//新增
@@ -140,8 +141,6 @@ public class WaterInfoService {
 	    		return result;
 	        }
 	        
-	        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-	        
 	        Sheet sheet1 = wb.getSheetAt(0);
 	        int i = 0;
 	        String county = null;
@@ -160,13 +159,13 @@ public class WaterInfoService {
 	        	   WaterInfo waterinfo = new WaterInfo();
 	        	   waterinfo.setQuality_address(quality_address);
 	        	   waterinfo.setCounty(county);
-	        	   waterinfo.setQuality_time(df.parse(quality_time));
+	        	   waterinfo.setQuality_time(quality_time);
 	        	   waterinfo.setQuality_type(row.getCell(0).getStringCellValue());
 	        	   waterinfo.setQuality_result(row.getCell(1).getStringCellValue());
 	        	   waterinfo.setRemarks(row.getCell(2).getStringCellValue());
 	        	   waterinfo.setCreator(String.valueOf(user.getUser_id()));
 	        	   waterinfo.setModifier(String.valueOf(user.getUser_id()));
-	        	   waterinfo.setCreate_time(new Date());
+	        	   waterinfo.setCreate_time(yyyyMMddHHmmss.format(new Date()));
 	        	   
 	        	   String gid = waterInfoMapper.queryGid(county, quality_time, row.getCell(0).getStringCellValue());
 	        	   LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, user.getUser_id(), "查询水质监测GID=" + gid);
@@ -175,7 +174,7 @@ public class WaterInfoService {
 		        	   if (StringUtils.isEmpty(gid)) {
 	        			   waterInfoMapper.insertWaterInfo(waterinfo);
 		        	   } else {
-		        		   waterinfo.setGid(Integer.valueOf(gid));
+		        		   waterinfo.setGid(gid);
 		        		   waterInfoMapper.updateWaterInfo(waterinfo);
 		        	   }
 	        	   } catch(Exception e) {

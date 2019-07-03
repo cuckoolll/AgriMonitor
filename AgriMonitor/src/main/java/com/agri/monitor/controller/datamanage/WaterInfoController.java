@@ -82,7 +82,7 @@ public class WaterInfoController {
 	
 	@ResponseBody
 	@RequestMapping(value="/findById",method=RequestMethod.POST)
-	public FarmInfo findById(Integer gid, HttpServletRequest request) {
+	public WaterInfo findById(Integer gid, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 		return waterInfoService.findById(gid, user.getUser_id());
 	}

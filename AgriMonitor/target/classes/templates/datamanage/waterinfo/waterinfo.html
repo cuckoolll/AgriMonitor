@@ -36,9 +36,9 @@
 			<div class="queryArea">
 				<form class="layui-form" action="">
 					<div class="layui-form-item">
-						<label class="layui-form-label text-left">所属地区：</label>
+						<label class="layui-form-label text-left">采样地点：</label>
 						<div class="layui-input-inline">
-							<input id="county" type="text" class="layui-input">
+							<input id="quality_address" type="text" class="layui-input">
 						</div>
 						<label class="layui-form-label text-left">采样时间：</label>
 						<div class="layui-input-inline">
@@ -47,7 +47,7 @@
 						
 						<a id="queryBtn" class="layui-btn">检索</a>
 						<a th:if="${session.userinfo.roleinfo.role_name=='admin'}" class="layui-btn" id="importBtn">导入数据</a>
-						<a class="layui-btn" th:href="@{/excel/水质监测数据导入模板.xlsx}" style="margin-left:10px">导入模板下载</a>
+						<a class="layui-btn" th:href="@{/excel/水质监测数据导入模板.xlsx}">模板下载</a>
 					</div>
 				</form>
 			</div>

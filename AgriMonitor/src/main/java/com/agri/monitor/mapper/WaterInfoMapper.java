@@ -19,9 +19,9 @@ public interface WaterInfoMapper {
 	
 	void updateWaterInfo(WaterInfo waterinfo);
 	
-	String queryGid(final String county, final String time, final String type);
+	String queryGid(final String county, final String quality_time, final String quality_type);
 
 	void delInfoByGid(List<Integer> gids);
 
-	FarmInfo findById(Integer gid);
+	WaterInfo findById(Integer gid);
 }

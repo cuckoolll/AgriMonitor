@@ -4,7 +4,8 @@ public class WaterQueryVO extends CommonQueryVO {
 	private String county;
 	private String quality_time;
 	private String quality_type;
-	
+	private String quality_address;
+
 	public String getCounty() {
 		return county;
 	}
@@ -22,5 +23,11 @@ public class WaterQueryVO extends CommonQueryVO {
 	}
 	public void setQuality_type(String quality_type) {
 		this.quality_type = quality_type;
+	}	
+	public String getQuality_address() {
+		return quality_address;
+	}
+	public void setQuality_address(String quality_address) {
+		this.quality_address = quality_address;
 	}
 }
