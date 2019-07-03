@@ -107,7 +107,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 			        		success:function(res){
 			        			if(res && res.code==0){
 			        				dataTable.reload({//表格数据重新加载
-					    				where: {"county":$("#county").val(),"quality_time":$("#quality_time").val()},
+					    				where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
 					  				  	page: {curr: 1}
 					    			});
 			        				layer.msg('删除成功');
