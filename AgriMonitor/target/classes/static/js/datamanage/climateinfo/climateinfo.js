@@ -26,11 +26,20 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		     cols: [[ //表头
 		    	 {type: 'checkbox', fixed: 'left'},
 		    	 {field: 'gid', title: 'gid',hide: true,align:'center'},
-		    	 {field: 'quality_address', title: '采样地点'},
-		    	 {field: 'quality_time', title: '采样时间', sort: true},
-		    	 {field: 'quality_type', title: '分析项目'}, 
-		    	 {field: 'quality_result', title: '分析结果（mg/L）'},
-		    	 {field: 'remarks', title: '备注'}
+		    	 {field: 'date_year', title: '所属年份', sort: true},
+		    	 {field: 'county', title: '所属地区'},
+		    	 {field: 'year_avg_temperature', title: '年平均气温（摄氏度）'},
+		    	 {field: 'high_temperature', title: '极端最高气温（摄氏度）'}, 
+		    	 {field: 'low_temperature', title: '极端最低气温（摄氏度）'},
+		    	 {field: 'year_precipitation', title: '年降水量（毫米）'},
+		    	 {field: 'mouth_high_precipitation', title: '月最大降水量（毫米）'},
+		    	 {field: 'day_high_precipitation', title: '日最大降水量（毫米）'},
+		    	 {field: 'year_avg_winds', title: '年平均最多风向（米每秒）'},
+		    	 {field: 'high_winds', title: '极大风速（米每秒）'},
+		    	 {field: 'year_high_winds_days', title: '年大风日数（天）'},
+		    	 {field: 'year_avg_pressure', title: '年平均气压（百帕）'},
+		    	 {field: 'year_thunderstorm_days', title: '年雷暴日数（次）'},
+		    	 {field: 'year_sandstorm_days', title: '年尘暴日数（次）'}
 			 ]]
 		  });
 		

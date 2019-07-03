@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agri.monitor.mapper.ClimateInfoMapper">
+	<select id="findById" parameterType="int" resultType="com.agri.monitor.entity.ClimateInfo">
+		select gid,
+			   quality_address,
+			   county,
+			   date_format(quality_time, '%Y-%m-%d') quality_time,
+			   quality_type,
+			   quality_result,
+			   remarks
+		  from t_water_quality 
+		 where gid = #{gid}
+	</select>
+
+    <select id="queryInfoForPage" parameterType="com.agri.monitor.vo.ClimateQueryVO" resultType="map">
+        select gid,
+			   quality_address,
+			   county,
+			   date_format(quality_time, '%Y-%m-%d') quality_time,
+			   quality_type,
+			   quality_result,
+			   remarks
+          from t_water_quality 
+    	<if test="quality_address != null and quality_address != ''">
+    		<bind name="quality_address" value="'%' + quality_address + '%'"/>
+        	where quality_address like #{quality_address} 
+        </if>
+        <if test="quality_address == null or quality_address == ''">
+        	<if test="quality_time != null and quality_time != ''">
+        		where quality_time = #{quality_time}
+        	</if>
+        </if>
+        <if test="quality_time != null and quality_time != ''">
+        	and quality_time = #{quality_time}
+       	</if>
+       	 order by quality_time desc limit #{currIndex},#{limit}
+    </select>
+    
+    <select id="queryGid" parameterType="com.agri.monitor.vo.WaterQueryVO" resultType="java.lang.String">
+   		select gid
+     	  from t_water_quality
+     	 where county = #{county}
+     	   and quality_time = #{quality_time}
+     	   and quality_type = #{quality_type}
+    </select>
+    
+    <insert id="insertWaterInfo" parameterType="com.agri.monitor.entity.WaterInfo">
+    	insert into t_water_quality
+    		(quality_address,
+			 county,
+			 quality_time,
+			 quality_type,
+			 quality_result,
+			 remarks,
+			 create_time,
+			 creator,
+			 modifier)
+    	values
+		   (#{quality_address},
+			#{county},
+			#{quality_time},
+			#{quality_type},
+			#{quality_result},
+			#{remarks},
+			#{create_time},
+			#{creator},
+			#{modifier})
+    </insert>
+    
+    <update id="updateWaterInfo" parameterType="com.agri.monitor.entity.WaterInfo">
+    	update t_water_quality
+    	   set quality_result = #{quality_result},
+    	   	   remarks = #{remarks},
+    	   	   modifier = #{modifier}
+    	 where gid = #{gid}
+    </update>
+    
+    <delete id="delInfoByGid" parameterType="java.util.List">
+    	delete from t_water_quality where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+</mapper>
