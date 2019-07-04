@@ -147,34 +147,39 @@ public class ClimateInfoService {
 	        Sheet sheet1 = wb.getSheetAt(0);
 	        int i = 0;
 	        String county = null;
-        	
+        	String towns = null;
+	        
 	        for (Row row : sheet1) {
 	        	//解析所属乡镇
 	           if (i == 1) {
-	        	   county = row.getCell(0).getStringCellValue();
+	        	   county = "刚察县";
+	        	   towns = row.getCell(1).getStringCellValue();
 	        	   //TODO 与缓存中乡镇信息对比
 	           }
-	           if (i >= 4) {
+	           if (i >= 3) {
 	        	   ClimateInfo climateinfo = new ClimateInfo();
 	        	   climateinfo.setCounty(county);
+	        	   climateinfo.setTowns(towns);
 	        	   climateinfo.setDate_year(row.getCell(0).getStringCellValue());
-	        	   climateinfo.setYear_avg_temperature(row.getCell(1).getStringCellValue());
-	        	   climateinfo.setHigh_temperature(row.getCell(2).getStringCellValue());
-	        	   climateinfo.setLow_temperature(row.getCell(3).getStringCellValue());
-	        	   climateinfo.setYear_precipitation(row.getCell(4).getStringCellValue());
-	        	   climateinfo.setMouth_high_precipitation(row.getCell(5).getStringCellValue());
-	        	   climateinfo.setDay_high_precipitation(row.getCell(6).getStringCellValue());
-	        	   climateinfo.setYear_avg_winds(row.getCell(7).getStringCellValue());
-	        	   climateinfo.setHigh_winds(row.getCell(8).getStringCellValue());
-	        	   climateinfo.setYear_high_winds_days(row.getCell(9).getStringCellValue());
-	        	   climateinfo.setYear_avg_pressure(row.getCell(10).getStringCellValue());
-	        	   climateinfo.setYear_thunderstorm_days(row.getCell(11).getStringCellValue());
-	        	   climateinfo.setYear_sandstorm_days(row.getCell(12).getStringCellValue());
+	        	   climateinfo.setYear_avg_temperature(row.getCell(1).getNumericCellValue());
+	        	   climateinfo.setHigh_temperature(row.getCell(2).getNumericCellValue());
+	        	   climateinfo.setLow_temperature(row.getCell(3).getNumericCellValue());
+	        	   climateinfo.setYear_precipitation(row.getCell(4).getNumericCellValue());
+	        	   climateinfo.setMouth_high_precipitation(row.getCell(5).getNumericCellValue());
+	        	   climateinfo.setDay_high_precipitation(row.getCell(6).getNumericCellValue());
+	        	   climateinfo.setYear_avg_winds(row.getCell(7).getNumericCellValue());
+	        	   climateinfo.setHigh_winds(row.getCell(8).getNumericCellValue());
+	        	   climateinfo.setYear_high_winds_days((int) row.getCell(9).getNumericCellValue());
+	        	   climateinfo.setYear_avg_pressure(row.getCell(10).getNumericCellValue());
+	        	   climateinfo.setYear_thunderstorm_days((int)row.getCell(11).getNumericCellValue());
+	        	   climateinfo.setYear_sandstorm_days((int)row.getCell(12).getNumericCellValue());
+	        	   climateinfo.setCreator(String.valueOf(user.getUser_id()));
+	        	   climateinfo.setModifier(String.valueOf(user.getUser_id()));
 	        	   
 	        	   String date_year = climateinfo.getDate_year();
 	        	   
 	        	   try {
-	        		   String gid = climateInfoMapper.queryGid(county, date_year);
+	        		   String gid = climateInfoMapper.queryGid(county, towns, date_year);
 		        	   if (StringUtils.isEmpty(gid)) {
 		        		   climateInfoMapper.insertInfo(climateinfo);
 		        	   } else {

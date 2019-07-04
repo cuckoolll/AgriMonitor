@@ -144,31 +144,33 @@ public class WaterInfoService {
 	        Sheet sheet1 = wb.getSheetAt(0);
 	        int i = 0;
 	        String county = null;
-        	String quality_address = null;
-        	String quality_time = null;
+	        String towns = null;
 	        
 	        for (Row row : sheet1) {
 	        	//解析所属乡镇
 	           if (i == 1) {
-	        	   county = row.getCell(0).getStringCellValue();
-	        	   quality_address = row.getCell(1).getStringCellValue();
-	        	   quality_time = row.getCell(2).getStringCellValue();
+	        	   county = "刚察县";
+	        	   towns = row.getCell(1).getStringCellValue();
 	        	   //TODO 与缓存中乡镇信息对比
 	           }
-	           if (i >= 4) {
+	           if (i >= 3) {
+	        	   String quality_address = row.getCell(0).getStringCellValue();
+	        	   String quality_time = row.getCell(1).getStringCellValue();
+	        	   String quality_type = row.getCell(2).getStringCellValue();
+	        	   
 	        	   WaterInfo waterinfo = new WaterInfo();
-	        	   waterinfo.setQuality_address(quality_address);
 	        	   waterinfo.setCounty(county);
+	        	   waterinfo.setTowns(towns);
+	        	   waterinfo.setQuality_address(quality_address);
 	        	   waterinfo.setQuality_time(quality_time);
-	        	   waterinfo.setQuality_type(row.getCell(0).getStringCellValue());
-	        	   waterinfo.setQuality_result(row.getCell(1).getStringCellValue());
-	        	   waterinfo.setRemarks(row.getCell(2).getStringCellValue());
+	        	   waterinfo.setQuality_type(quality_type);
+	        	   waterinfo.setQuality_result(row.getCell(3).getStringCellValue());
+	        	   waterinfo.setRemarks(row.getCell(4).getStringCellValue());
 	        	   waterinfo.setCreator(String.valueOf(user.getUser_id()));
 	        	   waterinfo.setModifier(String.valueOf(user.getUser_id()));
-	        	   waterinfo.setCreate_time(yyyyMMddHHmmss.format(new Date()));
 	        	   
-	        	   String gid = waterInfoMapper.queryGid(county, quality_time, row.getCell(0).getStringCellValue());
-	        	   LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, user.getUser_id(), "查询水质监测GID=" + gid);
+	        	   String gid = waterInfoMapper.queryGid(quality_address, quality_time, quality_type);
+	        	   LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, user.getUser_id(), "查询水质监测，返回GID=" + gid);
 	        	   
 	        	   try {
 		        	   if (StringUtils.isEmpty(gid)) {

@@ -40,7 +40,7 @@
     <select id="queryGid" parameterType="com.agri.monitor.vo.WaterQueryVO" resultType="java.lang.String">
    		select gid
      	  from t_water_quality
-     	 where county = #{county}
+     	 where quality_address = #{quality_address}
      	   and quality_time = #{quality_time}
      	   and quality_type = #{quality_type}
     </select>
@@ -53,7 +53,6 @@
 			 quality_type,
 			 quality_result,
 			 remarks,
-			 create_time,
 			 creator,
 			 modifier)
     	values
@@ -63,7 +62,6 @@
 			#{quality_type},
 			#{quality_result},
 			#{remarks},
-			#{create_time},
 			#{creator},
 			#{modifier})
     </insert>

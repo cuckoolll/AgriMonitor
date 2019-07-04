@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.agri.monitor.annotation.IgnoreSession;
 import com.agri.monitor.entity.ClimateInfo;
 import com.agri.monitor.entity.UserInfo;
-import com.agri.monitor.entity.WaterInfo;
 import com.agri.monitor.service.datamanage.ClimateInfoService;
 import com.agri.monitor.vo.ClimateQueryVO;
 
@@ -60,7 +59,7 @@ public class ClimateInfoController {
 	@IgnoreSession
 	@RequestMapping("/update")
 	public String add(Model model) {
-		return "/datamanage/waterinfo/waterupdate";
+		return "/datamanage/climateinfo/climateupdate";
 	}
 
 	@ResponseBody

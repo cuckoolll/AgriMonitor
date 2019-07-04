@@ -26,20 +26,21 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		     cols: [[ //表头
 		    	 {type: 'checkbox', fixed: 'left'},
 		    	 {field: 'gid', title: 'gid',hide: true,align:'center'},
-		    	 {field: 'date_year', title: '所属年份', sort: true},
-		    	 {field: 'county', title: '所属地区'},
-		    	 {field: 'year_avg_temperature', title: '年平均气温（摄氏度）'},
-		    	 {field: 'high_temperature', title: '极端最高气温（摄氏度）'}, 
-		    	 {field: 'low_temperature', title: '极端最低气温（摄氏度）'},
-		    	 {field: 'year_precipitation', title: '年降水量（毫米）'},
-		    	 {field: 'mouth_high_precipitation', title: '月最大降水量（毫米）'},
-		    	 {field: 'day_high_precipitation', title: '日最大降水量（毫米）'},
-		    	 {field: 'year_avg_winds', title: '年平均最多风向（米每秒）'},
-		    	 {field: 'high_winds', title: '极大风速（米每秒）'},
-		    	 {field: 'year_high_winds_days', title: '年大风日数（天）'},
-		    	 {field: 'year_avg_pressure', title: '年平均气压（百帕）'},
-		    	 {field: 'year_thunderstorm_days', title: '年雷暴日数（次）'},
-		    	 {field: 'year_sandstorm_days', title: '年尘暴日数（次）'}
+		    	 {field: 'date_year', title: '所属年份', sort: true, width:100},
+		    	 {field: 'county', title: '所属地区', width:100},
+		    	 {field: 'towns', title: '所属乡镇', width:100},
+		    	 {field: 'year_avg_temperature', title: '年平均气温（摄氏度）', width:180},
+		    	 {field: 'high_temperature', title: '极端最高气温（摄氏度）', width:200}, 
+		    	 {field: 'low_temperature', title: '极端最低气温（摄氏度）', width:200},
+		    	 {field: 'year_precipitation', title: '年降水量（毫米）', width:180},
+		    	 {field: 'mouth_high_precipitation', title: '月最大降水量（毫米）', width:180},
+		    	 {field: 'day_high_precipitation', title: '日最大降水量（毫米）', width:180},
+		    	 {field: 'year_avg_winds', title: '年平均最多风向（米每秒）', width:200},
+		    	 {field: 'high_winds', title: '极大风速（米每秒）', width:180},
+		    	 {field: 'year_high_winds_days', title: '年大风日数（天）', width:180},
+		    	 {field: 'year_avg_pressure', title: '年平均气压（百帕）', width:150},
+		    	 {field: 'year_thunderstorm_days', title: '年雷暴日数（次）', width:150},
+		    	 {field: 'year_sandstorm_days', title: '年尘暴日数（次）', width:150}
 			 ]]
 		  });
 		
@@ -73,9 +74,9 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    switch(obj.event){
 		      case 'add':
 		    	  layer.open({
-              		    title: "新增水质监测采样信息",
+              		    title: "新增气候监测采样信息",
 						type: 2,
-						area: ['800px', '500px'],
+						area: ['900px', '520px'],
 						scrollbar: true,
 						content: '/climateinfo/update'
 					}, function(a){
@@ -89,9 +90,9 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		        	layer.msg('只能同时编辑一个');
 		        } else {
 		        	layer.open({
-              		    title: "修改水质监测采样信息",
+              		    title: "修改气候监测采样信息",
 						type: 2,
-						area: ['800px', '500px'],
+						area: ['900px', '520px'],
 						scrollbar: true,
 						content: '/climateinfo/update?gid='+checkStatus.data[0].gid
 					});

@@ -4,6 +4,8 @@ public class WaterInfo {
 	private String gid;
 	private String quality_address; 
 	private String county;
+	private String towns;
+	private String village;
 	private String quality_time;
 	private String quality_type;
 	private String quality_result;
@@ -30,6 +32,18 @@ public class WaterInfo {
 	}
 	public void setCounty(String county) {
 		this.county = county;
+	}
+	public String getTowns() {
+		return towns;
+	}
+	public void setTowns(String towns) {
+		this.towns = towns;
+	}
+	public String getVillage() {
+		return village;
+	}
+	public void setVillage(String village) {
+		this.village = village;
 	}
 	public String getQuality_time() {
 		return quality_time;

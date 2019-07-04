@@ -2,82 +2,116 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.agri.monitor.mapper.ClimateInfoMapper">
 	<select id="findById" parameterType="int" resultType="com.agri.monitor.entity.ClimateInfo">
-		select gid,
-			   quality_address,
+		select gid, 
+			   date_year, 
 			   county,
-			   date_format(quality_time, '%Y-%m-%d') quality_time,
-			   quality_type,
-			   quality_result,
-			   remarks
-		  from t_water_quality 
+			   year_avg_temperature,
+			   high_temperature,
+			   low_temperature,
+			   year_precipitation, 
+			   mouth_high_precipitation,
+			   day_high_precipitation, 
+			   year_avg_winds, 
+			   high_winds,
+			   year_high_winds_days, 
+			   year_avg_pressure,
+			   year_thunderstorm_days, 
+			   year_sandstorm_days
+		  from t_climate_quality 
 		 where gid = #{gid}
 	</select>
 
     <select id="queryInfoForPage" parameterType="com.agri.monitor.vo.ClimateQueryVO" resultType="map">
         select gid,
-			   quality_address,
+			   date_year, 
 			   county,
-			   date_format(quality_time, '%Y-%m-%d') quality_time,
-			   quality_type,
-			   quality_result,
-			   remarks
-          from t_water_quality 
-    	<if test="quality_address != null and quality_address != ''">
-    		<bind name="quality_address" value="'%' + quality_address + '%'"/>
-        	where quality_address like #{quality_address} 
-        </if>
-        <if test="quality_address == null or quality_address == ''">
-        	<if test="quality_time != null and quality_time != ''">
-        		where quality_time = #{quality_time}
-        	</if>
-        </if>
-        <if test="quality_time != null and quality_time != ''">
-        	and quality_time = #{quality_time}
+			   towns,
+			   year_avg_temperature,
+			   high_temperature,
+			   low_temperature,
+			   year_precipitation, 
+			   mouth_high_precipitation,
+			   day_high_precipitation, 
+			   year_avg_winds, 
+			   high_winds,
+			   year_high_winds_days, 
+			   year_avg_pressure,
+			   year_thunderstorm_days, 
+			   year_sandstorm_days
+          from t_climate_quality 
+       	<if test="date_year != null and date_year != ''">
+			where date_year = #{date_year}
        	</if>
-       	 order by quality_time desc limit #{currIndex},#{limit}
+       	 order by date_year desc limit #{currIndex},#{limit}
     </select>
     
-    <select id="queryGid" parameterType="com.agri.monitor.vo.WaterQueryVO" resultType="java.lang.String">
+    <select id="queryGid" parameterType="com.agri.monitor.vo.ClimateQueryVO" resultType="java.lang.String">
    		select gid
-     	  from t_water_quality
+     	  from t_climate_quality
      	 where county = #{county}
-     	   and quality_time = #{quality_time}
-     	   and quality_type = #{quality_type}
+     	   and towns = #{towns}
+     	   and date_year = #{date_year}
     </select>
     
-    <insert id="insertWaterInfo" parameterType="com.agri.monitor.entity.WaterInfo">
-    	insert into t_water_quality
-    		(quality_address,
+    <insert id="insertInfo" parameterType="com.agri.monitor.entity.ClimateInfo">
+    	insert into t_climate_quality
+    		(date_year, 
 			 county,
-			 quality_time,
-			 quality_type,
-			 quality_result,
-			 remarks,
-			 create_time,
+			 towns,
+			 year_avg_temperature,
+		  	 high_temperature,
+		   	 low_temperature,
+		   	 year_precipitation, 
+		 	 mouth_high_precipitation,
+			 day_high_precipitation, 
+			 year_avg_winds, 
+			 high_winds,
+			 year_high_winds_days, 
+			 year_avg_pressure,
+			 year_thunderstorm_days, 
+			 year_sandstorm_days,
 			 creator,
 			 modifier)
     	values
-		   (#{quality_address},
+		   (#{date_year}, 
 			#{county},
-			#{quality_time},
-			#{quality_type},
-			#{quality_result},
-			#{remarks},
-			#{create_time},
+			#{towns},
+			#{year_avg_temperature},
+			#{high_temperature},
+			#{low_temperature},
+			#{year_precipitation}, 
+			#{mouth_high_precipitation},
+			#{day_high_precipitation}, 
+			#{year_avg_winds}, 
+			#{high_winds},
+			#{year_high_winds_days}, 
+			#{year_avg_pressure},
+			#{year_thunderstorm_days}, 
+			#{year_sandstorm_days},
 			#{creator},
 			#{modifier})
     </insert>
     
-    <update id="updateWaterInfo" parameterType="com.agri.monitor.entity.WaterInfo">
-    	update t_water_quality
-    	   set quality_result = #{quality_result},
-    	   	   remarks = #{remarks},
+    <update id="updateInfo" parameterType="com.agri.monitor.entity.ClimateInfo">
+    	update t_climate_quality
+    	   set year_avg_temperature = #{year_avg_temperature},
+			   high_temperature = #{high_temperature},
+			   low_temperature = #{low_temperature},
+			   year_precipitation = #{year_precipitation}, 
+			   mouth_high_precipitation = #{mouth_high_precipitation},
+			   day_high_precipitation = #{day_high_precipitation}, 
+			   year_avg_winds = #{year_avg_winds}, 
+			   high_winds = #{high_winds},
+			   year_high_winds_days = #{year_high_winds_days}, 
+			   year_avg_pressure = #{year_avg_pressure},
+			   year_thunderstorm_days = #{year_thunderstorm_days}, 
+			   year_sandstorm_days = #{year_sandstorm_days},
     	   	   modifier = #{modifier}
     	 where gid = #{gid}
     </update>
     
     <delete id="delInfoByGid" parameterType="java.util.List">
-    	delete from t_water_quality where gid in
+    	delete from t_climate_quality where gid in
     	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
     		#{item}
     	</foreach>

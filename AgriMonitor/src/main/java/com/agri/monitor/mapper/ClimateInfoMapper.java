@@ -11,15 +11,15 @@ import com.agri.monitor.vo.ClimateQueryVO;
 @Repository
 public interface ClimateInfoMapper {
 	
-	List<WaterInfo> findAll();
+	List<ClimateInfo> findAll();
 	
-	List<WaterInfo> queryInfoForPage(final ClimateQueryVO queryVo);
+	List<ClimateInfo> queryInfoForPage(final ClimateQueryVO queryVo);
 	
 	void insertInfo(ClimateInfo climateinfo);
 	
 	void updateInfo(ClimateInfo climateinfo);
 	
-	String queryGid(final String county, final String date_year);
+	String queryGid(final String county, final String towns, final String date_year);
 
 	void delInfoByGid(List<Integer> gids);
 
