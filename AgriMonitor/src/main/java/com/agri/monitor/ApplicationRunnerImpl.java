@@ -8,8 +8,10 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import com.agri.monitor.enums.CacheTypeEnum;
+import com.agri.monitor.mapper.AnimalsTargetMapper;
 import com.agri.monitor.mapper.AnimalsTypeMapper;
 import com.agri.monitor.utils.CacheUtil;
+import com.agri.monitor.vo.AnimalsTargetQueryVO;
 import com.agri.monitor.vo.AnimalsTypeQueryVO;
 
 @Component
@@ -19,6 +21,9 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 	
 	@Autowired
 	private AnimalsTypeMapper animalsTypeMapper;
+	
+	@Autowired
+	private AnimalsTargetMapper animalsTargetMapper;
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
@@ -30,6 +35,11 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 		queryVO.setPage(1);
 		queryVO.setLimit(Integer.MAX_VALUE);
 		CacheUtil.putCache(CacheTypeEnum.ANIMALSTYPE, animalsTypeMapper.findAllForPage(queryVO));
+		//缓存畜牧业指标
+		AnimalsTargetQueryVO queryVO1 = new AnimalsTargetQueryVO();
+		queryVO.setPage(1);
+		queryVO.setLimit(Integer.MAX_VALUE);
+		CacheUtil.putCache(CacheTypeEnum.ANIMALSTARGET, animalsTargetMapper.findAllForPage(queryVO1));
 		//TODO 其他缓存数据，先定义枚举类型
 	}
 

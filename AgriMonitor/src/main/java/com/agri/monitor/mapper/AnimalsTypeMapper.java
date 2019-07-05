@@ -16,8 +16,6 @@ public interface AnimalsTypeMapper {
 	
 	int findAllCount(AnimalsTypeQueryVO queryVO);
 	
-	void batchInsert(List<AnimalsType> list);
-	
 	void insert(AnimalsType animalstype);
 	
 	void update(AnimalsType animalstype);

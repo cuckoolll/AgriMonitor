@@ -149,15 +149,20 @@ public class FarmInfoService {
 	        	   farminfo.setFarm_address(row.getCell(1).getStringCellValue());
 	        	   farminfo.setLegal_person(row.getCell(2).getStringCellValue());
 	        	   farminfo.setPhone_num(row.getCell(3).getStringCellValue());
-	        	   Integer type = getAnimalsType(row.getCell(4).getStringCellValue());
+	        	   String name=row.getCell(4).getStringCellValue();
+	        	   if(StringUtils.isEmpty(name)) {
+	        		   result.put("code", -1);
+	        		   result.put("msg", "第"+(i+1)+"行认定畜种未填写");
+	        		   return result;
+	        	   }
+	        	   name=name.trim();
+	        	   Integer type = getAnimalsType(name);
 	        	   if(null == type) {
 	        		   result.put("code", -1);
 	        		   result.put("msg", "第"+(i+1)+"行认定畜种在系统中未维护");
-	        		   LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(),
-	        				   "第"+(i+1)+"行认定畜种在系统中未维护："+row.getCell(4).getStringCellValue());
 	        		   return result;
 	        	   }
-	        	   farminfo.setAnimals_type(1);
+	        	   farminfo.setAnimals_type(type);
 	        	   farminfo.setAnimals_size(Integer.valueOf(row.getCell(5).getStringCellValue()));
 	        	   farminfo.setRemarks(row.getCell(6).getStringCellValue());
 	        	   farminfo.setCreator(user.getUser_id());
@@ -169,14 +174,14 @@ public class FarmInfoService {
 	           i++;
 	        }
 	        farmInfoMapper.batchInsert(list);
-	        LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.SUCESS, user.getUser_id(), "导入查询养殖场信息，共导入"+list.size()+"条");
+	        LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.SUCESS, user.getUser_id(), "导入养殖场信息，共导入"+list.size()+"条");
 		} catch (Exception e) {
 			if (logger.isErrorEnabled()) {
 				logger.error("养殖场数据导入，解析文件异常", e);
 			}
 			result.put("code", -1);
     		result.put("msg", "解析文件失败");
-    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(), "导入查询养殖场信息异常："+e.getMessage());
+    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(), "导入养殖场信息异常："+e.getMessage());
 		}
 		return result;
 	}

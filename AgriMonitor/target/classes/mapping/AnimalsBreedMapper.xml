@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agri.monitor.mapper.AnimalsBreedMapper">
+	<select id="findById" parameterType="int" resultType="com.agri.monitor.entity.AnimalsBreed">
+		select * from t_animals_breed where gid=#{gid}
+	</select>
+    <select id="findAllForPage" parameterType="com.agri.monitor.vo.AnimalsBreedQueryVO" resultType="map">
+        select a.gid,date_month,county,towns,village,animals_target,b.target_name,surplus_size,female_size,
+        child_size,survival_size,death_size,maturity_size,sell_size,meat_output,milk_output,
+        egg_output,hair_output,a.create_time,a.creator,a.modifier,a.last_time 
+        from t_animals_breed a,t_animals_target b where a.animals_target=b.gid
+        <if test="date_month != null">
+	        and a.date_month=#{date_month}
+	    </if>
+	    order by a.gid desc limit #{currIndex},#{limit}
+    </select>
+    <select id="findAllCount" parameterType="com.agri.monitor.vo.AnimalsBreedQueryVO" resultType="int">
+        select count(a.gid) from t_animals_breed a,t_animals_target b where a.animals_target=b.gid
+        <if test="date_month != null">
+	        and a.date_month=#{date_month}
+	    </if>
+    </select>
+    <insert id="batchInsert" parameterType="java.util.List">
+    	insert into t_animals_breed(date_month,county,towns,village,animals_target,
+    	surplus_size,female_size,child_size,survival_size,death_size,maturity_size,sell_size,
+    	meat_output,milk_output,egg_output,hair_output,creator,modifier)
+    	values
+    	<foreach collection="list" item="item" index="index" separator=",">
+		   (#{item.date_month},#{item.county},#{item.towns},#{item.village},#{item.animals_target},
+    	#{item.surplus_size},#{item.female_size},#{item.child_size},#{item.survival_size},
+    	#{item.death_size},#{item.maturity_size},#{item.sell_size},#{item.meat_output},
+    	#{item.milk_output},#{item.egg_output},#{item.hair_output},#{item.creator},#{item.modifier})
+		</foreach>
+    </insert>
+    
+    <insert id="insert" parameterType="com.agri.monitor.entity.AnimalsBreed">
+    	insert into t_animals_breed(date_month,county,towns,village,animals_target,
+    	surplus_size,female_size,child_size,survival_size,death_size,maturity_size,sell_size,
+    	meat_output,milk_output,egg_output,hair_output,creator,modifier)
+    	values
+	   (#{date_month},#{county},#{towns},#{village},#{animals_target},
+    	#{surplus_size},#{female_size},#{child_size},#{survival_size},
+    	#{death_size},#{maturity_size},#{sell_size},#{meat_output},
+    	#{milk_output},#{egg_output},#{hair_output},#{creator},#{modifier})
+    </insert>
+    
+    <update id="update" parameterType="com.agri.monitor.entity.AnimalsBreed">
+    	update t_animals_breed set date_month=#{date_month},county=#{county},towns=#{towns},
+    	village=#{village},animals_target=#{animals_target},surplus_size=#{surplus_siz}e,
+    	female_size=#{female_size},child_size=#{child_size},survival_size=#{survival_size},
+    	death_size=#{death_size},maturity_size=#{maturity_size},sell_size=#{sell_size},
+    	meat_output=#{meat_output},milk_output=#{milk_output},egg_output=#{egg_output},
+    	hair_output=#{hair_output},modifier=#{modifier},last_time=#{last_time} where gid=#{gid}
+    </update>
+    
+    <delete id="delete" parameterType="java.util.List">
+    	delete from t_animals_breed where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+    
+    <select id="findByAnimalsTarget" parameterType="java.util.List" resultType="int">
+    	select count(gid) from t_animals_breed where animals_target in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </select>
+</mapper>

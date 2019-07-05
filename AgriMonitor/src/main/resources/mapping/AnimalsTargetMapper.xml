@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agri.monitor.mapper.AnimalsTargetMapper">
+    <select id="findById" parameterType="int" resultType="com.agri.monitor.entity.AnimalsTarget">
+		select * from t_animals_target where gid=#{gid}
+	</select>
+    <select id="findAllForPage" parameterType="com.agri.monitor.vo.AnimalsTargetQueryVO" resultType="map">
+        select a.gid,a.target_name,a.parent_id,a.create_time,a.creator,a.last_time,a.modifier,a.stopflag,b.user_showname from t_animals_target a, t_user_info b 
+        where a.creator=b.user_id
+        <if test="stopflag != null">
+	        and a.stopflag=#{stopflag}
+	    </if>
+	    order by a.gid desc<!--  limit #{currIndex},#{limit} -->
+    </select>
+    <select id="findAllCount" parameterType="com.agri.monitor.vo.AnimalsTargetQueryVO" resultType="int">
+        select count(a.gid) from t_animals_target a, t_user_info b where a.creator=b.user_id
+         <if test="stopflag != null">
+	        and a.stopflag=#{stopflag}
+	    </if>
+    </select>
+    
+    <insert id="insert" parameterType="com.agri.monitor.entity.AnimalsTarget">
+    	insert into t_animals_target(target_name,parent_id,stopflag,modifier,creator)
+    	values
+	   (#{target_name},#{parent_id},#{stopflag},#{modifier},#{creator})
+    </insert>
+    
+    <update id="update" parameterType="com.agri.monitor.entity.AnimalsTarget">
+    	update t_animals_target set target_name=#{target_name},stopflag=#{stopflag},modifier=#{modifier},last_time=#{last_time} where gid=#{gid}
+    </update>
+    
+    <update id="animalsTargetQy" parameterType="java.util.List">
+    	update t_animals_target set stopflag=1 where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </update>
+    
+    <update id="animalsTargetTy" parameterType="java.util.List">
+    	update t_animals_target set stopflag=0 where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </update>
+    
+    <delete id="delete" parameterType="java.util.List">
+    	delete from t_animals_target where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+</mapper>

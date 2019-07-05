@@ -9,5 +9,10 @@ public enum CacheTypeEnum {
 	/**
 	 * 认定畜种类型
 	 */
-	ANIMALSTYPE
+	ANIMALSTYPE,
+	
+	/**
+	 * 畜牧业指标
+	 */
+	ANIMALSTARGET
 }

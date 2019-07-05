@@ -17,135 +17,134 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.annotation.IgnoreSession;
-import com.agri.monitor.entity.AnimalsType;
-import com.agri.monitor.entity.FarmInfo;
+import com.agri.monitor.entity.AnimalsBreed;
+import com.agri.monitor.entity.AnimalsTarget;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.enums.CacheTypeEnum;
-import com.agri.monitor.service.datamanage.AnimalsTypeService;
-import com.agri.monitor.service.datamanage.FarmInfoService;
+import com.agri.monitor.service.datamanage.AnimalsBreedService;
+import com.agri.monitor.service.datamanage.AnimalsTargetService;
 import com.agri.monitor.utils.CacheUtil;
-import com.agri.monitor.vo.AnimalsTypeQueryVO;
-import com.agri.monitor.vo.FarmQueryVO;
+import com.agri.monitor.vo.AnimalsBreedQueryVO;
+import com.agri.monitor.vo.AnimalsTargetQueryVO;
 
 @Controller
-@RequestMapping("/farminfo")
-public class FarminfoController {
+@RequestMapping("/animalsBreed")
+public class AnimalsBreedController {
 	
 	@Autowired
-	private FarmInfoService farmInfoService;
+	private AnimalsBreedService animalsBreedService;
 	
 	@Autowired
-	private AnimalsTypeService animalsTypeService;
+	private AnimalsTargetService animalsTargetService;
 	
 	@RequestMapping("")
 	public String toPage(Model model) {
-		model.addAttribute("animalstype", CacheUtil.getCache(CacheTypeEnum.ANIMALSTYPE));
-		return "/datamanage/farminfo/datalist";
+		model.addAttribute("animalsTarget", CacheUtil.getCache(CacheTypeEnum.ANIMALSTARGET));
+		return "/datamanage/animalsBreed/datalist";
 	}
 	
 	@IgnoreSession
 	@RequestMapping("update")
 	public String add(Model model) {
 		model.addAttribute("animalstype", CacheUtil.getCache(CacheTypeEnum.ANIMALSTYPE));
-		return "/datamanage/farminfo/update";
+		return "/datamanage/animalsBreed/update";
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/doDel",method=RequestMethod.POST)
 	public Map doDel(@RequestBody ArrayList<Integer> gids, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return farmInfoService.doDel(gids, user.getUser_id());
+		return animalsBreedService.doDel(gids, user.getUser_id());
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/doSave",method=RequestMethod.POST)
-	public Map doUpdate(FarmInfo farminfo,HttpServletRequest request) {
+	public Map doUpdate(AnimalsBreed animalsBreed,HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return farmInfoService.saveOrUpdate(farminfo,user.getUser_id());
+		return animalsBreedService.saveOrUpdate(animalsBreed,user.getUser_id());
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/findById",method=RequestMethod.POST)
-	public FarmInfo findById(Integer gid, HttpServletRequest request) {
+	public AnimalsBreed findById(Integer gid, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return farmInfoService.findById(gid, user.getUser_id());
+		return animalsBreedService.findById(gid, user.getUser_id());
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/datalist",method=RequestMethod.POST)
-	public Map datalist(FarmQueryVO farmQueryVO, HttpServletRequest request) {
+	public Map datalist(AnimalsBreedQueryVO queryVO, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0);
 		result.put("msg", "成功");
-		result.put("data", farmInfoService.findAllForPage(farmQueryVO, user.getUser_id()));
-		result.put("count", farmInfoService.findAllCount(farmQueryVO));
+		result.put("data", animalsBreedService.findAllForPage(queryVO, user.getUser_id()));
+		result.put("count", animalsBreedService.findAllCount(queryVO));
 		return result;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/dataImport",method=RequestMethod.POST)
 	public Map dataImport(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-		return farmInfoService.dataImport(file, request);
+		return animalsBreedService.dataImport(file, request);
 	}
 	
 	/******************认定畜种维护*****************/
-	@RequestMapping("/animalstype")
+	@RequestMapping("/animalsTarget")
 	public String toAnimalsTypePage(Model model) {
-		return "/datamanage/farminfo/animalstype/datalist";
+		return "/datamanage/animalsBreed/animalsTarget/datalist";
 	}
 	
 	@IgnoreSession
-	@RequestMapping("/animalstype/update")
+	@RequestMapping("/animalsTarget/update")
 	public String addAnimalsType(Model model) {
-		return "/datamanage/farminfo/animalstype/update";
+		return "/datamanage/animalsBreed/animalsTarget/update";
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/animalstype/doDel",method=RequestMethod.POST)
+	@RequestMapping(value="/animalsTarget/doDel",method=RequestMethod.POST)
 	public Map delAnimalsType(@RequestBody ArrayList<Integer> gids, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return animalsTypeService.doDel(gids, user.getUser_id());
+		return animalsTargetService.doDel(gids, user.getUser_id());
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/animalstype/doSave",method=RequestMethod.POST)
-	public Map updateAnimalsType(AnimalsType animalsType,HttpServletRequest request) {
+	@RequestMapping(value="/animalsTarget/doSave",method=RequestMethod.POST)
+	public Map updateAnimalsType(AnimalsTarget animalsTarget,HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return animalsTypeService.saveOrUpdate(animalsType,user.getUser_id());
+		return animalsTargetService.saveOrUpdate(animalsTarget,user.getUser_id());
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/animalstype/findById",method=RequestMethod.POST)
-	public AnimalsType findAnimalsTypeById(Integer gid, HttpServletRequest request) {
+	@RequestMapping(value="/animalsTarget/findById",method=RequestMethod.POST)
+	public AnimalsTarget findAnimalsTargetById(Integer gid, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return animalsTypeService.findById(gid, user.getUser_id());
+		return animalsTargetService.findById(gid, user.getUser_id());
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/animalstype/datalist",method=RequestMethod.POST)
-	public Map animalsTypeList(AnimalsTypeQueryVO queryVO, HttpServletRequest request) {
+	@RequestMapping(value="/animalsTarget/datalist")
+	public Map animalsTypeList(AnimalsTargetQueryVO queryVO, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0);
 		result.put("msg", "成功");
-		result.put("data", animalsTypeService.findAllForPage(queryVO, user.getUser_id()));
-		result.put("count", animalsTypeService.findAllCount(queryVO));
+		result.put("data", animalsTargetService.findAllForPage(queryVO, user.getUser_id()));
 		return result;
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/animalstype/qy",method=RequestMethod.POST)
+	@RequestMapping(value="/animalsTarget/qy",method=RequestMethod.POST)
 	public Map animalstypeQy(@RequestBody ArrayList<Integer> gids,HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return animalsTypeService.animalstypeQy(gids,user.getUser_id());
+		return animalsTargetService.animalsTargetQy(gids,user.getUser_id());
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/animalstype/ty",method=RequestMethod.POST)
+	@RequestMapping(value="/animalsTarget/ty",method=RequestMethod.POST)
 	public Map animalstypeTy(@RequestBody ArrayList<Integer> gids,HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return animalsTypeService.animalstypeTy(gids,user.getUser_id());
+		return animalsTargetService.animalsTargetTy(gids,user.getUser_id());
 	}
 	
 }

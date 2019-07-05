@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<!-- Google Chrome Frame也可以让IE用上Chrome的引擎: -->
+		<meta name="renderer" content="webkit">
+		<!--国产浏览器高速模式-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>养殖场基本信息</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
+	    <!--[if lt IE 9]>
+	      	<script src="framework/html5shiv.min.js"></script>
+	      	<script src="framework/respond.min.js"></script>
+	    <![endif]-->
+		<script type="text/javascript" th:src="@{/temp/framework/jquery-1.11.3.min.js}" ></script>
+		<script type="text/javascript" th:src="@{/temp/layui/layui.js}"></script>
+		<!-- 公共样式 结束 -->
+	</head>
+
+	<body>
+		<div class="cBody" style="height: 450px">
+			<form id="addForm" class="layui-form">
+				<input type="hidden" name="gid"/>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">所属区域：</label>
+	                <div class="layui-input-inline">
+	                    <input type="text" name="county" readonly="readonly" class="layui-input" value="刚察县">
+	                </div>
+	                <div class="layui-input-inline">
+	                    <select name="towns" required lay-verify="required">
+	                        <option value="">请选择乡镇</option>
+					        <option value="沙柳河镇">沙柳河镇</option>
+					        <option value="沙柳河镇2">沙柳河镇2</option>
+	                    </select>
+	                </div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 140px">养殖场名称：</label>
+					<div class="layui-input-block">
+						<input type="text" name="farm_name" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 560px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">地址：</label>
+					<div class="layui-input-block">
+						<input type="text" name="farm_address" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 560px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">法人：</label>
+					<div class="layui-input-block">
+						<input type="text" name="legal_person" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 560px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">联系电话：</label>
+					<div class="layui-input-block">
+						<input type="text" name="phone_num" autocomplete="off" class="layui-input" style="width: 560px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">认定畜种：</label>
+					<div class="layui-input-inline">
+						<select name="animals_type" required lay-verify="required">
+							<option value=""></option>
+					    	<option th:each="type:${animalstype}" th:value="${type.gid}" th:text="${type.type_name}"></option>
+					   </select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">牲畜存栏（头、只）：</label>
+					<div class="layui-input-block">
+						<input type="text" name="animals_size" required lay-verify="required|number" autocomplete="off" class="layui-input" style="width: 560px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">备注：</label>
+					<div class="layui-input-block">
+						<textarea name="remarks" class="layui-textarea" style="width: 560px"></textarea>
+					</div>
+				</div>
+				
+				<div style="" class="layui-form-item">
+					<div class="layui-input-block" style="text-align: center">
+						<button id="saveBtn" class="layui-btn" lay-submit lay-filter="submitBut">保存</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<script th:src="@{/js/datamanage/farminfo/update.js}"></script>
+	</body>
+
+</html>
