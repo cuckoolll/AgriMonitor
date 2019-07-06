@@ -3,9 +3,7 @@ package com.agri.monitor.entity;
 import java.util.Date;
 
 public class UserInfo {
-	private Integer user_id;
-	
-	private String user_name;
+	private String user_id;
 	
 	private String user_showname;
 	
@@ -15,28 +13,20 @@ public class UserInfo {
 	
 	private Date create_time;
 	
-	private Integer creator;
+	private String creator;
 	
-	private Integer modifier;
+	private String modifier;
 	
 	private Date last_time;
 	
 	private RoleInfo roleinfo;
 
-	public Integer getUser_id() {
+	public String getUser_id() {
 		return user_id;
 	}
 
-	public void setUser_id(Integer user_id) {
+	public void setUser_id(String user_id) {
 		this.user_id = user_id;
-	}
-
-	public String getUser_name() {
-		return user_name;
-	}
-
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
 	}
 
 	public String getUser_password() {
@@ -63,19 +53,19 @@ public class UserInfo {
 		this.create_time = create_time;
 	}
 
-	public Integer getCreator() {
+	public String getCreator() {
 		return creator;
 	}
 
-	public void setCreator(Integer creator) {
+	public void setCreator(String creator) {
 		this.creator = creator;
 	}
 
-	public Integer getModifier() {
+	public String getModifier() {
 		return modifier;
 	}
 
-	public void setModifier(Integer modifier) {
+	public void setModifier(String modifier) {
 		this.modifier = modifier;
 	}
 

@@ -2,11 +2,12 @@ layui.use(['form','layer','table'], function(form,layer,table) {
 	function init(){
 		var gid = getUrlParam("gid");
 		if(gid){//如果有值，为更新操作
+			$("name='parent_id'").attr("disabled","disabled");
 			//查询数据并赋值到表单中
 			$.post("/farminfo/animalstype/findById", {gid:gid},function(res){
 		          if(res){
 		        	  $.each(res,function(key,val){
-		        		  if(key=='stopflag'){
+		        		  if(key=='stopflag' || key=='parent_id'){
 		        			  $("[name='"+key+"'] option[value='"+val+"']").attr("selected","true");
 		        			  form.render('select');
 		        		  }else{

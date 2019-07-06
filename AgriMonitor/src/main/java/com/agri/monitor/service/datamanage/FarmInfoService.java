@@ -39,7 +39,7 @@ public class FarmInfoService {
 	@Autowired
 	private FarmInfoMapper farmInfoMapper;
 	
-	public FarmInfo findById(Integer gid, Integer userid) {
+	public FarmInfo findById(Integer gid, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("获取养殖信息，GID=" + gid);
 		}
@@ -47,7 +47,7 @@ public class FarmInfoService {
 		return farmInfoMapper.findById(gid);
 	}
 	
-	public Map doDel(List<Integer> gids, Integer userid) {
+	public Map doDel(List<Integer> gids, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("养殖场数据删除开始：" + gids);
 		}
@@ -64,7 +64,7 @@ public class FarmInfoService {
 		return result;
 	}
 	
-	public Map saveOrUpdate(FarmInfo farminfo,Integer userid) {
+	public Map saveOrUpdate(FarmInfo farminfo,String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("养殖场数据更新开始：" + farminfo);
 		}
@@ -90,7 +90,7 @@ public class FarmInfoService {
 		return result;
 	}
 	
-	public List<Map> findAllForPage(FarmQueryVO farmQueryVO, Integer userid) {
+	public List<Map> findAllForPage(FarmQueryVO farmQueryVO, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("查询所有养殖场数据开始：" + farmQueryVO);
 		}
@@ -190,13 +190,13 @@ public class FarmInfoService {
 		if (StringUtils.isEmpty(name)) {
 			return null;
 		}
-		List<AnimalsType> list = (List<AnimalsType>) CacheUtil.getCache(CacheTypeEnum.ANIMALSTYPE);
+		List<Map> list = (List<Map>) CacheUtil.getCache(CacheTypeEnum.ANIMALSTYPE);
 		if (list == null || list.size() == 0) {
 			return null;
 		}
-		for (AnimalsType animalstype : list) {
-			if(name.equals(animalstype.getType_name())) {
-				return animalstype.getGid();
+		for (Map map : list) {
+			if(name.equals(map.get("type_name"))) {
+				return (Integer) map.get("gid");
 			}
 		}
 		return null;

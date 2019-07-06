@@ -11,9 +11,9 @@ public class RoleInfo {
 	
 	private Date create_time;
 	
-	private Integer creator;
+	private String creator;
 	
-	private Integer modifier;
+	private String modifier;
 	
 	private Date last_time;
 
@@ -49,19 +49,19 @@ public class RoleInfo {
 		this.create_time = create_time;
 	}
 
-	public Integer getCreator() {
+	public String getCreator() {
 		return creator;
 	}
 
-	public void setCreator(Integer creator) {
+	public void setCreator(String creator) {
 		this.creator = creator;
 	}
 
-	public Integer getModifier() {
+	public String getModifier() {
 		return modifier;
 	}
 
-	public void setModifier(Integer modifier) {
+	public void setModifier(String modifier) {
 		this.modifier = modifier;
 	}
 

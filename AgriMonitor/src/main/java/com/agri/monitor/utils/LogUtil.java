@@ -7,7 +7,7 @@ import com.agri.monitor.service.sysset.SystemLogService;
 
 public class LogUtil {
 	private LogUtil() {}
-	public static void log(LogOptTypeEnum type,LogOptSatusEnum status,Integer userid, String log) {
+	public static void log(LogOptTypeEnum type,LogOptSatusEnum status,String userid, String log) {
 		SystemLogService service = SpringUtil.getObject(SystemLogService.class);
 		SystemLog entity = new SystemLog();
 		entity.setOperation_type(type.getTypeId());

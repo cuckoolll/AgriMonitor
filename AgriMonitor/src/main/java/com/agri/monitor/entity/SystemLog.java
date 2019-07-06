@@ -6,7 +6,7 @@ public class SystemLog {
 	private Integer gid;
 	private Integer operation_type;
 	private Integer operation_status;
-	private Integer operation_user;
+	private String operation_user;
 	private String operation_log;
 	private Date create_time;
 	public Integer getGid() {
@@ -27,10 +27,10 @@ public class SystemLog {
 	public void setOperation_status(Integer operation_status) {
 		this.operation_status = operation_status;
 	}
-	public Integer getOperation_user() {
+	public String getOperation_user() {
 		return operation_user;
 	}
-	public void setOperation_user(Integer operation_user) {
+	public void setOperation_user(String operation_user) {
 		this.operation_user = operation_user;
 	}
 	public String getOperation_log() {

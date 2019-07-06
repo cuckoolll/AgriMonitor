@@ -7,10 +7,11 @@ public class AnimalsTarget {
 	private String target_name;
 	private Integer parent_id;
 	private Date create_time;
-	private Integer creator;
-	private Integer modifier;
+	private String creator;
+	private String modifier;
 	private Date last_time;
 	private Integer stopflag;
+	private String parent_name;
 	
 	public Integer getGid() {
 		return gid;
@@ -24,16 +25,16 @@ public class AnimalsTarget {
 	public void setCreate_time(Date create_time) {
 		this.create_time = create_time;
 	}
-	public Integer getCreator() {
+	public String getCreator() {
 		return creator;
 	}
-	public void setCreator(Integer creator) {
+	public void setCreator(String creator) {
 		this.creator = creator;
 	}
-	public Integer getModifier() {
+	public String getModifier() {
 		return modifier;
 	}
-	public void setModifier(Integer modifier) {
+	public void setModifier(String modifier) {
 		this.modifier = modifier;
 	}
 	public Date getLast_time() {
@@ -59,6 +60,13 @@ public class AnimalsTarget {
 	}
 	public void setParent_id(Integer parent_id) {
 		this.parent_id = parent_id;
+	}
+	
+	public String getParent_name() {
+		return parent_name;
+	}
+	public void setParent_name(String parent_name) {
+		this.parent_name = parent_name;
 	}
 	@Override
 	public String toString() {

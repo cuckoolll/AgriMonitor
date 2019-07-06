@@ -6,8 +6,8 @@ public class AnimalsType {
 	private Integer gid;
 	private String type_name;
 	private Date create_time;
-	private Integer creator;
-	private Integer modifier;
+	private String creator;
+	private String modifier;
 	private Date last_time;
 	private Integer stopflag;
 	
@@ -29,16 +29,16 @@ public class AnimalsType {
 	public void setCreate_time(Date create_time) {
 		this.create_time = create_time;
 	}
-	public Integer getCreator() {
+	public String getCreator() {
 		return creator;
 	}
-	public void setCreator(Integer creator) {
+	public void setCreator(String creator) {
 		this.creator = creator;
 	}
-	public Integer getModifier() {
+	public String getModifier() {
 		return modifier;
 	}
-	public void setModifier(Integer modifier) {
+	public void setModifier(String modifier) {
 		this.modifier = modifier;
 	}
 	public Date getLast_time() {

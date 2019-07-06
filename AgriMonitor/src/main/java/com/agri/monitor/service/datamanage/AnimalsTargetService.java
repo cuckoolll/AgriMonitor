@@ -31,7 +31,7 @@ public class AnimalsTargetService {
 	@Autowired
 	private AnimalsBreedMapper animalsBreedMapper;
 	
-	public AnimalsTarget findById(Integer gid, Integer userid) {
+	public AnimalsTarget findById(Integer gid, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("查询畜牧业指标信息，GID=" + gid);
 		}
@@ -39,7 +39,7 @@ public class AnimalsTargetService {
 		return animalsTargetMapper.findById(gid);
 	}
 	
-	public Map doDel(List<Integer> gids, Integer userid) {
+	public Map doDel(List<Integer> gids, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("畜牧业指标删除开始：" + gids);
 		}
@@ -69,7 +69,7 @@ public class AnimalsTargetService {
 		return result;
 	}
 	
-	public Map saveOrUpdate(AnimalsTarget animalsTarget,Integer userid) {
+	public Map saveOrUpdate(AnimalsTarget animalsTarget,String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("畜牧业指标数据更新开始：" + animalsTarget);
 		}
@@ -100,7 +100,7 @@ public class AnimalsTargetService {
 		return result;
 	}
 	
-	public List<AnimalsTarget> findAllForPage(AnimalsTargetQueryVO queryVO, Integer userid) {
+	public List<AnimalsTarget> findAllForPage(AnimalsTargetQueryVO queryVO, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("查询所有畜牧业指标数据开始：" + queryVO);
 		}
@@ -112,7 +112,7 @@ public class AnimalsTargetService {
 		return animalsTargetMapper.findAllCount(queryVO);
 	}
 	
-	public Map animalsTargetQy(List<Integer> gids, Integer userid) {
+	public Map animalsTargetQy(List<Integer> gids, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("启用畜牧业指标：" + gids);
 		}
@@ -129,7 +129,7 @@ public class AnimalsTargetService {
 		return result;
 	}
 	
-	public Map animalsTargetTy(List<Integer> gids, Integer userid) {
+	public Map animalsTargetTy(List<Integer> gids, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("停用畜牧业指标：" + gids);
 		}

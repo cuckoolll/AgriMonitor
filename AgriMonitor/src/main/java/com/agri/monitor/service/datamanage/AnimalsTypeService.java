@@ -31,7 +31,7 @@ public class AnimalsTypeService {
 	@Autowired
 	private FarmInfoMapper farmInfoMapper;
 	
-	public AnimalsType findById(Integer gid, Integer userid) {
+	public AnimalsType findById(Integer gid, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("查询认定畜种信息，GID=" + gid);
 		}
@@ -39,7 +39,7 @@ public class AnimalsTypeService {
 		return animalsTypeMapper.findById(gid);
 	}
 	
-	public Map doDel(List<Integer> gids, Integer userid) {
+	public Map doDel(List<Integer> gids, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("认定畜种删除开始：" + gids);
 		}
@@ -69,7 +69,7 @@ public class AnimalsTypeService {
 		return result;
 	}
 	
-	public Map saveOrUpdate(AnimalsType animalsType,Integer userid) {
+	public Map saveOrUpdate(AnimalsType animalsType,String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("认定畜种数据更新开始：" + animalsType);
 		}
@@ -100,7 +100,7 @@ public class AnimalsTypeService {
 		return result;
 	}
 	
-	public List<AnimalsType> findAllForPage(AnimalsTypeQueryVO queryVO, Integer userid) {
+	public List<AnimalsType> findAllForPage(AnimalsTypeQueryVO queryVO, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("查询所有认定畜种数据开始：" + queryVO);
 		}
@@ -112,7 +112,7 @@ public class AnimalsTypeService {
 		return animalsTypeMapper.findAllCount(queryVO);
 	}
 	
-	public Map animalstypeQy(List<Integer> gids, Integer userid) {
+	public Map animalstypeQy(List<Integer> gids, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("启用认定畜种：" + gids);
 		}
@@ -129,7 +129,7 @@ public class AnimalsTypeService {
 		return result;
 	}
 	
-	public Map animalstypeTy(List<Integer> gids, Integer userid) {
+	public Map animalstypeTy(List<Integer> gids, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("停用认定畜种：" + gids);
 		}

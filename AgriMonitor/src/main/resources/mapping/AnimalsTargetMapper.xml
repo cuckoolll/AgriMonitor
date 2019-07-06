@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.agri.monitor.mapper.AnimalsTargetMapper">
     <select id="findById" parameterType="int" resultType="com.agri.monitor.entity.AnimalsTarget">
-		select * from t_animals_target where gid=#{gid}
+		select * from t_animals_target a where gid=#{gid}
 	</select>
     <select id="findAllForPage" parameterType="com.agri.monitor.vo.AnimalsTargetQueryVO" resultType="map">
         select a.gid,a.target_name,a.parent_id,a.create_time,a.creator,a.last_time,a.modifier,a.stopflag,b.user_showname from t_animals_target a, t_user_info b 

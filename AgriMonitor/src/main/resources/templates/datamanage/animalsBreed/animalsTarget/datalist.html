@@ -41,8 +41,7 @@
 	                    	</select>
 					      </div>
 						<a id="queryBtn" class="layui-btn">检索</a>
-						<a th:if="${session.userinfo.roleinfo.role_name=='admin'}" type="button" class="layui-btn" id="qyBtn"><i class="layui-icon"></i>启用</a>
-						<a th:if="${session.userinfo.roleinfo.role_name=='admin'}" type="button" class="layui-btn" id="tyBtn"><i class="layui-icon"></i>停用</a>
+						<a th:if="${session.userinfo.roleinfo.role_name=='admin'}" type="button" class="layui-btn" id="addBtn"><i class="layui-icon"></i>新增</a>
 					</div>
 				</form>
 			</div>
@@ -54,8 +53,10 @@
    			 	停用
   			{{#  } }}
 			</script>
-			<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name=='admin'}">
-  			 <div class="layui-inline" lay-event="add"><i class="layui-icon layui-icon-add-1"></i></div><div class="layui-inline" lay-event="update"><i class="layui-icon layui-icon-edit"></i></div><div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
+			<!-- 操作列 -->
+			<script type="text/html" id="oper-col" th:if="${session.userinfo.roleinfo.role_name=='admin'}">
+    			<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 			</script>
 		</div>
 		<script th:src="@{/js/datamanage/animalsBreed/animalsTarget/datalist.js}"></script>

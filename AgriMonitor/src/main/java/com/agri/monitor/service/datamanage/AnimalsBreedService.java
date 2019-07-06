@@ -39,7 +39,7 @@ public class AnimalsBreedService {
 	@Autowired
 	private AnimalsBreedMapper animalsBreedMapper;
 	
-	public AnimalsBreed findById(Integer gid, Integer userid) {
+	public AnimalsBreed findById(Integer gid, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("获取养殖信息，GID=" + gid);
 		}
@@ -47,7 +47,7 @@ public class AnimalsBreedService {
 		return animalsBreedMapper.findById(gid);
 	}
 	
-	public Map doDel(List<Integer> gids, Integer userid) {
+	public Map doDel(List<Integer> gids, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("畜牧业生产情况数据删除开始：" + gids);
 		}
@@ -64,7 +64,7 @@ public class AnimalsBreedService {
 		return result;
 	}
 	
-	public Map saveOrUpdate(AnimalsBreed animalsBreed,Integer userid) {
+	public Map saveOrUpdate(AnimalsBreed animalsBreed,String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("畜牧业生产情况数据更新开始：" + animalsBreed);
 		}
@@ -90,7 +90,7 @@ public class AnimalsBreedService {
 		return result;
 	}
 	
-	public List<Map> findAllForPage(AnimalsBreedQueryVO queryVO, Integer userid) {
+	public List<Map> findAllForPage(AnimalsBreedQueryVO queryVO, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("查询所有畜牧业生产情况数据开始：" + queryVO);
 		}

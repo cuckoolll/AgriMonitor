@@ -31,8 +31,7 @@ public class LoginController {
 		role.setGid(1);
 		role.setRole_name("admin");
 		role.setRole_showname("管理员");
-		user.setUser_id(1);
-		user.setUser_name("zhangsan");
+		user.setUser_id("zhangsan");
 		user.setUser_showname("张三111");
 		user.setRoleinfo(role);
 		session.setAttribute("userinfo", user);

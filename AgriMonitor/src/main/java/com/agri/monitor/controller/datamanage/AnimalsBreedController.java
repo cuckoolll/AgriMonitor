@@ -98,6 +98,7 @@ public class AnimalsBreedController {
 	@IgnoreSession
 	@RequestMapping("/animalsTarget/update")
 	public String addAnimalsType(Model model) {
+		model.addAttribute("animalstarget", CacheUtil.getCache(CacheTypeEnum.ANIMALSTARGET));
 		return "/datamanage/animalsBreed/animalsTarget/update";
 	}
 	
@@ -117,8 +118,9 @@ public class AnimalsBreedController {
 	
 	@ResponseBody
 	@RequestMapping(value="/animalsTarget/findById",method=RequestMethod.POST)
-	public AnimalsTarget findAnimalsTargetById(Integer gid, HttpServletRequest request) {
+	public AnimalsTarget findAnimalsTargetById(Integer gid, Model model, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		model.addAttribute("animalstarget", CacheUtil.getCache(CacheTypeEnum.ANIMALSTARGET));
 		return animalsTargetService.findById(gid, user.getUser_id());
 	}
 	
