@@ -37,6 +37,23 @@
        	 order by quality_time desc limit #{currIndex},#{limit}
     </select>
     
+    <select id="queryInfoCount" parameterType="com.agri.monitor.vo.WaterQueryVO" resultType="int">
+        select count(gid)
+          from t_water_quality 
+    	<if test="quality_address != null and quality_address != ''">
+    		<bind name="quality_address" value="'%' + quality_address + '%'"/>
+        	where quality_address like #{quality_address} 
+        </if>
+        <if test="quality_address == null or quality_address == ''">
+        	<if test="quality_time != null and quality_time != ''">
+        		where quality_time = #{quality_time}
+        	</if>
+        </if>
+        <if test="quality_time != null and quality_time != ''">
+        	and quality_time = #{quality_time}
+       	</if>
+    </select>
+    
     <select id="queryGid" parameterType="com.agri.monitor.vo.WaterQueryVO" resultType="java.lang.String">
    		select gid
      	  from t_water_quality

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agri.monitor.mapper.SoilInfoMapper">
+	<select id="findById" parameterType="int" resultType="com.agri.monitor.entity.SoilInfo">
+		select gid,
+			   date_year,
+			   county,
+			   towns,
+			   village,
+			   code_number,
+			   organic,
+			   nitrogen,
+			   phosphorus,
+			   effective_phosphorus,
+			   potassium,
+			   ph,
+			   salinity,
+			   available_potassium,
+			   slow_release_potassium
+		  from t_soil_quality 
+		 where gid = #{gid}
+	</select>
+
+    <select id="queryInfoForPage" parameterType="com.agri.monitor.vo.SoilQueryVO" resultType="map">
+        select gid,
+			   date_year,
+			   county,
+			   towns,
+			   village,
+			   code_number,
+			   organic,
+			   nitrogen,
+			   phosphorus,
+			   effective_phosphorus,
+			   potassium,
+			   ph,
+			   salinity,
+			   available_potassium,
+			   slow_release_potassium
+          from t_soil_quality 
+       	<if test="code_number != null and code_number != ''">
+    		<bind name="code_number" value="'%' + code_number + '%'"/>
+        	where code_number like #{code_number} 
+        </if>
+        <if test="code_number == null or code_number == ''">
+        	<if test="date_year != null and date_year != ''">
+        		where date_year = #{date_year}
+        	</if>
+        </if>
+        <if test="date_year != null and date_year != ''">
+        	and date_year = #{date_year}
+       	</if>
+       	 order by date_year desc limit #{currIndex},#{limit}
+    </select>
+    
+    <select id="queryInfoCount" parameterType="com.agri.monitor.vo.SoilQueryVO" resultType="int">
+        select count(gid)
+          from t_soil_quality 
+       	<if test="code_number != null and code_number != ''">
+    		<bind name="code_number" value="'%' + code_number + '%'"/>
+        	where code_number like #{code_number} 
+        </if>
+        <if test="code_number == null or code_number == ''">
+        	<if test="date_year != null and date_year != ''">
+        		where date_year = #{date_year}
+        	</if>
+        </if>
+        <if test="date_year != null and date_year != ''">
+        	and date_year = #{date_year}
+       	</if>
+    </select>
+    
+    <select id="queryGid" parameterType="com.agri.monitor.vo.SoilQueryVO" resultType="java.lang.String">
+   		select gid
+     	  from t_soil_quality
+     	 where date_year = #{date_year}
+     	   and code_number = #{code_number}
+    </select>
+    
+    <insert id="insertInfo" parameterType="com.agri.monitor.entity.SoilInfo">
+    	insert into t_soil_quality
+    		(date_year,
+			 county,
+			 towns,
+			 code_number,
+			 organic,
+			 nitrogen,
+			 phosphorus,
+			 effective_phosphorus,
+			 potassium,
+			 ph,
+			 salinity,
+			 available_potassium,
+		   	 slow_release_potassium,
+			 creator,
+			 modifier)
+    	values
+		   (#{date_year}, 
+			#{county},
+			#{towns},
+			#{code_number},
+			#{organic},
+			#{nitrogen},
+			#{phosphorus},
+			#{effective_phosphorus},
+			#{potassium},
+			#{ph},
+			#{salinity},
+			#{available_potassium},
+			#{slow_release_potassium},
+			#{creator},
+			#{modifier})
+    </insert>
+    
+    <update id="updateInfo" parameterType="com.agri.monitor.entity.SoilInfo">
+    	update t_soil_quality
+    	   set organic = #{organic},
+			   nitrogen = #{nitrogen},
+			   phosphorus = #{phosphorus},
+			   effective_phosphorus = #{effective_phosphorus}, 
+			   potassium = #{potassium},
+			   ph = #{ph}, 
+			   salinity = #{salinity}, 
+			   available_potassium = #{available_potassium},
+			   slow_release_potassium = #{slow_release_potassium}, 
+    	   	   modifier = #{modifier}
+    	 where gid = #{gid}
+    </update>
+    
+    <delete id="delInfoByGid" parameterType="java.util.List">
+    	delete from t_soil_quality where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+</mapper>

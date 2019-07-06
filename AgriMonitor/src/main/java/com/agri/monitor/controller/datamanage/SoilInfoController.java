@@ -24,69 +24,66 @@ import com.agri.monitor.vo.SoilQueryVO;
 @Controller
 @RequestMapping("/soilinfo")
 public class SoilInfoController {
-	/*
+	@Autowired 
+	private SoilInfoService soilInfoService;
+	 
+	/**
+	 * 水质监测页面 .
 	 * 
-	 * @Autowired private SoilInfoService soilInfoService;
-	 * 
-	 *//**
-		 * 水质监测页面 .
-		 * 
-		 * @return .
-		 */
-	/*
-	 * @RequestMapping("") public String soilInfo() { return
-	 * "/datamanage/soilinfo/soilinfo"; }
-	 * 
-	 *//**
-		 * 查询水质监测信息 .
-		 * 
-		 * @param request .
-		 * @return .
-		 */
-	/*
-	 * @RequestMapping(value="/queryInfo", method = RequestMethod.POST)
-	 * 
-	 * @ResponseBody
-	 * 
-	 * @IgnoreSession public Map queryInfo(SoilQueryVO queryVo, HttpServletRequest
-	 * request) { UserInfo user = (UserInfo)
-	 * request.getSession().getAttribute("userinfo"); return
-	 * soilInfoService.queryInfoForPage(queryVo, user.getUser_id()); }
-	 * 
-	 * @ResponseBody
-	 * 
-	 * @RequestMapping(value="/dataImport",method=RequestMethod.POST) public Map
-	 * dataImport(@RequestParam("file") MultipartFile file, HttpServletRequest
-	 * request) { return soilInfoService.dataImport(file, request); }
-	 * 
-	 * @IgnoreSession
-	 * 
-	 * @RequestMapping("/update") public String add(Model model) { return
-	 * "/datamanage/soilinfo/soilupdate"; }
-	 * 
-	 * 
-	 * @ResponseBody
-	 * 
-	 * @RequestMapping(value="/save",method=RequestMethod.POST) public Map
-	 * doUpdate(SoilInfo soilinfo, HttpServletRequest request) { UserInfo user =
-	 * (UserInfo) request.getSession().getAttribute("userinfo"); return
-	 * soilInfoService.saveOrUpdate(soilinfo, user.getUser_id()); }
-	 * 
-	 * 
-	 * @ResponseBody
-	 * 
-	 * @RequestMapping(value="/delInfoByGid",method=RequestMethod.POST) public Map
-	 * delInfoByGid(@RequestBody ArrayList<Integer> gids, HttpServletRequest
-	 * request) { UserInfo user = (UserInfo)
-	 * request.getSession().getAttribute("userinfo"); return
-	 * soilInfoService.delInfoByGid(gids, user.getUser_id()); }
-	 * 
-	 * 
-	 * @ResponseBody
-	 * 
-	 * @RequestMapping(value="/findById",method=RequestMethod.POST) public SoilInfo
-	 * findById(Integer gid, HttpServletRequest request) { UserInfo user =
-	 * (UserInfo) request.getSession().getAttribute("userinfo"); return
-	 * soilInfoService.findById(gid, user.getUser_id()); }
-	 * 
-	 */}
+	 * @return .
+	 */
+	 @RequestMapping("") 
+	 public String soilInfo() { 
+		 return "/datamanage/soilinfo/soilinfo"; 
+	 }
+	  
+	 /**
+	  * 查询水质监测信息 .
+	  * 
+	  * @param request .
+	  * @return .
+	  */
+	 @RequestMapping(value="/queryInfo", method = RequestMethod.POST)
+	 @ResponseBody
+	 @IgnoreSession 
+	 public Map queryInfo(SoilQueryVO queryVo, HttpServletRequest request) {
+		 UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo"); return
+		 soilInfoService.queryInfoForPage(queryVo, user.getUser_id()); 
+	 }
+
+	@ResponseBody
+	@RequestMapping(value="/dataImport",method=RequestMethod.POST) public Map
+	dataImport(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+		return soilInfoService.dataImport(file, request); 
+	}
+
+	@IgnoreSession
+	@RequestMapping("/update") 
+	public String add(Model model) { 
+		return "/datamanage/soilinfo/soilupdate";
+	}
+
+
+	@ResponseBody
+	@RequestMapping(value="/save",method=RequestMethod.POST) 
+	public Map doUpdate(SoilInfo soilinfo, HttpServletRequest request) { 
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo"); 
+		return soilInfoService.saveOrUpdate(soilinfo, user.getUser_id()); 
+	}
+
+
+	@ResponseBody
+	@RequestMapping(value="/delInfoByGid",method=RequestMethod.POST) 
+	public Map delInfoByGid(@RequestBody ArrayList<Integer> gids, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo"); return
+		soilInfoService.delInfoByGid(gids, user.getUser_id()); 
+	}
+
+
+	@ResponseBody
+	@RequestMapping(value="/findById",method=RequestMethod.POST)
+	public SoilInfo findById(Integer gid, HttpServletRequest request) { 
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo"); return
+		soilInfoService.findById(gid, user.getUser_id()); 
+	}
+}

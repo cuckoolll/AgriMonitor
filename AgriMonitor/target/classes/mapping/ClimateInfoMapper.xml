@@ -45,6 +45,14 @@
        	 order by date_year desc limit #{currIndex},#{limit}
     </select>
     
+    <select id="queryInfoCount" parameterType="com.agri.monitor.vo.ClimateQueryVO" resultType="int">
+        select count(gid)
+          from t_climate_quality 
+       	<if test="date_year != null and date_year != ''">
+			where date_year = #{date_year}
+       	</if>
+    </select>
+    
     <select id="queryGid" parameterType="com.agri.monitor.vo.ClimateQueryVO" resultType="java.lang.String">
    		select gid
      	  from t_climate_quality
