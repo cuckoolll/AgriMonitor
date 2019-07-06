@@ -46,6 +46,7 @@ public class SoilInfoService {
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0); 
 		result.put("msg", "成功");
+		result.put("count", soilInfoMapper.queryInfoCount(queryVo));
 		result.put("data", soilInfoMapper.queryInfoForPage(queryVo));
 		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, "获取土壤监测信息，入参=date_year:" + queryVo.getDate_year()); 
 		return result; 
@@ -154,24 +155,27 @@ public class SoilInfoService {
 					SoilInfo soilinfo = new SoilInfo(); 
 					soilinfo.setCounty(county);
 					soilinfo.setTowns(towns);	
-					soilinfo.setCode_number(row.getCell(0).getStringCellValue());
-					soilinfo.setOrganic(row.getCell(1).getNumericCellValue());
-					soilinfo.setNitrogen(row.getCell(2).getNumericCellValue());
-					soilinfo.setPhosphorus(row.getCell(3).getNumericCellValue());
-					soilinfo.setEffective_phosphorus(row.getCell(4).getNumericCellValue());
-					soilinfo.setPotassium(row.getCell(5).getNumericCellValue());
-					soilinfo.setPh(row.getCell(6).getNumericCellValue());
-					soilinfo.setSalinity(row.getCell(7).getNumericCellValue());
-					soilinfo.setAvailable_potassium(row.getCell(8).getNumericCellValue());
-					soilinfo.setSlow_release_potassium((int) row.getCell(9).getNumericCellValue());
+					
+					int year = (int) row.getCell(0).getNumericCellValue();
+					soilinfo.setDate_year((int) row.getCell(0).getNumericCellValue());
+					soilinfo.setCode_number(row.getCell(1).getStringCellValue());
+					soilinfo.setOrganic(row.getCell(2).getNumericCellValue());
+					soilinfo.setNitrogen(row.getCell(3).getNumericCellValue());
+					soilinfo.setPhosphorus(row.getCell(4).getNumericCellValue());
+					soilinfo.setEffective_phosphorus(row.getCell(5).getNumericCellValue());
+					soilinfo.setPotassium(row.getCell(6).getNumericCellValue());
+					soilinfo.setPh(row.getCell(7).getNumericCellValue());
+					soilinfo.setSalinity(row.getCell(8).getNumericCellValue());
+					soilinfo.setAvailable_potassium(row.getCell(9).getNumericCellValue());
+					soilinfo.setSlow_release_potassium(row.getCell(10).getNumericCellValue());
 					soilinfo.setCreator(String.valueOf(user.getUser_id()));
 					soilinfo.setModifier(String.valueOf(user.getUser_id()));
 	
-					String date_year = soilinfo.getDate_year();
+					int date_year = soilinfo.getDate_year();
 					String code_number = soilinfo.getCode_number();
 					
 					try { 
-						String gid = soilInfoMapper.queryGid(date_year, code_number);
+						String gid = soilInfoMapper.queryGid(String.valueOf(date_year), code_number);
 						
 						if (StringUtils.isEmpty(gid)) {
 							soilInfoMapper.insertInfo(soilinfo); 

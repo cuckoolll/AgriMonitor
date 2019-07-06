@@ -2,7 +2,7 @@ package com.agri.monitor.entity;
 
 public class SoilInfo { 
 	private String gid; 
-	private String date_year; 
+	private int date_year; 
 	private String county;
 	private String towns;
 	private String village;
@@ -26,10 +26,10 @@ public class SoilInfo {
 	public void setGid(String gid) {
 		this.gid = gid;
 	}
-	public String getDate_year() {
+	public int getDate_year() {
 		return date_year;
 	}
-	public void setDate_year(String date_year) {
+	public void setDate_year(int date_year) {
 		this.date_year = date_year;
 	}
 	public String getCounty() {

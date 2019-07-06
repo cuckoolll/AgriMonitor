@@ -38,19 +38,36 @@
 			   available_potassium,
 			   slow_release_potassium
           from t_soil_quality 
-       	<if test="date_year != null and date_year != ''">
-    		<bind name="date_year" value="'%' + date_year + '%'"/>
-        	where date_year like #{date_year} 
+       	<if test="code_number != null and code_number != ''">
+    		<bind name="code_number" value="'%' + code_number + '%'"/>
+        	where code_number like #{code_number} 
         </if>
-        <if test="date_year == null or date_year == ''">
-        	<if test="code_number != null and code_number != ''">
-        		where code_number = #{code_number}
+        <if test="code_number == null or code_number == ''">
+        	<if test="date_year != null and date_year != ''">
+        		where date_year = #{date_year}
         	</if>
         </if>
-        <if test="code_number != null and code_number != ''">
-        	and code_number = #{code_number}
+        <if test="date_year != null and date_year != ''">
+        	and date_year = #{date_year}
        	</if>
        	 order by date_year desc limit #{currIndex},#{limit}
+    </select>
+    
+    <select id="queryInfoCount" parameterType="com.agri.monitor.vo.SoilQueryVO" resultType="int">
+        select count(gid)
+          from t_soil_quality 
+       	<if test="code_number != null and code_number != ''">
+    		<bind name="code_number" value="'%' + code_number + '%'"/>
+        	where code_number like #{code_number} 
+        </if>
+        <if test="code_number == null or code_number == ''">
+        	<if test="date_year != null and date_year != ''">
+        		where date_year = #{date_year}
+        	</if>
+        </if>
+        <if test="date_year != null and date_year != ''">
+        	and date_year = #{date_year}
+       	</if>
     </select>
     
     <select id="queryGid" parameterType="com.agri.monitor.vo.SoilQueryVO" resultType="java.lang.String">

@@ -46,74 +46,65 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label span_title">年份：</label>
 					<div class="layui-input-inline">
-						<input id="date_year" type="text" name="date_year" required lay-verify="required" autocomplete="off" class="layui-input input_area">
+						<input id="date_year" type="text" name="date_year" required lay-verify="required" 
+							autocomplete="off" class="layui-input input_area" readonly="readonly">
 					</div>
-					<label class="layui-form-label span_title">年平均气温（摄氏度）：</label>
+					<label class="layui-form-label span_title">编号：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="year_avg_temperature" required lay-verify="required" autocomplete="off" class="layui-input input_area">
+						<input type="text" name="code_number" required lay-verify="required" 
+							autocomplete="off" class="layui-input input_area">
 					</div>
 				</div>
 				
 				<div class="layui-form-item">
-					<label class="layui-form-label span_title">极端最高气温（摄氏度）：</label>
+					<label class="layui-form-label span_title">有机质（g/kg）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="high_temperature" required lay-verify="required" autocomplete="off" class="layui-input input_area">
+						<input type="text" name="organic" required lay-verify="required" autocomplete="off" class="layui-input input_area">
 					</div>
-					<label class="layui-form-label span_title">极端最低气温（摄氏度）：</label>
+					<label class="layui-form-label span_title">全氮（g/kg）：</label>
 					<div class="layui-input-block">
-						<input type="text" name="low_temperature" autocomplete="off" class="layui-input input_area">
+						<input type="text" name="nitrogen" autocomplete="off" class="layui-input input_area">
 					</div>
 				</div>
 				
 				
 				<div class="layui-form-item">
-					<label class="layui-form-label span_title">年降水量（毫米）：</label>
+					<label class="layui-form-label span_title">全磷含量(g/kg)：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="year_precipitation" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="phosphorus" autocomplete="off" class="layui-input input_area"></input>
 					</div>
-					<label class="layui-form-label span_title">月最大降水量（毫米）：</label>
+					<label class="layui-form-label span_title">有效磷含量(mg/kg)：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="mouth_high_precipitation" autocomplete="off" class="layui-input input_area"></input>
-					</div>
-				</div>
-				
-				<div class="layui-form-item">
-					<label class="layui-form-label span_title">日最大降水量（毫米）：</label>
-					<div class="layui-input-inline">
-						<input type="text" name="day_high_precipitation" autocomplete="off" class="layui-input input_area"></input>
-					</div>
-					<label class="layui-form-label span_title">年平均最多风向（米每秒）：</label>
-					<div class="layui-input-inline">
-						<input type="text" name="year_avg_winds" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="effective_phosphorus" autocomplete="off" class="layui-input input_area"></input>
 					</div>
 				</div>
 				
 				<div class="layui-form-item">
-					<label class="layui-form-label span_title">极大风速（米每秒）：</label>
+					<label class="layui-form-label span_title">全钾含量(g/kg)：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="high_winds" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="potassium" autocomplete="off" class="layui-input input_area"></input>
 					</div>
-					<label class="layui-form-label span_title">年大风日数（天）：</label>
+					<label class="layui-form-label span_title">pH：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="year_high_winds_days" autocomplete="off" class="layui-input input_area"></input>
-					</div>
-				</div>
-				
-				<div class="layui-form-item">
-					<label class="layui-form-label span_title">年平均气压（百帕）：</label>
-					<div class="layui-input-inline">
-						<input type="text" name="year_avg_pressure" autocomplete="off" class="layui-input input_area"></input>
-					</div>
-					<label class="layui-form-label span_title">年雷暴日数（次）：</label>
-					<div class="layui-input-inline">
-						<input type="text" name="year_thunderstorm_days" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="ph" autocomplete="off" class="layui-input input_area"></input>
 					</div>
 				</div>
 				
 				<div class="layui-form-item">
-					<label class="layui-form-label span_title">年尘暴日数（次）：</label>
-					<div class="layui-input-block">
-						<input type="text" name="year_sandstorm_days" autocomplete="off" class="layui-input input_area"></input>
+					<label class="layui-form-label span_title">盐度（%）：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="salinity" autocomplete="off" class="layui-input input_area"></input>
+					</div>
+					<label class="layui-form-label span_title">速效钾含量(mg/kg)：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="available_potassium" autocomplete="off" class="layui-input input_area"></input>
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label span_title">缓效钾含量(mg/kg)：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="slow_release_potassium" autocomplete="off" class="layui-input input_area"></input>
 					</div>
 				</div>
 				

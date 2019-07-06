@@ -14,6 +14,8 @@ public interface SoilInfoMapper {
 	
 	List<SoilInfo> queryInfoForPage(final SoilQueryVO queryVo);
 	
+	int queryInfoCount(final SoilQueryVO queryVo);
+	
 	void insertInfo(SoilInfo soilInfo);
 	
 	void updateInfo(SoilInfo soilInfo);

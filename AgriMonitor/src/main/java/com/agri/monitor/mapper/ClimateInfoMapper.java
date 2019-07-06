@@ -15,6 +15,8 @@ public interface ClimateInfoMapper {
 	
 	List<ClimateInfo> queryInfoForPage(final ClimateQueryVO queryVo);
 	
+	int queryInfoCount(final ClimateQueryVO queryVo);
+	
 	void insertInfo(ClimateInfo climateinfo);
 	
 	void updateInfo(ClimateInfo climateinfo);

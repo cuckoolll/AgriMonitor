@@ -55,6 +55,7 @@ public class ClimateInfoService {
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0);
 		result.put("msg", "成功");
+		result.put("count", climateInfoMapper.queryInfoCount(queryVo));
 		result.put("data", climateInfoMapper.queryInfoForPage(queryVo));
 		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, 
 				"获取气候监测信息，入参=date_year:" + queryVo.getDate_year());
