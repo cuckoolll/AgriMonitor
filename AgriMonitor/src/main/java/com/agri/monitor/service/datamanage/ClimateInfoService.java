@@ -47,7 +47,7 @@ public class ClimateInfoService {
 	@Autowired
 	private ClimateInfoMapper climateInfoMapper;
 	 
-	public Map queryInfoForPage(ClimateQueryVO queryVo, Integer userid) {
+	public Map queryInfoForPage(ClimateQueryVO queryVo, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("获取气候监测信息，入参=date_year:" + queryVo.getDate_year());
 		}
@@ -55,13 +55,14 @@ public class ClimateInfoService {
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0);
 		result.put("msg", "成功");
+		result.put("count", climateInfoMapper.queryInfoCount(queryVo));
 		result.put("data", climateInfoMapper.queryInfoForPage(queryVo));
 		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, 
 				"获取气候监测信息，入参=date_year:" + queryVo.getDate_year());
 		return result;
 	}
 	
-	public ClimateInfo findById(Integer gid, Integer userid) {
+	public ClimateInfo findById(Integer gid, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("获取气候监测信息，GID=" + gid);
 		}
@@ -69,7 +70,7 @@ public class ClimateInfoService {
 		return climateInfoMapper.findById(gid);
 	}
 	
-	public Map saveOrUpdate(ClimateInfo climateinfo, Integer userid) {
+	public Map saveOrUpdate(ClimateInfo climateinfo, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("气候监测数据更新开始：" + climateinfo);
 		}
@@ -94,7 +95,7 @@ public class ClimateInfoService {
 		return result;
 	}
 	
-	public Map delInfoByGid(List<Integer> gids, Integer userid) {
+	public Map delInfoByGid(List<Integer> gids, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("气候监测数据删除开始：" + gids);
 		}
