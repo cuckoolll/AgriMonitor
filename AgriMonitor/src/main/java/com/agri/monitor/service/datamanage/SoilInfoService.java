@@ -38,7 +38,7 @@ public class SoilInfoService {
 	@Autowired 
 	private SoilInfoMapper soilInfoMapper;
 	
-	public Map queryInfoForPage(SoilQueryVO queryVo, Integer userid) { 
+	public Map queryInfoForPage(SoilQueryVO queryVo, String userid) { 
 		if (logger.isInfoEnabled()) {
 			logger.info("获取土壤监测信息，入参=date_year:" + queryVo.getDate_year()); 
 		}
@@ -52,7 +52,7 @@ public class SoilInfoService {
 		return result; 
 	}
 	
-	public SoilInfo findById(Integer gid, Integer userid) {
+	public SoilInfo findById(Integer gid, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("获取土壤监测信息，GID=" + gid); 
 		}
@@ -60,7 +60,7 @@ public class SoilInfoService {
 		return soilInfoMapper.findById(gid); 
 	}
 	
-	public Map saveOrUpdate(SoilInfo soilinfo, Integer userid) { 
+	public Map saveOrUpdate(SoilInfo soilinfo, String userid) { 
 		if (logger.isInfoEnabled()) { 
 			logger.info("土壤监测数据更新开始：" + soilinfo); 
 		} 
@@ -86,7 +86,7 @@ public class SoilInfoService {
 		return result;
 	}
 	
-	public Map delInfoByGid(List<Integer> gids, Integer userid) { 
+	public Map delInfoByGid(List<Integer> gids, String userid) { 
 		if (logger.isInfoEnabled()) {
 			logger.info("土壤监测数据删除开始：" + gids); 
 		} 
