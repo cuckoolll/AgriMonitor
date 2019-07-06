@@ -21,7 +21,7 @@ public interface WaterInfoMapper {
 	
 	void updateWaterInfo(WaterInfo waterinfo);
 	
-	String queryGid(final String county, final String quality_time, final String quality_type);
+	String queryGid(final String quality_address, final String quality_time, final String quality_type);
 
 	void delInfoByGid(List<Integer> gids);
 
