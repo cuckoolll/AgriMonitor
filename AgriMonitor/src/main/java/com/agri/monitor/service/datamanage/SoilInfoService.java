@@ -26,6 +26,7 @@ import com.agri.monitor.enums.LogOptSatusEnum;
 import com.agri.monitor.enums.LogOptTypeEnum;
 import com.agri.monitor.mapper.SoilInfoMapper;
 import com.agri.monitor.utils.LogUtil;
+import com.agri.monitor.utils.UrbanAreaUtil;
 import com.agri.monitor.vo.SoilQueryVO;
 
 @Service
@@ -149,7 +150,11 @@ public class SoilInfoService {
 				if (i == 1) { 
 					county = "刚察县"; 
 					towns = row.getCell(1).getStringCellValue(); 
-					//TODO 与缓存中乡镇信息对比 
+					 if (!UrbanAreaUtil.isLegalTown(towns)) {
+		        		   result.put("code", -1);
+		        		   result.put("msg", "报表乡镇填写错误，请重新选择所属乡镇");
+		        		   return result;
+		        	   }
 				} 
 				if (i >= 3) {
 					SoilInfo soilinfo = new SoilInfo(); 

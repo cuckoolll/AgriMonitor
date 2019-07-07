@@ -29,6 +29,7 @@ import com.agri.monitor.enums.LogOptTypeEnum;
 import com.agri.monitor.mapper.AnimalsBreedMapper;
 import com.agri.monitor.utils.CacheUtil;
 import com.agri.monitor.utils.LogUtil;
+import com.agri.monitor.utils.UrbanAreaUtil;
 import com.agri.monitor.vo.AnimalsBreedQueryVO;
 
 @Service
@@ -143,6 +144,11 @@ public class AnimalsBreedService {
 	           if (i == 1) {
 	        	   towns = row.getCell(1).getStringCellValue();
 	        	   //TODO 与缓存中乡镇信息对比
+	        	   if (!UrbanAreaUtil.isLegalTown(towns)) {
+	        		   result.put("code", -1);
+	        		   result.put("msg", "报表乡镇填写错误，请重新选择所属乡镇");
+	        		   return result;
+	        	   }
 	        	   
 	        	   String ymstr  = row.getCell(3).getStringCellValue();
 	        	   if(StringUtils.isEmpty(ymstr)) {
