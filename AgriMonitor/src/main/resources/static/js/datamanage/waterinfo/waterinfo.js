@@ -26,6 +26,8 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		     cols: [[ //表头
 		    	 {type: 'checkbox', fixed: 'left'},
 		    	 {field: 'gid', title: 'gid',hide: true,align:'center'},
+		    	 {field: 'county', title: '区（县、市）'},
+		    	 {field: 'towns', title: '乡镇'},
 		    	 {field: 'quality_address', title: '采样地点'},
 		    	 {field: 'quality_time', title: '采样时间', sort: true},
 		    	 {field: 'quality_type', title: '分析项目'}, 

@@ -5,6 +5,7 @@
 		select gid,
 			   quality_address,
 			   county,
+			   towns,
 			   date_format(quality_time, '%Y-%m-%d') quality_time,
 			   quality_type,
 			   quality_result,
@@ -17,6 +18,7 @@
         select gid,
 			   quality_address,
 			   county,
+			   towns,
 			   date_format(quality_time, '%Y-%m-%d') quality_time,
 			   quality_type,
 			   quality_result,
@@ -66,6 +68,7 @@
     	insert into t_water_quality
     		(quality_address,
 			 county,
+			 towns,
 			 quality_time,
 			 quality_type,
 			 quality_result,
@@ -75,6 +78,7 @@
     	values
 		   (#{quality_address},
 			#{county},
+			#{towns},
 			#{quality_time},
 			#{quality_type},
 			#{quality_result},

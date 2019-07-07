@@ -197,6 +197,9 @@ public class WaterInfoService {
 	           }
 	           i++;
 	        }
+	        if (logger.isInfoEnabled()) {
+ 				logger.info("导入水质监测信息---------------------------成功");
+ 			}
 	        LogUtil.log(LogOptTypeEnum.ADD, LogOptSatusEnum.SUCESS, user.getUser_id(), "导入水质监测信息成功");
 		} catch (Exception e) {
 			e.printStackTrace();
