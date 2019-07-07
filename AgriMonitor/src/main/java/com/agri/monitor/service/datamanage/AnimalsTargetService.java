@@ -39,22 +39,29 @@ public class AnimalsTargetService {
 		return animalsTargetMapper.findById(gid);
 	}
 	
-	public Map doDel(List<Integer> gids, String userid) {
+	public Map doDel(Integer gid,Integer pid, String userid) {
 		if (logger.isInfoEnabled()) {
-			logger.info("畜牧业指标删除开始：" + gids);
+			logger.info("畜牧业指标删除开始：" + gid);
 		}
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0);
 		try {
 			//删除前判断是否有数据关联该分类
-			int count = animalsBreedMapper.findByAnimalsTarget(gids);
+			int count = animalsBreedMapper.findByAnimalsTarget(gid);
 			if(count > 0) {
 				result.put("code", -2);
 				result.put("msg", "删除的畜牧业指标已经被引用，只能停用");
 				return result;
 			}else {
-				animalsTargetMapper.delete(gids);
-				LogUtil.log(LogOptTypeEnum.DEL, LogOptSatusEnum.SUCESS, userid, "畜牧业指标删除，GID="+gids);
+				animalsTargetMapper.delete(gid);
+				//更新删掉的节点父节点是否叶子节点状态
+				if(animalsTargetMapper.findCountByPId(pid)==0) {
+					Map m = new HashMap<>();
+					m.put("parent_id", pid);
+					m.put("isleaf", 1);
+					animalsTargetMapper.updateIsLeaf(m);
+				}
+				LogUtil.log(LogOptTypeEnum.DEL, LogOptSatusEnum.SUCESS, userid, "畜牧业指标删除，GID="+gid);
 				//更新缓存
 				AnimalsTargetQueryVO queryVO = new AnimalsTargetQueryVO();
 				queryVO.setPage(1);
@@ -81,8 +88,21 @@ public class AnimalsTargetService {
 			if(!StringUtils.isEmpty(animalsTarget.getGid())) {
 				animalsTarget.setLast_time(new Date());
 				animalsTargetMapper.update(animalsTarget);
+				//更新子节点状态
+				Map m = new HashMap<>();
+				m.put("parent_id", animalsTarget.getGid());
+				m.put("stopflag", animalsTarget.getStopflag());
+				animalsTargetMapper.updStatusByPid(m);
 				LogUtil.log(LogOptTypeEnum.UPDATE, LogOptSatusEnum.SUCESS, userid, "畜牧业指标数据更新"+animalsTarget);
 			}else {//新增
+				animalsTarget.setIsleaf(1);
+				if(animalsTarget.getParent_id() != 0) {
+					//把父节点设置成非叶子状态
+					Map m = new HashMap<>();
+					m.put("parent_id", animalsTarget.getParent_id());
+					m.put("isleaf", 0);
+					animalsTargetMapper.updateIsLeaf(m);
+				}
 				animalsTarget.setCreator(userid);
 				animalsTargetMapper.insert(animalsTarget);
 				LogUtil.log(LogOptTypeEnum.ADD, LogOptSatusEnum.SUCESS, userid, "新增畜牧业指标数据"+animalsTarget);

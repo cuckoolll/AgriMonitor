@@ -14,5 +14,9 @@ public enum CacheTypeEnum {
 	/**
 	 * 畜牧业指标
 	 */
-	ANIMALSTARGET
+	ANIMALSTARGET,
+	/**
+	 * 乡镇
+	 */
+	TOWNS
 }

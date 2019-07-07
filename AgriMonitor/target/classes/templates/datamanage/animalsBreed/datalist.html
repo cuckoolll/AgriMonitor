@@ -8,7 +8,7 @@
 		<meta name="renderer" content="webkit">
 		<!--国产浏览器高速模式-->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>畜牧业指标维护</title>
+		<title>畜牧业生产情况</title>
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/base.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/iconfont.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
@@ -32,32 +32,39 @@
 			<div class="queryArea">
 				<form class="layui-form" action="">
 					<div class="layui-form-item">
-						<label class="layui-form-label text-left">是否停用：</label>
+						<label class="layui-form-label text-left">月份：</label>
 						<div class="layui-input-inline">
-					      <select id="stopflag" required lay-verify="required">
-					     	 <option value="">全部</option>
-	                        <option value="1">启用</option>
-					        <option value="0">停用</option>
-	                    	</select>
-					      </div>
+							<input type="text" id="date_month" class="layui-input">
+						</div>
+						<label class="layui-form-label">乡镇：</label>
+						<div class="layui-input-inline">
+					      <select id="towns">
+					        <option th:each="type:${towns}" th:value="${type}" th:text="${type}"></option>
+					      </select>
+					    </div>
+					    <!-- <label class="layui-form-label">指标：</label>
+						<div class="layui-input-inline">
+					      <select id="animalsTarget">
+					        <option value=""></option>
+					        <option th:each="type:${animalsTarget}" th:value="${type.gid}" th:text="${type.target_name}"></option>
+					      </select>
+					    </div> -->
 						<a id="queryBtn" class="layui-btn">检索</a>
-						<a th:if="${session.userinfo.roleinfo.role_name=='admin'}" type="button" class="layui-btn" id="qyBtn"><i class="layui-icon"></i>启用</a>
-						<a th:if="${session.userinfo.roleinfo.role_name=='admin'}" type="button" class="layui-btn" id="tyBtn"><i class="layui-icon"></i>停用</a>
+						<a th:if="${session.userinfo.roleinfo.role_name=='admin'}" type="button" class="layui-btn" id="dataImportBtn"><i class="layui-icon"></i>导入数据</a>
+						<a href="/animalsBreed/download" class="layui-btn"><i class="layui-icon"></i>模板下载</a>
 					</div>
 				</form>
 			</div>
 			<table id="datalist"  lay-filter="datalist"></table>
-			<script type="text/html" id="titleTpl">
- 			 {{#  if(d.stopflag==1){}}
-   				启用
-  			 {{#  } else if(d.stopflag==0) {}}
-   			 	停用
-  			{{#  } }}
+			<!-- 操作列 -->
+			<script type="text/html" id="oper-col" th:if="${session.userinfo.roleinfo.role_name=='admin'}">
+    			<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 			</script>
 			<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name=='admin'}">
   			 <div class="layui-inline" lay-event="add"><i class="layui-icon layui-icon-add-1"></i></div><div class="layui-inline" lay-event="update"><i class="layui-icon layui-icon-edit"></i></div><div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
 			</script>
 		</div>
-		<script th:src="@{/js/datamanage/animalsBreed/animalsTarget/datalist.js}"></script>
+		<script th:src="@{/js/datamanage/animalsBreed/datalist.js}"></script>
 	</body>
 </html>

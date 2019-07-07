@@ -25,5 +25,7 @@ public interface AnimalsBreedMapper {
 	
 	void delete(List<Integer> gids);
 	
-	int findByAnimalsTarget(List<Integer> typeGids);
+	int findByAnimalsTarget(Integer typeGid);
+	
+	void deleteByTowns(Map map);
 }

@@ -5,14 +5,19 @@
 		select * from t_animals_breed where gid=#{gid}
 	</select>
     <select id="findAllForPage" parameterType="com.agri.monitor.vo.AnimalsBreedQueryVO" resultType="map">
-        select a.gid,date_month,county,towns,village,animals_target,b.target_name,surplus_size,female_size,
+        select a.gid,date_month,county,towns,village,animals_target,b.gid fgid,b.parent_id,b.target_name,surplus_size,female_size,
         child_size,survival_size,death_size,maturity_size,sell_size,meat_output,milk_output,
         egg_output,hair_output,a.create_time,a.creator,a.modifier,a.last_time 
         from t_animals_breed a,t_animals_target b where a.animals_target=b.gid
         <if test="date_month != null">
 	        and a.date_month=#{date_month}
 	    </if>
-	    order by a.gid desc limit #{currIndex},#{limit}
+	    <if test="towns != null">
+	        and a.towns=#{towns}
+	    </if>
+	    <if test="animalsTarget != null">
+	        and a.animals_target=#{animalsTarget}
+	    </if>
     </select>
     <select id="findAllCount" parameterType="com.agri.monitor.vo.AnimalsBreedQueryVO" resultType="int">
         select count(a.gid) from t_animals_breed a,t_animals_target b where a.animals_target=b.gid
@@ -60,10 +65,11 @@
     	</foreach>
     </delete>
     
-    <select id="findByAnimalsTarget" parameterType="java.util.List" resultType="int">
-    	select count(gid) from t_animals_breed where animals_target in
-    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
-    		#{item}
-    	</foreach>
+    <select id="findByAnimalsTarget" parameterType="int" resultType="int">
+    	select count(gid) from t_animals_breed where animals_target = #{gid}
     </select>
+    
+    <delete id="deleteByTowns" parameterType="map">
+    	delete from t_animals_breed where towns=#{towns} and date_month=#{date_month}
+    </delete>
 </mapper>

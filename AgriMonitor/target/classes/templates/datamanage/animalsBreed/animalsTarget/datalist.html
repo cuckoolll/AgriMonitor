@@ -32,15 +32,15 @@
 			<div class="queryArea">
 				<form class="layui-form" action="">
 					<div class="layui-form-item">
-						<label class="layui-form-label text-left">是否停用：</label>
+						<!-- <label class="layui-form-label text-left">是否停用：</label>
 						<div class="layui-input-inline">
 					      <select id="stopflag" required lay-verify="required">
 					     	 <option value="">全部</option>
 	                        <option value="1">启用</option>
 					        <option value="0">停用</option>
 	                    	</select>
-					      </div>
-						<a id="queryBtn" class="layui-btn">检索</a>
+					      </div> -->
+						<!-- <a id="queryBtn" class="layui-btn">检索</a> -->
 						<a th:if="${session.userinfo.roleinfo.role_name=='admin'}" type="button" class="layui-btn" id="addBtn"><i class="layui-icon"></i>新增</a>
 					</div>
 				</form>

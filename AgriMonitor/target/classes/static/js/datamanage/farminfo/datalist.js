@@ -18,6 +18,7 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 		    	{type:'checkbox'},
 		      {field: 'gid', title: 'ID',hide: true,align:'center'},
 		      {field: 'county', title: '区（县、市）',align:'center',width:120},
+		      {field: 'towns', title: '乡镇',align:'center',width:120},
 		      {field: 'farm_name', title: '养殖场名称',align:'center'},
 		      {field: 'farm_address', title: '地址',align:'center'},
 		      {field: 'legal_person', title: '法人',align:'center',width:100},
@@ -36,6 +37,7 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 		    done: function(res){
 		    	if(res){
 		    		if(res.code==0){
+		    			  layer.msg('导入数据成功');
 				    	  datatable.reload({//表格数据重新加载
 							  where: {
 								  farmname: $("#farmname").val(),type: $("#type").val()

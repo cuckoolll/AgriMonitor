@@ -12,6 +12,7 @@ public class AnimalsTarget {
 	private Date last_time;
 	private Integer stopflag;
 	private String parent_name;
+	private Integer isleaf;
 	
 	public Integer getGid() {
 		return gid;
@@ -67,6 +68,12 @@ public class AnimalsTarget {
 	}
 	public void setParent_name(String parent_name) {
 		this.parent_name = parent_name;
+	}
+	public Integer getIsleaf() {
+		return isleaf;
+	}
+	public void setIsleaf(Integer isleaf) {
+		this.isleaf = isleaf;
 	}
 	@Override
 	public String toString() {

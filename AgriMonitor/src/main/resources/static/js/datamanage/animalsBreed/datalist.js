@@ -1,46 +1,67 @@
-layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
+layui.config({
+    base: '../../temp/treetable-lay/'
+}).extend({
+    treetable: 'treetable'
+}).use(['form','layer','treetable','upload','laydate','util'], function(form,layer,treetable,upload,laydate,util) {
 	var winH=$(window).height();
 	var datatable;
 	
-	function render(){
+	var curdate=util.toDateString(new Date(), 'yyyy-MM');
+	laydate.render({
+	    elem: '#date_month',
+	    type: 'month',
+	    value:curdate
+	 });
+	
+	function render(date){
 		//表格渲染
-		datatable=table.render({
+		datatable=treetable.render({
 			id:"datalist",
 		    elem: '#datalist',
-		    method:'post',
-		    toolbar: '#barDemo',
-		    url: '/farminfo/datalist', //数据接口，
+		    url: '/animalsBreed/datalist', //数据接口，
 		    height:winH-80,
-		    page: true, //开启分页
-		    limit:20,
-		    limits:[20,40,60,100],
-		    cols: [[ //表头
-		    	{type:'checkbox'},
-		      {field: 'gid', title: 'ID',hide: true,align:'center'},
-		      {field: 'county', title: '区（县、市）',align:'center',width:120},
-		      {field: 'farm_name', title: '养殖场名称',align:'center'},
-		      {field: 'farm_address', title: '地址',align:'center'},
-		      {field: 'legal_person', title: '法人',align:'center',width:100},
-		      {field: 'phone_num', title: '联系电话',align:'center',width:150},
-		      {field: 'animals_name', title: '认定畜种',align:'center'},
-		      {field: 'animals_size', title: '牲畜存栏（头、只）',align:'center'},
-		      {field: 'remarks', title: '备注',align:'center'}
+		    where: {date_month: date,towns:$("#towns").val()},
+		    toolbar: true,
+		    treeColIndex: 1,
+	        treeSpid: 0,
+	        treeIdName: 'fgid',
+	        treePidName: 'parent_id',
+	        treeDefaultClose: false,
+	        treeLinkage: false,
+		    cols: [[ 
+			      {field: 'gid', title: 'ID',hide: true,align:'center',rowspan:2},
+			      {field: 'target_name', title: '指标名称',align:'left',rowspan:2},
+			      {field: 'county', title: '区（县、市）',align:'center',width:120,rowspan:2},
+			      {field: 'towns', title: '乡镇',align:'center',width:120,rowspan:2},
+			      {field: 'surplus_size', title: '月末存栏数',align:'center',rowspan:2},
+			      {field: 'female_size', title: '能繁殖母畜',align:'center',rowspan:2},
+			      {title: '增加',align:'center',colspan:2},
+			      {title: '减少',align:'center',colspan:3},
+			      {title: '产量',align:'center',colspan:4},
+			      {templet: '#oper-col', title: '操作',align:'center',rowspan:2}
+			    ],[
+		      {field: 'child_size', title: '产仔数',align:'center'},
+		      {field: 'survival_size', title: '成活数',align:'center'},
+		      {field: 'death_size', title: '损亡数',align:'center'},
+		      {field: 'maturity_size', title: '出栏数',align:'center'},
+		      {field: 'sell_size', title: '出售数',align:'center'},
+		      {field: 'meat_output', title: '肉产量',align:'center'},
+		      {field: 'milk_output', title: '奶产量',align:'center'},
+		      {field: 'egg_output', title: '蛋产量',align:'center'},
+		      {field: 'hair_output', title: '毛产量',align:'center'}
 		    ]]
 		});
 		//文件上传
 		upload.render({
 		    elem: '#dataImportBtn',
-		    url: '/farminfo/dataImport',
+		    url: '/animalsBreed/dataImport',
 		    accept: 'file',
 		    exts: 'xls|xlsx',
 		    done: function(res){
 		    	if(res){
 		    		if(res.code==0){
-				    	  datatable.reload({//表格数据重新加载
-							  where: {
-								  farmname: $("#farmname").val(),type: $("#type").val()
-							  },page: {curr: 1}
-				    	  });
+		    			layer.msg('导入数据成功');
+		    			render($("#date_month").val().replace('-',''));
 				      }else{
 				    	  layer.msg(res.msg);
 				      }
@@ -50,21 +71,15 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 	}
 	
 	function bindEvent(){
+		//查询数据
+		$("#queryBtn").click(function(){
+			render($("#date_month").val().replace('-',''));
+		});
 		//监听工具条
-		table.on('toolbar(datalist)', function(obj){
-		    var checkStatus = table.checkStatus(obj.config.id)
-		    ,data = checkStatus.data; //获取选中的数据
+		table.on('tool(datalist)', function(obj){
+			var data = obj.data;
 		    switch(obj.event){
-		      case 'add':
-		    	  layer.open({
-              		    title: "新增养殖场信息",
-						type: 2,
-						area: ['800px', '500px'],
-						scrollbar: true,
-						content: '/farminfo/update'
-					});
-		      break;
-		      case 'update':
+		      case 'edit':
 		        if(data.length === 0){
 		          layer.msg('请选择一行');
 		        } else if(data.length > 1){
@@ -79,7 +94,7 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 					});
 		        }
 		      break;
-		      case 'delete':
+		      case 'del':
 		        if(data.length === 0){
 		          layer.msg('请选择一行');
 		        } else {
@@ -116,15 +131,7 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 		      break;
 		    };
 		  });
-		//查询数据
-		$("#queryBtn").click(function(){
-			datatable.reload({//表格数据重新加载
-				  where: {
-					  farm_name: $("#farmname").val(),animals_type: $("#type").val()
-				  },page: {curr: 1}
-			});
-		});
 	}
-	render();
+	render(curdate.replace('-',''));
 	bindEvent();
 });

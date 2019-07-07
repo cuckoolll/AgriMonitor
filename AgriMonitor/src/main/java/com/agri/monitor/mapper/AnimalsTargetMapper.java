@@ -1,6 +1,7 @@
 package com.agri.monitor.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -16,14 +17,20 @@ public interface AnimalsTargetMapper {
 	
 	int findAllCount(AnimalsTargetQueryVO queryVO);
 	
+	int findCountByPId(Integer pid);
+	
 	void insert(AnimalsTarget animalstype);
 	
 	void update(AnimalsTarget animalstype);
 	
-	void delete(List<Integer> gids);
+	void delete(Integer gid);
 	
 	void animalsTargetQy(List<Integer> gids);
 	
 	void animalsTargetTy(List<Integer> gids);
+	
+	void updateIsLeaf(Map map);
+	
+	void updStatusByPid(Map map);
 	
 }

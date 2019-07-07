@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,13 +41,15 @@ public class AnimalsBreedController {
 	@RequestMapping("")
 	public String toPage(Model model) {
 		model.addAttribute("animalsTarget", CacheUtil.getCache(CacheTypeEnum.ANIMALSTARGET));
+		model.addAttribute("towns", CacheUtil.getCache(CacheTypeEnum.TOWNS));
 		return "/datamanage/animalsBreed/datalist";
 	}
 	
 	@IgnoreSession
 	@RequestMapping("update")
 	public String add(Model model) {
-		model.addAttribute("animalstype", CacheUtil.getCache(CacheTypeEnum.ANIMALSTYPE));
+		model.addAttribute("animalsTarget", CacheUtil.getCache(CacheTypeEnum.ANIMALSTARGET));
+		model.addAttribute("towns", CacheUtil.getCache(CacheTypeEnum.TOWNS));
 		return "/datamanage/animalsBreed/update";
 	}
 	
@@ -72,14 +75,14 @@ public class AnimalsBreedController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/datalist",method=RequestMethod.POST)
+	@RequestMapping(value="/datalist")
 	public Map datalist(AnimalsBreedQueryVO queryVO, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0);
 		result.put("msg", "成功");
 		result.put("data", animalsBreedService.findAllForPage(queryVO, user.getUser_id()));
-		result.put("count", animalsBreedService.findAllCount(queryVO));
+		//result.put("count", animalsBreedService.findAllCount(queryVO));
 		return result;
 	}
 	
@@ -87,6 +90,11 @@ public class AnimalsBreedController {
 	@RequestMapping(value="/dataImport",method=RequestMethod.POST)
 	public Map dataImport(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
 		return animalsBreedService.dataImport(file, request);
+	}
+	
+	@RequestMapping("/download")
+    public void downloadFile(HttpServletResponse response) {
+		animalsBreedService.downloadFile(response);
 	}
 	
 	/******************认定畜种维护*****************/
@@ -104,9 +112,9 @@ public class AnimalsBreedController {
 	
 	@ResponseBody
 	@RequestMapping(value="/animalsTarget/doDel",method=RequestMethod.POST)
-	public Map delAnimalsType(@RequestBody ArrayList<Integer> gids, HttpServletRequest request) {
+	public Map delAnimalsType(Integer gid,Integer pid, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return animalsTargetService.doDel(gids, user.getUser_id());
+		return animalsTargetService.doDel(gid,pid, user.getUser_id());
 	}
 	
 	@ResponseBody

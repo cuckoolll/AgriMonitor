@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.agri.monitor.entity.AnimalsType;
 import com.agri.monitor.entity.FarmInfo;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.enums.CacheTypeEnum;
@@ -29,7 +28,6 @@ import com.agri.monitor.enums.LogOptTypeEnum;
 import com.agri.monitor.mapper.FarmInfoMapper;
 import com.agri.monitor.utils.CacheUtil;
 import com.agri.monitor.utils.LogUtil;
-import com.agri.monitor.utils.UrbanAreaUtil;
 import com.agri.monitor.vo.FarmQueryVO;
 
 @Service
@@ -142,9 +140,9 @@ public class FarmInfoService {
 	        	//解析所属乡镇
 	           if (i == 1) {
 	        	   towns = row.getCell(1).getStringCellValue();
-	        	   if (!UrbanAreaUtil.isLegalTown(towns)) {
+	        	   if(StringUtils.isEmpty(towns)) {
 	        		   result.put("code", -1);
-	        		   result.put("msg", "报表乡镇填写错误，请重新选择所属乡镇");
+	        		   result.put("msg", "乡镇未填写");
 	        		   return result;
 	        	   }
 	           }

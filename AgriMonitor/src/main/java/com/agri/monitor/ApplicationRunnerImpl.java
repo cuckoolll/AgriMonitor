@@ -1,5 +1,7 @@
 package com.agri.monitor;
 
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,8 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 		queryVO.setPage(1);
 		queryVO.setLimit(Integer.MAX_VALUE);
 		CacheUtil.putCache(CacheTypeEnum.ANIMALSTARGET, animalsTargetMapper.findAllForPage(queryVO1));
+		//缓存乡镇信息
+		CacheUtil.putCache(CacheTypeEnum.TOWNS, Arrays.asList(new String[]{"沙柳河镇","哈尔盖镇","伊克乌兰乡","泉吉乡","吉尔孟乡"}));
 		//TODO 其他缓存数据，先定义枚举类型
 	}
 

@@ -10,7 +10,7 @@
         <if test="stopflag != null">
 	        and a.stopflag=#{stopflag}
 	    </if>
-	    order by a.gid desc limit #{currIndex},#{limit}
+	    order by a.gid limit #{currIndex},#{limit}
     </select>
     <select id="findAllCount" parameterType="com.agri.monitor.vo.AnimalsTypeQueryVO" resultType="int">
         select count(a.gid) from t_animals_type a, t_user_info b where a.creator=b.user_id
