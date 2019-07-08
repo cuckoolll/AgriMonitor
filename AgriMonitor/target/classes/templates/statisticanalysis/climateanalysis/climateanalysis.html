@@ -52,8 +52,7 @@
 						
 						<label class="layui-form-label">气候指标：</label>
 						<div class="layui-input-inline">
-					      <select id="climateindex">
-					      	<option value=""></option>
+					      <select id="climateindex" lay-verify="required" lay-filter="climateindex">
 					        <option th:each="type:${climateindex}" th:value="${type.id}" th:text="${type.text}"></option>
 					      </select>
 					    </div>
@@ -63,7 +62,7 @@
 				</form>
 			</div>
 			
-			
+			<div id="charts" style="width: 100%; padding-top:10px;"></div>
 		</div>
 	</body>
 

@@ -1,11 +1,11 @@
 package com.agri.monitor.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
 import com.agri.monitor.entity.ClimateInfo;
-import com.agri.monitor.entity.WaterInfo;
 import com.agri.monitor.vo.ClimateQueryVO;
 
 @Repository
@@ -26,4 +26,6 @@ public interface ClimateInfoMapper {
 	void delInfoByGid(List<Integer> gids);
 
 	ClimateInfo findById(Integer gid);
+
+	List<Map> queryAnalysisData(Map param);
 }

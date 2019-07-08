@@ -1,6 +1,7 @@
 package com.agri.monitor.controller.datamanage;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.agri.monitor.annotation.IgnoreSession;
 import com.agri.monitor.entity.ClimateInfo;
 import com.agri.monitor.entity.UserInfo;
+import com.agri.monitor.enums.CacheTypeEnum;
 import com.agri.monitor.service.datamanage.ClimateInfoService;
+import com.agri.monitor.utils.CacheUtil;
 import com.agri.monitor.vo.ClimateQueryVO;
 
 @Controller
@@ -33,7 +36,8 @@ public class ClimateInfoController {
 	 * @return .
 	 */
 	@RequestMapping("")
-	public String climateInfo() {
+	public String climateInfo(Model model) {
+		model.addAttribute("towns", CacheUtil.getCache(CacheTypeEnum.TOWNS));
 		return "/datamanage/climateinfo/climateinfo";
 	}
 	
@@ -84,7 +88,16 @@ public class ClimateInfoController {
 	}
 	
 	@RequestMapping("/climateanalysis")
-	public String climateanalysis() {
+	public String climateAnalysis(Model model) {
+		model.addAttribute("climateindex", CacheUtil.getCache(CacheTypeEnum.CLIMATEINDEX));
+		model.addAttribute("towns", CacheUtil.getCache(CacheTypeEnum.TOWNS));
 		return "/statisticanalysis/climateanalysis/climateanalysis";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/queryAnalysisData", method=RequestMethod.POST)
+	public List<Map> queryAnalysisData(Map param, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		return climateInfoService.queryAnalysisData(param, user.getUser_id());
 	}
 }

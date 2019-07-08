@@ -224,4 +224,20 @@ public class ClimateInfoService {
 		}
 		return result;
 	}
+	
+	public List<Map> queryAnalysisData(Map param, String userid) {
+		if (logger.isInfoEnabled()) {
+			logger.info("气候数据分析查询：" + param);
+		}
+		List<Map> analysisData = new ArrayList();
+		try {
+			analysisData = climateInfoMapper.queryAnalysisData(param);
+			LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, "气候数据分析查询：" + param);
+		} catch (Exception e) {
+			logger.error("气候数据分析查询失败", e);
+			LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.FAIL, userid, "气候数据分析查询失败" + e.getMessage());
+		}
+		
+		return null;
+	}
 }
