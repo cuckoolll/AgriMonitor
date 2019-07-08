@@ -82,4 +82,9 @@ public class ClimateInfoController {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 		return climateInfoService.findById(gid, user.getUser_id());
 	}
+	
+	@RequestMapping("/climateanalysis")
+	public String climateanalysis() {
+		return "/statisticanalysis/climateanalysis/climateanalysis";
+	}
 }

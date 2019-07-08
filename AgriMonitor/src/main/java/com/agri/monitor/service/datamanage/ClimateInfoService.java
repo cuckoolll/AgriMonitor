@@ -28,6 +28,7 @@ import com.agri.monitor.entity.ClimateInfo;
 import com.agri.monitor.entity.FarmInfo;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.entity.WaterInfo;
+import com.agri.monitor.enums.ClimateIndexEnum;
 import com.agri.monitor.enums.LogOptSatusEnum;
 import com.agri.monitor.enums.LogOptTypeEnum;
 import com.agri.monitor.mapper.ClimateInfoMapper;
@@ -209,6 +210,17 @@ public class ClimateInfoService {
 			result.put("code", -1);
     		result.put("msg", "解析文件失败");
     		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(), "导入气候监测信息异常："+e.getMessage());
+		}
+		return result;
+	}
+	
+	public List<Map> getClimateIndex() {
+		List<Map> result = new ArrayList();
+		for (ClimateIndexEnum climateIndex : ClimateIndexEnum.values()) {
+			Map map = new HashMap();
+			map.put("id", climateIndex.getId());
+			map.put("text", climateIndex.getText());
+			result.add(map);
 		}
 		return result;
 	}

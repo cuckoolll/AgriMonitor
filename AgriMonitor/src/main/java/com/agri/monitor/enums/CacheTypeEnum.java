@@ -15,8 +15,14 @@ public enum CacheTypeEnum {
 	 * 畜牧业指标
 	 */
 	ANIMALSTARGET,
+	
 	/**
 	 * 乡镇
 	 */
-	TOWNS
+	TOWNS,
+	
+	/**
+	 * 气候指标
+	 */
+	CLIMATEINDEX
 }
