@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
@@ -104,12 +105,65 @@ public class AnimalsBreedService {
 		return result;
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private void totalParent(List<Map> list,Map nodeMap,Integer parent_id) {
+		for (Map map : list) {
+			if(((Integer) map.get("fgid")) == parent_id) {
+				map.put("surplus_size", 
+						new BigDecimal(null==map.get("surplus_size")?"0":map.get("surplus_size").toString())
+						.add(new BigDecimal(null==nodeMap.get("surplus_size")?"0":nodeMap.get("surplus_size").toString())));
+				map.put("female_size", 
+						new BigDecimal(null==map.get("female_size")?"0":map.get("female_size").toString())
+						.add(new BigDecimal(null==nodeMap.get("female_size")?"0":nodeMap.get("female_size").toString())));
+				map.put("child_size", 
+						new BigDecimal(null==map.get("child_size")?"0":map.get("child_size").toString())
+						.add(new BigDecimal(null==nodeMap.get("child_size")?"0":nodeMap.get("child_size").toString())));
+				map.put("survival_size", 
+						new BigDecimal(null==map.get("survival_size")?"0":map.get("survival_size").toString())
+						.add(new BigDecimal(null==nodeMap.get("survival_size")?"0":nodeMap.get("survival_size").toString())));
+				map.put("death_size", 
+						new BigDecimal(null==map.get("death_size")?"0":map.get("death_size").toString())
+						.add(new BigDecimal(null==nodeMap.get("death_size")?"0":nodeMap.get("death_size").toString())));
+				map.put("maturity_size", 
+						new BigDecimal(null==map.get("maturity_size")?"0":map.get("maturity_size").toString())
+						.add(new BigDecimal(null==nodeMap.get("maturity_size")?"0":nodeMap.get("maturity_size").toString())));
+				map.put("sell_size", 
+						new BigDecimal(null==map.get("sell_size")?"0":map.get("sell_size").toString())
+						.add(new BigDecimal(null==nodeMap.get("sell_size")?"0":nodeMap.get("sell_size").toString())));
+				map.put("meat_output", 
+						new BigDecimal(null==map.get("meat_output")?"0":map.get("meat_output").toString())
+						.add(new BigDecimal(null==nodeMap.get("meat_output")?"0":nodeMap.get("meat_output").toString())));
+				map.put("milk_output", 
+						new BigDecimal(null==map.get("milk_output")?"0":map.get("milk_output").toString())
+						.add(new BigDecimal(null==nodeMap.get("milk_output")?"0":nodeMap.get("milk_output").toString())));
+				map.put("egg_output", 
+						new BigDecimal(null==map.get("egg_output")?"0":map.get("egg_output").toString())
+						.add(new BigDecimal(null==nodeMap.get("egg_output")?"0":nodeMap.get("egg_output").toString())));
+				map.put("hair_output", 
+						new BigDecimal(null==map.get("hair_output")?"0":map.get("hair_output").toString())
+						.add(new BigDecimal(null==nodeMap.get("hair_output")?"0":nodeMap.get("hair_output").toString())));
+				if(((Integer) map.get("parent_id"))!=0) {
+					totalParent(list, nodeMap, (Integer) map.get("parent_id"));
+				}
+			}
+		}
+	}
+	
 	public List<Map> findAllForPage(AnimalsBreedQueryVO queryVO, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("查询所有畜牧业生产情况数据开始：" + queryVO);
 		}
 		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, "查询畜牧业生产情况信息，"+queryVO);
-		return animalsBreedMapper.findAllForPage(queryVO);
+		List<Map> list = animalsBreedMapper.findAllForPage(queryVO);
+		if(null != list && list.size() > 0) {
+			for (Map map : list) {
+				//如果是叶子节点，将本节点数据合计到父节点中
+				if(((Integer) map.get("isleaf"))==1) {
+					totalParent(list, map, (Integer) map.get("parent_id"));
+				}
+			}
+		}
+		return list;
 	}
 	
 	public int findAllCount(AnimalsBreedQueryVO queryVO) {

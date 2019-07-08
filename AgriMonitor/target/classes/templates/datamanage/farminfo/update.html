@@ -30,9 +30,8 @@
 	                </div>
 	                <div class="layui-input-inline">
 	                    <select name="towns" required lay-verify="required">
-	                        <option value="">请选择乡镇</option>
-					        <option value="沙柳河镇">沙柳河镇</option>
-					        <option value="沙柳河镇2">沙柳河镇2</option>
+	                    	<option value=""></option>
+	                        <option th:each="type:${towns}" th:value="${type}" th:text="${type}"></option>
 	                    </select>
 	                </div>
 				</div>

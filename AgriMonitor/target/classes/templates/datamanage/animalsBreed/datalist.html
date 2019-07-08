@@ -58,9 +58,11 @@
 			<table id="datalist"  lay-filter="datalist"></table>
 			<!-- 操作列 -->
 			<script type="text/html" id="oper-col" th:if="${session.userinfo.roleinfo.role_name=='admin'}">
-    			<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
-    			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+				{{#  if(d.isleaf==1){}}
+   					<a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+  				{{#  } }}
 			</script>
+			<!-- <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a> -->
 			<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name=='admin'}">
   			 <div class="layui-inline" lay-event="add"><i class="layui-icon layui-icon-add-1"></i></div><div class="layui-inline" lay-event="update"><i class="layui-icon layui-icon-edit"></i></div><div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
 			</script>

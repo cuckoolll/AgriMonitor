@@ -3,10 +3,10 @@ layui.use(['form','layer','table'], function(form,layer,table) {
 		var gid = getUrlParam("gid");
 		if(gid){//如果有值，为更新操作
 			//查询数据并赋值到表单中
-			$.post("/farminfo/findById", {gid:gid},function(res){
+			$.post("/animalsBreed/findById", {gid:gid},function(res){
 		          if(res){
 		        	  $.each(res,function(key,val){
-		        		  if(key=='towns'||key=='animals_type'){
+		        		  if(key=='towns'||key=='animals_target'){
 		        			  $("[name='"+key+"'] option[value='"+val+"']").attr("selected","true");
 		        			  form.render('select');
 		        		  }else{
@@ -14,7 +14,7 @@ layui.use(['form','layer','table'], function(form,layer,table) {
 		        		  }
 		        	  });
 		          }else{
-		        	  layer.msg('加载养殖场信息失败');
+		        	  layer.msg('加载畜牧业生成数据失败');
 		        	  $("#saveBtn").attr('disabled',true);
 		          }
 	        });
@@ -24,14 +24,15 @@ layui.use(['form','layer','table'], function(form,layer,table) {
 	function bindEvent(){
 		//监听提交
 		form.on('submit(submitBut)', function(data) {
-			$.post("/farminfo/doSave", data.field,function(res){
+			$.post("/animalsBreed/doSave", data.field,function(res){
 		          if(res && res.code==0){
-		        	  parent.layer.msg('保存养殖场数据成功');
-		        	  parent.layui.table.reload('datalist');
-		        	  var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-					  parent.layer.close(index); //再执行关闭
+		        	  //parent.layer.msg('保存畜牧业生成数据成功');
+		        	  var rq=$("#date_month").val();
+		        	  $("#mainIframe",window.top.document).attr("src","/animalsBreed?rq="+rq.slice(0,4)+"-"+rq.slice(4,6)+"&towns="+escape($("#towns").val()));
+		        	  //var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+					  //parent.layer.close(index); //再执行关闭
 		          }else{
-		        	  layer.msg('保存养殖场数据失败');
+		        	  layer.msg('保存畜牧业生成数据失败');
 		          }
 	        });
 			return false;

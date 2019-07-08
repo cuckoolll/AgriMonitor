@@ -24,61 +24,95 @@
 			<form id="addForm" class="layui-form">
 				<input type="hidden" name="gid"/>
 				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">指标名称：</label>
+	                <div class="layui-input-inline">
+	                    <select name="animals_target" disabled="disabled">
+							<option value="0"></option>
+					    	<option th:each="type:${animalsTarget}" th:value="${type.gid}" th:text="${type.target_name}"></option>
+					   </select>
+	                </div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">月份：</label>
+	                <div class="layui-input-inline">
+	                    <input id="date_month" type="text" name="date_month" readonly="readonly" class="layui-input">
+	                </div>
+				</div>
+				<div class="layui-form-item">
 					<label class="layui-form-label" style="width: 140px">所属区域：</label>
 	                <div class="layui-input-inline">
 	                    <input type="text" name="county" readonly="readonly" class="layui-input" value="刚察县">
 	                </div>
 	                <div class="layui-input-inline">
-	                    <select name="towns" required lay-verify="required">
-	                        <option value="">请选择乡镇</option>
-					        <option value="沙柳河镇">沙柳河镇</option>
-					        <option value="沙柳河镇2">沙柳河镇2</option>
+	                    <select id="towns" name="towns" disabled="disabled" lay-verify="required">
+	                        <option th:each="type:${towns}" th:value="${type}" th:text="${type}"></option>
 	                    </select>
 	                </div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label"  style="width: 140px">养殖场名称：</label>
+					<label class="layui-form-label"  style="width: 140px">月末存栏数：</label>
 					<div class="layui-input-block">
-						<input type="text" name="farm_name" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 560px">
+						<input type="text" name="surplus_size" required lay-verify="required|number" autocomplete="off"  class="layui-input" style="width: 560px">
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label" style="width: 140px">地址：</label>
+					<label class="layui-form-label" style="width: 140px">能繁殖母畜：</label>
 					<div class="layui-input-block">
-						<input type="text" name="farm_address" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 560px">
+						<input type="text" name="female_size" required lay-verify="required|number" autocomplete="off" class="layui-input" style="width: 560px">
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label" style="width: 140px">法人：</label>
+					<label class="layui-form-label" style="width: 140px">产仔数：</label>
 					<div class="layui-input-block">
-						<input type="text" name="legal_person" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 560px">
+						<input type="text" name="child_size" required lay-verify="required|number" autocomplete="off" class="layui-input" style="width: 560px">
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label" style="width: 140px">联系电话：</label>
+					<label class="layui-form-label" style="width: 140px">成活数：</label>
 					<div class="layui-input-block">
-						<input type="text" name="phone_num" autocomplete="off" class="layui-input" style="width: 560px">
+						<input type="text" name="survival_size" required lay-verify="required|number" autocomplete="off" class="layui-input" style="width: 560px">
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label" style="width: 140px">认定畜种：</label>
-					<div class="layui-input-inline">
-						<select name="animals_type" required lay-verify="required">
-							<option value=""></option>
-					    	<option th:each="type:${animalstype}" th:value="${type.gid}" th:text="${type.type_name}"></option>
-					   </select>
+					<label class="layui-form-label" style="width: 140px">损亡数：</label>
+					<div class="layui-input-block">
+						<input type="text" name="death_size" required lay-verify="required|number" autocomplete="off" class="layui-input" style="width: 560px">
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label" style="width: 140px">牲畜存栏（头、只）：</label>
+					<label class="layui-form-label" style="width: 140px">出栏数：</label>
 					<div class="layui-input-block">
-						<input type="text" name="animals_size" required lay-verify="required|number" autocomplete="off" class="layui-input" style="width: 560px">
+						<input type="text" name="maturity_size" required lay-verify="required|number" autocomplete="off" class="layui-input" style="width: 560px">
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label" style="width: 140px">备注：</label>
+					<label class="layui-form-label" style="width: 140px">出售数：</label>
 					<div class="layui-input-block">
-						<textarea name="remarks" class="layui-textarea" style="width: 560px"></textarea>
+						<input type="text" name="sell_size" required lay-verify="required|number" autocomplete="off" class="layui-input" style="width: 560px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">肉产量：</label>
+					<div class="layui-input-block">
+						<input type="text" name="meat_output" required lay-verify="required|number" autocomplete="off" class="layui-input" style="width: 560px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">奶产量：</label>
+					<div class="layui-input-block">
+						<input type="text" name="milk_output" required lay-verify="required|number" autocomplete="off" class="layui-input" style="width: 560px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">蛋产量：</label>
+					<div class="layui-input-block">
+						<input type="text" name="egg_output" required lay-verify="required|number" autocomplete="off" class="layui-input" style="width: 560px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">毛产量：</label>
+					<div class="layui-input-block">
+						<input type="text" name="hair_output" required lay-verify="required|number" autocomplete="off" class="layui-input" style="width: 560px">
 					</div>
 				</div>
 				
@@ -89,7 +123,7 @@
 				</div>
 			</form>
 		</div>
-		<script th:src="@{/js/datamanage/farminfo/update.js}"></script>
+		<script th:src="@{/js/datamanage/animalsBreed/update.js}"></script>
 	</body>
 
 </html>

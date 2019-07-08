@@ -5,7 +5,7 @@
 		select * from t_animals_breed where gid=#{gid}
 	</select>
     <select id="findAllForPage" parameterType="com.agri.monitor.vo.AnimalsBreedQueryVO" resultType="map">
-        select a.gid,date_month,county,towns,village,animals_target,b.gid fgid,b.parent_id,b.target_name,surplus_size,female_size,
+        select a.gid,date_month,county,towns,village,animals_target,b.gid fgid,b.parent_id,b.target_name,b.isleaf,surplus_size,female_size,
         child_size,survival_size,death_size,maturity_size,sell_size,meat_output,milk_output,
         egg_output,hair_output,a.create_time,a.creator,a.modifier,a.last_time 
         from t_animals_breed a,t_animals_target b where a.animals_target=b.gid
@@ -51,7 +51,7 @@
     
     <update id="update" parameterType="com.agri.monitor.entity.AnimalsBreed">
     	update t_animals_breed set date_month=#{date_month},county=#{county},towns=#{towns},
-    	village=#{village},animals_target=#{animals_target},surplus_size=#{surplus_siz}e,
+    	village=#{village},animals_target=#{animals_target},surplus_size=#{surplus_size},
     	female_size=#{female_size},child_size=#{child_size},survival_size=#{survival_size},
     	death_size=#{death_size},maturity_size=#{maturity_size},sell_size=#{sell_size},
     	meat_output=#{meat_output},milk_output=#{milk_output},egg_output=#{egg_output},

@@ -6,7 +6,7 @@ layui.use(['form','layer','table'], function(form,layer,table) {
 			$.post("/farminfo/animalstype/findById", {gid:gid},function(res){
 		          if(res){
 		        	  $.each(res,function(key,val){
-		        		  if(key=='stopflag'){
+		        		  if(key=='stopflag'||key=='towns'){
 		        			  $("[name='"+key+"'] option[value='"+val+"']").attr("selected","true");
 		        			  form.render('select');
 		        		  }else{

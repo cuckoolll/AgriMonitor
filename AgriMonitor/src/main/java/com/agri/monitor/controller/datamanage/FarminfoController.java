@@ -46,6 +46,7 @@ public class FarminfoController {
 	@IgnoreSession
 	@RequestMapping("update")
 	public String add(Model model) {
+		model.addAttribute("towns", CacheUtil.getCache(CacheTypeEnum.TOWNS));
 		model.addAttribute("animalstype", CacheUtil.getCache(CacheTypeEnum.ANIMALSTYPE));
 		return "/datamanage/farminfo/update";
 	}
