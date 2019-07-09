@@ -96,8 +96,7 @@ public class ClimateInfoController {
 	
 	@ResponseBody
 	@RequestMapping(value="/queryAnalysisData", method=RequestMethod.POST)
-	public List<Map> queryAnalysisData(Map param, HttpServletRequest request) {
-		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return climateInfoService.queryAnalysisData(param, user.getUser_id());
+	public Map queryAnalysisData(HttpServletRequest request) {
+		return climateInfoService.queryAnalysisData(request);
 	}
 }

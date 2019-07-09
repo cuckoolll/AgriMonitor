@@ -8,9 +8,9 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 	
  // 指定图表的配置项和数据
     function setLineOption(map) {
-    	var towns = param.towns;
-    	var climateindex = param.climateindex;
-    	var climateindexName = param.climateindexName;
+    	var towns = map.towns;
+    	var climateindex = map.climateindex;
+    	var climateindexName = map.climateindexName;
     	
     	var param = {};
     	param.towns = towns;
@@ -18,7 +18,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
     	
     	title = towns + climateindexName + "分析图";
     	
-    	$.post("/climateinfo/queryAnalysisData", param, function(data){
+    	$.post("/climateinfo/queryAnalysisData", param, function(res){
     		charts.setOption({
     			title: {
     	            text: title,
@@ -28,13 +28,13 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
     	            data:[climateindexName]
     	        },
     	        xAxis: {
-    	            data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+    	            data: res.date_year
     	        },
     	        yAxis: {},
     	        series: [{
-    	            name: '销量',
-    	            type: 'bar',
-    	            data: [5, 20, 36, 10, 10, 20]
+    	            name: climateindexName,
+    	            type: 'line',
+    	            data: res.data
     	        }]
         	});
     	});
@@ -44,7 +44,8 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 	function render() {
 		timeControl = laydate.render({
 			elem: '#date_year',
-			type: 'year'
+			type: 'year',
+			value: new Date()
 		}); 
 		
 		var map = {};

@@ -225,10 +225,17 @@ public class ClimateInfoService {
 		return result;
 	}
 	
-	public List<Map> queryAnalysisData(Map param, String userid) {
+	public Map queryAnalysisData(HttpServletRequest request) {
+		Map param = new HashMap();
+		param.put("towns", request.getParameter("towns"));
+		param.put("date_year", request.getParameter("date_year"));
+		param.put("climateindex", request.getParameter("climateindex"));
 		if (logger.isInfoEnabled()) {
 			logger.info("气候数据分析查询：" + param);
 		}
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		String userid = user.getUser_id();
+		
 		List<Map> analysisData = new ArrayList();
 		try {
 			analysisData = climateInfoMapper.queryAnalysisData(param);
@@ -238,6 +245,23 @@ public class ClimateInfoService {
 			LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.FAIL, userid, "气候数据分析查询失败" + e.getMessage());
 		}
 		
-		return null;
+		final String climateindex = (String) param.get("climateindex");
+		
+		final List dataList = new ArrayList();
+		final List townsList = new ArrayList();
+		final List date_yearList = new ArrayList();
+		
+		for (Map map : analysisData) {
+			dataList.add(map.get(climateindex));
+			townsList.add(map.get("towns"));
+			date_yearList.add(map.get("date_year"));
+		}
+		
+		final Map result = new HashMap();
+		result.put("data", dataList);
+		result.put("towns", townsList);
+		result.put("date_year", date_yearList);
+		
+		return result;
 	}
 }

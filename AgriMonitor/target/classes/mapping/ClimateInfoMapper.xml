@@ -124,4 +124,17 @@
     		#{item}
     	</foreach>
     </delete>
+    
+    <select id="queryAnalysisData" parameterType="java.util.Map" resultType="java.util.Map">
+    	select ${climateindex},
+    		   towns,
+    		   date_year
+    	  from t_climate_quality 
+    	 <if test="towns != null and towns != ''">
+    	 	where towns = #{towns}
+    	 </if>
+    	 <if test="date_year != null and date_year != ''">
+    	 	where date_year = #{date_year}
+    	 </if>
+    </select>
 </mapper>
