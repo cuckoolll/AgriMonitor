@@ -42,15 +42,52 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
     	});
     };
     
+    /**
+     * 绘制柱状图 .
+     */
+    function setBarOption(map) {
+    	var date_year = map.date_year;
+    	var climateindex = map.climateindex;
+    	var climateindexName = map.climateindexName;
+    	
+    	var param = {};
+    	param.date_year = date_year;
+    	param.climateindex = climateindex;
+    	
+    	title = date_year + "年" + climateindexName + "分析图";
+    	
+    	$.post("/climateinfo/queryAnalysisData", param, function(res){
+    		charts.setOption({
+    			title: {
+    	            text: title,
+    	        },
+    	        tooltip: {},
+    	        legend: {
+    	            data:[climateindexName]
+    	        },
+    	        xAxis: {
+    	            data: res.towns
+    	        },
+    	        yAxis: {},
+    	        series: [{
+    	            name: climateindexName,
+    	            type: 'bar',
+    	            data: res.data
+    	        }]
+        	});
+    	});
+    };
+    
 	function render() {
 		timeControl = laydate.render({
 			elem: '#date_year',
 			type: 'year',
-			value: new Date()
+			value: new Date(),
 			done: function(value, date, endDate) {
 				var towns = $("#towns").val();
 				if (towns != null && towns != '' && towns != 'undefined') {
 					$("#towns").val('');
+					form.render('select');
 				}
 			}
 		}); 
@@ -67,7 +104,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		if (map.date_year == null || map.date_year == '' || map.date_year == 'undefined') {
 			setLineOption(map);
 		} else {
-			
+			setBarOption(map);
 		}
 		
 	}
