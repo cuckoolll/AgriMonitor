@@ -6,7 +6,9 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 	
     var charts = echarts.init(document.getElementById('charts'));
 	
- // 指定图表的配置项和数据
+    /**
+     * 绘制折线图 .
+     */
     function setLineOption(map) {
     	var towns = map.towns;
     	var climateindex = map.climateindex;
@@ -38,7 +40,6 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
     	        }]
         	});
     	});
-    	
     };
     
 	function render() {
@@ -46,24 +47,47 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 			elem: '#date_year',
 			type: 'year',
 			value: new Date()
+			done: function(value, date, endDate) {
+				var towns = $("#towns").val();
+				if (towns != null && towns != '' && towns != 'undefined') {
+					$("#towns").val('');
+				}
+			}
 		}); 
 		
+		doQuery();
+	}
+	
+	function doQuery() {
 		var map = {};
+		map.date_year = $("#date_year").val();
 		map.towns = $("#towns").val();
 		map.climateindex = $("#climateindex").val();
 		map.climateindexName = $("#climateindex option:selected").text();
-		setLineOption(map);
+		if (map.date_year == null || map.date_year == '' || map.date_year == 'undefined') {
+			setLineOption(map);
+		} else {
+			
+		}
+		
 	}
 	
 	function bindEvent() {
 		//查询数据
 		$("#queryBtn").click(function(){
-			render();
+			doQuery();
 		});
 		
 		$(window).resize(function(){
 			$("#charts").css("height",winH - 80);
 			charts.resize();
+		});
+		
+		form.on('select(towns)', function(data) { 
+			var date_year = $("#date_year").val();
+			if (date_year != null && date_year != '' && date_year != 'undefined') {
+				$("#date_year").val('');
+			}
 		});
 	}
 	

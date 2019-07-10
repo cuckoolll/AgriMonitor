@@ -44,7 +44,7 @@
 						
 						<label class="layui-form-label">乡镇：</label>
 						<div class="layui-input-inline">
-					      <select id="towns">
+					      <select id="towns" lay-filter='towns'>
 					      	<option value=""></option>
 					        <option th:each="type:${towns}" th:value="${type}" th:text="${type}"></option>
 					      </select>
