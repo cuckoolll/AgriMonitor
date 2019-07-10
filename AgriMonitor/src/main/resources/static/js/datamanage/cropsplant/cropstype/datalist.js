@@ -9,7 +9,7 @@ layui.use(['form','layer','table'], function(form,layer,table,upload) {
 		    elem: '#datalist',
 		    method:'post',
 		    toolbar: '#barDemo',
-		    url: '/farminfo/animalstype/datalist', //数据接口，
+		    url: '/cropsplant/cropstype/datalist', //数据接口，
 		    height:winH-80,
 		    page: true, //开启分页
 		    limit:20,
@@ -17,7 +17,7 @@ layui.use(['form','layer','table'], function(form,layer,table,upload) {
 		    cols: [[ //表头
 		    	{type:'checkbox'},
 		      {field: 'gid', title: 'ID',hide: true,align:'center'},
-		      {field: 'type_name', title: '认定畜种名称',align:'center'},
+		      {field: 'type_name', title: '农产品类型',align:'center'},
 		      {field: 'user_showname', title: '创建人',align:'center'},
 		      {field: 'create_time', title: '创建时间',align:'center'},
 		      {field: 'stopflag', title: '是否停用',align:'center', templet: '#titleTpl'}
@@ -33,11 +33,11 @@ layui.use(['form','layer','table'], function(form,layer,table,upload) {
 		    switch(obj.event){
 		      case 'add':
 		    	  layer.open({
-              		    title: "新增认定畜种",
+              		    title: "新增农产品类型",
 						type: 2,
 						area: ['400px', '280px'],
 						scrollbar: true,
-						content: '/farminfo/animalstype/update'
+						content: '/cropsplant/cropstype/update'
 					});
 		      break;
 		      case 'update':
@@ -47,11 +47,11 @@ layui.use(['form','layer','table'], function(form,layer,table,upload) {
 		          layer.msg('只能同时编辑一个');
 		        } else {
 		        	layer.open({
-              		    title: "修改认定畜种",
+              		    title: "修改农产品类型",
 						type: 2,
 						area: ['400px', '250px'],
 						scrollbar: true,
-						content: '/farminfo/animalstype/update?gid='+checkStatus.data[0].gid
+						content: '/cropsplant/cropstype/update?gid='+checkStatus.data[0].gid
 					});
 		        }
 		      break;
@@ -59,7 +59,7 @@ layui.use(['form','layer','table'], function(form,layer,table,upload) {
 		        if(data.length === 0){
 		          layer.msg('请选择一行');
 		        } else {
-		        	layer.confirm('确定要删除选择的认定畜种信息吗？', function(index){
+		        	layer.confirm('确定要删除选择的农产品类型信息吗？', function(index){
 		        	        layer.close(index);
 		        	        var gids=[];
 				        	$.each(data,function(index,item){
@@ -67,14 +67,14 @@ layui.use(['form','layer','table'], function(form,layer,table,upload) {
 				        	});
 				        	$.ajax({
 				        		type:"post",
-				        		url:"/farminfo/animalstype/doDel",
+				        		url:"/cropsplant/cropstype/doDel",
 				        		contentType:"application/json",
 				        		data: JSON.stringify(gids),
 				        		dataType:"json",
 				        		success:function(res){
 				        			if(res){
 							        	  if(res.code==0){
-							        		  layer.msg('删除认定畜种数据成功');
+							        		  layer.msg('删除农产品类型数据成功');
 							        		  datatable.reload({//表格数据重新加载
 							    				  where: {
 							    					  stopflag: $("#stopflag").val()
@@ -84,11 +84,11 @@ layui.use(['form','layer','table'], function(form,layer,table,upload) {
 							        		  layer.msg(res.msg);
 							        	  }
 							          }else{
-							        	  layer.msg('删除认定畜种数据失败');
+							        	  layer.msg('删除农产品类型数据失败');
 							          }
 				        		},
 				        		error:function(){
-				        			layer.msg('删除认定畜种失败');
+				        			layer.msg('删除养殖场数据失败');
 				        		}
 				        	});
 		        	});
@@ -125,24 +125,24 @@ layui.use(['form','layer','table'], function(form,layer,table,upload) {
         	});
         	$.ajax({
         		type:"post",
-        		url:status==1?"/farminfo/animalstype/qy":"/farminfo/animalstype/ty",
+        		url:status==1?"/cropsplant/cropstype/qy":"/cropsplant/cropstype/ty",
         		contentType:"application/json",
         		data: JSON.stringify(gids),
         		dataType:"json",
         		success:function(res){
         			  if(res && res.code==0){
-        				layer.msg((status==1?'启用':'停用')+'认定畜种成功');
+        				layer.msg((status==1?'启用':'停用')+'农产品类型成功');
         				datatable.reload({//表格数据重新加载
         					  where: {
         						  stopflag: $("#stopflag").val()
         					  },page: {curr: $(".layui-laypage-curr em:last").text()}
         				});
 			          }else{
-			        	  layer.msg((status==1?'启用':'停用')+'认定畜种失败');
+			        	  layer.msg((status==1?'启用':'停用')+'农产品类型失败');
 			          }
         		},
         		error:function(){
-        			layer.msg('删除认定畜种数据失败');
+        			layer.msg('删除农产品类型失败');
         		}
         	});
 	    }

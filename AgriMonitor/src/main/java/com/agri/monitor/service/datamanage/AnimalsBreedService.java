@@ -235,10 +235,10 @@ public class AnimalsBreedService {
 	           if (i >= 6) {
 	        	   AnimalsBreed animalsBreed = new AnimalsBreed();
 	        	   String name = row.getCell(0).getStringCellValue();
-	        	   name=name.trim();
 	        	   if(StringUtils.isEmpty(name)) {
 	        		   break;
 	        	   }
+	        	   name=name.trim();
 	        	   Map zbmap = getAnimalsTarget(name);
 	        	   if(null == zbmap) {
 	        		   result.put("code", -1);

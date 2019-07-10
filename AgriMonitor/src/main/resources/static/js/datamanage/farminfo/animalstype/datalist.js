@@ -88,7 +88,7 @@ layui.use(['form','layer','table'], function(form,layer,table,upload) {
 							          }
 				        		},
 				        		error:function(){
-				        			layer.msg('删除养殖场数据失败');
+				        			layer.msg('删除认定畜种失败');
 				        		}
 				        	});
 		        	});
@@ -142,7 +142,7 @@ layui.use(['form','layer','table'], function(form,layer,table,upload) {
 			          }
         		},
         		error:function(){
-        			layer.msg('删除养殖场数据失败');
+        			layer.msg('删除认定畜种数据失败');
         		}
         	});
 	    }

@@ -12,10 +12,12 @@ import org.springframework.stereotype.Component;
 import com.agri.monitor.enums.CacheTypeEnum;
 import com.agri.monitor.mapper.AnimalsTargetMapper;
 import com.agri.monitor.mapper.AnimalsTypeMapper;
+import com.agri.monitor.mapper.CropsTypeMapper;
 import com.agri.monitor.service.datamanage.ClimateInfoService;
 import com.agri.monitor.utils.CacheUtil;
 import com.agri.monitor.vo.AnimalsTargetQueryVO;
 import com.agri.monitor.vo.AnimalsTypeQueryVO;
+import com.agri.monitor.vo.CropsTypeQueryVO;
 
 @Component
 public class ApplicationRunnerImpl implements ApplicationRunner {
@@ -30,6 +32,9 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 	
 	@Autowired
 	private ClimateInfoService climateInfoService;
+	
+	@Autowired
+	private CropsTypeMapper cropsTypeMapper;
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
@@ -50,6 +55,11 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 		CacheUtil.putCache(CacheTypeEnum.TOWNS, Arrays.asList(new String[]{"沙柳河镇","哈尔盖镇","伊克乌兰乡","泉吉乡","吉尔孟乡"}));
 		//缓存气候指标信息
 		CacheUtil.putCache(CacheTypeEnum.CLIMATEINDEX, climateInfoService.getClimateIndex());
+		//缓存农作物类型
+		CropsTypeQueryVO queryVO2 = new CropsTypeQueryVO();
+		queryVO2.setPage(1);
+		queryVO2.setLimit(Integer.MAX_VALUE);
+		CacheUtil.putCache(CacheTypeEnum.CROPSTYPE, cropsTypeMapper.findAllForPage(queryVO2));
 		//TODO 其他缓存数据，先定义枚举类型
 	}
 

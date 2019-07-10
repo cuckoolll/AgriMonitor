@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agri.monitor.mapper.CropsPlantMapper">
+	<select id="findById" parameterType="int" resultType="com.agri.monitor.entity.CropsPlant">
+		select * from t_crops_plant where gid=#{gid}
+	</select>
+    <select id="findAllForPage" parameterType="com.agri.monitor.vo.CropsPlantQueryVO" resultType="map">
+        select a.gid,a.county,a.towns,a.date_year,a.crops_type,a.planted_area,a.planted_output,b.type_name crops_name
+        from t_crops_plant a,t_crops_type b where a.crops_type=b.gid
+	    <if test="date_year != null">
+	    	and a.date_year=#{date_year}
+	    </if>
+	    <if test="crops_type != null  and crops_type != ''">
+	        and a.crops_type=#{crops_type}
+	    </if>
+	    <if test="towns != null and towns != ''">
+	        and a.towns=#{towns}
+	    </if>
+	    order by a.gid desc limit #{currIndex},#{limit}
+    </select>
+    <select id="findAllCount" parameterType="com.agri.monitor.vo.CropsPlantQueryVO" resultType="int">
+        select count(a.gid) from t_crops_plant a,t_crops_type b where a.crops_type=b.gid
+        <if test="date_year != null">
+	    	and a.date_year=#{date_year}
+	    </if>
+	    <if test="crops_type != null">
+	        and a.crops_type=#{crops_type}
+	    </if>
+	    <if test="towns != null">
+	        and a.towns=#{towns}
+	    </if>
+    </select>
+    <insert id="batchInsert" parameterType="java.util.List">
+    	insert into t_crops_plant(county,towns,village,date_year,crops_type,planted_area,planted_output,creator,modifier)
+    	values
+    	<foreach collection="list" item="item" index="index" separator=",">
+		   (#{item.county},#{item.towns},#{item.village},#{item.date_year},#{item.crops_type},#{item.planted_area},#{item.planted_output},#{item.creator},#{item.modifier})
+		</foreach>
+    </insert>
+    
+    <insert id="insert" parameterType="com.agri.monitor.entity.CropsPlant">
+    	insert into t_crops_plant(county,towns,village,date_year,crops_type,planted_area,planted_output,creator,modifier)
+    	values
+	   (#{county},#{towns},#{village},#{date_year},#{crops_type},#{planted_area},#{planted_output},#{creator},#{modifier})
+    </insert>
+    
+    <update id="update" parameterType="com.agri.monitor.entity.CropsPlant">
+    	update t_crops_plant set county=#{county},towns=#{towns},village=#{village},date_year=#{date_year},
+    	crops_type=#{crops_type},planted_area=#{planted_area},planted_output=#{planted_output},
+    	modifier=#{modifier},last_time=#{last_time} where gid=#{gid}
+    </update>
+    
+    <delete id="delete" parameterType="java.util.List">
+    	delete from t_crops_plant where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+    
+    <select id="findByCropsType" parameterType="java.util.List" resultType="int">
+    	select count(gid) from t_crops_plant where crops_type in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </select>
+</mapper>

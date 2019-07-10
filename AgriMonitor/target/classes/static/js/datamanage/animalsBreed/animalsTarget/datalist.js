@@ -58,17 +58,17 @@ layui.config({
 				        		success:function(res){
 				        			if(res){
 							        	  if(res.code==0){
-							        		  layer.msg('删除认定畜种数据成功');
+							        		  layer.msg('删除指标数据成功');
 							        		  render();
 							        	  }else{
 							        		  layer.msg(res.msg);
 							        	  }
 							          }else{
-							        	  layer.msg('删除认定畜种数据失败');
+							        	  layer.msg('删除指标数据失败');
 							          }
 				        		},
 				        		error:function(){
-				        			layer.msg('删除养殖场数据失败');
+				        			layer.msg('删除指标数据失败');
 				        		}
 				        	});
 			    	  });
@@ -106,18 +106,18 @@ layui.config({
         		dataType:"json",
         		success:function(res){
         			  if(res && res.code==0){
-        				layer.msg((status==1?'启用':'停用')+'认定畜种成功');
+        				layer.msg((status==1?'启用':'停用')+'畜牧业指标成功');
         				datatable.reload({//表格数据重新加载
         					  where: {
         						  stopflag: $("#stopflag").val()
         					  },page: {curr: $(".layui-laypage-curr em:last").text()}
         				});
 			          }else{
-			        	  layer.msg((status==1?'启用':'停用')+'认定畜种失败');
+			        	  layer.msg((status==1?'启用':'停用')+'畜牧业指标失败');
 			          }
         		},
         		error:function(){
-        			layer.msg('删除养殖场数据失败');
+        			layer.msg('删除畜牧业指标失败');
         		}
         	});
 	    }
