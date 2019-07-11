@@ -28,7 +28,7 @@
 		<!-- 公共样式 结束 -->
 
 		<script type="text/javascript" th:src="@{/temp/framework/echarts.min.js}"></script>
-		<script type="text/javascript" th:src="@{/js/statisticanalysis/climateanalysis/climateanalysis.js}" ></script>
+		<script type="text/javascript" th:src="@{/js/statisticanalysis/soilanalysis/soilanalysis.js}" ></script>
 
 	</head>
 
@@ -42,26 +42,15 @@
 							<input id="date_year" type="text" class="layui-input" readonly="readonly">
 						</div>
 						
-						<label class="layui-form-label">乡镇：</label>
+						<!--<label class="layui-form-label">编号：</label>
 						<div class="layui-input-inline">
-					      <select id="towns" lay-filter='towns'>
-					      	<option value=""></option>
-					        <option th:each="type:${towns}" th:value="${type}" th:text="${type}"></option>
-					      </select>
-					    </div>
-						
-						<label class="layui-form-label">编号：</label>
-						<div class="layui-input-inline">
-					      <select id="code_number" lay-filter='code_number'>
-					      	<option value=""></option>
-					        <option th:each="type:${code_number}" th:value="${type.id}" th:text="${type.text}"></option>
-					      </select>
-					    </div>
+					      <select id="code_number" lay-filter='code_number'></select>
+					    </div>-->
 						
 						<label class="layui-form-label">土壤指标：</label>
 						<div class="layui-input-inline">
-					      <select id="climateindex" lay-verify="required" lay-filter="climateindex">
-					        <option th:each="type:${climateindex}" th:value="${type.id}" th:text="${type.text}"></option>
+					      <select id="soilindex" lay-verify="required" lay-filter="climateindex">
+					        <option th:each="type:${soilindex}" th:value="${type.id}" th:text="${type.text}"></option>
 					      </select>
 					    </div>
 						

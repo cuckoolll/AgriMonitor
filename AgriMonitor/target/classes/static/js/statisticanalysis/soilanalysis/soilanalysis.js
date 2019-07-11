@@ -7,70 +7,34 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
     var charts = echarts.init(document.getElementById('charts'));
 	
     /**
-     * 绘制折线图 .
-     */
-    function setLineOption(map) {
-    	var towns = map.towns;
-    	var climateindex = map.climateindex;
-    	var climateindexName = map.climateindexName;
-    	
-    	var param = {};
-    	param.towns = towns;
-    	param.climateindex = climateindex;
-    	
-    	title = towns + climateindexName + "分析图";
-    	
-    	$.post("/climateinfo/queryAnalysisData", param, function(res){
-    		charts.setOption({
-    			title: {
-    	            text: title,
-    	        },
-    	        tooltip: {},
-    	        legend: {
-    	            data:[climateindexName]
-    	        },
-    	        xAxis: {
-    	            data: res.date_year
-    	        },
-    	        yAxis: {},
-    	        series: [{
-    	            name: climateindexName,
-    	            type: 'line',
-    	            data: res.data
-    	        }]
-        	});
-    	});
-    };
-    
-    /**
      * 绘制柱状图 .
      */
     function setBarOption(map) {
     	var date_year = map.date_year;
-    	var climateindex = map.climateindex;
-    	var climateindexName = map.climateindexName;
+    	var soilindex = map.soilindex;
+    	var soilindexName = map.soilindexName;
     	
     	var param = {};
     	param.date_year = date_year;
-    	param.climateindex = climateindex;
+    	param.soilindex = soilindex;
     	
-    	title = date_year + "年" + climateindexName + "分析图";
+    	title = date_year + "年" + soilindexName + "分析图";
     	
-    	$.post("/climateinfo/queryAnalysisData", param, function(res){
+    	$.post("/soilinfo/queryAnalysisData", param, function(res){
     		charts.setOption({
     			title: {
     	            text: title,
     	        },
     	        tooltip: {},
     	        legend: {
-    	            data:[climateindexName]
+    	            data:[soilindexName]
     	        },
     	        xAxis: {
-    	            data: res.towns
+    	            data: res.code_number
     	        },
     	        yAxis: {},
     	        series: [{
-    	            name: climateindexName,
+    	            name: soilindexName,
     	            type: 'bar',
     	            data: res.data
     	        }]
@@ -82,14 +46,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		timeControl = laydate.render({
 			elem: '#date_year',
 			type: 'year',
-			value: new Date(),
-			done: function(value, date, endDate) {
-				var towns = $("#towns").val();
-				if (towns != null && towns != '' && towns != 'undefined') {
-					$("#towns").val('');
-					form.render('select');
-				}
-			}
+			value: new Date()
 		}); 
 		
 		doQuery();
@@ -98,14 +55,10 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 	function doQuery() {
 		var map = {};
 		map.date_year = $("#date_year").val();
-		map.towns = $("#towns").val();
-		map.climateindex = $("#climateindex").val();
-		map.climateindexName = $("#climateindex option:selected").text();
-		if (map.date_year == null || map.date_year == '' || map.date_year == 'undefined') {
-			setLineOption(map);
-		} else {
-			setBarOption(map);
-		}
+		map.soilindex = $("#soilindex").val();
+		map.soilindexName = $("#soilindex option:selected").text();
+
+		setBarOption(map);
 		
 	}
 	
@@ -118,13 +71,6 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		$(window).resize(function(){
 			$("#charts").css("height",winH - 80);
 			charts.resize();
-		});
-		
-		form.on('select(towns)', function(data) { 
-			var date_year = $("#date_year").val();
-			if (date_year != null && date_year != '' && date_year != 'undefined') {
-				$("#date_year").val('');
-			}
 		});
 	}
 	

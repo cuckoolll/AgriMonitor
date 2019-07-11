@@ -1,6 +1,7 @@
 package com.agri.monitor.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -25,4 +26,6 @@ public interface SoilInfoMapper {
 	void delInfoByGid(List<Integer> gids);
 
 	SoilInfo findById(Integer gid);
+
+	List<Map> queryAnalysisData(Map param);
 }

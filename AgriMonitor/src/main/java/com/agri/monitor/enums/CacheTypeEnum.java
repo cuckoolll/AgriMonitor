@@ -25,8 +25,14 @@ public enum CacheTypeEnum {
 	 * 气候指标
 	 */
 	CLIMATEINDEX,
+	
 	/**
 	 * 农作物类型
 	 */
-	CROPSTYPE
+	CROPSTYPE,
+	
+	/**
+	 * 土壤指标
+	 */
+	SOILINDEX
 }

@@ -87,7 +87,7 @@ public class ClimateInfoController {
 		return climateInfoService.findById(gid, user.getUser_id());
 	}
 	
-	@RequestMapping("/climateanalysis")
+	@RequestMapping("/climateAnalysis")
 	public String climateAnalysis(Model model) {
 		model.addAttribute("climateindex", CacheUtil.getCache(CacheTypeEnum.CLIMATEINDEX));
 		model.addAttribute("towns", CacheUtil.getCache(CacheTypeEnum.TOWNS));

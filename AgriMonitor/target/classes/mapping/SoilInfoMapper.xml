@@ -133,4 +133,12 @@
     		#{item}
     	</foreach>
     </delete>
+    
+    <select id="queryAnalysisData" parameterType="java.util.Map" resultType="java.util.Map">
+    	select ${soilindex},
+    		   code_number
+    	  from t_soil_quality 
+    	 where date_year = #{date_year}
+    	 order by code_number asc
+    </select>
 </mapper>

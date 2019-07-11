@@ -18,7 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.agri.monitor.annotation.IgnoreSession;
 import com.agri.monitor.entity.SoilInfo;
 import com.agri.monitor.entity.UserInfo;
+import com.agri.monitor.enums.CacheTypeEnum;
 import com.agri.monitor.service.datamanage.SoilInfoService;
+import com.agri.monitor.utils.CacheUtil;
 import com.agri.monitor.vo.SoilQueryVO;
 
 @Controller
@@ -85,5 +87,17 @@ public class SoilInfoController {
 	public SoilInfo findById(Integer gid, HttpServletRequest request) { 
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo"); return
 		soilInfoService.findById(gid, user.getUser_id()); 
+	}
+	
+	@RequestMapping("/soilAnalysis")
+	public String soilAnalysis(Model model) {
+		model.addAttribute("soilindex", CacheUtil.getCache(CacheTypeEnum.SOILINDEX));
+		return "/statisticanalysis/soilanalysis/soilanalysis";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/queryAnalysisData", method=RequestMethod.POST)
+	public Map queryAnalysisData(HttpServletRequest request) {
+		return soilInfoService.queryAnalysisData(request);
 	}
 }

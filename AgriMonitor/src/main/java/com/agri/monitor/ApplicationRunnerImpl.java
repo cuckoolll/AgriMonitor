@@ -14,6 +14,7 @@ import com.agri.monitor.mapper.AnimalsTargetMapper;
 import com.agri.monitor.mapper.AnimalsTypeMapper;
 import com.agri.monitor.mapper.CropsTypeMapper;
 import com.agri.monitor.service.datamanage.ClimateInfoService;
+import com.agri.monitor.service.datamanage.SoilInfoService;
 import com.agri.monitor.utils.CacheUtil;
 import com.agri.monitor.vo.AnimalsTargetQueryVO;
 import com.agri.monitor.vo.AnimalsTypeQueryVO;
@@ -35,6 +36,9 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 	
 	@Autowired
 	private CropsTypeMapper cropsTypeMapper;
+	
+	@Autowired
+	private SoilInfoService soilInfoService;
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
@@ -60,6 +64,8 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 		queryVO2.setPage(1);
 		queryVO2.setLimit(Integer.MAX_VALUE);
 		CacheUtil.putCache(CacheTypeEnum.CROPSTYPE, cropsTypeMapper.findAllForPage(queryVO2));
+		//缓存土壤指标
+		CacheUtil.putCache(CacheTypeEnum.SOILINDEX, soilInfoService.getSoilIndex());
 		//TODO 其他缓存数据，先定义枚举类型
 	}
 

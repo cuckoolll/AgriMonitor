@@ -1,6 +1,7 @@
 package com.agri.monitor.service.datamanage;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import com.agri.monitor.entity.SoilInfo;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.enums.LogOptSatusEnum;
 import com.agri.monitor.enums.LogOptTypeEnum;
+import com.agri.monitor.enums.SoilIndexEnum;
 import com.agri.monitor.mapper.SoilInfoMapper;
 import com.agri.monitor.utils.LogUtil;
 import com.agri.monitor.utils.UrbanAreaUtil;
@@ -206,6 +208,53 @@ public class SoilInfoService {
 			result.put("msg", "解析文件失败");
 			LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(), "导入土壤监测信息异常："+e.getMessage()); 
 		} 
+		return result;
+	}
+	
+	public List<Map> getSoilIndex() {
+		List<Map> result = new ArrayList();
+		for (SoilIndexEnum soilIndex : SoilIndexEnum.values()) {
+			Map map = new HashMap();
+			map.put("id", soilIndex.getId());
+			map.put("text", soilIndex.getText());
+			result.add(map);
+		}
+		return result;
+	}
+	
+	public Map queryAnalysisData(HttpServletRequest request) {
+		Map param = new HashMap();
+		param.put("date_year", request.getParameter("date_year"));
+		param.put("soilindex", request.getParameter("soilindex"));
+		if (logger.isInfoEnabled()) {
+			logger.info("土壤数据分析查询：" + param);
+		}
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		String userid = user.getUser_id();
+		
+		List<Map> analysisData = new ArrayList();
+		try {
+			analysisData = soilInfoMapper.queryAnalysisData(param);
+			LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, "土壤数据分析查询：" + param);
+		} catch (Exception e) {
+			logger.error("土壤数据分析查询失败", e);
+			LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.FAIL, userid, "土壤数据分析查询失败" + e.getMessage());
+		}
+		
+		final String soilindex = (String) param.get("soilindex");
+		
+		final List dataList = new ArrayList();
+		final List code_numberList = new ArrayList();
+		
+		for (Map map : analysisData) {
+			dataList.add(map.get(soilindex));
+			code_numberList.add(map.get("code_number"));
+		}
+		
+		final Map result = new HashMap();
+		result.put("data", dataList);
+		result.put("code_number", code_numberList);
+		
 		return result;
 	}
 }

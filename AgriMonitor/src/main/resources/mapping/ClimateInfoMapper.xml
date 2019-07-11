@@ -142,5 +142,6 @@
     	 <if test="date_year != null and date_year != ''">
     	 	and date_year = #{date_year}
     	 </if>
+    	 order by date_year asc
     </select>
 </mapper>
