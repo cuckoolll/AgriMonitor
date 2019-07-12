@@ -101,6 +101,12 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		map.towns = $("#towns").val();
 		map.climateindex = $("#climateindex").val();
 		map.climateindexName = $("#climateindex option:selected").text();
+		if (   (map.date_year == null || map.date_year == '' || map.date_year == 'undefined')
+			&& (map.towns == null || map.towns == '' || map.towns == 'undefined')) {
+			layer.msg("请至少选择一个查询条件（年份、乡镇）。");
+			return;
+		}
+		
 		if (map.date_year == null || map.date_year == '' || map.date_year == 'undefined') {
 			setLineOption(map);
 		} else {
