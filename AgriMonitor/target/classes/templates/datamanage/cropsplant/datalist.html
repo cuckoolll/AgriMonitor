@@ -36,13 +36,13 @@
 						<div class="layui-input-inline">
 							<input type="text" id="date_year" class="layui-input">
 						</div>
-						<label class="layui-form-label">乡镇：</label>
+<!-- 						<label class="layui-form-label">乡镇：</label>
 						<div class="layui-input-inline">
 					      <select id="towns">
 					     	 <option value="">全部</option>
 					        <option th:each="type:${towns}" th:value="${type}" th:text="${type}"></option>
 					      </select>
-					    </div>
+					    </div> -->
 						<label style="width: 100px" class="layui-form-label">农作物类型：</label>
 						<div class="layui-input-inline">
 					      <select id="crops_type">
@@ -57,7 +57,6 @@
 				</form>
 			</div>
 			<table id="datalist"  lay-filter="datalist"></table>
-			
 			<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name=='admin'}">
   			 <div class="layui-inline" lay-event="add"><i class="layui-icon layui-icon-add-1"></i></div><div class="layui-inline" lay-event="update"><i class="layui-icon layui-icon-edit"></i></div><div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
 			</script>

@@ -70,6 +70,6 @@
     </select>
     
     <delete id="deleteByTowns" parameterType="map">
-    	delete from t_animals_breed where towns=#{towns} and date_month=#{date_month}
+    	delete from t_animals_breed where date_month=#{date_month}
     </delete>
 </mapper>

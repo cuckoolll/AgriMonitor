@@ -32,7 +32,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.entity.CropsPlant;
-import com.agri.monitor.entity.FarmInfo;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.enums.CacheTypeEnum;
 import com.agri.monitor.enums.LogOptSatusEnum;
@@ -40,9 +39,7 @@ import com.agri.monitor.enums.LogOptTypeEnum;
 import com.agri.monitor.mapper.CropsPlantMapper;
 import com.agri.monitor.utils.CacheUtil;
 import com.agri.monitor.utils.LogUtil;
-import com.agri.monitor.utils.TreeBuilder;
 import com.agri.monitor.vo.CropsPlantQueryVO;
-import com.agri.monitor.vo.Node;
 
 @Service
 public class CropsPlantService {
@@ -91,6 +88,11 @@ public class CropsPlantService {
 				cropsPlantMapper.update(cropsPlant);
 				LogUtil.log(LogOptTypeEnum.UPDATE, LogOptSatusEnum.SUCESS, userid, "农作物产量数据更新"+cropsPlant);
 			}else {//新增
+				//删除已有数据
+				Map m = new HashMap<>();
+				m.put("year", cropsPlant.getDate_year());
+				m.put("type", cropsPlant.getCrops_type());
+				cropsPlantMapper.deleteByYearAndType(m);
 				cropsPlant.setCreator(userid);
 				cropsPlantMapper.insert(cropsPlant);
 				LogUtil.log(LogOptTypeEnum.ADD, LogOptSatusEnum.SUCESS, userid, "新增农作物产量数据"+cropsPlant);
@@ -148,20 +150,17 @@ public class CropsPlantService {
 	        
 	        Sheet sheet1 = wb.getSheetAt(0);
 	        int i = 0;
-	        String towns = null;
+	        //String towns = null;
 	        Integer year = null;
 	        List<CropsPlant> list = new ArrayList<>();
 	        for (Row row : sheet1) {
 	        	//解析所属乡镇
-	           if (i == 1) {
-	        	   towns = row.getCell(1).getStringCellValue();
-	        	   if(StringUtils.isEmpty(towns)) {
-	        		   result.put("code", -1);
-	        		   result.put("msg", "乡镇未填写");
-	        		   return result;
-	        	   }
-	           }
-	           if(i == 2) {
+				/*
+				 * if (i == 1) { towns = row.getCell(1).getStringCellValue();
+				 * if(StringUtils.isEmpty(towns)) { result.put("code", -1); result.put("msg",
+				 * "乡镇未填写"); return result; } }
+				 */
+	           if(i == 1) {
 	        	   String ymstr  = row.getCell(1).getStringCellValue();
 	        	   if(StringUtils.isEmpty(ymstr)) {
 	        		   result.put("code", -1);
@@ -180,7 +179,7 @@ public class CropsPlantService {
 		        		return result;
 					}
 	           }
-	           if (i >= 5) {
+	           if (i >= 3) {
 	        	   CropsPlant cropsPlant = new CropsPlant();
 	        	   
 	        	   String name=row.getCell(0).getStringCellValue();
@@ -201,12 +200,13 @@ public class CropsPlantService {
 	        	   cropsPlant.setCreator(user.getUser_id());
 	        	   cropsPlant.setModifier(user.getUser_id());
 	        	   cropsPlant.setCounty("刚察县");
-	        	   cropsPlant.setTowns(towns);
+	        	   //cropsPlant.setTowns(towns);
 	        	   cropsPlant.setDate_year(year);
 	        	   list.add(cropsPlant);
 	           }
 	           i++;
 	        }
+	        cropsPlantMapper.deleteByYear(year);
 	        cropsPlantMapper.batchInsert(list);
 	        LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.SUCESS, user.getUser_id(), "导入农作物产量信息，共导入"+list.size()+"条");
 		} catch (Exception e) {
@@ -237,10 +237,12 @@ public class CropsPlantService {
 			HSSFSheet sheet = wb.getSheetAt(0);
 			//获取指标数据
 			List<Map> list = (List<Map>) CacheUtil.getCache(CacheTypeEnum.CROPSTYPE);
-			List<Node> nodelist = new ArrayList<>();
 			if (null != list && list.size() > 0) {
+				int rownum=3;
 				for (int i = 0;i < list.size(); i++) {
-					sheet.getRow(5 + i).getCell(0).setCellValue((String) list.get(i).get("type_name"));
+					if(1 == (Integer) list.get(i).get("stopflag")) {
+						sheet.getRow(rownum++).getCell(0).setCellValue((String) list.get(i).get("type_name"));
+					}
 				}
 				//强制下载不打开
 	    		response.setContentType("application/octet-stream");

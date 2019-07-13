@@ -29,13 +29,13 @@
 	                    <input type="text" id="date_year" name="date_year" class="layui-input">
 	                </div>
 				</div>
-				<div class="layui-form-item">
+				<div class="layui-form-item" style="display: none">
 					<label class="layui-form-label" style="width: 200px">所属区域：</label>
 	                <div class="layui-input-inline">
 	                    <input type="text" name="county" readonly="readonly" class="layui-input" value="刚察县">
 	                </div>
 	                <div class="layui-input-inline">
-	                    <select name="towns" required lay-verify="required">
+	                    <select name="towns">
 	                    	<option value=""></option>
 	                        <option th:each="type:${towns}" th:value="${type}" th:text="${type}"></option>
 	                    </select>
@@ -57,7 +57,7 @@
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label" style="width: 200px">农作物单产（公斤）：</label>
+					<label class="layui-form-label" style="width: 200px">农作物总产（万公斤）：</label>
 					<div class="layui-input-block">
 						<input type="text" name="planted_output" required lay-verify="required|number" autocomplete="off" class="layui-input" style="width: 400px">
 					</div>

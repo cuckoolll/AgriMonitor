@@ -25,12 +25,13 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 		    cols: [[ //表头
 		    	{type:'checkbox'},
 		      {field: 'gid', title: 'ID',hide: true,align:'center'},
-		      {field: 'county', title: '区（县、市）',align:'center',width:120},
-		      {field: 'towns', title: '乡镇',align:'center',width:120},
+		     /* {field: 'county', title: '区（县、市）',align:'center',width:120},
+		      {field: 'towns', title: '乡镇',align:'center',width:120},*/
 		      {field: 'date_year', title: '年份',align:'center'},
 		      {field: 'crops_name', title: '农作物类型',align:'center'},
 		      {field: 'planted_area', title: '农作物播种面积（万亩）',align:'center'},
-		      {field: 'planted_output', title: '农作物单产（公斤）',align:'center'}
+		      {field: 'dc', title: '农作物单产（万斤）',align:'center', templet: '#titleTpl'},
+		      {field: 'planted_output', title: '农作物总产（万公斤）',align:'center'}
 		    ]]
 		});
 		//文件上传
@@ -45,7 +46,7 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 		    			  layer.msg('导入数据成功');
 				    	  datatable.reload({//表格数据重新加载
 							  where: {
-								  date_year: $("#date_year").val(),crops_type: $("#crops_type").val(),towns: $("#towns").val()
+								  date_year: $("#date_year").val(),crops_type: $("#crops_type").val()
 							  },page: {curr: 1}
 				    	  });
 				      }else{
@@ -107,7 +108,7 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 							        	  layer.msg('删除农作物产量数据成功');
 							        	  datatable.reload({//表格数据重新加载
 											  where: {
-												  date_year: $("#date_year").val(),crops_type: $("#crops_type").val(),towns: $("#towns").val()
+												  date_year: $("#date_year").val(),crops_type: $("#crops_type").val()
 											  },page: {curr: 1}
 							        	  });
 							          }else{
@@ -127,7 +128,7 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 		$("#queryBtn").click(function(){
 			datatable.reload({//表格数据重新加载
 				  where: {
-					  date_year: $("#date_year").val(),crops_type: $("#crops_type").val(),towns: $("#towns").val()
+					  date_year: $("#date_year").val(),crops_type: $("#crops_type").val()
 				  },page: {curr: 1}
 			});
 		});

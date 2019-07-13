@@ -5,7 +5,8 @@
 		select * from t_crops_plant where gid=#{gid}
 	</select>
     <select id="findAllForPage" parameterType="com.agri.monitor.vo.CropsPlantQueryVO" resultType="map">
-        select a.gid,a.county,a.towns,a.date_year,a.crops_type,a.planted_area,a.planted_output,b.type_name crops_name
+        select a.gid,a.county,a.towns,a.date_year,a.crops_type,a.planted_area,a.planted_output,b.type_name crops_name,
+        TRUNCATE(a.planted_output*2/a.planted_area,2) dc
         from t_crops_plant a,t_crops_type b where a.crops_type=b.gid
 	    <if test="date_year != null">
 	    	and a.date_year=#{date_year}
@@ -55,6 +56,14 @@
     	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
     		#{item}
     	</foreach>
+    </delete>
+    
+    <delete id="deleteByYear" parameterType="int">
+    	delete from t_crops_plant where date_year = #{year}
+    </delete>
+    
+    <delete id="deleteByYearAndType" parameterType="map">
+    	delete from t_crops_plant where date_year = #{year} and crops_type=#{type}
     </delete>
     
     <select id="findByCropsType" parameterType="java.util.List" resultType="int">

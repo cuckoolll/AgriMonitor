@@ -26,4 +26,8 @@ public interface CropsPlantMapper {
 	void delete(List<Integer> gids);
 	
 	int findByCropsType(List<Integer> typeGids);
+	
+	void deleteByYear(Integer year);
+	
+	void deleteByYearAndType(Map map);
 }

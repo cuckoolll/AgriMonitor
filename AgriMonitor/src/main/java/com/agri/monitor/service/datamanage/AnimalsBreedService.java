@@ -203,20 +203,17 @@ public class AnimalsBreedService {
 	        
 	        Sheet sheet1 = wb.getSheetAt(0);
 	        int i = 0;
-	        String towns = null;
+	        //String towns = null;
 	        Integer ym = null;
 	        List<AnimalsBreed> list = new ArrayList<>();
 	        for (Row row : sheet1) {
 	        	//解析所属乡镇
-	           if (i == 1) {
-	        	   towns = row.getCell(1).getStringCellValue();
-	        	   if(StringUtils.isEmpty(towns)) {
-	        		   result.put("code", -1);
-	        		   result.put("msg", "乡镇未填写");
-	        		   return result;
-	        	   }
-	           }
-	           if(i == 2) {
+				/*
+				 * if (i == 1) { towns = row.getCell(1).getStringCellValue();
+				 * if(StringUtils.isEmpty(towns)) { result.put("code", -1); result.put("msg",
+				 * "乡镇未填写"); return result; } }
+				 */
+	           if(i == 1) {
 	        	   String ymstr  = row.getCell(1).getStringCellValue();
 	        	   if(StringUtils.isEmpty(ymstr)) {
 	        		   result.put("code", -1);
@@ -232,7 +229,7 @@ public class AnimalsBreedService {
 		        		return result;
 					}
 	           }
-	           if (i >= 6) {
+	           if (i >= 5) {
 	        	   AnimalsBreed animalsBreed = new AnimalsBreed();
 	        	   String name = row.getCell(0).getStringCellValue();
 	        	   if(StringUtils.isEmpty(name)) {
@@ -250,7 +247,7 @@ public class AnimalsBreedService {
 	        	   animalsBreed.setCreator(user.getUser_id());
 	        	   animalsBreed.setModifier(user.getUser_id());
 	        	   animalsBreed.setCounty("刚察县");
-	        	   animalsBreed.setTowns(towns);
+	        	   //animalsBreed.setTowns(towns);
 	        	   //非叶子节点数据不解析
 	        	   if (((Integer) zbmap.get("isleaf"))!=0) {
 	        		   animalsBreed.setSurplus_size(row.getCell(1).getNumericCellValue());
@@ -270,7 +267,7 @@ public class AnimalsBreedService {
 	           i++;
 	        }
 	        Map m = new HashMap<>();
-	        m.put("towns", towns);
+	        //m.put("towns", towns);
 	        m.put("date_month", ym);
 	        animalsBreedMapper.deleteByTowns(m);
 	        animalsBreedMapper.batchInsert(list);
@@ -316,9 +313,11 @@ public class AnimalsBreedService {
 			List<Node> nodelist = new ArrayList<>();
 			if (null != list && list.size() > 0) {
 				for (Map map : list) {
-					nodelist.add(new Node((Integer) map.get("gid"), (Integer) map.get("parent_id"), (String) map.get("target_name")));
+					if(1 == (Integer) map.get("stopflag")) {
+						nodelist.add(new Node((Integer) map.get("gid"), (Integer) map.get("parent_id"), (String) map.get("target_name")));
+					}
 				}
-				rownum_local.set(5);
+				rownum_local.set(4);
 				setRowVal(sheet, TreeBuilder.buildListToTree(nodelist), "");
 				rownum_local.remove();
 				//强制下载不打开

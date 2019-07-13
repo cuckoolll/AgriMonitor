@@ -7,16 +7,16 @@ layui.config({
 	var datatable;
 	var curdate;
 	
-	var rq=getUrlParam("rq"),towns=unescape(getUrlParam("towns"));
+	var rq=getUrlParam("rq");//,towns=unescape(getUrlParam("towns"));
 	if(rq){
 		curdate=rq;
 	}else{
 		curdate=util.toDateString(new Date(), 'yyyy-MM');
 	}
-	if(towns){
+	/*if(towns){
 		$("[id='towns'] option[value='"+towns+"']").attr("selected","true");
 		form.render('select');
-	}
+	}*/
 	laydate.render({
 	    elem: '#date_month',
 	    type: 'month',
@@ -30,7 +30,8 @@ layui.config({
 		    elem: '#datalist',
 		    url: '/animalsBreed/datalist', //数据接口，
 		    height:winH-80,
-		    where: {date_month: date,towns:$("#towns").val()},
+		    //where: {date_month: date,towns:$("#towns").val()},
+		    where: {date_month: date},
 		    /*toolbar: true,*/
 		    treeColIndex: 1,
 	        treeSpid: 0,
@@ -42,7 +43,7 @@ layui.config({
 			      {field: 'gid', title: 'ID',hide: true,align:'center',rowspan:2},
 			      {field: 'target_name', title: '指标名称',align:'left',rowspan:2,width:220},
 			      /*{field: 'county', title: '区（县、市）',align:'center',width:120,rowspan:2},*/
-			      {field: 'towns', title: '乡镇',align:'center',width:120,rowspan:2},
+			      /*{field: 'towns', title: '乡镇',align:'center',width:120,rowspan:2},*/
 			      {field: 'surplus_size', title: '月末存栏数',align:'center',rowspan:2},
 			      {field: 'female_size', title: '能繁殖母畜',align:'center',rowspan:2},
 			      {title: '增加',align:'center',colspan:2},
