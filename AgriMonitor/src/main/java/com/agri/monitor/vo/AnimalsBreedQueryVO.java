@@ -4,6 +4,7 @@ public class AnimalsBreedQueryVO extends CommonQueryVO{
 	private Integer date_month;
 	private String towns;
 	private Integer animalsTarget;
+	private Integer stopflag;
 
 	public Integer getDate_month() {
 		return date_month;
@@ -27,6 +28,14 @@ public class AnimalsBreedQueryVO extends CommonQueryVO{
 
 	public void setAnimalsTarget(Integer animalsTarget) {
 		this.animalsTarget = animalsTarget;
+	}
+
+	public Integer getStopflag() {
+		return stopflag;
+	}
+
+	public void setStopflag(Integer stopflag) {
+		this.stopflag = stopflag;
 	}
 
 	@Override

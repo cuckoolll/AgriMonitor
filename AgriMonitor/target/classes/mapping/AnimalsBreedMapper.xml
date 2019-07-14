@@ -7,7 +7,7 @@
     <select id="findAllForPage" parameterType="com.agri.monitor.vo.AnimalsBreedQueryVO" resultType="map">
         select a.gid,date_month,county,towns,village,animals_target,b.gid fgid,b.parent_id,b.target_name,b.isleaf,surplus_size,female_size,
         child_size,survival_size,death_size,maturity_size,sell_size,meat_output,milk_output,
-        egg_output,hair_output,a.create_time,a.creator,a.modifier,a.last_time 
+        egg_output,hair_output,a.create_time,a.creator,a.modifier,a.last_time
         from t_animals_breed a,t_animals_target b where a.animals_target=b.gid
         <if test="date_month != null">
 	        and a.date_month=#{date_month}
@@ -17,6 +17,9 @@
 	    </if>
 	    <if test="animalsTarget != null">
 	        and a.animals_target=#{animalsTarget}
+	    </if>
+	    <if test="stopflag != null">
+	        and b.stopflag=#{stopflag}
 	    </if>
     </select>
     <select id="findAllCount" parameterType="com.agri.monitor.vo.AnimalsBreedQueryVO" resultType="int">
@@ -72,4 +75,14 @@
     <delete id="deleteByTowns" parameterType="map">
     	delete from t_animals_breed where date_month=#{date_month}
     </delete>
+    
+    <select id="getYearData" parameterType="map" resultType="map">
+        select a.*,b.gid fgid,b.parent_id,b.isleaf,b.target_name from(
+		select animals_target,sum(surplus_size) surplus_size,sum(female_size) female_size,
+        sum(child_size) child_size,sum(survival_size) survival_size,sum(death_size) death_size,
+			  sum(maturity_size) maturity_size,sum(sell_size) sell_size,sum(meat_output) meat_output,
+        sum(milk_output) milk_output,sum(egg_output) egg_output,sum(hair_output) hair_output
+ 		from t_animals_breed where date_month between #{m1} and #{m2} group by animals_target) a,
+		t_animals_target b where a.animals_target=b.gid and b.stopflag=1
+    </select>
 </mapper>
