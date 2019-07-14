@@ -57,7 +57,6 @@
    		select gid
      	  from t_climate_quality
      	 where county = #{county}
-     	   and towns = #{towns}
      	   and date_year = #{date_year}
     </select>
     
@@ -142,6 +141,6 @@
     	 <if test="date_year != null and date_year != ''">
     	 	and date_year = #{date_year}
     	 </if>
-    	 order by date_year asc
+    	 order by date_year desc limit 0,10 
     </select>
 </mapper>

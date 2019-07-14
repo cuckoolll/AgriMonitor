@@ -2,6 +2,9 @@ package com.agri.monitor.service.datamanage;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -156,14 +159,14 @@ public class ClimateInfoService {
 	        	//解析所属乡镇
 	           if (i == 1) {
 	        	   county = "刚察县";
-	        	   towns = row.getCell(1).getStringCellValue();
-	        	   if (!UrbanAreaUtil.isLegalTown(towns)) {
-	        		   result.put("code", -1);
-	        		   result.put("msg", "报表乡镇填写错误，请重新选择所属乡镇");
-	        		   return result;
-	        	   }
+//	        	   towns = row.getCell(1).getStringCellValue();
+//	        	   if (!UrbanAreaUtil.isLegalTown(towns)) {
+//	        		   result.put("code", -1);
+//	        		   result.put("msg", "报表乡镇填写错误，请重新选择所属乡镇");
+//	        		   return result;
+//	        	   }
 	           }
-	           if (i >= 3) {
+	           if (i >= 2) {
 	        	   ClimateInfo climateinfo = new ClimateInfo();
 	        	   climateinfo.setCounty(county);
 	        	   climateinfo.setTowns(towns);
@@ -186,7 +189,7 @@ public class ClimateInfoService {
 	        	   String date_year = climateinfo.getDate_year();
 	        	   
 	        	   try {
-	        		   String gid = climateInfoMapper.queryGid(county, towns, date_year);
+	        		   String gid = climateInfoMapper.queryGid(county, date_year);
 		        	   if (StringUtils.isEmpty(gid)) {
 		        		   climateInfoMapper.insertInfo(climateinfo);
 		        	   } else {
@@ -247,20 +250,35 @@ public class ClimateInfoService {
 		
 		final String climateindex = (String) param.get("climateindex");
 		
-		final List dataList = new ArrayList();
-		final List townsList = new ArrayList();
-		final List date_yearList = new ArrayList();
+		Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR);
 		
-		for (Map map : analysisData) {
-			dataList.add(map.get(climateindex));
-			townsList.add(map.get("towns"));
-			date_yearList.add(map.get("date_year"));
+		Object[] datas = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+		
+//		final List townsList = new ArrayList();
+//		final List date_yearList = new ArrayList();
+		
+		for (int i = 0; i < analysisData.size(); i++) {
+//			dataList.add(map.get(climateindex));
+//			townsList.add(map.get("towns"));
+//			date_yearList.add(map.get("date_year"));
+			int date_year = (Integer) analysisData.get(i).get("date_year");
+			Object obj = analysisData.get(i).get(climateindex);
+			if (obj instanceof java.lang.Double) {
+				datas[year - date_year] = (Double) obj;
+			} else if (obj instanceof java.lang.Integer) {
+				datas[year - date_year] = (Integer) obj;
+			}
+			
 		}
+		
+		final List dataList = Arrays.asList(datas);
+		Collections.reverse(dataList);
 		
 		final Map result = new HashMap();
 		result.put("data", dataList);
-		result.put("towns", townsList);
-		result.put("date_year", date_yearList);
+//		result.put("towns", townsList);
+//		result.put("date_year", date_yearList);
 		
 		return result;
 	}

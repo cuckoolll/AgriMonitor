@@ -153,14 +153,14 @@ public class WaterInfoService {
 	        	//解析所属乡镇
 	           if (i == 1) {
 	        	   county = "刚察县";
-	        	   towns = row.getCell(1).getStringCellValue();
-	        	   if (!UrbanAreaUtil.isLegalTown(towns)) {
-	        		   result.put("code", -1);
-	        		   result.put("msg", "报表乡镇填写错误，请重新选择所属乡镇");
-	        		   return result;
-	        	   }
+//	        	   towns = row.getCell(1).getStringCellValue();
+//	        	   if (!UrbanAreaUtil.isLegalTown(towns)) {
+//	        		   result.put("code", -1);
+//	        		   result.put("msg", "报表乡镇填写错误，请重新选择所属乡镇");
+//	        		   return result;
+//	        	   }
 	           }
-	           if (i >= 3) {
+	           if (i >= 2) {
 	        	   String quality_address = row.getCell(0).getStringCellValue();
 	        	   String quality_time = row.getCell(1).getStringCellValue();
 	        	   String quality_type = row.getCell(2).getStringCellValue();

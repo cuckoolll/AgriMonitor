@@ -25,7 +25,15 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
     			title: {
     	            text: title,
     	        },
-    	        tooltip: {},
+    	        tooltip: {
+			        trigger: 'axis',
+			        axisPointer: {
+			            type: 'cross',
+			            crossStyle: {
+			                color: '#999'
+			            }
+			        }
+			    },
     	        legend: {
     	            data:[soilindexName]
     	        },
@@ -46,15 +54,18 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		timeControl = laydate.render({
 			elem: '#date_year',
 			type: 'year',
-			value: new Date()
+			value: new Date(),
+			done: function(value, date, endDate) {
+				doQuery(value);
+			}
 		}); 
 		
-		doQuery();
+		doQuery($("#date_year").val());
 	}
 	
-	function doQuery() {
+	function doQuery(year) {
 		var map = {};
-		map.date_year = $("#date_year").val();
+		map.date_year = year;
 		map.soilindex = $("#soilindex").val();
 		map.soilindexName = $("#soilindex option:selected").text();
 
@@ -64,13 +75,17 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 	
 	function bindEvent() {
 		//查询数据
-		$("#queryBtn").click(function(){
-			doQuery();
-		});
+//		$("#queryBtn").click(function(){
+//			doQuery();
+//		});
 		
 		$(window).resize(function(){
 			$("#charts").css("height",winH - 80);
 			charts.resize();
+		});
+		
+		form.on('select(soilindex)', function(data) {
+			doQuery($("#date_year").val());
 		});
 	}
 	

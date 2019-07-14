@@ -1,9 +1,11 @@
-layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form, laydate, layer, upload) {
+layui.use(['table', 'form', 'laydate', 'layer', 'upload', 'util'], function(table, form, laydate, layer, upload, util) {
 	var timeControl;	  
 	var winH=$(window).height();
 	
 	$("#charts").css("height",winH - 80);
 	
+	var curyear=util.toDateString(new Date(), 'yyyy');
+	var years=[curyear-9,curyear-8,curyear-7,curyear-6,curyear-5,curyear-4,curyear-3,curyear-2,curyear-1,curyear];
     var charts = echarts.init(document.getElementById('charts'));
 	
     /**
@@ -18,26 +20,35 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
     	param.towns = towns;
     	param.climateindex = climateindex;
     	
-    	title = towns + climateindexName + "分析图";
+    	title = climateindexName + "近十年分析图";
     	
     	$.post("/climateinfo/queryAnalysisData", param, function(res){
     		charts.setOption({
     			title: {
     	            text: title,
     	        },
-    	        tooltip: {},
+    	        tooltip: {
+			        trigger: 'axis',
+			        axisPointer: {
+			            type: 'cross',
+			            crossStyle: {
+			                color: '#999'
+			            }
+			        }
+			    },
     	        legend: {
     	            data:[climateindexName]
     	        },
     	        xAxis: {
-    	            data: res.date_year
+    	            data: years
     	        },
     	        yAxis: {},
     	        series: [{
     	            name: climateindexName,
     	            type: 'line',
     	            data: res.data
-    	        }]
+    	        }
+    	        ]
         	});
     	});
     };
@@ -97,41 +108,49 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 	
 	function doQuery() {
 		var map = {};
-		map.date_year = $("#date_year").val();
-		map.towns = $("#towns").val();
+//		map.date_year = $("#date_year").val();
+//		map.towns = $("#towns").val();
 		map.climateindex = $("#climateindex").val();
 		map.climateindexName = $("#climateindex option:selected").text();
-		if (   (map.date_year == null || map.date_year == '' || map.date_year == 'undefined')
-			&& (map.towns == null || map.towns == '' || map.towns == 'undefined')) {
-			layer.msg("请至少选择一个查询条件（年份、乡镇）。");
-			return;
-		}
 		
-		if (map.date_year == null || map.date_year == '' || map.date_year == 'undefined') {
-			setLineOption(map);
-		} else {
-			setBarOption(map);
-		}
+		setLineOption(map);
+//		if (   (map.date_year == null || map.date_year == '' || map.date_year == 'undefined')
+//			&& (map.towns == null || map.towns == '' || map.towns == 'undefined')) {
+//			layer.msg("请至少选择一个查询条件（年份、乡镇）。");
+//			return;
+//		}
+		
+//		if (map.date_year == null || map.date_year == '' || map.date_year == 'undefined') {
+//			setLineOption(map);
+//		} else {
+//			setBarOption(map);
+//		}
 		
 	}
 	
 	function bindEvent() {
 		//查询数据
-		$("#queryBtn").click(function(){
-			doQuery();
-		});
+//		$("#queryBtn").click(function(){
+//			doQuery();
+//		});
 		
 		$(window).resize(function(){
 			$("#charts").css("height",winH - 80);
 			charts.resize();
 		});
 		
-		form.on('select(towns)', function(data) { 
-			var date_year = $("#date_year").val();
-			if (date_year != null && date_year != '' && date_year != 'undefined') {
-				$("#date_year").val('');
-			}
+		form.on('select(climateindex)', function(data) {
+			doQuery();
 		});
+		
+//		form.on('select(towns)', function(data) { 
+//			var date_year = $("#date_year").val();
+//			if (date_year != null && date_year != '' && date_year != 'undefined') {
+//				$("#date_year").val('');
+//			}
+//		});
+		
+		
 	}
 	
 	function init() {
