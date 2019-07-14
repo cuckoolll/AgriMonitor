@@ -2,6 +2,7 @@ package com.agri.monitor.controller.datamanage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -154,6 +155,26 @@ public class CropsPlantController {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 		return cropsTypeService.cropstypeTy(gids,user.getUser_id());
 	}
+	/**--------------数据分析--------------------**/
+	@RequestMapping("/cropsPlantAnalysis")
+	public String cropsPlantAnalysis(Model model) {
+		List<Map> types = new ArrayList<>();
+		List<Map> list = (List<Map>) CacheUtil.getCache(CacheTypeEnum.CROPSTYPE);
+		if(null != list) {
+			for (Map map : list) {
+				if((Integer)map.get("stopflag")==1) {
+					types.add(map);
+				}
+			}
+		}
+		model.addAttribute("cropstype", types);
+		return "/statisticanalysis/cropsPlantAnalysis/cropsPlantAnalysis";
+	}
 	
+	@ResponseBody
+	@RequestMapping(value="/cropsPlantAnalysis/getdata",method=RequestMethod.POST)
+	public Map getdata(Model model,Integer type) {
+		return cropsPlantService.getdata(type);
+	}
 }
 

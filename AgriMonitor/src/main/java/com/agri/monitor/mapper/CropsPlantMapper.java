@@ -30,4 +30,6 @@ public interface CropsPlantMapper {
 	void deleteByYear(Integer year);
 	
 	void deleteByYearAndType(Map map);
+	
+	List<Map> getdata10(Integer type);
 }

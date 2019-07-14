@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<!-- Google Chrome Frame也可以让IE用上Chrome的引擎: -->
+		<meta name="renderer" content="webkit">
+		<!--国产浏览器高速模式-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>农作物产量分析</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/base.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/iconfont.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
+		<!-- 滚动条插件 -->
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/jquery.mCustomScrollbar.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/frameStyle.css}">
+	    <!--[if lt IE 9]>
+	      	<script src="framework/html5shiv.min.js"></script>
+	      	<script src="framework/respond.min.js"></script>
+	    <![endif]-->
+		<script type="text/javascript" th:src="@{/temp/framework/jquery-1.11.3.min.js}" ></script>
+		<script type="text/javascript" th:src="@{/temp/layui/layui.js}"></script>
+		<script th:src="@{/temp/framework/jquery-ui-1.10.4.min.js}"></script>
+		<script th:src="@{/temp/framework/jquery.mousewheel.min.js}"></script>
+		<script th:src="@{/temp/framework/jquery.mCustomScrollbar.min.js}"></script>
+		<!-- 公共样式 结束 -->
+	</head>
+
+	<body>
+		<div class="cBody" style="height: 100%">
+			<div class="queryArea">
+					<form class="layui-form" action="">
+						<div class="layui-form-item">
+							<label style="width: 90px" class="layui-form-label text-left">农作物类型：</label>
+							<div class="layui-input-inline">
+								<select id="crops_type" style="width: 200px" lay-filter="crops_type">
+							        <option th:each="type:${cropstype}" th:value="${type.gid}" th:text="${type.type_name}"></option>
+							    </select>
+							</div>
+						</div>
+					</form>
+				</div>
+		    <div id="main"></div>
+		    <div id="main1"></div>
+		    <script th:src="@{/temp/echarts.min.js}"></script>
+		</div>
+		<script th:src="@{/js/statisticanalysis/cropsPlantAnalysis/cropsPlantAnalysis.js}"></script>
+	</body>
+</html>

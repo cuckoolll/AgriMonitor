@@ -7,6 +7,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -296,5 +299,42 @@ public class CropsPlantService {
 			}
 		}
 		return null;
+	}
+	
+	public Map getdata(Integer type) {
+		if (logger.isInfoEnabled()) {
+			logger.info("农作物产量情况分析，type=" + type);
+		}
+		Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR);
+		Double[] zcarr= {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+		Double[] dcarr= {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+		Double[] mjarr= {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+		Map ret = new HashMap<>();
+		if(null != type) {
+			List<Map> list = cropsPlantMapper.getdata10(type);
+			if (null != list && list.size() > 0) {
+				for (int i=0;i<list.size();i++) {
+					if((year-i)==(Integer)list.get(i).get("date_year")) {
+						zcarr[i]=(Double) list.get(i).get("planted_output");
+						dcarr[i]=(Double) list.get(i).get("dc");
+						mjarr[i]=(Double) list.get(i).get("planted_area");
+					}
+				}
+				List<Double> zc = Arrays.asList(zcarr);
+				List<Double> dc = Arrays.asList(dcarr);
+				List<Double> mj = Arrays.asList(mjarr);
+				Collections.reverse(zc);
+				Collections.reverse(dc);
+				Collections.reverse(mj);
+				ret.put("zc", zc);
+				ret.put("dc", dc);
+				ret.put("mj", mj);
+			}
+		}
+		ret.put("zc", zcarr);
+		ret.put("dc", dcarr);
+		ret.put("mj", mjarr);
+		return ret;
 	}
 }
