@@ -273,9 +273,7 @@ public class AnimalsBreedService {
 	        animalsBreedMapper.batchInsert(list);
 	        LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.SUCESS, user.getUser_id(), "导入查询畜牧业生产情况信息，共导入"+list.size()+"条");
 		} catch (Exception e) {
-			if (logger.isErrorEnabled()) {
-				logger.error("畜牧业生产情况数据导入，解析文件异常", e);
-			}
+			logger.error("畜牧业生产情况数据导入，解析文件异常", e);
 			result.put("code", -1);
     		result.put("msg", "解析文件失败");
     		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(), "导入畜牧业生产情况信息异常："+e.getMessage());
@@ -372,5 +370,146 @@ public class AnimalsBreedService {
 			}
 		}
 		return null;
+	}
+	
+	public List<Map> getMonthData(Integer date_month, String userid){
+		if (logger.isErrorEnabled()) {
+			logger.info("获取畜牧业生产情况月度数据，month="+date_month);
+		}
+		
+		AnimalsBreedQueryVO queryvo = new AnimalsBreedQueryVO();
+		queryvo.setDate_month(
+				Integer.valueOf(((date_month-100)+"").substring(0, 4) +"12"));
+		queryvo.setPage(1);
+		queryvo.setLimit(Integer.MAX_VALUE);
+		queryvo.setStopflag(1);
+		//查询上年年末数据
+		List<Map> nmlist=animalsBreedMapper.findAllForPage(queryvo);
+		if (logger.isErrorEnabled()) {
+			logger.info("获取畜牧业生产情况上年年末数据完成");
+		}
+		Map<String, Map> nmflData = new HashMap<>();
+		//统计父节点合计数
+		if(null != nmlist && nmlist.size() > 0) {
+			for (Map map : nmlist) {
+				//如果是叶子节点，将本节点数据合计到父节点中
+				if(((Integer) map.get("isleaf"))==1) {
+					totalParent(nmlist, map, (Integer) map.get("parent_id"));
+				}
+			}
+			//按分类存储
+			for (Map map : nmlist) {
+				nmflData.put(map.get("fgid").toString(), map);
+			}
+		}
+		
+		queryvo.setDate_month(date_month);
+		//查询当月数据
+		List<Map> dylist=animalsBreedMapper.findAllForPage(queryvo);
+		//查询去年同期数据
+		queryvo.setDate_month(date_month-100);
+		List<Map> tqlist=animalsBreedMapper.findAllForPage(queryvo);
+		if (logger.isErrorEnabled()) {
+			logger.info("获取畜牧业生产情况月度数据和上年同期数据完成");
+		}
+		Map<String, Map> tqflData = new HashMap<>();
+		if(null != tqlist && tqlist.size() > 0) {
+			for (Map map : tqlist) {
+				//如果是叶子节点，将本节点数据合计到父节点中
+				if(((Integer) map.get("isleaf"))==1) {
+					totalParent(tqlist, map, (Integer) map.get("parent_id"));
+				}
+			}
+			//按分类存储
+			for (Map map : tqlist) {
+				tqflData.put(map.get("fgid").toString(), map);
+			}
+		}
+		
+		if(null != dylist && dylist.size() > 0) {
+			for (Map map : dylist) {
+				//如果是叶子节点，将本节点数据合计到父节点中
+				if(((Integer) map.get("isleaf"))==1) {
+					totalParent(dylist, map, (Integer) map.get("parent_id"));
+				}
+			}
+			for (Map map : dylist) {
+				map.put("nccl", nmflData.get(map.get("fgid")).get("surplus_size"));
+				map.put("czs_tq", tqflData.get(map.get("fgid")).get("child_size"));
+				map.put("chs_tq", tqflData.get(map.get("fgid")).get("survival_size"));
+				Double survival_size = (Double) map.get("survival_size");
+				Double child_size = (Double) map.get("child_size");
+				if(null != survival_size && null != child_size && child_size != 0.0) {
+					map.put("chl", new BigDecimal(survival_size).divide(new BigDecimal(child_size)).setScale(2, BigDecimal.ROUND_DOWN));
+				}
+				Double czs_tq = (Double) map.get("czs_tq");
+				Double chs_tq= (Double) map.get("chs_tq");
+				if(null != chs_tq && null != czs_tq && czs_tq != 0.0) {
+					map.put("chl_tq", new BigDecimal(chs_tq).divide(new BigDecimal(czs_tq)).setScale(2, BigDecimal.ROUND_DOWN));
+				}
+				
+			}
+		}
+		
+		if (logger.isErrorEnabled()) {
+			logger.info("子节点数据汇总到父节点完成");
+		}
+		
+		return dylist;
+	}
+	
+	public List<Map> getYearData(Integer year, String userid){
+		if (logger.isErrorEnabled()) {
+			logger.info("获取畜牧业生产情况年度数据，year="+year);
+		}
+		AnimalsBreedQueryVO queryvo = new AnimalsBreedQueryVO();
+		queryvo.setDate_month(Integer.valueOf((year-1)+"12"));
+		queryvo.setPage(1);
+		queryvo.setLimit(Integer.MAX_VALUE);
+		queryvo.setStopflag(1);
+		//查询上年年末数据
+		List<Map> list=animalsBreedMapper.findAllForPage(queryvo);
+		if (logger.isErrorEnabled()) {
+			logger.info("获取畜牧业生产情况上年年末数据完成");
+		}
+		Map<String, Map> flData = new HashMap<>();
+		//统计父节点合计数
+		if(null != list && list.size() > 0) {
+			for (Map map : list) {
+				//如果是叶子节点，将本节点数据合计到父节点中
+				if(((Integer) map.get("isleaf"))==1) {
+					totalParent(list, map, (Integer) map.get("parent_id"));
+				}
+			}
+			//按分类存储
+			for (Map map : list) {
+				flData.put(map.get("fgid").toString(), map);
+			}
+		}
+		
+		Map m = new HashMap<>();
+		m.put("m1", Integer.valueOf(year+"01"));
+		m.put("m2", Integer.valueOf(year+"12"));
+		List<Map> list1 = animalsBreedMapper.getYearData(m);
+		if (logger.isErrorEnabled()) {
+			logger.info("获取畜牧业生产情况本年数据完成");
+		}
+		if(null != list1 && list1.size() > 0) {
+			for (Map map : list1) {
+				//如果是叶子节点，将本节点数据合计到父节点中
+				if(((Integer) map.get("isleaf"))==1) {
+					totalParent(list1, map, (Integer) map.get("parent_id"));
+				}
+			}
+			//按分类存储
+			for (Map map : list1) {
+				if(null != flData.get(map.get("fgid"))) {
+					map.put("surplus_size", flData.get(map.get("fgid")).get("surplus_size"));
+					map.put("female_size", flData.get(map.get("fgid")).get("female_size"));
+				}
+			}
+		}
+		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, "畜牧业生产情况年度数据分析");
+		return list1;
 	}
 }

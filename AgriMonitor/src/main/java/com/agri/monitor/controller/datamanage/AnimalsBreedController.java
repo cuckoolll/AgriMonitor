@@ -2,6 +2,7 @@ package com.agri.monitor.controller.datamanage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -156,6 +157,32 @@ public class AnimalsBreedController {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 		return animalsTargetService.animalsTargetTy(gids,user.getUser_id());
 	}
-	
+	/****------------------------------*********/
+	@RequestMapping("/animalsBreedAnalysis")
+	public String animalsBreedAnalysis(Model model) {
+		return "/statisticanalysis/animalsBreedAnalysis/animalsBreedAnalysis";
+	}
+	@ResponseBody
+	@RequestMapping(value="/animalsBreedAnalysis/getYearData")
+	public Map getYearData(Model model,Integer year,HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		final Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", 0);
+		result.put("msg", "成功");
+		result.put("data", animalsBreedService.getYearData(year, user.getUser_id()));
+		//result.put("count", animalsBreedService.findAllCount(queryVO));
+		return result;
+	}
+	@ResponseBody
+	@RequestMapping(value="/animalsBreedAnalysis/getMonthData")
+	public Map getMonthData(Model model,Integer month,HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		final Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", 0);
+		result.put("msg", "成功");
+		result.put("data", animalsBreedService.getMonthData(month, user.getUser_id()));
+		//result.put("count", animalsBreedService.findAllCount(queryVO));
+		return result;
+	}
 }
 

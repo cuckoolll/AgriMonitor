@@ -28,4 +28,6 @@ public interface AnimalsBreedMapper {
 	int findByAnimalsTarget(Integer typeGid);
 	
 	void deleteByTowns(Map map);
+	
+	List<Map> getYearData(Map map);
 }
