@@ -5,15 +5,15 @@
 		select * from t_crops_type where gid=#{gid}
 	</select>
     <select id="findAllForPage" parameterType="com.agri.monitor.vo.CropsTypeQueryVO" resultType="map">
-        select a.gid,a.type_name,a.create_time,a.creator,a.last_time,a.modifier,a.stopflag,b.user_showname from t_crops_type a, t_user_info b 
-        where a.creator=b.user_id
+        select a.gid,a.type_name,a.create_time,a.creator,a.last_time,a.modifier,a.stopflag,CONCAT_WS('-',a.creator,b.user_showname) user_showname 
+        from t_crops_type a left join t_user_info b on a.creator=b.user_id
         <if test="stopflag != null">
 	        and a.stopflag=#{stopflag}
 	    </if>
 	    order by a.gid limit #{currIndex},#{limit}
     </select>
     <select id="findAllCount" parameterType="com.agri.monitor.vo.CropsTypeQueryVO" resultType="int">
-        select count(a.gid) from t_crops_type a, t_user_info b where a.creator=b.user_id
+        select count(a.gid) from t_crops_type a left join t_user_info b on a.creator=b.user_id
          <if test="stopflag != null">
 	        and a.stopflag=#{stopflag}
 	    </if>

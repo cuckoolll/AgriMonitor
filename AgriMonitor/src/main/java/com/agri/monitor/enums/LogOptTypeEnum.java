@@ -26,11 +26,11 @@ public enum LogOptTypeEnum {
  
     public static List<Map<String, Object>> toList() {
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        Map<String, Object> item = new HashMap<String, Object>();
         LogOptTypeEnum[] values = values();
         for (int i = 0; i < values.length; ++i) {
+        	Map<String, Object> item = new HashMap<String, Object>();
         	LogOptTypeEnum value = values[i];
-            item.put("typeId", Integer.valueOf(value.getTypeId()));
+            item.put("typeId", value.getTypeId());
             item.put("typeName", value.getTypeName());
             list.add(item);
         }

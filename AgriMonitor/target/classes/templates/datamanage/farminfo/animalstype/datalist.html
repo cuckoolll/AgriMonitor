@@ -54,7 +54,7 @@
    			 	停用
   			{{#  } }}
 			</script>
-			<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name=='admin'}">
+			<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name!='user'}">
   			 <div class="layui-inline" lay-event="add"><i class="layui-icon layui-icon-add-1"></i></div><div class="layui-inline" lay-event="update"><i class="layui-icon layui-icon-edit"></i></div><div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
 			</script>
 		</div>

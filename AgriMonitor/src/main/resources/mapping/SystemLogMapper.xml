@@ -5,5 +5,31 @@
     	insert into t_system_log(operation_type,operation_status,operation_user,operation_log)
     	values(#{operation_type},#{operation_status},#{operation_user},#{operation_log})
     </insert>
-    
+    <select id="findAllForPage" parameterType="com.agri.monitor.vo.SysLogQueryVO" resultType="map">
+        select a.gid,a.operation_type,a.operation_status,a.operation_log,a.create_time,
+        CONCAT_WS('-',a.creator,b.user_showname) user_showname 
+        from t_system_log a left join t_user_info b on a.operation_user=b.user_id
+        <if test="operation_type != null">
+	        and a.operation_type=#{operation_type}
+	    </if>
+	    <if test="operation_status != null">
+	        and a.operation_status=#{operation_status}
+	    </if>
+	    order by a.gid desc limit #{currIndex},#{limit}
+    </select>
+    <select id="findAllCount" parameterType="com.agri.monitor.vo.SysLogQueryVO" resultType="int">
+        select count(a.gid) from t_system_log a left join t_user_info b on a.operation_user=b.user_id
+        <if test="operation_type != null">
+	        and a.operation_type=#{operation_type}
+	    </if>
+	    <if test="operation_status != null">
+	        and a.operation_status=#{operation_status}
+	    </if>
+    </select>
+    <delete id="delete" parameterType="java.util.List">
+    	delete from t_system_log where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
 </mapper>

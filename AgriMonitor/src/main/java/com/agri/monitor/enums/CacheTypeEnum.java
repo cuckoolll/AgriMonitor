@@ -5,7 +5,9 @@ public enum CacheTypeEnum {
 	 * 用户角色
 	 */
 	USER_ROLE,
-	
+	 /* 用户
+	 */
+	USER,
 	/**
 	 * 认定畜种类型
 	 */

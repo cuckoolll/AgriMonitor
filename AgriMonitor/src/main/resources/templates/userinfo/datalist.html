@@ -8,7 +8,7 @@
 		<meta name="renderer" content="webkit">
 		<!--国产浏览器高速模式-->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>农作物产量情况信息</title>
+		<title>用户信息维护</title>
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/base.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/iconfont.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
@@ -32,35 +32,23 @@
 			<div class="queryArea">
 				<form class="layui-form" action="">
 					<div class="layui-form-item">
-						<label class="layui-form-label text-left">年份：</label>
+						<label style="width: 60px" class="layui-form-label text-left">角色：</label>
 						<div class="layui-input-inline">
-							<input type="text" id="date_year" class="layui-input">
-						</div>
-<!-- 						<label class="layui-form-label">乡镇：</label>
-						<div class="layui-input-inline">
-					      <select id="towns">
-					     	 <option value="">全部</option>
-					        <option th:each="type:${towns}" th:value="${type}" th:text="${type}"></option>
-					      </select>
-					    </div> -->
-						<label style="width: 100px" class="layui-form-label">农作物类型：</label>
-						<div class="layui-input-inline">
-					      <select id="crops_type">
-					        <option value="">全部</option>
-					        <option th:each="type:${cropstype}" th:value="${type.gid}" th:text="${type.type_name}"></option>
+					      <select id="user_role">
+					        <option value=""></option>
+					        <option th:each="type:${user_role}" th:value="${type.gid}" th:text="${type.role_showname}"></option>
 					      </select>
 					      </div>
 						<a id="queryBtn" class="layui-btn">检索</a>
-						<a th:if="${session.userinfo.roleinfo.role_name!='user'}" type="button" class="layui-btn" id="dataImportBtn"><i class="layui-icon"></i>导入数据</a>
-						<a href="/cropsplant/download" class="layui-btn"><i class="layui-icon"></i>模板下载</a>
 					</div>
 				</form>
 			</div>
 			<table id="datalist"  lay-filter="datalist"></table>
-			<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name!='user'}">
+			
+			<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name=='sys'}">
   			 <div class="layui-inline" lay-event="add"><i class="layui-icon layui-icon-add-1"></i></div><div class="layui-inline" lay-event="update"><i class="layui-icon layui-icon-edit"></i></div><div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
 			</script>
 		</div>
-		<script th:src="@{/js/datamanage/cropsplant/datalist.js}"></script>
+		<script th:src="@{/js/userinfo/datalist.js}"></script>
 	</body>
 </html>

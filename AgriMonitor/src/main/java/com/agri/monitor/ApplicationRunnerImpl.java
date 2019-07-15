@@ -13,12 +13,14 @@ import com.agri.monitor.enums.CacheTypeEnum;
 import com.agri.monitor.mapper.AnimalsTargetMapper;
 import com.agri.monitor.mapper.AnimalsTypeMapper;
 import com.agri.monitor.mapper.CropsTypeMapper;
+import com.agri.monitor.mapper.UserinfoMapper;
 import com.agri.monitor.service.datamanage.ClimateInfoService;
 import com.agri.monitor.service.datamanage.SoilInfoService;
 import com.agri.monitor.utils.CacheUtil;
 import com.agri.monitor.vo.AnimalsTargetQueryVO;
 import com.agri.monitor.vo.AnimalsTypeQueryVO;
 import com.agri.monitor.vo.CropsTypeQueryVO;
+import com.agri.monitor.vo.UserQueryVO;
 
 @Component
 public class ApplicationRunnerImpl implements ApplicationRunner {
@@ -39,6 +41,9 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 	
 	@Autowired
 	private SoilInfoService soilInfoService;
+	
+	@Autowired
+	private UserinfoMapper userinfoMapper;
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
@@ -66,7 +71,13 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 		CacheUtil.putCache(CacheTypeEnum.CROPSTYPE, cropsTypeMapper.findAllForPage(queryVO2));
 		//缓存土壤指标
 		CacheUtil.putCache(CacheTypeEnum.SOILINDEX, soilInfoService.getSoilIndex());
-		//TODO 其他缓存数据，先定义枚举类型
+		//用户角色
+		CacheUtil.putCache(CacheTypeEnum.USER_ROLE, userinfoMapper.queryUserRole());
+		//用户
+		UserQueryVO queryVO3 = new UserQueryVO();
+		queryVO3.setPage(1);
+		queryVO3.setLimit(Integer.MAX_VALUE);
+		CacheUtil.putCache(CacheTypeEnum.USER, userinfoMapper.findAllForPage(queryVO3));
 	}
 
 }

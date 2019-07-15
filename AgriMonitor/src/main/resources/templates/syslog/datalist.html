@@ -8,7 +8,7 @@
 		<meta name="renderer" content="webkit">
 		<!--国产浏览器高速模式-->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>农作物产量情况信息</title>
+		<title>系统日志查看</title>
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/base.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/iconfont.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
@@ -32,35 +32,54 @@
 			<div class="queryArea">
 				<form class="layui-form" action="">
 					<div class="layui-form-item">
-						<label class="layui-form-label text-left">年份：</label>
+						<label style="width: 90px" class="layui-form-label text-left">操作类型：</label>
 						<div class="layui-input-inline">
-							<input type="text" id="date_year" class="layui-input">
-						</div>
-<!-- 						<label class="layui-form-label">乡镇：</label>
-						<div class="layui-input-inline">
-					      <select id="towns">
-					     	 <option value="">全部</option>
-					        <option th:each="type:${towns}" th:value="${type}" th:text="${type}"></option>
-					      </select>
-					    </div> -->
-						<label style="width: 100px" class="layui-form-label">农作物类型：</label>
-						<div class="layui-input-inline">
-					      <select id="crops_type">
+					      <select id="type">
 					        <option value="">全部</option>
-					        <option th:each="type:${cropstype}" th:value="${type.gid}" th:text="${type.type_name}"></option>
+					        <option th:each="type:${logopttype}" th:value="${type.typeId}" th:text="${type.typeName}"></option>
+					      </select>
+					      </div>
+					      <label class="layui-form-label text-left">操作状态：</label>
+						 <div class="layui-input-inline">
+					      <select id="status">
+					        <option value="">全部</option>
+					        <option value="0">失败</option>
+					        <option value="1">成功</option>
 					      </select>
 					      </div>
 						<a id="queryBtn" class="layui-btn">检索</a>
-						<a th:if="${session.userinfo.roleinfo.role_name!='user'}" type="button" class="layui-btn" id="dataImportBtn"><i class="layui-icon"></i>导入数据</a>
-						<a href="/cropsplant/download" class="layui-btn"><i class="layui-icon"></i>模板下载</a>
 					</div>
 				</form>
 			</div>
-			<table id="datalist"  lay-filter="datalist"></table>
-			<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name!='user'}">
-  			 <div class="layui-inline" lay-event="add"><i class="layui-icon layui-icon-add-1"></i></div><div class="layui-inline" lay-event="update"><i class="layui-icon layui-icon-edit"></i></div><div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
+			<table id="datalist" lay-filter="datalist"></table>
+			<script type="text/html" id="titleTpl">
+ 			 {{#  if(d.operation_type==1){}}
+   				查询
+  			 {{#  } else if(d.operation_type==2) {}}
+   			 	新增
+  			{{#  } else if(d.operation_type==3) {}}
+				修改
+			{{#  } else if(d.operation_type==4) {}}
+				删除
+			{{#  } else if(d.operation_type==5) {}}
+				导入
+			{{#  } else if(d.operation_type==6) {}}
+				登陆
+			{{#  } else if(d.operation_type==7) {}}
+				保存
+			{{#  }}}
+			</script>
+			<script type="text/html" id="titleTpl1">
+ 			 {{#  if(d.operation_status==0){}}
+   				失败
+  			 {{#  } else if(d.operation_status==1) {}}
+   			 	成功
+			{{#  }}}
+			</script>
+			<script type="text/html" id="barDemo">
+  			 <div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
 			</script>
 		</div>
-		<script th:src="@{/js/datamanage/cropsplant/datalist.js}"></script>
+		<script th:src="@{/js/syslog/datalist.js}"></script>
 	</body>
 </html>

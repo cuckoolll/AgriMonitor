@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agri.monitor.mapper.UserinfoMapper">
+	<select id="findById" parameterType="string" resultType="com.agri.monitor.entity.UserInfo">
+		select * from t_user_info where user_id=#{user_id}
+	</select>
+    <select id="findAllForPage" parameterType="com.agri.monitor.vo.UserQueryVO" resultType="map">
+        select a.user_id,a.user_password,a.user_role,a.user_showname,b.role_showname
+        from t_user_info a,t_role_info b where a.user_role=b.gid
+        <if test="user_role != null and user_role != ''">
+	        and a.user_role = #{user_role}
+	    </if> limit #{currIndex},#{limit}
+    </select>
+    <select id="findAllCount" parameterType="com.agri.monitor.vo.UserQueryVO" resultType="int">
+        select count(a.user_id) from t_user_info a,t_role_info b where a.user_role=b.gid
+        <if test="user_role != null and user_role != ''">
+	        and a.user_role = #{user_role}
+	    </if>
+    </select>
+   
+    <select id="queryUserRole" resultType="map">
+        select gid,role_name,role_showname from t_role_info
+    </select> 
+    
+    <select id="findForLogin" parameterType="map" resultType="com.agri.monitor.entity.UserInfo">
+		select * from t_user_info where user_id=#{user_id} and user_password=#{user_password}
+	</select>
+	<select id="findRole" parameterType="int" resultType="com.agri.monitor.entity.RoleInfo">
+		select * from t_role_info where gid=#{gid}
+	</select>
+	
+    <insert id="insert" parameterType="com.agri.monitor.entity.UserInfo">
+    	insert into t_user_info(user_id,user_password,user_role,user_showname)
+    	values
+	   (#{user_id},#{user_password},#{user_role},#{user_showname})
+    </insert>
+    
+    <update id="update" parameterType="com.agri.monitor.entity.UserInfo">
+    	update t_user_info set user_password=#{user_password},user_role=#{user_role},
+    	user_showname=#{user_showname} where user_id=#{user_id}
+    </update>
+    
+    <delete id="delete" parameterType="java.util.List">
+    	delete from t_user_info where user_id in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+</mapper>
