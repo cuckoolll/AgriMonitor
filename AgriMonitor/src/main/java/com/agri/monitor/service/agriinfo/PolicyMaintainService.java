@@ -94,7 +94,7 @@ public class PolicyMaintainService {
         }
 
 	    String fileName = file.getOriginalFilename();
-	    String filePath = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/policyfile";
+	    String filePath = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/policyfile/";
 	    String file_address = filePath + fileName;
 	    String file_name = request.getParameter("file_name");
 	    String gid = null;
@@ -137,7 +137,7 @@ public class PolicyMaintainService {
         PolicyInfo policy = new PolicyInfo();
 	    policy.setFile_name(file_name);
 	    policy.setFile_address(file_address);
-	    policy.setCreate_time(user.getUser_id());
+	    policy.setCreator(user.getUser_id());
 	    try {
 	    	policyMaintainMapper.insertInfo(policy);
 	    } catch (Exception e) {

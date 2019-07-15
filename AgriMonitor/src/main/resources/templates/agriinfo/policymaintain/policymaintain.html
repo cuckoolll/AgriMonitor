@@ -41,6 +41,11 @@
 							<input id="create_time" type="text" class="layui-input" readonly="readonly">
 						</div>
 						
+						<label class="layui-form-label text-left">文件标题：</label>
+						<div class="layui-input-inline">
+							<input id="file_name" type="text" class="layui-input" >
+						</div>
+						
 						<a id="queryBtn" class="layui-btn">检索</a>
 						<a th:if="${session.userinfo.roleinfo.role_name=='admin'}" class="layui-btn" id="uploadBtn">上传文件</a>
 					</div>

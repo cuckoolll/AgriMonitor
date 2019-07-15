@@ -51,7 +51,7 @@ public class PolicyMaintainController {
 	
 	@ResponseBody
 	@RequestMapping(value="/fileUpload",method=RequestMethod.POST)
-	public Map fileUpload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+	public Map fileUpload(HttpServletRequest request, @RequestParam("file") MultipartFile file) {
 		return policyMaintainService.fileUpload(file, request);
 	}
 	
