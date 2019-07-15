@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agri.monitor.mapper.PolicyMaintainMapper">
+	<select id="queryInfoForPage" parameterType="com.agri.monitor.vo.PolicyQueryVO" resultType="map">
+        select gid,
+			   file_name,
+			   file_address,
+			   date_format(create_time, '%Y-%m-%d') create_time,
+			   creator
+          from t_agriculture_file 
+    	<if test="file_name != null and file_name != ''">
+    		<bind name="file_name" value="'%' + file_name + '%'"/>
+        	where file_name like #{file_name} 
+        </if>
+        <if test="file_name == null or file_name == ''">
+        	<if test="create_time != null and create_time != ''">
+        		where create_time = #{create_time}
+        	</if>
+        </if>
+        <if test="create_time != null and create_time != ''">
+        	and create_time = #{create_time}
+       	</if>
+       	 order by create_time desc limit #{currIndex},#{limit}
+    </select>
+    
+    <select id="queryInfoCount" parameterType="com.agri.monitor.vo.PolicyQueryVO" resultType="int">
+        select count(gid)
+          from t_agriculture_file 
+    	<if test="file_name != null and file_name != ''">
+    		<bind name="file_name" value="'%' + file_name + '%'"/>
+        	where file_name like #{file_name} 
+        </if>
+        <if test="file_name == null or file_name == ''">
+        	<if test="create_time != null and create_time != ''">
+        		where create_time = #{create_time}
+        	</if>
+        </if>
+        <if test="create_time != null and create_time != ''">
+        	and create_time = #{create_time}
+       	</if>
+    </select>
+    
+    <select id="queryGid" parameterType="com.agri.monitor.vo.PolicyQueryVO" resultType="java.lang.String">
+   		select gid
+     	  from t_agriculture_file
+     	 where file_name = #{file_name}
+    </select>
+    
+    <insert id="insertInfo" parameterType="com.agri.monitor.entity.PolicyInfo">
+    	insert into t_agriculture_file
+    		(file_name,
+			 file_address,
+			 creator)
+    	values
+		   (#{file_name},
+			#{file_address},
+			#{creator})
+    </insert>
+    
+    <delete id="delInfoByGid" parameterType="java.util.List">
+    	delete from t_agriculture_file where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+</mapper>
