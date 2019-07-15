@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
@@ -434,20 +435,33 @@ public class AnimalsBreedService {
 				}
 			}
 			for (Map map : dylist) {
-				map.put("nccl", nmflData.get(map.get("fgid")).get("surplus_size"));
-				map.put("czs_tq", tqflData.get(map.get("fgid")).get("child_size"));
-				map.put("chs_tq", tqflData.get(map.get("fgid")).get("survival_size"));
-				Double survival_size = (Double) map.get("survival_size");
-				Double child_size = (Double) map.get("child_size");
-				if(null != survival_size && null != child_size && child_size != 0.0) {
-					map.put("chl", new BigDecimal(survival_size).divide(new BigDecimal(child_size)).setScale(2, BigDecimal.ROUND_DOWN));
+				Map nmmap = nmflData.get(map.get("fgid").toString());
+				Map tqmap = tqflData.get(map.get("fgid").toString());
+				map.put("nccl", null!=nmmap?nmmap.get("surplus_size"):null);
+				map.put("czs_tq", null!=tqmap?tqmap.get("child_size"):null);
+				map.put("chs_tq", null!=tqmap?tqmap.get("survival_size"):null);
+				//存活率
+				BigDecimal survival_size = null!=map.get("survival_size")?new BigDecimal(map.get("survival_size").toString()):null;
+				BigDecimal child_size = null!=map.get("child_size")?new BigDecimal(map.get("child_size").toString()):null;
+				if(null != survival_size && null != child_size && child_size.doubleValue()!=0) {
+					map.put("chl", survival_size.divide(child_size,3,RoundingMode.HALF_UP).setScale(2, BigDecimal.ROUND_DOWN));
 				}
-				Double czs_tq = (Double) map.get("czs_tq");
-				Double chs_tq= (Double) map.get("chs_tq");
-				if(null != chs_tq && null != czs_tq && czs_tq != 0.0) {
-					map.put("chl_tq", new BigDecimal(chs_tq).divide(new BigDecimal(czs_tq)).setScale(2, BigDecimal.ROUND_DOWN));
+				BigDecimal czs_tq = null!=map.get("czs_tq")?new BigDecimal(map.get("czs_tq").toString()):null;
+				BigDecimal chs_tq= null!=map.get("chs_tq")?new BigDecimal(map.get("chs_tq").toString()):null;
+				if(null != chs_tq && null != czs_tq && czs_tq.doubleValue()!=0) {
+					map.put("chl_tq", chs_tq.divide(czs_tq,3,RoundingMode.HALF_UP).setScale(2, BigDecimal.ROUND_DOWN));
 				}
-				
+				//损亡情况
+				map.put("sws_tq", null!=tqmap?tqmap.get("death_size"):null);
+				BigDecimal death_size = null!=map.get("death_size")?new BigDecimal(map.get("death_size").toString()):null;
+				//损亡率
+				if(null != death_size && null != child_size && child_size.doubleValue()!=0) {
+					map.put("swl", death_size.divide(child_size,3,RoundingMode.HALF_UP).setScale(2, BigDecimal.ROUND_DOWN));
+				}
+				BigDecimal sws_tq= null!=map.get("sws_tq")?new BigDecimal(map.get("sws_tq").toString()):null;
+				if(null != sws_tq && null != czs_tq && czs_tq.doubleValue()!=0) {
+					map.put("swl_tq", sws_tq.divide(czs_tq,3,RoundingMode.HALF_UP).setScale(2, BigDecimal.ROUND_DOWN));
+				}
 			}
 		}
 		
@@ -503,9 +517,9 @@ public class AnimalsBreedService {
 			}
 			//按分类存储
 			for (Map map : list1) {
-				if(null != flData.get(map.get("fgid"))) {
-					map.put("surplus_size", flData.get(map.get("fgid")).get("surplus_size"));
-					map.put("female_size", flData.get(map.get("fgid")).get("female_size"));
+				if(null != flData.get(map.get("fgid").toString())) {
+					map.put("surplus_size", flData.get(map.get("fgid").toString()).get("surplus_size"));
+					map.put("female_size", flData.get(map.get("fgid").toString()).get("female_size"));
 				}
 			}
 		}

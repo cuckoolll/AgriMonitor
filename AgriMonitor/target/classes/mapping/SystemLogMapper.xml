@@ -6,9 +6,10 @@
     	values(#{operation_type},#{operation_status},#{operation_user},#{operation_log})
     </insert>
     <select id="findAllForPage" parameterType="com.agri.monitor.vo.SysLogQueryVO" resultType="map">
+    select * from(
         select a.gid,a.operation_type,a.operation_status,a.operation_log,a.create_time,
-        CONCAT_WS('-',a.creator,b.user_showname) user_showname 
-        from t_system_log a left join t_user_info b on a.operation_user=b.user_id
+        CONCAT_WS('-',a.operation_user,b.user_showname) user_showname 
+        from t_system_log a left join t_user_info b on a.operation_user=b.user_id) a where 1=1
         <if test="operation_type != null">
 	        and a.operation_type=#{operation_type}
 	    </if>
@@ -18,7 +19,8 @@
 	    order by a.gid desc limit #{currIndex},#{limit}
     </select>
     <select id="findAllCount" parameterType="com.agri.monitor.vo.SysLogQueryVO" resultType="int">
-        select count(a.gid) from t_system_log a left join t_user_info b on a.operation_user=b.user_id
+        select count(a.gid) from(
+          select a.gid,a.operation_type,a.operation_status from t_system_log a left join t_user_info b on a.operation_user=b.user_id) a where 1=1
         <if test="operation_type != null">
 	        and a.operation_type=#{operation_type}
 	    </if>
