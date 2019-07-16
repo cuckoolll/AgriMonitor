@@ -119,6 +119,9 @@ public class PolicyMaintainService {
 	    } 
 	    
         File dest = new File(file_address);
+        if (!dest.exists()) {
+        	dest.mkdirs();
+        }
         try {
             file.transferTo(dest);
             if (logger.isInfoEnabled()) {
