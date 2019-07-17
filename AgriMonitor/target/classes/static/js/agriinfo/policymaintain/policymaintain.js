@@ -35,15 +35,29 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		  });
 	}
 	
+	function doQuery() {
+		dataTable.reload({//表格数据重新加载
+			where: {"create_time":$("#create_time").val(),"file_name":$("#file_name").val()},
+			  	page: {curr: 1}
+		});
+	}
+	
+	function download(file_address){
+	    //动态创建表单加到fbody中，最后删除表单
+	    var queryForm = $("#queryForm");
+	    var downloadForm = $("<form action='/policymaintain/download' method='post'></form>");
+	    downloadForm.append("<input type='hidden' name='file_address' value='"+file_address+"'/>");
+	    $(document.body).append(downloadForm);
+	    downloadForm.submit();
+	    downloadForm.remove(); 
+	}
+	
 	function bindEvent() {
 		//监听工具条
 		table.on('toolbar(datalist)', function(obj){
-		    var checkStatus = table.checkStatus(obj.config.id)
-		    ,data = checkStatus.data; //获取选中的数据
+		    var checkStatus = table.checkStatus(obj.config.id);
+		    var data = checkStatus.data; //获取选中的数据
 		    switch(obj.event){
-		      case 'download':
-		    	  
-		      break;
 		      case 'delete':
 			        if(data.length === 0){
 			        	layer.msg('至少选择一行数据删除');
@@ -62,10 +76,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 				        		dataType:"json",
 				        		success:function(res){
 				        			if(res && res.code==0){
-				        				dataTable.reload({//表格数据重新加载
-						    				where: {"create_time":$("#create_time").val(),"file_name":$("#file_name").val()},
-						  				  	page: {curr: 1}
-						    			});
+				        				doQuery();
 				        				layer.msg('删除成功');
 								        obj.config.index;
 				        			}else{
@@ -81,12 +92,20 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 			      break;
 		    };
 		  });
+		
+		table.on('tool(datalist)', function(obj){
+		    var data = obj.data; //获取选中的数据
+		    switch(obj.event){
+		      case 'download':
+		    	  layer.msg('开始下载');
+		    	  download(data.file_address);
+		      break;
+		    };
+		  });
+		
 		//查询数据
 		$("#queryBtn").click(function(){
-			dataTable.reload({//表格数据重新加载
-				  where: {"create_time":$("#create_time").val(),"file_name":$("#file_name").val()},
-				  page: {curr: 1}
-			});
+			doQuery();
 		});
 		
 		$("#uploadBtn").click(function(){
@@ -95,9 +114,12 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 				type: 2,
 				area: ['700px', '230px'],
 				scrollbar: true,
-				content: '/policymaintain/upload'
-			}, function(a){
-				alert(a);
+				content: '/policymaintain/upload',
+				end: function(index, layero){ 
+					doQuery();
+					layer.msg(sessionStorage.getItem('msg'));
+				  	return false; 
+				}  
 			});
 		});
 	}

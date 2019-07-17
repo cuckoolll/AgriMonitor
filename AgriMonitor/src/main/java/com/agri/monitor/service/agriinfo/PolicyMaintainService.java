@@ -1,15 +1,26 @@
 package com.agri.monitor.service.agriinfo;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -20,15 +31,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ClassUtils;
+import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.entity.PolicyInfo;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.entity.WaterInfo;
+import com.agri.monitor.enums.CacheTypeEnum;
 import com.agri.monitor.enums.LogOptSatusEnum;
 import com.agri.monitor.enums.LogOptTypeEnum;
 import com.agri.monitor.mapper.PolicyMaintainMapper;
+import com.agri.monitor.utils.CacheUtil;
 import com.agri.monitor.utils.LogUtil;
 import com.agri.monitor.vo.PolicyQueryVO;
 
@@ -152,8 +166,48 @@ public class PolicyMaintainService {
     		return result;
 	    }
 	    
+	    if (logger.isInfoEnabled()) {
+			logger.info("上传农业政策文件-----------------成功");
+		}
 		result.put("code", 0);
 		result.put("msg", "上传成功");
 		return result;
+	}
+	
+	/**
+	 * 下载 .
+	 * @param response .
+	 */
+	public void downloadFile(HttpServletRequest request, HttpServletResponse response) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		String file_address = request.getParameter("file_address");
+		String[] addressArray = file_address.split("/");
+		String fileName = addressArray[addressArray.length - 1];
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("下载农业政策文件：file_address=" + file_address);
+		}
+		
+		 try {
+	            InputStream bis = new BufferedInputStream(new FileInputStream(new File(file_address)));
+	            fileName = URLEncoder.encode(fileName,"UTF-8");
+	            //设置文件下载头
+	            response.addHeader("Content-Disposition", "attachment;filename=" + fileName);
+	            //1.设置文件ContentType类型，这样设置，会自动判断下载文件类型
+	            response.setContentType("multipart/form-data");
+	            BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream());
+	            int len = 0;
+	            while((len = bis.read()) != -1){
+	                out.write(len);
+	                out.flush();
+	            }
+	            if (logger.isInfoEnabled()) {
+	    			logger.info("下载农业政策文件 -----------------成功");
+	    		}
+	            out.close();
+	        } catch (Exception e) {
+	            logger.error("下载农业政策文件错误", e);
+	            LogUtil.log(LogOptTypeEnum.DOWNLOAD, LogOptSatusEnum.FAIL, user.getUser_id(), "下载农业政策文件错误" + e.getMessage());
+	        }
 	}
 }

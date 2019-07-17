@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public enum LogOptTypeEnum {
-	 QUERY(1, "查询"), ADD(2, "新增"), UPDATE(3, "修改"), DEL(4, "删除"), IMPORT(5, "导入"), LOGIN(6, "登陆"), SAVE(7, "保存");
+	 QUERY(1, "查询"), ADD(2, "新增"), UPDATE(3, "修改"), DEL(4, "删除"), IMPORT(5, "导入"), LOGIN(6, "登陆"), SAVE(7, "保存"), DOWNLOAD(8, "下载");
 	 
     private int typeId;
     private String typeName;

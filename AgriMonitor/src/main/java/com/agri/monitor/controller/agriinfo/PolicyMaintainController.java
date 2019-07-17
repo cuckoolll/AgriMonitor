@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -59,6 +60,11 @@ public class PolicyMaintainController {
 	@RequestMapping("/upload")
 	public String upload(Model model) {
 		return "/agriinfo/policymaintain/policyupload";
+	}
+	
+	@RequestMapping(value="/download",method=RequestMethod.POST)
+	public void downloadFile(HttpServletRequest request, HttpServletResponse response) {
+		policyMaintainService.downloadFile(request, response);
 	}
 	
 	@ResponseBody
