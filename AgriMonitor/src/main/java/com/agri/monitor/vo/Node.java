@@ -1,6 +1,7 @@
 package com.agri.monitor.vo;
 
 import java.util.List;
+import java.util.Map;
 
 public class Node implements java.io.Serializable {
     private static final long serialVersionUID = -2721191232926604726L;
@@ -27,6 +28,8 @@ public class Node implements java.io.Serializable {
 
     private String description;
 
+    private Map data;
+    
     public Node() {
         super();
     }
@@ -38,6 +41,13 @@ public class Node implements java.io.Serializable {
         this.name = name;
     }
 
+    public Node(int id, int parentId, Map data) {
+        super();
+        this.id = id;
+        this.parentId = parentId;
+        this.data = data;
+    }
+    
     public String getDescription() {
         return description;
     }
@@ -151,7 +161,15 @@ public class Node implements java.io.Serializable {
         return true;
     }
 
-    @Override
+    public Map getData() {
+		return data;
+	}
+
+	public void setData(Map data) {
+		this.data = data;
+	}
+
+	@Override
     public String toString() {
         return "Node {id=" + id + ", parentId=" + parentId + ", children="
                 + children + ", name=" + name + ", level =" + level + "}";

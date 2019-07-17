@@ -2,7 +2,6 @@ package com.agri.monitor.controller.datamanage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -183,6 +182,16 @@ public class AnimalsBreedController {
 		result.put("data", animalsBreedService.getMonthData(month, user.getUser_id()));
 		//result.put("count", animalsBreedService.findAllCount(queryVO));
 		return result;
+	}
+	@RequestMapping("/animalsBreedAnalysis/exportMonthData")
+    public void exportMonthData(Integer month,HttpServletResponse response,HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		animalsBreedService.exportMonthData(response, month, user.getUser_id());
+	}
+	@RequestMapping("/animalsBreedAnalysis/exportYearData")
+    public void exportYearData(Integer year,HttpServletResponse response,HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		animalsBreedService.exportYearData(response, year, user.getUser_id());
 	}
 }
 

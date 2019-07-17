@@ -40,8 +40,8 @@ layui.config({
 	        treeLinkage: false,
 		    cols: [[ 
 			      {field: 'target_name', title: '指标名称',align:'left',rowspan:2,width:220},
-			      {field: 'surplus_size', title: '年初存栏数',align:'center',rowspan:2},
-			      {field: 'female_size', title: '其中:能繁殖母畜',align:'center',rowspan:2},
+			      {field: 'nccl', title: '年初存栏数',align:'center',rowspan:2},
+			      {field: 'nfmc', title: '其中:能繁殖母畜',align:'center',rowspan:2},
 			      {title: '增加',align:'center',colspan:2},
 			      {title: '减少',align:'center',colspan:3},
 			      {title: '产量',align:'center',colspan:4}
@@ -104,7 +104,16 @@ layui.config({
 		    ]]
 		});
 	}
+	function bindEvent(){
+		$("#exportYearData").click(function(){
+			window.open("/animalsBreed/animalsBreedAnalysis/exportYearData?year="+$("#year").val());
+		});
+		$("#exportMonthData").click(function(){
+			window.open("/animalsBreed/animalsBreedAnalysis/exportMonthData?month="+$("#month").val().replace('-',''));
+		});
+	}
 	
 	render(curyear);
 	rendermonthdata(curmonth);
+	bindEvent();
 });

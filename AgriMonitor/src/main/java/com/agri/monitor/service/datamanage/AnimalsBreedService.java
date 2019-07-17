@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
@@ -282,16 +283,7 @@ public class AnimalsBreedService {
 		return result;
 	}
 	
-	private void setRowVal(HSSFSheet sheet, List<Node> nodelist, String sp) {
-		for (Node node : nodelist) {
-			rownum_local.set(rownum_local.get()+1);
-			sheet.getRow(rownum_local.get()).getCell(0).setCellValue(sp+node.getName());
-			if(null != node.getChildren() && node.getChildren().size() > 0) {
-				setRowVal(sheet, node.getChildren(),sp+"   ");
-			}
-		}
-	}
-	
+	//模板下载
 	public void downloadFile(HttpServletResponse response) {
 		File destFile = null;
 		InputStream is = null;
@@ -515,15 +507,213 @@ public class AnimalsBreedService {
 					totalParent(list1, map, (Integer) map.get("parent_id"));
 				}
 			}
-			//按分类存储
 			for (Map map : list1) {
 				if(null != flData.get(map.get("fgid").toString())) {
-					map.put("surplus_size", flData.get(map.get("fgid").toString()).get("surplus_size"));
-					map.put("female_size", flData.get(map.get("fgid").toString()).get("female_size"));
+					map.put("nccl", flData.get(map.get("fgid").toString()).get("surplus_size"));
+					map.put("nfmc", flData.get(map.get("fgid").toString()).get("female_size"));
 				}
 			}
 		}
 		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, "畜牧业生产情况年度数据分析");
 		return list1;
+	}
+	/**
+	 * 导出年报表
+	 * @param response
+	 */
+	public void exportYearData(HttpServletResponse response, Integer year, String userid) {
+		File destFile = null;
+		InputStream is = null;
+		OutputStream out = null;
+		try {
+			out = response.getOutputStream();
+			String staticDir = ResourceUtils.getURL("classpath:static").getPath();
+			//复制原模板到临时文件中
+			destFile = new File(staticDir+"/excel/"+new Date().getTime()+".xls");
+			FileUtils.copyFile(ResourceUtils.getFile(staticDir+"/excel/year_export.xls"),destFile);
+			is = new FileInputStream(destFile);
+			POIFSFileSystem pfs = new POIFSFileSystem(is);
+			//读取excel模板
+			HSSFWorkbook wb = new HSSFWorkbook(pfs);
+			HSSFSheet sheet = wb.getSheetAt(0);
+			//获取指标数据
+			List<Map> list = getYearData(year, userid);
+			List<Node> nodelist = new ArrayList<>();
+			if (null != list && list.size() > 0) {
+				for (Map map : list) {
+					nodelist.add(new Node((Integer) map.get("fgid"), (Integer) map.get("parent_id"), map));
+				}
+				sheet.getRow(0).getCell(0).setCellValue(year+"年畜牧业生产情况");
+				rownum_local.set(4);
+				setRowValForYearData(sheet, TreeBuilder.buildListToTree(nodelist), "");
+				rownum_local.remove();
+				//强制下载不打开
+	    		response.setContentType("application/octet-stream");
+	            //使用URLEncoder来防止文件名乱码或者读取错误
+	            response.setHeader("Content-Disposition", "attachment; filename="+URLEncoder.encode(year+"年畜牧业生产情况.xls", "UTF-8"));
+	            wb.write(out);
+			} else {
+				out.write(new String("没有畜牧业生产情况年度数据，请先维护。").getBytes("utf-8"));
+			}
+        } catch (Exception e) {
+            logger.error("生成模板文件异常",e);
+            try {
+				out.write(new String("导出数据失败").getBytes("utf-8"));
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+        } finally {
+			if (is != null) {
+				try {
+					is.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (destFile != null) {
+				destFile.delete();
+			}
+			if (out != null) {
+				try {
+					out.flush();
+		            out.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	/**
+	 * 导出月报表
+	 * @param response
+	 */
+	public void exportMonthData(HttpServletResponse response, Integer month, String userid) {
+		File destFile = null;
+		InputStream is = null;
+		OutputStream out = null;
+		try {
+			out = response.getOutputStream();
+			String staticDir = ResourceUtils.getURL("classpath:static").getPath();
+			//复制原模板到临时文件中
+			destFile = new File(staticDir+"/excel/"+new Date().getTime()+".xls");
+			FileUtils.copyFile(ResourceUtils.getFile(staticDir+"/excel/month_export.xls"),destFile);
+			is = new FileInputStream(destFile);
+			POIFSFileSystem pfs = new POIFSFileSystem(is);
+			//读取excel模板
+			HSSFWorkbook wb = new HSSFWorkbook(pfs);
+			HSSFSheet sheet = wb.getSheetAt(0);
+			//获取指标数据
+			List<Map> list = getMonthData(month, userid);
+			List<Node> nodelist = new ArrayList<>();
+			if (null != list && list.size() > 0) {
+				for (Map map : list) {
+					nodelist.add(new Node((Integer) map.get("fgid"), (Integer) map.get("parent_id"), map));
+				}
+				sheet.getRow(0).getCell(0).setCellValue(month+"畜牧业生产月报表");
+				rownum_local.set(4);
+				setRowValForMonthData(sheet, TreeBuilder.buildListToTree(nodelist), "");
+				rownum_local.remove();
+				//强制下载不打开
+	    		response.setContentType("application/octet-stream");
+	            //使用URLEncoder来防止文件名乱码或者读取错误
+	            response.setHeader("Content-Disposition", "attachment; filename="+URLEncoder.encode(month+"畜牧业生产月报表.xls", "UTF-8"));
+	            wb.write(out);
+			} else {
+				out.write(new String("没有畜牧业生产情况月度数据，请先维护。").getBytes("utf-8"));
+			}
+        } catch (Exception e) {
+            logger.error("生成模板文件异常",e);
+            try {
+				out.write(new String("导出数据失败").getBytes("utf-8"));
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+        } finally {
+			if (is != null) {
+				try {
+					is.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (destFile != null) {
+				destFile.delete();
+			}
+			if (out != null) {
+				try {
+					out.flush();
+		            out.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	private void setRowVal(HSSFSheet sheet, List<Node> nodelist, String sp) {
+		for (Node node : nodelist) {
+			rownum_local.set(rownum_local.get()+1);
+			sheet.getRow(rownum_local.get()).getCell(0).setCellValue(sp+node.getName());
+			if(null != node.getChildren() && node.getChildren().size() > 0) {
+				setRowVal(sheet, node.getChildren(),sp+"   ");
+			}
+		}
+	}
+	
+	private void setRowValForYearData(HSSFSheet sheet, List<Node> nodelist, String sp) {
+		for (Node node : nodelist) {
+			rownum_local.set(rownum_local.get()+1);
+			HSSFRow row = sheet.getRow(rownum_local.get());
+			row.getCell(0).setCellValue(sp+node.getData().get("target_name"));
+			row.getCell(1).setCellValue(ObjToStr(node.getData().get("nccl")));
+			row.getCell(2).setCellValue(ObjToStr(node.getData().get("nfmc")));
+			row.getCell(3).setCellValue(ObjToStr(node.getData().get("child_size")));
+			row.getCell(4).setCellValue(ObjToStr(node.getData().get("survival_size")));
+			row.getCell(5).setCellValue(ObjToStr(node.getData().get("death_size")));
+			row.getCell(6).setCellValue(ObjToStr(node.getData().get("maturity_size")));
+			row.getCell(7).setCellValue(ObjToStr(node.getData().get("sell_size")));
+			row.getCell(8).setCellValue(ObjToStr(node.getData().get("meat_output")));
+			row.getCell(9).setCellValue(ObjToStr(node.getData().get("milk_output")));
+			row.getCell(10).setCellValue(ObjToStr(node.getData().get("egg_output")));
+			row.getCell(11).setCellValue(ObjToStr(node.getData().get("hair_output")));
+			if(null != node.getChildren() && node.getChildren().size() > 0) {
+				setRowValForYearData(sheet, node.getChildren(),sp+"   ");
+			}
+		}
+	}
+	private void setRowValForMonthData(HSSFSheet sheet, List<Node> nodelist, String sp) {
+		for (Node node : nodelist) {
+			rownum_local.set(rownum_local.get()+1);
+			HSSFRow row = sheet.getRow(rownum_local.get());
+			row.getCell(0).setCellValue(sp+node.getData().get("target_name"));
+			row.getCell(1).setCellValue(ObjToStr(node.getData().get("nccl")));
+			row.getCell(2).setCellValue(ObjToStr(node.getData().get("surplus_size")));
+			row.getCell(3).setCellValue(ObjToStr(node.getData().get("female_size")));
+			row.getCell(4).setCellValue(ObjToStr(node.getData().get("child_size")));
+			row.getCell(5).setCellValue(ObjToStr(node.getData().get("czs_tq")));
+			row.getCell(6).setCellValue(ObjToStr(node.getData().get("survival_size")));
+			row.getCell(7).setCellValue(ObjToStr(node.getData().get("chs_tq")));
+			row.getCell(8).setCellValue(ObjToStr(node.getData().get("chl")));
+			row.getCell(9).setCellValue(ObjToStr(node.getData().get("chl_tq")));
+			row.getCell(10).setCellValue(ObjToStr(node.getData().get("death_size")));
+			row.getCell(11).setCellValue(ObjToStr(node.getData().get("sws_tq")));
+			row.getCell(12).setCellValue(ObjToStr(node.getData().get("swl")));
+			row.getCell(13).setCellValue(ObjToStr(node.getData().get("swl_tq")));
+			row.getCell(14).setCellValue(ObjToStr(node.getData().get("maturity_size")));
+			row.getCell(15).setCellValue(ObjToStr(node.getData().get("sell_size")));
+			row.getCell(16).setCellValue(ObjToStr(node.getData().get("meat_output")));
+			row.getCell(17).setCellValue(ObjToStr(node.getData().get("milk_output")));
+			row.getCell(18).setCellValue(ObjToStr(node.getData().get("egg_output")));
+			row.getCell(19).setCellValue(ObjToStr(node.getData().get("hair_output")));
+			if(null != node.getChildren() && node.getChildren().size() > 0) {
+				setRowValForMonthData(sheet, node.getChildren(),sp+"   ");
+			}
+		}
+	}
+	
+	private String ObjToStr(Object o) {
+		if (null != o) {
+			return o.toString();
+		}
+		return "";
 	}
 }
