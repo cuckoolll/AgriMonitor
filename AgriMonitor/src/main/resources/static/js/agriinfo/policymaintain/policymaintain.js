@@ -9,7 +9,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 	function render() {
 		timeControl = laydate.render({
 			elem: '#create_time',
-			range: true,
+			type: 'month',
 			value: new Date()
 		}); 
 		
@@ -20,7 +20,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 			 toolbar: '#barDemo',
 			 url: '/policymaintain/queryInfo', //数据接口
 			 method: 'post',
-			 where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
+			 where: {"create_time":$("#create_time").val(),"file_name":$("#file_name").val()},
 		     page: true, //开启分页
 		     limit:20,
 			 limits:[20,40,60,100],
@@ -33,27 +33,6 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    	 {templet: '#oper-col', title: '操作',align:'center'}
 			 ]]
 		  });
-		
-		//文件上传
-		upload.render({
-		    elem: '#importBtn',
-		    url: '/waterinfo/dataImport',
-		    accept: 'file',
-		    exts: 'xls|xlsx',
-		    done: function(res){
-		    	if(res){
-		    		if(res.code==0){
-		    			dataTable.reload({//表格数据重新加载
-		    				where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
-		  				  	page: {curr: 1}
-		    			});
-		    			layer.msg(res.msg);
-				      }else{
-				    	layer.msg(res.msg);
-				      }
-		    	}
-		    }
-		});
 	}
 	
 	function bindEvent() {
@@ -77,14 +56,14 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 				        	});
 				        	$.ajax({
 				        		type:"post",
-				        		url:"/waterinfo/delInfoByGid",
+				        		url:"/policymaintain/delInfoByGid",
 				        		contentType:"application/json",
 				        		data: JSON.stringify(gids),
 				        		dataType:"json",
 				        		success:function(res){
 				        			if(res && res.code==0){
 				        				dataTable.reload({//表格数据重新加载
-						    				where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
+						    				where: {"create_time":$("#create_time").val(),"file_name":$("#file_name").val()},
 						  				  	page: {curr: 1}
 						    			});
 				        				layer.msg('删除成功');
@@ -105,18 +84,18 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		//查询数据
 		$("#queryBtn").click(function(){
 			dataTable.reload({//表格数据重新加载
-				  where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
+				  where: {"create_time":$("#create_time").val(),"file_name":$("#file_name").val()},
 				  page: {curr: 1}
 			});
 		});
 		
 		$("#uploadBtn").click(function(){
 			layer.open({
-      		    title: "新增水质监测采样信息",
+      		    title: "上传农业政策文件",
 				type: 2,
-				area: ['800px', '500px'],
+				area: ['700px', '230px'],
 				scrollbar: true,
-				content: '/waterinfo/update'
+				content: '/policymaintain/upload'
 			}, function(a){
 				alert(a);
 			});

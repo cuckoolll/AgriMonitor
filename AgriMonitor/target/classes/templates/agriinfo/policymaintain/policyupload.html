@@ -20,55 +20,31 @@
 	</head>
 
 	<body>
-		<div class="cBody" style="height: 450px">
+		<div class="cBody" style="height: 180px">
 			<form id="addForm" class="layui-form" action="">
 				<input type="hidden" name="gid"/>
-				<div class="layui-form-item">
-					<label class="layui-form-label" style="width: 140px">所属区域：</label>
-	                <div class="layui-input-inline">
-	                    <input type="text" name="county" readonly="readonly" class="layui-input" value="刚察县">
-	                </div>
+				<div class="layui-form-item" style="padding-top: 10px">
+					<label class="layui-form-label"  style="width: 140px">文件标题：</label>
+					<div class="layui-input-block">
+						<input type="text" id="file_name" name="file_name" lay-verify="required" autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
 				</div>
 				
 				<div class="layui-form-item">
-					<label class="layui-form-label"  style="width: 140px">采样地点：</label>
-					<div class="layui-input-block">
-						<input type="text" name="quality_address" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 450px">
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label" style="width: 140px">采样时间：</label>
-					<div class="layui-input-block">
-						<input id="quality_time" type="text" name="quality_time" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 150px" readonly="readonly">
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label" style="width: 140px">分析项目：</label>
-					<div class="layui-input-block">
-						<input type="text" name="quality_type" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 450px">
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label" style="width: 140px">分析结果（mg/L）：</label>
-					<div class="layui-input-block">
-						<input type="text" name="quality_result" autocomplete="off" class="layui-input" style="width: 450px">
-					</div>
-				</div>
-				<div class="layui-form-item">
-					<label class="layui-form-label" style="width: 140px">备注：</label>
-					<div class="layui-input-block">
-						<textarea name="remarks" class="layui-textarea" style="width: 560px"></textarea>
+					<label class="layui-form-label" style="width: 140px">选择文件：</label>
+					<div class="layui-input-inline">
+						<input type="file" name="file" id="chosefile" style="width:250px;padding-top:5px;">
 					</div>
 				</div>
 				
 				<div style="" class="layui-form-item">
 					<div class="layui-input-block" style="text-align: center">
-						<button class="layui-btn" lay-submit lay-filter="submitBut">保存</button>
+						<button class="layui-btn" id="uploadBtn">上传</button>
 					</div>
 				</div>
 			</form>
 			
-			<script th:src="@{/js/agriinfo/policymaintain/policyupdate.js}"></script>
+			<script th:src="@{/js/agriinfo/policymaintain/policyupload.js}"></script>
 		</div>
 	</body>
 
