@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<!-- Google Chrome Frame也可以让IE用上Chrome的引擎: -->
+		<meta name="renderer" content="webkit">
+		<!--国产浏览器高速模式-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- 公共样式 开始 -->
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/base.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/iconfont.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/laydate/theme/default/laydate.css}">
+		
+		<!-- 滚动条插件 -->
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/jquery.mCustomScrollbar.css}">
+		
+		<script type="text/javascript" th:src="@{/temp/framework/jquery-1.11.3.min.js}"></script>
+		<script type="text/javascript" th:src="@{/temp/framework/jquery-ui-1.10.4.min.js}"></script>
+		<script type="text/javascript" th:src="@{/temp/framework/jquery.mousewheel.min.js}"></script>
+		<script type="text/javascript" th:src="@{/temp/framework/jquery.mCustomScrollbar.min.js}"></script>
+		<script type="text/javascript" th:src="@{/temp/framework/cframe.js}"></script><!-- 仅供所有子页面使用 -->
+		<script type="text/javascript" th:src="@{/temp/layui/layui.js}"></script>
+		<script type="text/javascript" th:src="@{/temp/laydate/laydate.js}"></script>
+		<!-- 公共样式 结束 -->
+
+		<script type="text/javascript" th:src="@{/js/agriinfo/agrinews/agrinews.js}" ></script>
+
+	</head>
+
+	<body>
+		<div class="cBody">
+			<div class="queryArea">
+				<form class="layui-form" action="">
+					<div class="layui-form-item">
+						<!--<label class="layui-form-label text-left">创建时间：</label>
+						<div class="layui-input-inline">
+							<input id="create_time" type="text" class="layui-input" readonly="readonly">
+						</div>-->
+						
+						<label class="layui-form-label text-left">标题：</label>
+						<div class="layui-input-inline">
+							<input id="title" type="text" class="layui-input" >
+						</div>
+						
+						<a id="queryBtn" class="layui-btn">检索</a>
+					</div>
+				</form>
+			</div>
+			
+			<table id="datalist" lay-filter="datalist" lay-data="{id: 'datalist'}"></table>
+
+			<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name=='admin'}">
+				<div class="layui-inline" lay-event="delete">	
+					<i class="layui-icon layui-icon-delete"></i>
+				</div>
+			</script>
+		</div>
+		
+	</body>
+
+</html>

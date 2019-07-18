@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<!-- Google Chrome Frame也可以让IE用上Chrome的引擎: -->
+		<meta name="renderer" content="webkit">
+		<!--国产浏览器高速模式-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>水质监测基本信息</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
+	    <!--[if lt IE 9]>
+	      	<script src="framework/html5shiv.min.js"></script>
+	      	<script src="framework/respond.min.js"></script>
+	    <![endif]-->
+		<script type="text/javascript" th:src="@{/temp/framework/jquery-1.11.3.min.js}" ></script>
+		<script type="text/javascript" th:src="@{/temp/layui/layui.js}"></script>
+		<!-- 公共样式 结束 -->
+	</head>
+
+	<body>
+		<div class="cBody" style="height: 180px">
+			<form id="addForm" class="layui-form" action="">
+				<input type="hidden" name="gid"/>
+				<div class="layui-form-item" style="padding-top: 10px">
+					<label class="layui-form-label"  style="width: 140px">文件标题：</label>
+					<div class="layui-input-block">
+						<input type="text" id="file_name" name="file_name" lay-verify="required" autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">选择文件：</label>
+					<div class="layui-input-inline">
+						<input type="file" name="file" id="chosefile" style="width:250px;padding-top:5px;">
+					</div>
+				</div>
+				
+				<div style="" class="layui-form-item">
+					<div class="layui-input-block" style="text-align: center">
+						<button class="layui-btn" id="uploadBtn">上传</button>
+					</div>
+				</div>
+			</form>
+			
+			<script th:src="@{/js/agriinfo/policymaintain/policyupload.js}"></script>
+		</div>
+	</body>
+
+</html>
