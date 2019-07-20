@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.agri.monitor.entity.AgriNewsInfo;
+import com.agri.monitor.entity.SoilInfo;
 import com.agri.monitor.vo.AgriNewsQueryVO;
 
 @Repository
@@ -18,4 +19,8 @@ public interface AgriNewsMapper {
 	String queryGid(final String title);
 
 	void delInfoByGid(List<Integer> gids);
+
+	AgriNewsInfo findById(Integer gid);
+
+	void updateInfo(AgriNewsInfo agriNewsInfo);
 }

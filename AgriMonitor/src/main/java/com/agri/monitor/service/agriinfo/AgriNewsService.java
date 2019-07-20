@@ -10,7 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
+import com.agri.monitor.entity.AgriNewsInfo;
+import com.agri.monitor.entity.SoilInfo;
 import com.agri.monitor.enums.LogOptSatusEnum;
 import com.agri.monitor.enums.LogOptTypeEnum;
 import com.agri.monitor.mapper.AgriNewsMapper;
@@ -60,5 +63,38 @@ public class AgriNewsService {
 		return result;
 	}
 	
+	public AgriNewsInfo findById(Integer gid, String userid) {
+		if (logger.isInfoEnabled()) {
+			logger.info("获取农业信息，GID=" + gid); 
+		}
+		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, "查询农业信息，GID="+gid); 
+		return agriNewsMapper.findById(gid); 
+	}
 	
+	public Map saveOrUpdate(AgriNewsInfo agriNewsInfo, String userid) { 
+		if (logger.isInfoEnabled()) { 
+			logger.info("农业信息数据更新开始：" + agriNewsInfo); 
+		} 
+		final Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", 0); 
+		
+		try { 
+			agriNewsInfo.setModifier(String.valueOf(userid));
+			//更新 
+			if(!StringUtils.isEmpty(agriNewsInfo.getGid())) {
+				agriNewsMapper.updateInfo(agriNewsInfo); 
+				LogUtil.log(LogOptTypeEnum.UPDATE, LogOptSatusEnum.SUCESS, userid, "农业信息数据更新" + agriNewsInfo); 
+			} else {
+				//新增
+				agriNewsInfo.setCreator(String.valueOf(userid));
+				agriNewsInfo.setAuthor(userid);
+				agriNewsMapper.insertInfo(agriNewsInfo); 
+				LogUtil.log(LogOptTypeEnum.ADD, LogOptSatusEnum.SUCESS, userid, "农业信息测数据" + agriNewsInfo); 
+			} 
+		} catch (Exception e) {
+			result.put("code", -1); logger.error("保存土壤监测数据异常" + e);
+			LogUtil.log(LogOptTypeEnum.SAVE, LogOptSatusEnum.FAIL, userid, "保存土壤监测数据异常：" + e.getMessage()); 
+		}
+		return result;
+	}
 }

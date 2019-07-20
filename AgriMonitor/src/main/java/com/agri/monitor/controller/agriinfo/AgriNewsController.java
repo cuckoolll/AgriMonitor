@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.agri.monitor.annotation.IgnoreSession;
+import com.agri.monitor.entity.AgriNewsInfo;
+import com.agri.monitor.entity.SoilInfo;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.service.agriinfo.AgriNewsService;
 import com.agri.monitor.vo.AgriNewsQueryVO;
@@ -54,10 +56,23 @@ public class AgriNewsController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/findById",method=RequestMethod.POST)
+	public AgriNewsInfo findById(Integer gid, HttpServletRequest request) { 
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo"); return
+		agriNewsService.findById(gid, user.getUser_id()); 
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/delInfoByGid",method=RequestMethod.POST)
 	public Map delInfoByGid(@RequestBody ArrayList<Integer> gids, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 		return agriNewsService.delInfoByGid(gids, user.getUser_id());
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/save",method=RequestMethod.POST) 
+	public Map doUpdate(AgriNewsInfo agriNewsInfo, HttpServletRequest request) { 
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo"); 
+		return agriNewsService.saveOrUpdate(agriNewsInfo, user.getUser_id()); 
+	}
 }

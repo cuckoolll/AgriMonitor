@@ -51,4 +51,25 @@
     		#{item}
     	</foreach>
     </delete>
+    
+   	<select id="findById" parameterType="int" resultType="com.agri.monitor.entity.AgriNewsInfo">
+		select gid,
+			   title,
+			   author,
+			   content,
+			   create_time,
+			   creator,
+			   last_time,
+			   modifier
+		  from t_agriculture_info 
+		 where gid = #{gid}
+	</select>
+	
+	<update id="updateInfo" parameterType="com.agri.monitor.entity.AgriNewsInfo">
+    	update t_agriculture_info
+    	   set title = #{title},
+			   content = #{content},
+			   modifier = #{modifier}
+    	 where gid = #{gid}
+    </update>
 </mapper>

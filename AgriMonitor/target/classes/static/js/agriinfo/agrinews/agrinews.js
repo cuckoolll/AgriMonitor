@@ -58,7 +58,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 						}  
 					});
 	    		break;
-		    	case 'edit':
+		    	case 'update':
 		    		if(data.length === 0){
 			        	layer.msg('请选择一行');
 			        } else if(data.length > 1){
