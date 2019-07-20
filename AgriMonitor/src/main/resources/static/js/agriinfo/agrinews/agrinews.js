@@ -13,7 +13,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 			 elem: '#datalist',
 			 height:winH-80,
 			 toolbar: '#barDemo',
-			 url: '/policymaintain/queryInfo', //数据接口
+			 url: '/agrinews/queryInfo', //数据接口
 			 method: 'post',
 			 where: {"title":$("#title").val()},
 			 skin : 'line',
@@ -38,23 +38,47 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		});
 	}
 	
-	function download(file_address){
-	    //动态创建表单加到fbody中，最后删除表单
-	    var queryForm = $("#queryForm");
-	    var downloadForm = $("<form action='/policymaintain/download' method='post'></form>");
-	    downloadForm.append("<input type='hidden' name='file_address' value='"+file_address+"'/>");
-	    $(document.body).append(downloadForm);
-	    downloadForm.submit();
-	    downloadForm.remove(); 
-	}
-	
 	function bindEvent() {
 		//监听工具条
 		table.on('toolbar(datalist)', function(obj){
 		    var checkStatus = table.checkStatus(obj.config.id);
 		    var data = checkStatus.data; //获取选中的数据
 		    switch(obj.event){
-		      case 'delete':
+		    	case 'add':
+		    		layer.open({
+		      		    title: "新建农业信息",
+						type: 2,
+						area: ['800px', '600px'],
+						scrollbar: true,
+						content: '/agrinews/newsedit',
+						end: function(index, layero){ 
+							doQuery();
+							layer.msg(sessionStorage.getItem('msg'));
+						  	return false; 
+						}  
+					});
+	    		break;
+		    	case 'edit':
+		    		if(data.length === 0){
+			        	layer.msg('请选择一行');
+			        } else if(data.length > 1){
+			        	layer.msg('只能同时编辑一个');
+			        } else {
+			        	layer.open({
+			      		    title: "修改农业信息",
+							type: 2,
+							area: ['800px', '600px'],
+							scrollbar: true,
+							content: '/agrinews/newsedit?gid='+checkStatus.data[0].gid,
+							end: function(index, layero){ 
+								doQuery();
+								layer.msg(sessionStorage.getItem('msg'));
+							  	return false; 
+							}  
+						});
+			        }
+	    		break;
+		      	case 'delete':
 			        if(data.length === 0){
 			        	layer.msg('至少选择一行数据删除');
 			        } else {
@@ -66,7 +90,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 				        	});
 				        	$.ajax({
 				        		type:"post",
-				        		url:"/policymaintain/delInfoByGid",
+				        		url:"/agrinews/delInfoByGid",
 				        		contentType:"application/json",
 				        		data: JSON.stringify(gids),
 				        		dataType:"json",
@@ -85,7 +109,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 				        	});
 			        	});
 			        }
-			      break;
+			     break;
 		    };
 		  });
 		

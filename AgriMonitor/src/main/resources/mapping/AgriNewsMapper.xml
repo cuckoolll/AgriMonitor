@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agri.monitor.mapper.AgriNewsMapper">
+	<select id="queryInfoForPage" parameterType="com.agri.monitor.vo.AgriNewsQueryVO" resultType="map">
+        select gid,
+			   title,
+			   author,
+			   date_format(create_time, '%Y-%m-%d') create_time,
+			   creator
+          from t_agriculture_info 
+    	<if test="title != null and title != ''">
+    		<bind name="title" value="'%' + title + '%'"/>
+        	where title like #{title} 
+        </if>
+       	 order by create_time desc limit #{currIndex},#{limit}
+    </select>
+    
+    <select id="queryInfoCount" parameterType="com.agri.monitor.vo.AgriNewsQueryVO" resultType="int">
+        select count(gid)
+          from t_agriculture_info 
+    	<if test="title != null and title != ''">
+    		<bind name="title" value="'%' + title + '%'"/>
+        	where title like #{title} 
+        </if>
+    </select>
+    
+    <select id="queryGid" parameterType="com.agri.monitor.vo.AgriNewsQueryVO" resultType="java.lang.String">
+   		select gid
+     	  from t_agriculture_info
+     	 where title = #{title}
+    </select>
+    
+    <insert id="insertInfo" parameterType="com.agri.monitor.entity.AgriNewsInfo">
+    	insert into t_agriculture_info
+    		(title,
+			 author,
+			 content,
+			 modifier,
+			 creator)
+    	values
+		   (#{title},
+			#{author},
+			#{content},
+			#{modifier},
+			#{creator})
+    </insert>
+    
+    <delete id="delInfoByGid" parameterType="java.util.List">
+    	delete from t_agriculture_info where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+</mapper>

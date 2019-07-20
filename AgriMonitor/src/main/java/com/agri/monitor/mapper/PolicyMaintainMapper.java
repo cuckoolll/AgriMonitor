@@ -5,9 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.agri.monitor.entity.PolicyInfo;
-import com.agri.monitor.entity.WaterInfo;
 import com.agri.monitor.vo.PolicyQueryVO;
-import com.agri.monitor.vo.WaterQueryVO;
 
 @Repository
 public interface PolicyMaintainMapper {
