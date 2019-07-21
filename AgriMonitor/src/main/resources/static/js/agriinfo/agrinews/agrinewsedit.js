@@ -1,4 +1,5 @@
 layui.use(['form','layer','table', 'laydate', 'upload'], function(form,layer,table,laydate,upload) {
+	var winW = $(window).width();
 	function init(){
 		var gid = getUrlParam("gid");
 		var isShow = getUrlParam("show") == '1' ? true : false;

@@ -2,7 +2,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 	var dataTable;
 	var timeControl;	  
 	var winH=$(window).height();
-	
+	var winW=$(window).width();
 	/**
 	 * 表格渲染 .
 	 */
@@ -23,11 +23,10 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		     cols: [[ //表头
 		    	 {type: 'checkbox', fixed: 'left'},
 		    	 {field: 'gid', title: 'gid',hide: true,align:'center'},
-		    	 {field: 'title', title: '标题'},
+		    	 {field: 'title', title: '标题', style:'color:#01AAED'},
 		    	 {field: 'author', title: '作者'},
 		    	 {field: 'create_time', title: '创建时间', sort: true},
-		    	 {field: 'creator', title: '创建人'},
-		    	 {templet: '#oper-col', title: '操作',align:'center'}
+		    	 {field: 'creator', title: '创建人'}
 			 ]]
 		  });
 	}
@@ -46,18 +45,25 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    var data = checkStatus.data; //获取选中的数据
 		    switch(obj.event){
 		    	case 'add':
-		    		layer.open({
+		    		var addLayer = layer.open({
 		      		    title: "新建农业信息",
 						type: 2,
 						area: ['800px', '600px'],
 						scrollbar: true,
+						maxmin: true, 
 						content: '/agrinews/newsedit',
 						end: function(index, layero){ 
-							doQuery();
-							layer.msg(sessionStorage.getItem('msg'));
+							var code = sessionStorage.getItem('code');
+							if (code && code == 0) {
+								doQuery();
+								layer.msg(sessionStorage.getItem('msg'));
+							} else if (code && code == -1) {
+								layer.msg(sessionStorage.getItem('msg'));
+							}
 						  	return false; 
 						}  
 					});
+		    		layer.full(addLayer);
 	    		break;
 		    	case 'update':
 		    		if(data.length === 0){
@@ -65,18 +71,25 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 			        } else if(data.length > 1){
 			        	layer.msg('只能同时编辑一个');
 			        } else {
-			        	layer.open({
+			        	var updateLayer = layer.open({
 			      		    title: "修改农业信息",
 							type: 2,
 							area: ['800px', '600px'],
 							scrollbar: true,
+							maxmin: true, 
 							content: '/agrinews/newsedit?gid='+checkStatus.data[0].gid,
 							end: function(index, layero){ 
-								doQuery();
-								layer.msg(sessionStorage.getItem('msg'));
+								var code = sessionStorage.getItem('code');
+								if (code && code == 0) {
+									doQuery();
+									layer.msg(sessionStorage.getItem('msg'));
+								} else if (code && code == -1) {
+									layer.msg(sessionStorage.getItem('msg'));
+								}
 							  	return false; 
 							}  
 						});
+			        	layer.full(updateLayer);
 			        }
 	    		break;
 		      	case 'delete':
@@ -114,20 +127,19 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    };
 		  });
 		
-		table.on('tool(datalist)', function(obj){
-		    var data = obj.data; //获取选中的数据
-		    switch(obj.event){
-		      case 'show':
-		    	  layer.open({
-		      		    title: "查看农业信息",
-						type: 2,
-						area: ['800px', '600px'],
-						scrollbar: true,
-						content: '/agrinews/newsedit?show=1&gid='+data.gid
-					});
-		      break;
-		    };
-		  });
+		//监听行单击事件
+		table.on('row(datalist)', function(obj){
+			var data = obj.data; //获取选中的数据
+			var showLayer = layer.open({
+      		    title: "查看农业信息",
+				type: 2,
+				area: ['800px', '600px'],
+				scrollbar: true,
+				maxmin: true, 
+				content: '/agrinews/newsedit?show=1&gid='+data.gid
+    	  });
+    	  layer.full(showLayer); 
+		});
 		
 		//查询数据
 		$("#queryBtn").click(function(){
