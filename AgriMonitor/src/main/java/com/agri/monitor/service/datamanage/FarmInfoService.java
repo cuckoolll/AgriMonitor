@@ -21,11 +21,13 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.entity.FarmInfo;
+import com.agri.monitor.entity.MonitorLog;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.enums.CacheTypeEnum;
 import com.agri.monitor.enums.LogOptSatusEnum;
 import com.agri.monitor.enums.LogOptTypeEnum;
 import com.agri.monitor.mapper.FarmInfoMapper;
+import com.agri.monitor.mapper.MonitorLogMapper;
 import com.agri.monitor.utils.CacheUtil;
 import com.agri.monitor.utils.LogUtil;
 import com.agri.monitor.vo.FarmQueryVO;
@@ -37,19 +39,17 @@ public class FarmInfoService {
 	
 	@Autowired
 	private FarmInfoMapper farmInfoMapper;
+	@Autowired
+	private MonitorLogMapper monitorLogMapper;
 	
 	public FarmInfo findById(Integer gid, String userid) {
-		if (logger.isInfoEnabled()) {
-			logger.info("获取养殖信息，GID=" + gid);
-		}
+		info("获取养殖信息，GID=" + gid);
 		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, "查询养殖场信息，GID="+gid);
 		return farmInfoMapper.findById(gid);
 	}
 	
 	public Map doDel(List<Integer> gids, String userid) {
-		if (logger.isInfoEnabled()) {
-			logger.info("养殖场数据删除开始：" + gids);
-		}
+		info("养殖场数据删除开始：" + gids);
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0);
 		try {
@@ -64,9 +64,7 @@ public class FarmInfoService {
 	}
 	
 	public Map saveOrUpdate(FarmInfo farminfo,String userid) {
-		if (logger.isInfoEnabled()) {
-			logger.info("养殖场数据更新开始：" + farminfo);
-		}
+		info("养殖场数据更新开始：" + farminfo);
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0);
 		try {
@@ -90,9 +88,7 @@ public class FarmInfoService {
 	}
 	
 	public List<Map> findAllForPage(FarmQueryVO farmQueryVO, String userid) {
-		if (logger.isInfoEnabled()) {
-			logger.info("查询所有养殖场数据开始：" + farmQueryVO);
-		}
+		info("查询所有养殖场数据开始：" + farmQueryVO);
 		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, "查询养殖场信息，"+farmQueryVO);
 		return farmInfoMapper.findAllForPage(farmQueryVO);
 	}
@@ -102,9 +98,7 @@ public class FarmInfoService {
 	}
 	
 	public Map dataImport(MultipartFile file, HttpServletRequest request) {
-		if (logger.isInfoEnabled()) {
-			logger.info("养殖场数据导入开始");
-		}
+		info("养殖场数据导入开始");
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0);
@@ -115,17 +109,13 @@ public class FarmInfoService {
 	        String filename=file.getOriginalFilename();
 	        // 获取文件后缀
 	        String prefix=filename.substring(filename.lastIndexOf(".")+1);
-	        if (logger.isInfoEnabled()) {
-				logger.info("养殖场数据导入，文件名：" + filename);
-			}
+        	info("养殖场数据导入，文件名：" + filename);
 	        if (prefix.equals("xlsx")) {
 	        	wb = new XSSFWorkbook(file.getInputStream());
 	        } else if (prefix.equals("xls")) {
 	        	wb = new HSSFWorkbook(file.getInputStream());
 	        } else {
-	        	if (logger.isInfoEnabled()) {
-					logger.info("养殖场数据导入，不支持的文件类型");
-				}
+        		info("养殖场数据导入，不支持的文件类型");
 	        	result.put("code", -1);
 	    		result.put("msg", "不支持的文件类型");
 	    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(),"不支持的文件类型");
@@ -203,5 +193,105 @@ public class FarmInfoService {
 			}
 		}
 		return null;
+	}
+	/**
+	 * 农场数据监控
+	 * @param setData1 养殖场牲畜总存栏监控设置数据
+	 * @param setData2 单个养殖场牲畜存栏监控设置数据
+	 */
+	public void dataMonitorHandle(List<Map> setData1,List<Map> setData2) {
+		info("处理养殖场数据监控开始");
+		//养殖场牲畜总存栏监控
+		if (null != setData1 && setData1.size() > 0) {
+			info("养殖场牲畜总存栏监控");
+			//统计所有分类
+			List<Integer> animaltype = new ArrayList<>();
+			for (Map map : setData1) {
+				animaltype.add((Integer) map.get("target_type"));
+			}
+			//按牲畜类型统计合计值
+			Map<String, Double> sumMap = new HashMap<>();
+			List<Map> sumList = farmInfoMapper.findSumByType(animaltype);
+			//判断规则
+			if(null != sumList && sumList.size() > 0) {
+				for (Map map1 : sumList) {
+					for (Map map2 : setData1) {
+						if((Integer) map1.get("animals_type")==(Integer) map2.get("target_type")) {
+							String conditions = (String) map2.get("conditions");
+							Double d1 = null != map1.get("animals_size")?Double.valueOf(map1.get("animals_size").toString()):null;
+							Double d2 = null != map2.get("value_set")?Double.valueOf(map2.get("value_set").toString()):null;
+							if(d1 != null && d2 != null) {
+								String log=null;
+								if (">".equals(conditions) && d1>d2) {
+									log=map1.get("type_name")+"实际总存栏数"+d1+"，大于预警值"+d2;
+								}else if ("<".equals(conditions) && d1<d2) {
+									log=map1.get("type_name")+"实际总存栏数"+d1+"，小于预警值"+d2;
+								} else if ("=".equals(conditions) && d1==d2) {
+									log=map1.get("type_name")+"实际总存栏数"+d1+"，等于预警值"+d2;
+								}
+								if(log != null) {
+									info("养殖场牲畜总存栏监控预警信息保存");
+									MonitorLog l = new MonitorLog();
+									l.setStopflag(1);
+									l.setSetgid((Integer) map2.get("gid"));
+									l.setLog(log);
+									monitorLogMapper.insert(l);
+								}
+							}
+							break;
+						}
+					}
+				}
+			}
+		}
+		//单个养殖场牲畜存栏监控
+		if(null != setData2 && setData2.size() > 0) {
+			info("单个养殖场牲畜存栏监控");
+			//统计所有分类
+			List<Integer> types = new ArrayList<>();
+			for (Map map : setData2) {
+				types.add((Integer) map.get("target_type"));
+			}
+			
+			List<Map> list = farmInfoMapper.findNumByType(types);
+			if(null != list && list.size() > 0) {
+				//判断规则
+				for (Map map1 : list) {
+					for (Map map2 : setData2) {
+						if((Integer) map1.get("animals_type")==(Integer) map2.get("target_type")) {
+							String conditions = (String) map2.get("conditions");
+							Double d1 = null != map1.get("animals_size")?Double.valueOf(map1.get("animals_size").toString()):null;
+							Double d2 = null != map2.get("value_set")?Double.valueOf(map2.get("value_set").toString()):null;
+							if(d1 != null && d2 != null) {
+								String log=null;
+								if (">".equals(conditions) && d1>d2) {
+									log=map1.get("farm_name")+""+map1.get("type_name")+"实际存栏数"+d1+"，大于预警值"+d2;
+								}else if ("<".equals(conditions) && d1<d2) {
+									log=map1.get("farm_name")+""+map1.get("type_name")+"实际存栏数"+d1+"，小于预警值"+d2;
+								} else if ("=".equals(conditions) && d1==d2) {
+									log=map1.get("farm_name")+""+map1.get("type_name")+"实际存栏数"+d1+"，等于预警值"+d2;
+								}
+								if(log != null) {
+									info("单个养殖场牲畜存栏监控预警信息保存");
+									MonitorLog l = new MonitorLog();
+									l.setStopflag(1);
+									l.setSetgid((Integer) map2.get("gid"));
+									l.setLog(log);
+									monitorLogMapper.insert(l);
+								}
+							}
+							break;
+						}
+					}
+				}
+			}
+		}
+		info("处理养殖场数据监控结束");
+	}
+	
+	private void info(String msg) {
+		if (logger.isInfoEnabled()) {
+			logger.info(msg);
+		}
 	}
 }

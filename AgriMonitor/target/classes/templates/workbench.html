@@ -87,8 +87,8 @@
 		        	<li>
 		                <a class="menuFA" href="javascript:void(0)"><i class="iconfont icon-zhuyidapx left"></i>检测报警<i class="iconfont icon-dajiantouyou right"></i></a>
 		                <dl>
-		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('tgls/base/base_add.html',this)">报警阀值</a></dt>
-		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('tgls/base/base_list.html',this)">报警记录</a></dt>
+		                	<dt><a href="javascript:void(0)" th:if="${session.userinfo.roleinfo.role_name!='user'}" onclick="menuCAClick('/monitorManage',this)">报警阀值</a></dt>
+		                	<dt><a href="javascript:void(0)" th:if="${session.userinfo.roleinfo.role_name!='user'}" onclick="menuCAClick('/monitorManage/monitorlog',this)">报警记录</a></dt>
 		                </dl>
 		           	</li>
 		        	<li>

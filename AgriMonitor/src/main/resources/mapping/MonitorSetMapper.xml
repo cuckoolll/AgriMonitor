@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agri.monitor.mapper.MonitorSetMapper">
+	<select id="findById" parameterType="int" resultType="com.agri.monitor.entity.MonitorSet">
+		select * from t_monitor_set where gid=#{gid}
+	</select>
+    <select id="findAllForPage" parameterType="com.agri.monitor.vo.MonitorSetQueryVO" resultType="map">
+        select gid,monitor_type,target_type,target,conditions,value_set,stopflag,condition_showname
+        from t_monitor_set where 1=1
+        <if test="monitor_type != null">
+	        and monitor_type=#{monitor_type}
+	    </if>
+	    <if test="stopflag != null">
+	        and stopflag=#{stopflag}
+	    </if>
+	    order by gid desc limit #{currIndex},#{limit}
+    </select>
+    <select id="findAllCount" parameterType="com.agri.monitor.vo.MonitorSetQueryVO" resultType="int">
+        select count(gid) from t_monitor_set where 1=1
+        <if test="monitor_type != null">
+	        and monitor_type=#{monitor_type}
+	    </if>
+	    <if test="stopflag != null">
+	        and stopflag=#{stopflag}
+	    </if>
+    </select>
+    
+    <insert id="insert" parameterType="com.agri.monitor.entity.MonitorSet">
+    	insert into t_monitor_set(monitor_type,target_type,target,conditions,value_set,stopflag,condition_showname,creator,modifier)
+    	values
+	   (#{monitor_type},#{target_type},#{target},#{conditions},#{value_set},#{stopflag},#{condition_showname},#{creator},#{modifier})
+    </insert>
+    
+    <update id="update" parameterType="com.agri.monitor.entity.MonitorSet">
+    	update t_monitor_set set monitor_type=#{monitor_type},target_type=#{target_type},target=#{target},
+    	conditions=#{conditions},value_set=#{value_set},stopflag=#{stopflag},condition_showname=#{condition_showname},
+    	modifier=#{modifier},last_time=#{last_time} where gid=#{gid}
+    </update>
+    
+    <delete id="delete" parameterType="java.util.List">
+    	delete from t_monitor_set where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+    
+</mapper>

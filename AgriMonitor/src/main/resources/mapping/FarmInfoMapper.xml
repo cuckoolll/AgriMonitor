@@ -62,4 +62,20 @@
     		#{item}
     	</foreach>
     </select>
+    <select id="findSumByType" parameterType="java.util.List" resultType="map">
+	    select a.animals_type,a.animals_size,b.type_name from (
+				select animals_type,SUM(animals_size) animals_size 
+				from t_farm_info a where animals_type in 
+				<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    				#{item}
+    			</foreach> group by animals_type ) a,t_animals_type b
+		where a.animals_type=b.gid and b.stopflag=1
+    </select>
+    <select id="findNumByType" parameterType="java.util.List" resultType="map">
+      select a.farm_name,a.animals_type,a.animals_size,b.type_name
+		from t_farm_info a,t_animals_type b where a.animals_type=b.gid and b.stopflag=1 and a.animals_type in 
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </select>
 </mapper>

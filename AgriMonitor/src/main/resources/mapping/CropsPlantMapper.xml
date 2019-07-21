@@ -78,4 +78,13 @@
         from t_crops_plant a,t_crops_type b where a.crops_type=b.gid and b.stopflag=1
 		and a.crops_type=#{type} order by a.date_year desc limit 0,10
     </select>
+    
+    <select id="findNumByType" parameterType="java.util.List" resultType="map">
+		select a.date_year,a.crops_type,a.planted_area,a.planted_output,b.type_name
+		from t_crops_plant a,t_crops_type b where a.crops_type=b.gid and b.stopflag=1 and a.crops_type in 
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+		and a.date_year=DATE_FORMAT(NOW(), '%Y')
+    </select>
 </mapper>

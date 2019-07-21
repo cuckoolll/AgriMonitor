@@ -26,4 +26,8 @@ public interface FarmInfoMapper {
 	void delete(List<Integer> gids);
 	
 	int findByAnimalsType(List<Integer> typeGids);
+	
+	List<Map> findSumByType(List<Integer> type);
+	
+	List<Map> findNumByType(List<Integer> type);
 }

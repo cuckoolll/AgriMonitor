@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<!-- Google Chrome Frame也可以让IE用上Chrome的引擎: -->
+		<meta name="renderer" content="webkit">
+		<!--国产浏览器高速模式-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>数据预警设置</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
+	    <!--[if lt IE 9]>
+	      	<script src="framework/html5shiv.min.js"></script>
+	      	<script src="framework/respond.min.js"></script>
+	    <![endif]-->
+		<script type="text/javascript" th:src="@{/temp/framework/jquery-1.11.3.min.js}" ></script>
+		<script type="text/javascript" th:src="@{/temp/layui/layui.js}"></script>
+		<!-- 公共样式 结束 -->
+	</head>
+
+	<body>
+		<div class="cBody" style="height: 280px;padding-top: 10px">
+			<form id="addForm" class="layui-form">
+			<input type="hidden" name="gid"/>
+			<input type="hidden" name="condition_showname"/>
+				<div class="layui-form-item">
+					<label class="layui-form-label">监控指标：</label>
+	                <div class="layui-input-inline">
+						<select id="monitor_type" name="monitor_type" required lay-verify="required" lay-filter="monitor_type">
+							<option value="1">养殖场牲畜总存栏监控</option>
+							<option value="2">单个养殖场牲畜存栏监控</option>
+							<option value="3">畜牧业生产情况监控</option>
+							<option value="4">农作物产量面积监控</option>
+					   </select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" >指标分类：</label>
+					<div class="layui-input-inline">
+						<select id="target_type" name="target_type" required lay-verify="required">
+							<option value=""></option>
+					   </select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" >监控数据：</label>
+					<div class="layui-input-inline">
+						<select id="target" name="target" required lay-verify="required">
+							<option value=""></option>
+					   </select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" >条件：</label>
+					<div class="layui-input-inline">
+						<select id="conditions" name="conditions" required lay-verify="required">
+							<option value="<"><</option>
+							<option value=">">></option>
+							<option value="=">=</option>
+					   </select>
+					</div>
+					<label class="layui-form-label" >预警值：</label>
+					<div class="layui-input-inline">
+						<input type="text" id="value_set" name="value_set" required lay-verify="required|number" autocomplete="off" class="layui-input" >
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">是否停用：</label>
+					<div class="layui-input-inline">
+						<select name="stopflag" required lay-verify="required">
+	                        <option value="1">启用</option>
+					        <option value="0">停用</option>
+	                    </select>
+					</div>
+				</div>				
+				<div style="" class="layui-form-item">
+					<div class="layui-input-block" style="text-align: center">
+						<button id="saveBtn" class="layui-btn" lay-submit lay-filter="submitBut">保存</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<script th:src="@{/js/monitorManage/update.js}"></script>
+	</body>
+
+</html>

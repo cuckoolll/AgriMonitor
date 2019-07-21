@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -35,11 +36,13 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.entity.AnimalsBreed;
+import com.agri.monitor.entity.MonitorLog;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.enums.CacheTypeEnum;
 import com.agri.monitor.enums.LogOptSatusEnum;
 import com.agri.monitor.enums.LogOptTypeEnum;
 import com.agri.monitor.mapper.AnimalsBreedMapper;
+import com.agri.monitor.mapper.MonitorLogMapper;
 import com.agri.monitor.utils.CacheUtil;
 import com.agri.monitor.utils.LogUtil;
 import com.agri.monitor.utils.TreeBuilder;
@@ -55,7 +58,8 @@ public class AnimalsBreedService {
 	
 	@Autowired
 	private AnimalsBreedMapper animalsBreedMapper;
-	
+	@Autowired
+	private MonitorLogMapper monitorLogMapper;
 	public AnimalsBreed findById(Integer gid, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("获取养殖信息，GID=" + gid);
@@ -709,7 +713,93 @@ public class AnimalsBreedService {
 			}
 		}
 	}
+	private String getTargetName(String target) {
+		if("surplus_size".equals(target)) {
+			return "月末存栏数";
+		}else if("female_size".equals(target)) {
+			return "能繁殖母畜";
+		}else if("child_size".equals(target)) {
+			return "产仔数";
+		}else if("survival_size".equals(target)) {
+			return "成活数";
+		}else if("death_size".equals(target)) {
+			return "损亡数";
+		}else if("maturity_size".equals(target)) {
+			return "出栏数";
+		}else if("sell_size".equals(target)) {
+			return "出售数";
+		}else if("meat_output".equals(target)) {
+			return "肉产量";
+		}else if("milk_output".equals(target)) {
+			return "奶产量";
+		}else if("egg_output".equals(target)) {
+			return "蛋产量";
+		}else if("hair_output".equals(target)) {
+			return "毛产量";
+		}
+		return "";
+	}
+	/**
+	 * 畜牧业生产情况监控
+	 * @param setData 监控设置数据
+	 */
+	public void dataMonitorHandle(List<Map> setData) {
+		info("处理畜牧业生产情况监控开始");
+		if(null != setData && setData.size() > 0) {
+			AnimalsBreedQueryVO vo = new AnimalsBreedQueryVO();
+			vo.setPage(1);
+			vo.setLimit(Integer.MAX_VALUE);
+			vo.setStopflag(1);
+			vo.setDate_month(Integer.valueOf(new SimpleDateFormat("yyyyMM").format(new Date())));
+			List<Map> list = animalsBreedMapper.findAllForPage(vo);
+			if(null != list && list.size() > 0) {
+				//统计父节点合计数
+				for (Map map : list) {
+					//如果是叶子节点，将本节点数据合计到父节点中
+					if(((Integer) map.get("isleaf"))==1) {
+						totalParent(list, map, (Integer) map.get("parent_id"));
+					}
+				}
+				
+				//判断规则
+				for (Map map1 : list) {
+					for (Map map2 : setData) {
+						if((Integer) map1.get("fgid")==(Integer) map2.get("target_type")) {
+							String target=(String) map2.get("target");
+							String conditions = (String) map2.get("conditions");
+							Double d1 = null != map1.get(target)?Double.valueOf(map1.get(target).toString()):null;
+							Double d2 = null != map2.get("value_set")?Double.valueOf(map2.get("value_set").toString()):null;
+							if(d1 != null && d2 != null) {
+								String log=null;
+								if (">".equals(conditions) && d1>d2) {
+									log=vo.getDate_month()+"月"+map1.get("target_name")+"实际"+getTargetName(target)+d1+"，大于预警值"+d2;
+								}else if ("<".equals(conditions) && d1<d2) {
+									log=vo.getDate_month()+"月"+map1.get("target_name")+"实际"+getTargetName(target)+d1+"，小于预警值"+d2;
+								} else if ("=".equals(conditions) && d1==d2) {
+									log=vo.getDate_month()+"月"+map1.get("target_name")+"实际"+getTargetName(target)+d1+"，等于预警值"+d2;
+								}
+								if(log != null) {
+									info("畜牧业生产情况监控开预警信息保存");
+									MonitorLog l = new MonitorLog();
+									l.setStopflag(1);
+									l.setSetgid((Integer) map2.get("gid"));
+									l.setLog(log);
+									monitorLogMapper.insert(l);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		info("处理畜牧业生产情况监控结束");
+	}
 	
+	private void info(String msg) {
+		if (logger.isInfoEnabled()) {
+			logger.info(msg);
+		}
+	}
 	private String ObjToStr(Object o) {
 		if (null != o) {
 			return o.toString();

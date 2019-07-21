@@ -35,11 +35,13 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.entity.CropsPlant;
+import com.agri.monitor.entity.MonitorLog;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.enums.CacheTypeEnum;
 import com.agri.monitor.enums.LogOptSatusEnum;
 import com.agri.monitor.enums.LogOptTypeEnum;
 import com.agri.monitor.mapper.CropsPlantMapper;
+import com.agri.monitor.mapper.MonitorLogMapper;
 import com.agri.monitor.utils.CacheUtil;
 import com.agri.monitor.utils.LogUtil;
 import com.agri.monitor.vo.CropsPlantQueryVO;
@@ -51,19 +53,17 @@ public class CropsPlantService {
 	
 	@Autowired
 	private CropsPlantMapper cropsPlantMapper;
+	@Autowired
+	private MonitorLogMapper monitorLogMapper;
 	
 	public CropsPlant findById(Integer gid, String userid) {
-		if (logger.isInfoEnabled()) {
-			logger.info("获取农作物产量信息，GID=" + gid);
-		}
+		info("获取农作物产量信息，GID=" + gid);
 		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, "查询农作物产量信息，GID="+gid);
 		return cropsPlantMapper.findById(gid);
 	}
 	
 	public Map doDel(List<Integer> gids, String userid) {
-		if (logger.isInfoEnabled()) {
-			logger.info("农作物产量数据删除开始：" + gids);
-		}
+		info("农作物产量数据删除开始：" + gids);
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0);
 		try {
@@ -78,9 +78,7 @@ public class CropsPlantService {
 	}
 	
 	public Map saveOrUpdate(CropsPlant cropsPlant,String userid) {
-		if (logger.isInfoEnabled()) {
-			logger.info("农作物产量数据更新开始：" + cropsPlant);
-		}
+		info("农作物产量数据更新开始：" + cropsPlant);
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0);
 		try {
@@ -109,9 +107,7 @@ public class CropsPlantService {
 	}
 	
 	public List<Map> findAllForPage(CropsPlantQueryVO queryVO, String userid) {
-		if (logger.isInfoEnabled()) {
-			logger.info("查询所有农作物产量数据开始：" + queryVO);
-		}
+		info("查询所有农作物产量数据开始：" + queryVO);
 		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, "查询农作物产量信息，"+queryVO);
 		return cropsPlantMapper.findAllForPage(queryVO);
 	}
@@ -121,9 +117,7 @@ public class CropsPlantService {
 	}
 	
 	public Map dataImport(MultipartFile file, HttpServletRequest request) {
-		if (logger.isInfoEnabled()) {
-			logger.info("农作物产量数据导入开始");
-		}
+		info("农作物产量数据导入开始");
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0);
@@ -134,17 +128,13 @@ public class CropsPlantService {
 	        String filename=file.getOriginalFilename();
 	        // 获取文件后缀
 	        String prefix=filename.substring(filename.lastIndexOf(".")+1);
-	        if (logger.isInfoEnabled()) {
-				logger.info("农作物产量数据导入，文件名：" + filename);
-			}
+	        info("农作物产量数据导入，文件名：" + filename);
 	        if (prefix.equals("xlsx")) {
 	        	wb = new XSSFWorkbook(file.getInputStream());
 	        } else if (prefix.equals("xls")) {
 	        	wb = new HSSFWorkbook(file.getInputStream());
 	        } else {
-	        	if (logger.isInfoEnabled()) {
-					logger.info("农作物产量数据导入，不支持的文件类型");
-				}
+        		info("农作物产量数据导入，不支持的文件类型");
 	        	result.put("code", -1);
 	    		result.put("msg", "不支持的文件类型");
 	    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(),"不支持的文件类型");
@@ -213,9 +203,7 @@ public class CropsPlantService {
 	        cropsPlantMapper.batchInsert(list);
 	        LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.SUCESS, user.getUser_id(), "导入农作物产量信息，共导入"+list.size()+"条");
 		} catch (Exception e) {
-			if (logger.isErrorEnabled()) {
-				logger.error("农作物产量数据导入，解析文件异常", e);
-			}
+			logger.error("农作物产量数据导入，解析文件异常", e);
 			result.put("code", -1);
     		result.put("msg", "解析文件失败");
     		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(), "导入农作物产量信息异常："+e.getMessage());
@@ -302,9 +290,7 @@ public class CropsPlantService {
 	}
 	
 	public Map getdata(Integer type) {
-		if (logger.isInfoEnabled()) {
-			logger.info("农作物产量情况分析，type=" + type);
-		}
+		info("农作物产量情况分析，type=" + type);
 		Calendar c = Calendar.getInstance();
 		int year = c.get(Calendar.YEAR);
 		Double[] zcarr= {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
@@ -336,5 +322,68 @@ public class CropsPlantService {
 		ret.put("dc", dcarr);
 		ret.put("mj", mjarr);
 		return ret;
+	}
+	
+	private String getTargetName(String target){
+		if("planted_area".equals(target)) {
+			return "播种面积（万亩）";
+		}else if("planted_output".equals(target)) {
+			return "总产（万公斤）";
+		}
+		return "";
+	}
+	/**
+	 * 农作物产量面积监控
+	 * @param setData 监控设置数据
+	 */
+	public void dataMonitorHandle(List<Map> setData) {
+		info("处理农作物产量面积监控开始");
+		if(null != setData && setData.size() > 0) {
+			//统计所有农作物分类
+			List<Integer> types = new ArrayList<>();
+			for (Map map : setData) {
+				types.add((Integer) map.get("target_type"));
+			}
+			
+			List<Map> list = cropsPlantMapper.findNumByType(types);
+			if(null != list && list.size() > 0) {
+				//判断规则
+				for (Map map1 : list) {
+					for (Map map2 : setData) {
+						if((Integer) map1.get("crops_type")==(Integer) map2.get("target_type")) {
+							String target=(String) map2.get("target");
+							String conditions = (String) map2.get("conditions");
+							Double d1 = null != map1.get(target)?Double.valueOf(map1.get(target).toString()):null;
+							Double d2 = null != map2.get("value_set")?Double.valueOf(map2.get("value_set").toString()):null;
+							if(d1 != null && d2 != null) {
+								String log=null;
+								if (">".equals(conditions) && d1>d2) {
+									log=map1.get("date_year")+"年"+map1.get("type_name")+"实际"+getTargetName(target)+d1+"，大于预警值"+d2;
+								}else if ("<".equals(conditions) && d1<d2) {
+									log=map1.get("date_year")+"年"+map1.get("type_name")+"实际"+getTargetName(target)+d1+"，小于预警值"+d2;
+								} else if ("=".equals(conditions) && d1==d2) {
+									log=map1.get("date_year")+"年"+map1.get("type_name")+"实际"+getTargetName(target)+d1+"，等于预警值"+d2;
+								}
+								if(log != null) {
+									info("农作物产量面积监控开预警信息保存");
+									MonitorLog l = new MonitorLog();
+									l.setStopflag(1);
+									l.setSetgid((Integer) map2.get("gid"));
+									l.setLog(log);
+									monitorLogMapper.insert(l);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		info("处理农作物产量面积监控结束");
+	}
+	
+	private void info(String msg) {
+		if (logger.isInfoEnabled()) {
+			logger.info(msg);
+		}
 	}
 }

@@ -18,4 +18,6 @@ public interface SystemLogMapper {
 	int findAllCount(SysLogQueryVO queryVO);
 	
 	void delete(List<Integer> gids);
+	
+	void deleteAll();
 }

@@ -34,4 +34,7 @@
     		#{item}
     	</foreach>
     </delete>
+     <delete id="deleteAll">
+    	delete from t_system_log
+    </delete>
 </mapper>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agri.monitor.mapper.MonitorLogMapper">
+    <select id="findAllForPage" parameterType="com.agri.monitor.vo.MonitorSetQueryVO" resultType="map">
+		select a.gid,a.stopflag,b.monitor_type,b.condition_showname,a.log,a.create_time from t_monitor_log a,t_monitor_set b
+		where a.setgid=b.gid 
+        <if test="monitor_type != null">
+	        and b.monitor_type=#{monitor_type}
+	    </if>
+	    <if test="stopflag != null">
+	        and a.stopflag=#{stopflag}
+	    </if>
+	    order by a.gid desc limit #{currIndex},#{limit}
+    </select>
+
+    <select id="findAllCount" parameterType="com.agri.monitor.vo.MonitorSetQueryVO" resultType="int">
+       select count(a.gid) from t_monitor_log a,t_monitor_set b
+		where a.setgid=b.gid 
+        <if test="monitor_type != null">
+	        and b.monitor_type=#{monitor_type}
+	    </if>
+	    <if test="stopflag != null">
+	        and a.stopflag=#{stopflag}
+	    </if>
+    </select>
+    
+    <insert id="insert" parameterType="com.agri.monitor.entity.MonitorLog">
+    	insert into t_monitor_log(setgid,log,stopflag)
+    	values
+	   (#{setgid},#{log},#{stopflag})
+    </insert>
+    
+    <delete id="delete" parameterType="java.util.List">
+    	delete from t_monitor_log where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+    
+   <delete id="deleteByType" parameterType="java.util.List">
+    	delete from t_monitor_log where setgid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+    
+    <update id="updateStatus" parameterType="map">
+    	update t_monitor_log set stopflag=#{stopflag} where gid=#{gid}
+    </update>
+    <update id="updateStatusByType" parameterType="map">
+    	update t_monitor_log set stopflag=#{stopflag} where setgid=#{setgid}
+    </update>
+    
+   <update id="updateStatusAll">
+    	update t_monitor_log set stopflag=0
+    </update>
+    
+    <delete id="deleteAll">
+    	delete from t_monitor_log
+    </delete>
+</mapper>

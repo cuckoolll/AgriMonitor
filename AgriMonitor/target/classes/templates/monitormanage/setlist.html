@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<!-- Google Chrome Frame也可以让IE用上Chrome的引擎: -->
+		<meta name="renderer" content="webkit">
+		<!--国产浏览器高速模式-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>数据预警设置</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/base.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/iconfont.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
+		<!-- 滚动条插件 -->
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/jquery.mCustomScrollbar.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/frameStyle.css}">
+	    <!--[if lt IE 9]>
+	      	<script src="framework/html5shiv.min.js"></script>
+	      	<script src="framework/respond.min.js"></script>
+	    <![endif]-->
+		<script type="text/javascript" th:src="@{/temp/framework/jquery-1.11.3.min.js}" ></script>
+		<script type="text/javascript" th:src="@{/temp/layui/layui.js}"></script>
+		<script th:src="@{/temp/framework/jquery-ui-1.10.4.min.js}"></script>
+		<script th:src="@{/temp/framework/jquery.mousewheel.min.js}"></script>
+		<script th:src="@{/temp/framework/jquery.mCustomScrollbar.min.js}"></script>
+		<!-- 公共样式 结束 -->
+	</head>
+
+	<body>
+		<div class="cBody">
+			<div class="queryArea">
+				<form class="layui-form" action="">
+					<div class="layui-form-item">
+						<label style="width: 90px" class="layui-form-label text-left">监控指标：</label>
+						<div class="layui-input-inline">
+					      <select id="monitor_type">
+					        <option value="">全部</option>
+					        <option value="1">养殖场牲畜总存栏监控</option>
+							<option value="2">单个养殖场牲畜存栏监控</option>
+							<option value="3">畜牧业生产情况监控</option>
+							<option value="4">农作物产量面积监控</option>
+					      </select>
+					      </div>
+						<a id="queryBtn" class="layui-btn">检索</a>
+					</div>
+				</form>
+			</div>
+			<table id="datalist"  lay-filter="datalist"></table>
+			<script type="text/html" id="titleTpl">
+ 			 {{#  if(d.monitor_type==1){}}
+   				养殖场牲畜总存栏监控
+  			 {{#  } else if(d.monitor_type==2) {}}
+   			 	单个养殖场牲畜存栏监控
+  			{{#  } else if(d.monitor_type==3) {}}
+   			 	畜牧业生产情况监控
+  			{{#  } else if(d.monitor_type==4) {}}
+   			 	农作物产量面积监控
+  			{{#  } }}
+			</script>
+			<script type="text/html" id="titleTpl1">
+ 			 {{#  if(d.stopflag==1){}}
+   				启用
+  			 {{#  } else if(d.stopflag==0) {}}
+   			 	停用
+  			{{#  } }}
+			</script>
+			<script type="text/html" id="barDemo">
+  			 <div class="layui-inline" lay-event="add"><i class="layui-icon layui-icon-add-1"></i></div><div class="layui-inline" lay-event="update"><i class="layui-icon layui-icon-edit"></i></div><div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
+			</script>
+		</div>
+		<script th:src="@{/js/monitorManage/setlist.js}"></script>
+	</body>
+</html>
