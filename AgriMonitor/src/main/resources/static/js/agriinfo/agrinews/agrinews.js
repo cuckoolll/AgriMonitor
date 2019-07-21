@@ -26,7 +26,8 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    	 {field: 'title', title: '标题'},
 		    	 {field: 'author', title: '作者'},
 		    	 {field: 'create_time', title: '创建时间', sort: true},
-		    	 {field: 'creator', title: '创建人'}
+		    	 {field: 'creator', title: '创建人'},
+		    	 {templet: '#oper-col', title: '操作',align:'center'}
 			 ]]
 		  });
 	}
@@ -110,6 +111,21 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 			        	});
 			        }
 			     break;
+		    };
+		  });
+		
+		table.on('tool(datalist)', function(obj){
+		    var data = obj.data; //获取选中的数据
+		    switch(obj.event){
+		      case 'show':
+		    	  layer.open({
+		      		    title: "查看农业信息",
+						type: 2,
+						area: ['800px', '600px'],
+						scrollbar: true,
+						content: '/agrinews/newsedit?show=1&gid='+data.gid
+					});
+		      break;
 		    };
 		  });
 		

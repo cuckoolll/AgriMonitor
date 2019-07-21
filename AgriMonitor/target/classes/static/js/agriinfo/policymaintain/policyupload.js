@@ -31,6 +31,7 @@ layui.use(['form','layer','table', 'laydate', 'upload'], function(form,layer,tab
             var filesize = (size / 1024 / 1024).toFixed(2);				//MB
 		    
             if (filesize > 20) {
+            	sessionStorage.setItem('code', "-1");
             	sessionStorage.setItem('msg', "上传文件大小不能大于20MB");
             	var index=parent.layer.getFrameIndex(window.name); //获取当前窗口的name
 	            parent.layer.close(index);		//关闭窗口
@@ -46,6 +47,7 @@ layui.use(['form','layer','table', 'laydate', 'upload'], function(form,layer,tab
 		        processData : false, // 使数据不做处理
 		        contentType : false, // 不要设置Content-Type请求头
 		        success: function(res){
+		        	sessionStorage.setItem('code', res.code);
 	        		sessionStorage.setItem('msg', res.msg);
 		        	var index=parent.layer.getFrameIndex(window.name); //获取当前窗口的name
 		            parent.layer.close(index);		//关闭窗口

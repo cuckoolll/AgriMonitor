@@ -1,8 +1,15 @@
 layui.use(['form','layer','table', 'laydate', 'upload'], function(form,layer,table,laydate,upload) {
 	function init(){
-		var ue = UE.getEditor('container');
-		
 		var gid = getUrlParam("gid");
+		var isShow = getUrlParam("show") == '1' ? true : false;
+		
+		var ue = UE.getEditor('container');
+		if (!isShow) {
+			$("#title").removeAttr("readonly");
+			$("#container").removeAttr("readonly");
+			$("#saveBtn").css("display", "block");
+		}
+		
 		if(gid){//如果有值，为更新操作
 			//查询数据并赋值到表单中
 			$.post("/agrinews/findById", {gid:gid},function(res){
@@ -10,10 +17,13 @@ layui.use(['form','layer','table', 'laydate', 'upload'], function(form,layer,tab
 		        	  $.each(res,function(key,val){
 	        			  $("[name='"+key+"']").val(val);
 	        			  if ("content" == key) {
-	        				  ue.ready(function() {
+        					  ue.ready(function() {
 	        					  //设置编辑器的内容
 	        					  ue.setContent(val);
-	        				  });
+	        					  if (isShow) {
+	        						  ue.setDisabled();
+	        					  }
+	        				  }); 
 	        			  }
 		        	  });
 		          }else{

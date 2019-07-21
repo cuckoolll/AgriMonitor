@@ -32,18 +32,21 @@
 				<div class="layui-form-item" style="padding-top: 10px">
 					<label class="layui-form-label"  style="width: 140px">标题：</label>
 					<div class="layui-input-inline">
-						<input type="text" id="title" name="title" lay-verify="required" autocomplete="off" class="layui-input" style="width: 400px">
+						<input type="text" id="title" readonly="readonly" name="title" lay-verify="required" autocomplete="off" class="layui-input" style="width: 400px">
 					</div>
 					
 					<div class="layui-input-inline" style="float:right">
-						<button class="layui-btn" id="saveBtn" lay-submit lay-filter="submitBut">保存</button>
+						<button class="layui-btn" id="saveBtn" lay-submit lay-filter="submitBut" style="display:none">保存</button>
 					</div>
 				</div>
 				
 				<!-- 加载编辑器的容器 -->
-   				<textarea id="container" name="content" style="padding-left:15px;padding-bottom:5px;width:740px;height:400px"></textarea>
+   				<textarea id="container" name="content" readonly="readonly" style="padding-left:15px;padding-bottom:5px;width:740px;height:400px"></textarea>
 				
 			</form>
+			
+			<input type="hidden" class="input-text" value="${session.userinfo.roleinfo.role_name}"
+						name="role_name" id="role_name">
 			
 			<script th:src="@{/js/agriinfo/agrinews/agrinewsedit.js}"></script>
 		</div>

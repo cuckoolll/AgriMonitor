@@ -115,9 +115,15 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 				area: ['700px', '230px'],
 				scrollbar: true,
 				content: '/policymaintain/upload',
-				end: function(index, layero){ 
-					doQuery();
-					layer.msg(sessionStorage.getItem('msg'));
+				end: function(index, layero){
+					var code = sessionStorage.getItem('code');
+					if (code && code == 0) {
+						doQuery();
+						layer.msg(sessionStorage.getItem('msg'));
+					} else if (code && code == -1) {
+						layer.msg(sessionStorage.getItem('msg'));
+					}
+					sessionStorage.removeItem("code");
 				  	return false; 
 				}  
 			});
