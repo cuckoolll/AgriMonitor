@@ -1,0 +1,102 @@
+package com.agri.monitor.controller.datamanage;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.agri.monitor.annotation.IgnoreSession;
+import com.agri.monitor.entity.ClimateInfo;
+import com.agri.monitor.entity.UserInfo;
+import com.agri.monitor.enums.CacheTypeEnum;
+import com.agri.monitor.service.datamanage.ClimateInfoService;
+import com.agri.monitor.utils.CacheUtil;
+import com.agri.monitor.vo.ClimateQueryVO;
+
+@Controller
+@RequestMapping("/grassinfo")
+public class GrassInfoController {
+	
+	@Autowired
+	private ClimateInfoService climateInfoService;
+	
+	/**
+	 * 水质监测页面 .
+	 * @return .
+	 */
+	@RequestMapping("")
+	public String climateInfo(Model model) {
+		model.addAttribute("towns", CacheUtil.getCache(CacheTypeEnum.TOWNS));
+		return "/datamanage/grassinfo/grassinfo";
+	}
+	
+	/**
+	 * 查询水质监测信息 .
+	 * @param request .
+	 * @return .
+	 */
+	@RequestMapping(value="/queryInfo", method = RequestMethod.POST)
+	@ResponseBody
+	@IgnoreSession
+	public Map queryInfo(ClimateQueryVO queryVo, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		return climateInfoService.queryInfoForPage(queryVo, user.getUser_id());
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/dataImport",method=RequestMethod.POST)
+	public Map dataImport(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+		return climateInfoService.dataImport(file, request);
+	}
+	
+	@IgnoreSession
+	@RequestMapping("/update")
+	public String add(Model model) {
+		return "/datamanage/climateinfo/climateupdate";
+	}
+
+	@ResponseBody
+	@RequestMapping(value="/save",method=RequestMethod.POST)
+	public Map doUpdate(ClimateInfo climateinfo, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		return climateInfoService.saveOrUpdate(climateinfo, user.getUser_id());
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/delInfoByGid",method=RequestMethod.POST)
+	public Map delInfoByGid(@RequestBody ArrayList<Integer> gids, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		return climateInfoService.delInfoByGid(gids, user.getUser_id());
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/findById",method=RequestMethod.POST)
+	public ClimateInfo findById(Integer gid, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		return climateInfoService.findById(gid, user.getUser_id());
+	}
+	
+	@RequestMapping("/climateAnalysis")
+	public String climateAnalysis(Model model) {
+		model.addAttribute("climateindex", CacheUtil.getCache(CacheTypeEnum.CLIMATEINDEX));
+		model.addAttribute("towns", CacheUtil.getCache(CacheTypeEnum.TOWNS));
+		return "/statisticanalysis/climateanalysis/climateanalysis";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/queryAnalysisData", method=RequestMethod.POST)
+	public Map queryAnalysisData(HttpServletRequest request) {
+		return climateInfoService.queryAnalysisData(request);
+	}
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<!-- Google Chrome Frame也可以让IE用上Chrome的引擎: -->
+		<meta name="renderer" content="webkit">
+		<!--国产浏览器高速模式-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>气候监测基本信息</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
+	    <!--[if lt IE 9]>
+	      	<script src="framework/html5shiv.min.js"></script>
+	      	<script src="framework/respond.min.js"></script>
+	    <![endif]-->
+		<script type="text/javascript" th:src="@{/temp/framework/jquery-1.11.3.min.js}" ></script>
+		<script type="text/javascript" th:src="@{/temp/layui/layui.js}"></script>
+		<!-- 公共样式 结束 -->
+		
+		<style type="text/css">
+			.span_title{
+				width : 190px;
+			}
+			.input_area{
+				width : 150px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="cBody" style="height: 450px">
+			<form id="addForm" class="layui-form" action="">
+				<input type="hidden" name="gid"/>
+				<div class="layui-form-item">
+					<label class="layui-form-label span_title">所属区域：</label>
+	                <div class="layui-input-inline">
+	                    <input type="text" name="county" readonly="readonly" class="layui-input input_area" value="刚察县">
+	                </div>
+	                <!--<label class="layui-form-label span_title">所属乡镇：</label>
+	                <div class="layui-input-inline">
+	                    <input type="text" name="towns" class="layui-input input_area">
+	                </div>-->
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label span_title">年份：</label>
+					<div class="layui-input-inline">
+						<input id="date_year" type="text" name="date_year" required lay-verify="required" 
+							autocomplete="off" class="layui-input input_area" readonly="readonly">
+					</div>
+					<label class="layui-form-label span_title">年平均气温（摄氏度）：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="year_avg_temperature" required lay-verify="required" 
+							autocomplete="off" class="layui-input input_area">
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label span_title">极端最高气温（摄氏度）：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="high_temperature" required lay-verify="required" autocomplete="off" class="layui-input input_area">
+					</div>
+					<label class="layui-form-label span_title">极端最低气温（摄氏度）：</label>
+					<div class="layui-input-block">
+						<input type="text" name="low_temperature" autocomplete="off" class="layui-input input_area">
+					</div>
+				</div>
+				
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label span_title">年降水量（毫米）：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="year_precipitation" autocomplete="off" class="layui-input input_area"></input>
+					</div>
+					<label class="layui-form-label span_title">月最大降水量（毫米）：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="mouth_high_precipitation" autocomplete="off" class="layui-input input_area"></input>
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label span_title">日最大降水量（毫米）：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="day_high_precipitation" autocomplete="off" class="layui-input input_area"></input>
+					</div>
+					<label class="layui-form-label span_title">年平均最多风向（米每秒）：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="year_avg_winds" autocomplete="off" class="layui-input input_area"></input>
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label span_title">极大风速（米每秒）：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="high_winds" autocomplete="off" class="layui-input input_area"></input>
+					</div>
+					<label class="layui-form-label span_title">年大风日数（天）：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="year_high_winds_days" autocomplete="off" class="layui-input input_area"></input>
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label span_title">年平均气压（百帕）：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="year_avg_pressure" autocomplete="off" class="layui-input input_area"></input>
+					</div>
+					<label class="layui-form-label span_title">年雷暴日数（次）：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="year_thunderstorm_days" autocomplete="off" class="layui-input input_area"></input>
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label span_title">年尘暴日数（次）：</label>
+					<div class="layui-input-block">
+						<input type="text" name="year_sandstorm_days" autocomplete="off" class="layui-input input_area"></input>
+					</div>
+				</div>
+				
+				<div style="" class="layui-form-item">
+					<div class="layui-input-block" style="text-align: center">
+						<button class="layui-btn" lay-submit lay-filter="submitBut">保存</button>
+					</div>
+				</div>
+			</form>
+			
+			<script th:src="@{/js/datamanage/climateinfo/climateupdate.js}"></script>
+		</div>
+	</body>
+
+</html>
