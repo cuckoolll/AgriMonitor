@@ -9,6 +9,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 	function render() {
 		timeControl = laydate.render({
 			elem: '#quality_time',
+			type: 'month',
 			value: new Date()
 		}); 
 		
@@ -32,9 +33,9 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    	 {field: 'so2', title: 'SO2'}, 
 		    	 {field: 'no2', title: 'NO2'},
 		    	 {field: 'co', title: 'CO(mg/m3)'},
-		    	 {field: 'o3-8h', title: 'O3-8h'},
+		    	 {field: 'o3_8h', title: 'O3-8h'},
 		    	 {field: 'pm10', title: 'PM10'},
-		    	 {field: 'pm2.5', title: 'PM2.5'}
+		    	 {field: 'pm2_5', title: 'PM2.5'}
 			 ]]
 		  });
 		

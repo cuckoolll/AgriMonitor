@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agri.monitor.mapper.AirInfoMapper">
+	<select id="findById" parameterType="int" resultType="com.agri.monitor.entity.AirInfo">
+		select gid,
+			   city,
+			   station_name,
+			   county,
+			   towns,
+			   village,
+			   date_format(quality_time, '%Y-%m-%d') quality_time,
+			   so2,
+			   no2,
+			   co,
+			   o3_8h,
+			   pm10,
+			   pm2_5,
+			   preparer,
+			   auditor,
+			   date_format(paper_time, '%Y-%m-%d') paper_time
+		  from t_air_quality 
+		 where gid = #{gid}
+	</select>
+
+    <select id="queryInfoByCountryAndTimeForPage" parameterType="com.agri.monitor.vo.AirQueryVO" resultType="map">
+        select gid,
+			   city,
+			   station_name,
+			   county,
+			   towns,
+			   village,
+			   date_format(quality_time, '%Y-%m-%d') quality_time,
+			   so2,
+			   no2,
+			   co,
+			   o3_8h,
+			   pm10,
+			   pm2_5,
+			   preparer,
+			   auditor,
+			   date_format(paper_time, '%Y-%m-%d') paper_time
+          from t_air_quality 
+    	<if test="city != null and city != ''">
+    		<bind name="city" value="'%' + city + '%'"/>
+        	where city like #{city} 
+        </if>
+        <if test="city == null or city == ''">
+        	<if test="quality_time != null and quality_time != ''">
+        		where quality_time = #{quality_time}
+        	</if>
+        </if>
+        <if test="quality_time != null and quality_time != ''">
+        	and quality_time = #{quality_time}
+       	</if>
+       	 order by quality_time desc limit #{currIndex},#{limit}
+    </select>
+    
+    <select id="queryInfoCount" parameterType="com.agri.monitor.vo.AirQueryVO" resultType="int">
+        select count(gid)
+          from t_air_quality 
+    	<if test="city != null and city != ''">
+    		<bind name="city" value="'%' + city + '%'"/>
+        	where city like #{city} 
+        </if>
+        <if test="city == null or city == ''">
+        	<if test="quality_time != null and quality_time != ''">
+        		where quality_time = #{quality_time}
+        	</if>
+        </if>
+        <if test="quality_time != null and quality_time != ''">
+        	and quality_time = #{quality_time}
+       	</if>
+    </select>
+    
+    <select id="queryGid" parameterType="com.agri.monitor.vo.AirQueryVO" resultType="java.lang.String">
+   		select gid
+     	  from t_air_quality
+     	 where city = #{city}
+     	   and quality_time = #{quality_time}
+     	   and station_name = #{station_name}
+    </select>
+    
+    <insert id="insertInfo" parameterType="com.agri.monitor.entity.AirInfo">
+    	insert into t_air_quality
+    		(city,
+		     station_name,
+		     county,
+		     towns,
+		     village,
+		     quality_time,
+		     so2,
+		     no2,
+		     co,
+		     o3_8h,
+		     pm10,
+		     pm2_5,
+		     preparer,
+		     auditor,
+		     paper_time,
+			 creator,
+			 modifier)
+    	values
+		   (#{city},
+			#{station_name},
+			#{county},      
+			#{towns},       
+			#{village},     
+			#{quality_time}, 
+			#{so2},         
+			#{no2},         
+			#{co},          
+			#{o3_8h},       
+			#{pm10},        
+			#{pm2_5},       
+			#{preparer},    
+			#{auditor},     
+			#{paper_time},    
+			#{creator},
+			#{modifier})
+    </insert>
+    
+    <update id="updateInfo" parameterType="com.agri.monitor.entity.AirInfo">
+    	update t_air_quality
+    	   set so2 = #{so2},
+		       no2 = #{no2},
+		       co = #{co},
+		       o3_8h = #{o3_8h},
+		       pm10 = #{pm10},
+		       pm2_5 = #{pm2_5},
+		       preparer = #{preparer},
+		       auditor = #{auditor},
+		       paper_time = #{paper_table},
+			   modifier = #{modifier}
+    	 where gid = #{gid}
+    </update>
+    
+    <delete id="delInfoByGid" parameterType="java.util.List">
+    	delete from t_air_quality where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+</mapper>

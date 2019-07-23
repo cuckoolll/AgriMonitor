@@ -1,7 +1,6 @@
 package com.agri.monitor.controller.datamanage;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,20 +16,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.annotation.IgnoreSession;
-import com.agri.monitor.entity.FarmInfo;
+import com.agri.monitor.entity.AirInfo;
 import com.agri.monitor.entity.UserInfo;
-import com.agri.monitor.entity.WaterInfo;
-import com.agri.monitor.enums.CacheTypeEnum;
-import com.agri.monitor.service.datamanage.WaterInfoService;
-import com.agri.monitor.utils.CacheUtil;
-import com.agri.monitor.vo.WaterQueryVO;
+import com.agri.monitor.service.datamanage.AirInfoService;
+import com.agri.monitor.vo.AirQueryVO;
 
 @Controller
 @RequestMapping("/airinfo")
 public class AirInfoController {
 	
 	@Autowired
-	private WaterInfoService waterInfoService;
+	private AirInfoService airInfoService;
 	
 	@RequestMapping("")
 	public String airinfo() {
@@ -40,41 +36,41 @@ public class AirInfoController {
 	@RequestMapping(value="/queryInfo", method = RequestMethod.POST)
 	@ResponseBody
 	@IgnoreSession
-	public Map queryInfo(WaterQueryVO queryVo, HttpServletRequest request) {
+	public Map queryInfo(AirQueryVO queryVo, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return waterInfoService.queryInfoByCountryAndTimeForPage(queryVo, user.getUser_id());
+		return airInfoService.queryInfoByCountryAndTimeForPage(queryVo, user.getUser_id());
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/dataImport",method=RequestMethod.POST)
 	public Map dataImport(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-		return waterInfoService.dataImport(file, request);
+		return airInfoService.dataImport(file, request);
 	}
 	
 	@IgnoreSession
 	@RequestMapping("/update")
 	public String add(Model model) {
-		return "/datamanage/waterinfo/waterupdate";
+		return "/datamanage/airinfo/airupdate";
 	}
 
 	@ResponseBody
 	@RequestMapping(value="/save",method=RequestMethod.POST)
-	public Map doUpdate(WaterInfo waterinfo,HttpServletRequest request) {
+	public Map doUpdate(AirInfo airinfo,HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return waterInfoService.saveOrUpdate(waterinfo, user.getUser_id());
+		return airInfoService.saveOrUpdate(airinfo, user.getUser_id());
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/delInfoByGid",method=RequestMethod.POST)
 	public Map delInfoByGid(@RequestBody ArrayList<Integer> gids, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return waterInfoService.delInfoByGid(gids, user.getUser_id());
+		return airInfoService.delInfoByGid(gids, user.getUser_id());
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/findById",method=RequestMethod.POST)
-	public WaterInfo findById(Integer gid, HttpServletRequest request) {
+	public AirInfo findById(Integer gid, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return waterInfoService.findById(gid, user.getUser_id());
+		return airInfoService.findById(gid, user.getUser_id());
 	}
 }
