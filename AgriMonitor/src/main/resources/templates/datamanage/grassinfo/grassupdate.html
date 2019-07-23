@@ -8,7 +8,7 @@
 		<meta name="renderer" content="webkit">
 		<!--国产浏览器高速模式-->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>气候监测基本信息</title>
+		<title>草地生态监测基本信息</title>
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
 	    <!--[if lt IE 9]>
 	      	<script src="framework/html5shiv.min.js"></script>
@@ -20,7 +20,7 @@
 		
 		<style type="text/css">
 			.span_title{
-				width : 190px;
+				width : 250px;
 			}
 			.input_area{
 				width : 150px;
@@ -49,73 +49,66 @@
 						<input id="date_year" type="text" name="date_year" required lay-verify="required" 
 							autocomplete="off" class="layui-input input_area" readonly="readonly">
 					</div>
-					<label class="layui-form-label span_title">年平均气温（摄氏度）：</label>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label span_title">草地总面积（万亩）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="year_avg_temperature" required lay-verify="required" 
+						<input type="text" name="grass_area" required lay-verify="required" 
+							autocomplete="off" class="layui-input input_area">
+					</div>
+					<label class="layui-form-label span_title">草地可用面积（万亩）：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="grass_usable_area" required lay-verify="required"
 							autocomplete="off" class="layui-input input_area">
 					</div>
 				</div>
 				
-				<div class="layui-form-item">
-					<label class="layui-form-label span_title">极端最高气温（摄氏度）：</label>
-					<div class="layui-input-inline">
-						<input type="text" name="high_temperature" required lay-verify="required" autocomplete="off" class="layui-input input_area">
-					</div>
-					<label class="layui-form-label span_title">极端最低气温（摄氏度）：</label>
-					<div class="layui-input-block">
-						<input type="text" name="low_temperature" autocomplete="off" class="layui-input input_area">
-					</div>
-				</div>
-				
 				
 				<div class="layui-form-item">
-					<label class="layui-form-label span_title">年降水量（毫米）：</label>
+					<label class="layui-form-label span_title">多年生人工种草保留面积（万亩）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="year_precipitation" autocomplete="off" class="layui-input input_area"></input>
-					</div>
-					<label class="layui-form-label span_title">月最大降水量（毫米）：</label>
-					<div class="layui-input-inline">
-						<input type="text" name="mouth_high_precipitation" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="grass_retain_area" lay-verify="required" 
+							autocomplete="off" class="layui-input input_area"></input>
 					</div>
 				</div>
 				
 				<div class="layui-form-item">
-					<label class="layui-form-label span_title">日最大降水量（毫米）：</label>
+					<label class="layui-form-label span_title">牧草产量（禁牧）（kg/hm2）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="day_high_precipitation" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="grass_unforage" lay-verify="required" 
+							autocomplete="off" class="layui-input input_area"></input>
 					</div>
-					<label class="layui-form-label span_title">年平均最多风向（米每秒）：</label>
+					<label class="layui-form-label span_title">牧草产量（草畜平衡）（kg/hm2）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="year_avg_winds" autocomplete="off" class="layui-input input_area"></input>
-					</div>
-				</div>
-				
-				<div class="layui-form-item">
-					<label class="layui-form-label span_title">极大风速（米每秒）：</label>
-					<div class="layui-input-inline">
-						<input type="text" name="high_winds" autocomplete="off" class="layui-input input_area"></input>
-					</div>
-					<label class="layui-form-label span_title">年大风日数（天）：</label>
-					<div class="layui-input-inline">
-						<input type="text" name="year_high_winds_days" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="grass_animal_balance" lay-verify="required" 
+							autocomplete="off" class="layui-input input_area"></input>
 					</div>
 				</div>
 				
 				<div class="layui-form-item">
-					<label class="layui-form-label span_title">年平均气压（百帕）：</label>
+					<label class="layui-form-label span_title">高原鼠兔危害面积（万亩）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="year_avg_pressure" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="plateau_pika_area" lay-verify="required" 
+							autocomplete="off" class="layui-input input_area"></input>
 					</div>
-					<label class="layui-form-label span_title">年雷暴日数（次）：</label>
+					<label class="layui-form-label span_title">高原鼢鼠危害面积（万亩）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="year_thunderstorm_days" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="plateau_zokor_area" lay-verify="required" 
+							autocomplete="off" class="layui-input input_area"></input>
 					</div>
 				</div>
 				
 				<div class="layui-form-item">
-					<label class="layui-form-label span_title">年尘暴日数（次）：</label>
-					<div class="layui-input-block">
-						<input type="text" name="year_sandstorm_days" autocomplete="off" class="layui-input input_area"></input>
+					<label class="layui-form-label span_title">草原毛虫危害面积（万亩）：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="grass_worm_area" lay-verify="required" 
+							autocomplete="off" class="layui-input input_area"></input>
+					</div>
+					<label class="layui-form-label span_title">蝗虫危害面积（万亩）：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="grasshopper_area" lay-verify="required" 
+							autocomplete="off" class="layui-input input_area"></input>
 					</div>
 				</div>
 				
@@ -126,7 +119,7 @@
 				</div>
 			</form>
 			
-			<script th:src="@{/js/datamanage/climateinfo/climateupdate.js}"></script>
+			<script th:src="@{/js/datamanage/grassinfo/grassupdate.js}"></script>
 		</div>
 	</body>
 

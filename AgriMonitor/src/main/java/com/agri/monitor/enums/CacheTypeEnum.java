@@ -36,5 +36,10 @@ public enum CacheTypeEnum {
 	/**
 	 * 土壤指标
 	 */
-	SOILINDEX
+	SOILINDEX,
+	
+	/**
+	 * 草原生态指标
+	 */
+	GRASSINDEX,
 }

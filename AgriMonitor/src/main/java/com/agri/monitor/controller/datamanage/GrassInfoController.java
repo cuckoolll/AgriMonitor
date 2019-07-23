@@ -1,7 +1,6 @@
 package com.agri.monitor.controller.datamanage;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,86 +16,86 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.annotation.IgnoreSession;
-import com.agri.monitor.entity.ClimateInfo;
+import com.agri.monitor.entity.GrassInfo;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.enums.CacheTypeEnum;
-import com.agri.monitor.service.datamanage.ClimateInfoService;
+import com.agri.monitor.service.datamanage.GrassInfoService;
 import com.agri.monitor.utils.CacheUtil;
-import com.agri.monitor.vo.ClimateQueryVO;
+import com.agri.monitor.vo.GrassQueryVO;
 
 @Controller
 @RequestMapping("/grassinfo")
 public class GrassInfoController {
 	
 	@Autowired
-	private ClimateInfoService climateInfoService;
+	private GrassInfoService grassInfoService;
 	
 	/**
-	 * 水质监测页面 .
+	 * 草原生态监测页面 .
 	 * @return .
 	 */
 	@RequestMapping("")
-	public String climateInfo(Model model) {
+	public String grassInfo(Model model) {
 		model.addAttribute("towns", CacheUtil.getCache(CacheTypeEnum.TOWNS));
 		return "/datamanage/grassinfo/grassinfo";
 	}
 	
 	/**
-	 * 查询水质监测信息 .
+	 * 查询草原生态监测信息 .
 	 * @param request .
 	 * @return .
 	 */
 	@RequestMapping(value="/queryInfo", method = RequestMethod.POST)
 	@ResponseBody
 	@IgnoreSession
-	public Map queryInfo(ClimateQueryVO queryVo, HttpServletRequest request) {
+	public Map queryInfo(GrassQueryVO queryVo, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return climateInfoService.queryInfoForPage(queryVo, user.getUser_id());
+		return grassInfoService.queryInfoForPage(queryVo, user.getUser_id());
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/dataImport",method=RequestMethod.POST)
 	public Map dataImport(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-		return climateInfoService.dataImport(file, request);
+		return grassInfoService.dataImport(file, request);
 	}
 	
 	@IgnoreSession
 	@RequestMapping("/update")
 	public String add(Model model) {
-		return "/datamanage/climateinfo/climateupdate";
+		return "/datamanage/grassinfo/grassupdate";
 	}
 
 	@ResponseBody
 	@RequestMapping(value="/save",method=RequestMethod.POST)
-	public Map doUpdate(ClimateInfo climateinfo, HttpServletRequest request) {
+	public Map doUpdate(GrassInfo grassinfo, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return climateInfoService.saveOrUpdate(climateinfo, user.getUser_id());
+		return grassInfoService.saveOrUpdate(grassinfo, user.getUser_id());
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/delInfoByGid",method=RequestMethod.POST)
 	public Map delInfoByGid(@RequestBody ArrayList<Integer> gids, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return climateInfoService.delInfoByGid(gids, user.getUser_id());
+		return grassInfoService.delInfoByGid(gids, user.getUser_id());
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/findById",method=RequestMethod.POST)
-	public ClimateInfo findById(Integer gid, HttpServletRequest request) {
+	public GrassInfo findById(Integer gid, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return climateInfoService.findById(gid, user.getUser_id());
+		return grassInfoService.findById(gid, user.getUser_id());
 	}
 	
-	@RequestMapping("/climateAnalysis")
-	public String climateAnalysis(Model model) {
-		model.addAttribute("climateindex", CacheUtil.getCache(CacheTypeEnum.CLIMATEINDEX));
+	@RequestMapping("/grassAnalysis")
+	public String grassAnalysis(Model model) {
+		model.addAttribute("grassindex", CacheUtil.getCache(CacheTypeEnum.GRASSINDEX));
 		model.addAttribute("towns", CacheUtil.getCache(CacheTypeEnum.TOWNS));
-		return "/statisticanalysis/climateanalysis/climateanalysis";
+		return "/statisticanalysis/grassanalysis/grassanalysis";
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/queryAnalysisData", method=RequestMethod.POST)
 	public Map queryAnalysisData(HttpServletRequest request) {
-		return climateInfoService.queryAnalysisData(request);
+		return grassInfoService.queryAnalysisData(request);
 	}
 }

@@ -13,8 +13,10 @@ import com.agri.monitor.enums.CacheTypeEnum;
 import com.agri.monitor.mapper.AnimalsTargetMapper;
 import com.agri.monitor.mapper.AnimalsTypeMapper;
 import com.agri.monitor.mapper.CropsTypeMapper;
+import com.agri.monitor.mapper.GrassInfoMapper;
 import com.agri.monitor.mapper.UserinfoMapper;
 import com.agri.monitor.service.datamanage.ClimateInfoService;
+import com.agri.monitor.service.datamanage.GrassInfoService;
 import com.agri.monitor.service.datamanage.SoilInfoService;
 import com.agri.monitor.utils.CacheUtil;
 import com.agri.monitor.vo.AnimalsTargetQueryVO;
@@ -44,6 +46,9 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 	
 	@Autowired
 	private UserinfoMapper userinfoMapper;
+	
+	@Autowired
+	private GrassInfoService grassInfoService;
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
@@ -78,6 +83,8 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 		queryVO3.setPage(1);
 		queryVO3.setLimit(Integer.MAX_VALUE);
 		CacheUtil.putCache(CacheTypeEnum.USER, userinfoMapper.findAllForPage(queryVO3));
+		//缓存草原生态指标
+		CacheUtil.putCache(CacheTypeEnum.GRASSINDEX, grassInfoService.getGrassIndex());
 	}
 
 }

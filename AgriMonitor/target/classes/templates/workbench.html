@@ -7,7 +7,7 @@
 		<meta name="renderer" content="webkit">
 		<!--国产浏览器高速模式-->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>刚查农业信息管理系统</title>
+		<title>刚察农业信息管理系统</title>
 
 		<!-- 公共样式 开始 -->
 		<link rel="shortcut icon" th:href="@{/temp/images/favicon.ico}"/>
@@ -37,7 +37,7 @@
 	<body>
 		<!-- 头部栏 - 开始 -->
 		<div class="frameTop">
-			<div style="font-size: 41px;font-weight: bold;float: left">刚查农业信息管理系统 </div>
+			<div style="font-size: 41px;font-weight: bold;float: left">刚察农业信息管理系统 </div>
 			<div class="topMenu">
 				<ul>
 					<li><a href="javascript:void(0)"><i class="iconfont icon-yonghu1"></i><span th:text="${session.userinfo.user_showname}"></span>(<span th:text="${session.userinfo.roleinfo.role_showname}"></span>)</a></li>
@@ -66,7 +66,7 @@
 		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/waterinfo',this)">水质监测信息</a></dt>
 		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/climateinfo',this)">气候监测信息</a></dt>
 		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/soilinfo',this)">土壤监测信息</a></dt>
-		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/grassinfo',this)">草原生态监测信息</a></dt>
+		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/grassinfo',this)">草地生态监测信息</a></dt>
 		                </dl>
 		            </li>
 		        	<li>
@@ -76,6 +76,7 @@
 		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/soilinfo/soilAnalysis',this)">土壤信息分析</a></dt>
 		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/cropsplant/cropsPlantAnalysis',this)">农作物产量面积分析</a></dt>
 		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/animalsBreed/animalsBreedAnalysis',this)">畜牧业生产情况分析</a></dt>
+		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/grassinfo/grassAnalysis',this)">草地生态情况分析</a></dt>
 		                </dl>
 		            </li>
 		            <li>

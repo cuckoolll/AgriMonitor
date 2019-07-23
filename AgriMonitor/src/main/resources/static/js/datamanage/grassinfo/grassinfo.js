@@ -35,14 +35,14 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 				     {title: '鼠虫害危害面积（万亩）',align:'center',colspan:4}
 			     ],
 			     [
-			    	 {field: 'grass_area', title: '总面积（万亩）', width:140},
-			    	 {field: 'grass_usable_area', title: '可利用面积（万亩）', width:160},
-			    	 {field: 'grass_unforage', title: '禁牧（kg/hm2）', width:140},
-			    	 {field: 'grass_animal_balance', title: '草畜平衡（kg/hm2）', width:160},
-			    	 {field: 'plateau_pika_area', title: '高原鼠兔危害面积（万亩）', width:200},
-			    	 {field: 'plateau_zokor_area', title: '高原鼢鼠危害面积（万亩）', width:200},
-			    	 {field: 'grass_worm_area', title: '草原毛虫危害面积（万亩）', width:200},
-			    	 {field: 'grasshopper_area', title: '蝗虫危害面积（万亩）', width:200}
+			    	 {field: 'grass_area', title: '总面积', align:'center', width:100},
+			    	 {field: 'grass_usable_area', title: '可利用面积', align:'center', width:120},
+			    	 {field: 'grass_unforage', title: '禁牧', align:'center', width:100},
+			    	 {field: 'grass_animal_balance', title: '草畜平衡', align:'center', width:120},
+			    	 {field: 'plateau_pika_area', title: '高原鼠兔', align:'center', width:120},
+			    	 {field: 'plateau_zokor_area', title: '高原鼢鼠', align:'center', width:120},
+			    	 {field: 'grass_worm_area', title: '草原毛虫', align:'center', width:120},
+			    	 {field: 'grasshopper_area', title: '蝗虫', align:'center', width:120}
 			    ]]
 		  });
 		
@@ -76,9 +76,9 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    switch(obj.event){
 		      case 'add':
 		    	  layer.open({
-              		    title: "新增草原生态监测采样信息",
+              		    title: "新增草地生态监测采样信息",
 						type: 2,
-						area: ['900px', '520px'],
+						area: ['980px', '520px'],
 						scrollbar: true,
 						content: '/grassinfo/update'
 					}, function(a){
@@ -92,9 +92,9 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		        	layer.msg('只能同时编辑一个');
 		        } else {
 		        	layer.open({
-              		    title: "修改草原生态监测采样信息",
+              		    title: "修改草地生态监测采样信息",
 						type: 2,
-						area: ['900px', '520px'],
+						area: ['980px', '520px'],
 						scrollbar: true,
 						content: '/grassinfo/update?gid='+checkStatus.data[0].gid
 					});
