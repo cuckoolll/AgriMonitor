@@ -42,6 +42,8 @@ public class WaterInfoService {
 	
 	private SimpleDateFormat yyyyMMddHHmmss = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
+	private SimpleDateFormat yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd");
+	
 	@Autowired
 	private WaterInfoMapper waterInfoMapper;
 	 
@@ -162,7 +164,7 @@ public class WaterInfoService {
 	           }
 	           if (i >= 2) {
 	        	   String quality_address = row.getCell(0).getStringCellValue();
-	        	   String quality_time = row.getCell(1).getStringCellValue();
+	        	   String quality_time = yyyyMMdd.format(row.getCell(1).getDateCellValue());
 	        	   String quality_type = row.getCell(2).getStringCellValue();
 	        	   
 	        	   WaterInfo waterinfo = new WaterInfo();
