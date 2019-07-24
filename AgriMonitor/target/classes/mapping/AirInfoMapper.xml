@@ -46,11 +46,11 @@
         </if>
         <if test="city == null or city == ''">
         	<if test="quality_time != null and quality_time != ''">
-        		where quality_time = #{quality_time}
+        		where quality_time between #{quality_time} and last_day(#{quality_time})
         	</if>
         </if>
         <if test="quality_time != null and quality_time != ''">
-        	and quality_time = #{quality_time}
+        	and quality_time between #{quality_time} and last_day(#{quality_time})
        	</if>
        	 order by quality_time desc limit #{currIndex},#{limit}
     </select>
@@ -64,11 +64,11 @@
         </if>
         <if test="city == null or city == ''">
         	<if test="quality_time != null and quality_time != ''">
-        		where quality_time = #{quality_time}
+        		where quality_time between #{quality_time} and last_day(#{quality_time})
         	</if>
         </if>
         <if test="quality_time != null and quality_time != ''">
-        	and quality_time = #{quality_time}
+        	and quality_time between #{quality_time} and last_day(#{quality_time})
        	</if>
     </select>
     
@@ -129,7 +129,7 @@
 		       pm2_5 = #{pm2_5},
 		       preparer = #{preparer},
 		       auditor = #{auditor},
-		       paper_time = #{paper_table},
+		       paper_time = #{paper_time},
 			   modifier = #{modifier}
     	 where gid = #{gid}
     </update>

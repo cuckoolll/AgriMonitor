@@ -8,7 +8,7 @@
 		<meta name="renderer" content="webkit">
 		<!--国产浏览器高速模式-->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>水质监测基本信息</title>
+		<title>空气站监测基本信息</title>
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
 	    <!--[if lt IE 9]>
 	      	<script src="framework/html5shiv.min.js"></script>
@@ -17,6 +17,16 @@
 		<script type="text/javascript" th:src="@{/temp/framework/jquery-1.11.3.min.js}" ></script>
 		<script type="text/javascript" th:src="@{/temp/layui/layui.js}"></script>
 		<!-- 公共样式 结束 -->
+		
+		<style type="text/css">
+			.span_title{
+				width : 150px;
+			}
+			.input_area{
+				width : 150px;
+			}
+		</style>
+		
 	</head>
 
 	<body>
@@ -24,40 +34,90 @@
 			<form id="addForm" class="layui-form" action="">
 				<input type="hidden" name="gid"/>
 				<div class="layui-form-item">
-					<label class="layui-form-label" style="width: 140px">所属区域：</label>
+					<label class="layui-form-label span_title">所属区域：</label>
 	                <div class="layui-input-inline">
-	                    <input type="text" name="county" readonly="readonly" class="layui-input" value="刚察县">
+	                    <input type="text" name="county" readonly="readonly" class="layui-input input_area" value="刚察县">
 	                </div>
 				</div>
 				
 				<div class="layui-form-item">
-					<label class="layui-form-label"  style="width: 140px">采样地点：</label>
-					<div class="layui-input-block">
-						<input type="text" name="quality_address" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 450px">
+					<label class="layui-form-label span_title" >城市：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="city" required lay-verify="required" 
+							autocomplete="off" class="layui-input input_area">
+					</div>
+					<label class="layui-form-label span_title" >站点名称：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="station_name" required lay-verify="required" 
+							autocomplete="off" class="layui-input input_area">
 					</div>
 				</div>
+				
 				<div class="layui-form-item">
-					<label class="layui-form-label" style="width: 140px">采样时间：</label>
+					<label class="layui-form-label span_title">时间：</label>
 					<div class="layui-input-block">
-						<input id="quality_time" type="text" name="quality_time" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 150px" readonly="readonly">
+						<input id="quality_time" type="text" name="quality_time" required lay-verify="required" 
+							autocomplete="off" class="layui-input input_area" readonly="readonly">
 					</div>
 				</div>
+				
 				<div class="layui-form-item">
-					<label class="layui-form-label" style="width: 140px">分析项目：</label>
-					<div class="layui-input-block">
-						<input type="text" name="quality_type" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 450px">
+					<label class="layui-form-label span_title">SO2：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="so2" required lay-verify="required" 
+							autocomplete="off" class="layui-input input_area">
+					</div>
+					<label class="layui-form-label span_title">NO2：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="no2" required lay-verify="required" 
+							autocomplete="off" class="layui-input input_area">
 					</div>
 				</div>
+				
 				<div class="layui-form-item">
-					<label class="layui-form-label" style="width: 140px">分析结果（mg/L）：</label>
-					<div class="layui-input-block">
-						<input type="text" name="quality_result" autocomplete="off" class="layui-input" style="width: 450px">
+					<label class="layui-form-label span_title">CO(mg/m3)：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="co" required lay-verify="required" 
+							autocomplete="off" class="layui-input input_area">
+					</div>
+					<label class="layui-form-label span_title">O3-8h：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="o3_8h" required lay-verify="required" 
+							autocomplete="off" class="layui-input input_area">
 					</div>
 				</div>
+				
 				<div class="layui-form-item">
-					<label class="layui-form-label" style="width: 140px">备注：</label>
+					<label class="layui-form-label span_title">PM10：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="pm10" required lay-verify="required" 
+							autocomplete="off" class="layui-input input_area">
+					</div>
+					<label class="layui-form-label span_title">PM2.5：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="pm2_5" required lay-verify="required" 
+							autocomplete="off" class="layui-input input_area">
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label span_title">填表人：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="preparer" required lay-verify="required" 
+							autocomplete="off" class="layui-input input_area" >
+					</div>
+					<label class="layui-form-label span_title">审核人：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="auditor" required lay-verify="required" 
+							autocomplete="off" class="layui-input input_area">
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label span_title">填表时间：</label>
 					<div class="layui-input-block">
-						<textarea name="remarks" class="layui-textarea" style="width: 560px"></textarea>
+						<input id="paper_time" type="text" name="paper_time" required lay-verify="required" 
+							autocomplete="off" class="layui-input input_area" readonly="readonly">
 					</div>
 				</div>
 				

@@ -71,7 +71,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    	  layer.open({
               		    title: "新增空气站监测信息",
 						type: 2,
-						area: ['800px', '500px'],
+						area: ['800px', '550px'],
 						scrollbar: true,
 						content: '/airinfo/update'
 					}, function(a){
@@ -87,7 +87,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		        	layer.open({
               		    title: "修改空气站监测信息",
 						type: 2,
-						area: ['800px', '500px'],
+						area: ['800px', '550px'],
 						scrollbar: true,
 						content: '/airinfo/update?gid='+checkStatus.data[0].gid
 					});
