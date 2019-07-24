@@ -193,5 +193,11 @@ public class AnimalsBreedController {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 		animalsBreedService.exportYearData(response, year, user.getUser_id());
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getSumGroupYear")
+	public Map getSumGroupYear() {
+		return animalsBreedService.getSumGroupYear();
+	}
 }
 

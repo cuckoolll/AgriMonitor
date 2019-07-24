@@ -148,6 +148,10 @@ public class FarminfoController {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 		return animalsTypeService.animalstypeTy(gids,user.getUser_id());
 	}
-	
+	@ResponseBody
+	@RequestMapping(value="/findSumGroupTowns",method=RequestMethod.POST)
+	public Map findSumGroupTowns() {
+		return farmInfoService.findSumGroupTowns();
+	}
 }
 

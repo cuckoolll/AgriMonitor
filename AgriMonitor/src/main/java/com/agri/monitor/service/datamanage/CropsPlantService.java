@@ -380,7 +380,48 @@ public class CropsPlantService {
 		}
 		info("处理农作物产量面积监控结束");
 	}
-	
+	/**
+	 * 各农作物产量面积统计
+	 * @return
+	 */
+	public Map findSumGroupType() {
+		info("各农作物产量面积统计");
+		Map ret = new HashMap<>();
+		Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR);
+		List<Map> list = cropsPlantMapper.findSumGroupType(year);
+		if(null==list || list.size() ==0) {
+			info("当年无各农作物产量面积数据，查询上年");
+			year=year-1;
+			list = cropsPlantMapper.findSumGroupType(year-1);
+		}
+		if(null==list || list.size() ==0) {
+			info("上年无各农作物产量面积数据，直接返回");
+			return null;
+		}
+		ret.put("year", year);
+		
+		List<Object> names = new ArrayList<Object>();
+		List<Map> l1 = new ArrayList<>();
+		List<Map> l2 = new ArrayList<>();
+		for (Map map : list) {
+			Map areamap = new HashMap<>();
+			Map outputmap = new HashMap<>();
+			
+			names.add(map.get("type_name"));
+			areamap.put("name", map.get("type_name"));
+			areamap.put("value", map.get("planted_area"));
+			l1.add(areamap);
+			
+			outputmap.put("name", map.get("type_name"));
+			outputmap.put("value", map.get("planted_output"));
+			l2.add(outputmap);
+		}
+		ret.put("planted_area", l1);
+		ret.put("planted_output", l2);
+		return ret;
+	}
+
 	private void info(String msg) {
 		if (logger.isInfoEnabled()) {
 			logger.info(msg);

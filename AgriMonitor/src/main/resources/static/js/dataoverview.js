@@ -1,54 +1,44 @@
-var chart1;
+var chart1,chart2,chart3,chart4,chart5;
+var option1,option2,option3,option4,option5;
 
-function chart1(){
-	chart1 = echarts.init(document.getElementById('chart1')); 
-	var data = [
-	     {name: '沙柳河镇', value: 670,size:100},
-	     {name: '伊克乌兰乡', value: 100,size:100},
-	     {name: '泉吉乡', value: 100,size:100},
-	     {name: '吉尔孟乡', value: 100,size:100},
-	     {name: '黄玉农场', value: 100,size:100},
-	     {name: '哈尔盖镇', value: 100,size:100}
-	];
-	var geoCoordMap = {
-	    '沙柳河镇':[100.145841,37.335063],
-	    '伊克乌兰乡':[100.09333,37.321518],
-	    '泉吉乡':[99.886799,37.274324],
-	    '吉尔孟乡':[99.579424,37.155703],
-	    '黄玉农场':[99.95554,37.270184],
-	    '哈尔盖镇':[100.417701,37.231455]
-	};
+var curyear=new Date().getFullYear();
+var data = [{name: '沙柳河镇', size:100},{name: '伊克乌兰乡', size:100},{name: '泉吉乡', size:100},{name: '吉尔孟乡', size:100},{name: '黄玉农场', size:100},{name: '哈尔盖镇', size:100}];
+var geoCoordMap = {'沙柳河镇':[100.15841,37.355063],'伊克乌兰乡':[100.09333,37.311518],'泉吉乡':[99.846799,37.294324],'吉尔孟乡':[99.619424,37.188703],'黄玉农场':[99.95554,37.250184],'哈尔盖镇':[100.417701,37.261455]};
 
-	var convertData = function (data) {
-	    var res = [];
-	    for (var i = 0; i < data.length; i++) {
-	        var geoCoord = geoCoordMap[data[i].name];
-	        if (geoCoord) {
-	            res.push({
-	                name: data[i].name,
-	                value: geoCoord.concat(data[i].size)
-	            });
-	        }
-	    }
-	    return res;
-	};
-
-	var option = {
-	    title: {
-	        text: '刚察县乡镇养殖场数据统计图',
-	        left: 'center'
-	    },
+var convertData = function (data) {
+    var res = [];
+    for (var i = 0; i < data.length; i++) {
+        var geoCoord = geoCoordMap[data[i].name];
+        if (geoCoord) {
+            res.push({
+                name: data[i].name,value: geoCoord.concat(data[i].size),data:data[i].data
+            });
+        }
+    }
+    return res;
+};
+	
+function initchart(){
+	option1 = {
+	    title: {text: '刚察县'+curyear+'养殖场畜种存栏数据统计图',left: 'center'},
 	    tooltip : {
-	        trigger: 'item'
+	        trigger: 'item',
+	        formatter: function(param){
+	        	if(param.data.data){
+	        		var s=param.name;
+	        		$.each(param.data.data,function(index,item){
+	            		s+="<br/>"+item.type_name+":"+item.animals_size
+	            	});
+	        		return s;
+	        	}else{
+	        		return "无数据";
+	        	}
+			}
 	    },
-	    bmap: {
-	        center: [100.030020,37.235610],
-	        zoom:11,
-	        roam: true
-	    },
+	    bmap: {center: [100.030020,37.235610],zoom:10,roam: true},
 	    series : [
 	        {
-	            name: 'Top 5',
+	            name: '各畜种存栏数据',
 	            type: 'effectScatter',
 	            coordinateSystem: 'bmap',
 	            data: convertData(data.sort(function (a, b) {
@@ -58,40 +48,24 @@ function chart1(){
 	                return val[2] / 10;
 	            },
 	            showEffectOn: 'render',
-	            rippleEffect: {
-	                brushType: 'stroke'
-	            },
+	            rippleEffect: {brushType: 'stroke'},
 	            hoverAnimation: true,
 	            label: {
-	                normal: {
-	                    formatter: '{b}',
-	                    position: 'right',
-	                    show: true
-	                }
+	                normal: {formatter: '{b}',position: 'right',show: true}
 	            },
 	            itemStyle: {
-	                normal: {
-	                    color: 'purple',
-	                    shadowBlur: 10,
-	                    shadowColor: '#333'
-	                }
+	                normal: {color: 'purple',shadowBlur: 10,shadowColor: '#333'}
 	            },
 	            zlevel: 1
 	        }
 	    ]
 	};
       
-
-	chart1.setOption(option); 
-
-}
-
-function chart2(){
-	var option = {
-	    title : {
-	        text: '刚察县乡镇养殖场各畜种占比图',
-	        x:'center'
-	    },
+	chart1 = echarts.init(document.getElementById('chart1')); 
+	chart1.setOption(option1); 
+	/**-----------------------------------------**/
+	option2 = {
+	    title : {text: '刚察县'+curyear+'养殖场各畜种存栏占比图',x:'center',subtext: '单位：头、只'},
 	    tooltip : {
 	        trigger: 'item',
 	        formatter: "{a} <br/>{b} : {c} ({d}%)"
@@ -102,15 +76,15 @@ function chart2(){
 	        right: 10,
 	        top: 20,
 	        bottom: 20,
-	        data: ['访问','fsd','直gdf接访问','gdf','gd']
+	        data: ['']
 	    },
 	    series : [
 	        {
-	            name: '姓名',
+	            name: '存栏数',
 	            type: 'pie',
-	            radius : '77%',
-	            center: ['40%', '50%'],
-	            data: [{value:33, name:'访问'},{value:35, name:'fsd'},{value:335, name:'fs'},{value:33, name:'直gdf接访问'},{value:35, name:'gdf'},{value:55, name:'gd'}],
+	            radius : '70%',
+	            center: ['40%', '52%'],
+	            data: [{value:0, name:''}],
 	            itemStyle: {
 	                emphasis: {
 	                    shadowBlur: 10,
@@ -123,14 +97,10 @@ function chart2(){
 	};
 
 	chart2 = echarts.init(document.getElementById('chart2')); 
-	chart2.setOption(option); 
-}
-function chart3(){
-	var option = {
-	    title : {
-	        text: '刚察县各农作物占比图',
-	        x:'center'
-	    },
+	chart2.setOption(option2); 
+	/**-----------------------------------------**/
+	option3 = {
+	    title : {text: '刚察县'+curyear+'各农作物播种面积占比图',x:'center',subtext: '单位：万亩'},
 	    tooltip : {
 	        trigger: 'item',
 	        formatter: "{a} <br/>{b} : {c} ({d}%)"
@@ -141,15 +111,15 @@ function chart3(){
 	        right: 10,
 	        top: 20,
 	        bottom: 20,
-	        data: ['访问','fsd','直gdf接访问','gdf','gd']
+	        data: ['']
 	    },
 	    series : [
 	        {
-	            name: '姓名',
+	            name: '面积',
 	            type: 'pie',
-	            radius : '77%',
-	            center: ['40%', '50%'],
-	            data: [{value:33, name:'访问'},{value:35, name:'fsd'},{value:335, name:'fs'},{value:33, name:'直gdf接访问'},{value:35, name:'gdf'},{value:55, name:'gd'}],
+	            radius : '70%',
+	            center: ['40%', '52%'],
+	            data: [{value:0, name:''}],
 	            itemStyle: {
 	                emphasis: {
 	                    shadowBlur: 10,
@@ -162,14 +132,10 @@ function chart3(){
 	};
 
 	chart3 = echarts.init(document.getElementById('chart3')); 
-	chart3.setOption(option); 
-}
-function chart4(){
-	var option = {
-	    title : {
-	        text: '刚察县各农作物总产占比图',
-	        x:'center'
-	    },
+	chart3.setOption(option3); 
+	/**-----------------------------------------**/
+	option4 = {
+	    title : {text: '刚察县'+curyear+'各农作物总产占比图',x:'center',subtext: '单位：万公斤'},
 	    tooltip : {
 	        trigger: 'item',
 	        formatter: "{a} <br/>{b} : {c} ({d}%)"
@@ -180,15 +146,15 @@ function chart4(){
 	        right: 10,
 	        top: 20,
 	        bottom: 20,
-	        data: ['访问','fsd','直gdf接访问','gdf','gd']
+	        data: ['']
 	    },
 	    series : [
 	        {
-	            name: '姓名',
+	            name: '总产',
 	            type: 'pie',
-	            radius : '77%',
-	            center: ['40%', '50%'],
-	            data: [{value:33, name:'访问'},{value:35, name:'fsd'},{value:335, name:'fs'},{value:33, name:'直gdf接访问'},{value:35, name:'gdf'},{value:55, name:'gd'}],
+	            radius : '70%',
+	            center: ['40%', '52%'],
+	            data: [{value:0, name:''}],
 	            itemStyle: {
 	                emphasis: {
 	                    shadowBlur: 10,
@@ -201,24 +167,13 @@ function chart4(){
 	};
 
 	chart4 = echarts.init(document.getElementById('chart4')); 
-	chart4.setOption(option); 
-}
-function chart5(){
-	var option = {
-			title : {
-		        text: '刚察县畜牧业产量图',
-		        x:'center'
-		    },
-		    tooltip : {
-		        trigger: 'axis',
-		        axisPointer : {
-		            type : 'shadow'
-		        }
-		    },
+	chart4.setOption(option4); 
+	/**-----------------------------------------**/
+	option5 = {
+			title : {text: '刚察县'+curyear+'畜牧业产量统计图',x:'center'},
+		    tooltip : {trigger: 'axis',axisPointer : {type : 'shadow'}},
 		    legend: {
-		        data: ['直接访问', '邮件营销','联盟广告','视频广告'],
-		        x:'right'
-		    },
+		        data: ['肉产量', '奶产量','蛋产量','毛产量'],x:'right'},
 		    grid: {
 		        left: '3%',
 		        right: '4%',
@@ -226,27 +181,27 @@ function chart5(){
 		        containLabel: true
 		    },
 		    yAxis:  {
-		        type: 'value'
+		        type: 'value',
+		        name: '产量(吨)'
 		    },
 		    xAxis: {
 		        type: 'category',
-		        data: ['周一','周二','周三','周四','周五','周六','周日','周一1','周二1','周三1','周四1','周五1']
+		        data: [curyear+'01',curyear+'03',curyear+'03',curyear+'04',
+		        	curyear+'05',curyear+'06',curyear+'07',curyear+'08',curyear+'09',
+		        	curyear+'10',curyear+'11',curyear+'12']
 		    },
 		    series: [
 		        {
-		            name: '直接访问',
+		            name: '肉产量',
 		            type: 'bar',
 		            stack: '总量',
 		            label: {
-		                normal: {
-		                    show: true,
-		                    position: 'insideRight'
-		                }
+		                normal: { show: true,position: 'insideRight'}
 		            },
-		            data: [320, 302, 301, 334, 390, 330, 320]
+		            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 		        },
 		        {
-		            name: '邮件营销',
+		            name: '奶产量',
 		            type: 'bar',
 		            stack: '总量',
 		            label: {
@@ -255,10 +210,10 @@ function chart5(){
 		                    position: 'insideRight'
 		                }
 		            },
-		            data: [120, 132, 101, 134, 90, 230, 210]
+		            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 		        },
 		        {
-		            name: '联盟广告',
+		            name: '蛋产量',
 		            type: 'bar',
 		            stack: '总量',
 		            label: {
@@ -267,10 +222,10 @@ function chart5(){
 		                    position: 'insideRight'
 		                }
 		            },
-		            data: [220, 182, 191, 234, 290, 330, 310]
+		            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 		        },
 		        {
-		            name: '视频广告',
+		            name: '毛产量',
 		            type: 'bar',
 		            stack: '总量',
 		            label: {
@@ -279,16 +234,78 @@ function chart5(){
 		                    position: 'insideRight'
 		                }
 		            },
-		            data: [150, 212, 201, 154, 190, 330, 410]
+		            data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 		        }
 		    ]
 	};
 
 	chart5 = echarts.init(document.getElementById('chart5')); 
-	chart5.setOption(option); 
+	chart5.setOption(option5); 
 }
-chart1();
-chart2();
-chart3();
-chart4();
-chart5();
+
+function farmdata(){
+	$.post("/farminfo/findSumGroupTowns", {},function(res){
+        if(res && res.mapdata && res.mapdata.length>0){
+        	$.each(data,function(index,item){
+        		$.each(res.mapdata,function(i,o){
+            		if(item.name==o.name){
+            			data[index]=o;
+            			return false;
+            		}
+            	});
+        	});
+      	  option1.series[0].data=convertData(data.sort(function (a, b) {
+              return b.value - a.value;
+          }).slice(0, 6));
+      	  chart1.dispose();
+      	  chart1 = echarts.init(document.getElementById('chart1'));
+      	  chart1.setOption(option1); 
+        }
+        if(res && res.piedata && res.piedata.length>0){
+        	$.each(res.piedata,function(index,item){
+        		option2.legend.data.push(item.name);
+        	});
+        	option2.series[0].data=res.piedata;
+    	    chart2.dispose();
+    	    chart2 = echarts.init(document.getElementById('chart2'));
+    	    chart2.setOption(option2); 
+        }
+    });
+}
+function animalsBreedData(){
+	$.post("/animalsBreed/getSumGroupYear", {},function(res){
+        if(res){
+        	option5.title.text='刚察县'+res.year+'畜牧业产量统计图';
+      	    option5.series[0].data=res.meat_output;
+        	option5.series[1].data=res.milk_output;
+        	option5.series[2].data=res.egg_output;
+        	option5.series[3].data=res.hair_output;
+      	    chart5.dispose();
+      	    chart5 = echarts.init(document.getElementById('chart5'));
+      	    chart5.setOption(option5); 
+        }
+    });
+}
+function cropsplantData(){
+	$.post("/cropsplant/findSumGroupType", {},function(res){
+        if(res){
+        	option3.title.text='刚察县'+res.year+'各农作物播种面积占比图';
+        	option3.legend.data=res.names;
+      	    option3.series[0].data=res.planted_area;
+      	    chart3.dispose();
+      	    chart3 = echarts.init(document.getElementById('chart3'));
+      	    chart3.setOption(option3); 
+      	    
+      	    option4.title.text='刚察县'+res.year+'各农作物总产占比图';
+      	    option4.legend.data=res.names;
+    	    option4.series[0].data=res.planted_output;
+    	    chart4.dispose();
+    	    chart4 = echarts.init(document.getElementById('chart4'));
+    	    chart4.setOption(option4); 
+        }
+    });
+}
+initchart();
+farmdata();
+animalsBreedData();
+cropsplantData();

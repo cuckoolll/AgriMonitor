@@ -26,9 +26,9 @@
     </select>
     
     <insert id="insert" parameterType="com.agri.monitor.entity.MonitorSet">
-    	insert into t_monitor_set(monitor_type,target_type,target,conditions,value_set,stopflag,condition_showname,creator,modifier)
+    	insert into t_monitor_set(monitor_type,target_type,target,conditions,value_set,stopflag,condition_showname,creator,modifier,create_time)
     	values
-	   (#{monitor_type},#{target_type},#{target},#{conditions},#{value_set},#{stopflag},#{condition_showname},#{creator},#{modifier})
+	   (#{monitor_type},#{target_type},#{target},#{conditions},#{value_set},#{stopflag},#{condition_showname},#{creator},#{modifier},now())
     </insert>
     
     <update id="update" parameterType="com.agri.monitor.entity.MonitorSet">

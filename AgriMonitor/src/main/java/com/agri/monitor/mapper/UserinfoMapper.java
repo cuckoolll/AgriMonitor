@@ -29,4 +29,5 @@ public interface UserinfoMapper {
 	UserInfo findForLogin(Map map);
 	
 	RoleInfo findRole(Integer gid);
+	void updpw(UserInfo userInfo);
 }

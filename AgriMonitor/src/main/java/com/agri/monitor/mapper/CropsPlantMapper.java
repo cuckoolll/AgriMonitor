@@ -34,4 +34,6 @@ public interface CropsPlantMapper {
 	List<Map> getdata10(Integer type);
 	
 	List<Map> findNumByType(List<Integer> typeGids);
+	
+	List<Map> findSumGroupType(int year);
 }

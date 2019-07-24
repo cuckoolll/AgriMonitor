@@ -10,6 +10,7 @@ import java.math.RoundingMode;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -793,6 +794,58 @@ public class AnimalsBreedService {
 			}
 		}
 		info("处理畜牧业生产情况监控结束");
+	}
+	/**
+	 * 按月统计产量
+	 * @param map
+	 * @return
+	 */
+	public Map getSumGroupYear(){
+		info("按月统计产量");
+		Map ret = new HashMap<>();
+		
+		Double[] meat_output = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+		Double[] milk_output = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+		Double[] egg_output = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+		Double[] hair_output = {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
+		
+		Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR);
+		Map param = new HashMap<>();
+		param.put("m1", Integer.valueOf(year+"01"));
+		param.put("m2", Integer.valueOf(year+"12"));
+		List<Map> list = animalsBreedMapper.getSumGroupYear(param);
+		if(list == null || list.size() == 0) {
+			info("当年无数据，查询上年数据");
+			year=year-1;
+			param.put("m1", Integer.valueOf((year-1)+"01"));
+			param.put("m2", Integer.valueOf((year-1)+"12"));
+			list = animalsBreedMapper.getSumGroupYear(param);
+		}
+		if(list == null || list.size() == 0) {
+			info("上年无数据直接返回");
+			return null;
+		}
+		Map<String, Map> monthData=new HashMap<>();
+		//按月分组
+		for (Map map : list) {
+			monthData.put(map.get("date_month").toString(),map);
+		}
+		for(int i=1;i<=12;i++) {
+			Map tmpmap = monthData.get(""+(year*100+i));
+			if(null != tmpmap) {
+				meat_output[i-1]=null==tmpmap.get("meat_output")?0:Double.valueOf(tmpmap.get("meat_output").toString());
+				milk_output[i-1]=null==tmpmap.get("milk_output")?0:Double.valueOf(tmpmap.get("milk_output").toString());
+				egg_output[i-1]=null==tmpmap.get("egg_output")?0:Double.valueOf(tmpmap.get("egg_output").toString());
+				hair_output[i-1]=null==tmpmap.get("hair_output")?0:Double.valueOf(tmpmap.get("hair_output").toString());
+			}
+		}
+		ret.put("meat_output", meat_output);
+		ret.put("milk_output", milk_output);
+		ret.put("egg_output", egg_output);
+		ret.put("hair_output", hair_output);
+		ret.put("year", year);
+		return ret;
 	}
 	
 	private void info(String msg) {

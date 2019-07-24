@@ -40,6 +40,16 @@ public class UserinfoController {
 		model.addAttribute("user_role", CacheUtil.getCache(CacheTypeEnum.USER_ROLE));
 		return "/userinfo/update";
 	}
+	@RequestMapping("updpw")
+	public String updpw(Model model) {
+		return "/userinfo/updpw";
+	}
+	
+	@ResponseBody
+	@RequestMapping("savepw")
+	public boolean savepw(UserInfo userinfo, HttpServletRequest request) {
+		return userInfoService.savepw(userinfo, request);
+	}
 	
 	@ResponseBody
 	@RequestMapping(value="/doDel",method=RequestMethod.POST)

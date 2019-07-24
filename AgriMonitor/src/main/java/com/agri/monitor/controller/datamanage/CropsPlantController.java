@@ -176,5 +176,12 @@ public class CropsPlantController {
 	public Map getdata(Model model,Integer type) {
 		return cropsPlantService.getdata(type);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/findSumGroupType",method=RequestMethod.POST)
+	public Map findSumGroupType() {
+		return cropsPlantService.findSumGroupType();
+	}
+
 }
 

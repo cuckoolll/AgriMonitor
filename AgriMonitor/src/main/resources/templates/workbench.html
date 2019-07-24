@@ -7,12 +7,8 @@
 		<meta name="renderer" content="webkit">
 		<!--国产浏览器高速模式-->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>刚察农业信息管理系统</title>
+		<title>刚查农业信息管理系统</title>
 
-		<!-- 公共样式 开始 -->
-		<link rel="shortcut icon" th:href="@{/temp/images/favicon.ico}"/>
-		<link rel="bookmark" th:href="@{/temp/images/favicon.ico}"/>
-		
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/base.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/iconfont.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
@@ -37,12 +33,12 @@
 	<body>
 		<!-- 头部栏 - 开始 -->
 		<div class="frameTop">
-			<div style="font-size: 41px;font-weight: bold;float: left">刚察农业信息管理系统 </div>
+			<div style="font-size: 41px;font-weight: bold;float: left"> </div>
 			<div class="topMenu">
 				<ul>
 					<li><a href="javascript:void(0)"><i class="iconfont icon-yonghu1"></i><span th:text="${session.userinfo.user_showname}"></span>(<span th:text="${session.userinfo.roleinfo.role_showname}"></span>)</a></li>
-					<li><a href="javascript:void(0)" onclick="menuCAClick('tgls/modify_password.html',this)"><i class="iconfont icon-xiugaimima"></i>修改密码</a></li>
-					<li><a href="login.html"><i class="iconfont icon-084tuichu"></i>注销</a></li>
+					<li><a id="updpw" href="javascript:void(0)"><i class="iconfont icon-xiugaimima"></i>修改密码</a></li>
+					<li><a href="/loginout"><i class="iconfont icon-084tuichu"></i>注销</a></li>
 				</ul>
 			</div>
 		</div>
@@ -52,54 +48,53 @@
 		    <div class="menu">
 		        <ul>
 		        	<li>
-		                <a class="menuFA" href="javascript:void(0)" onclick="menuCAClick('/dataoverview',this)"><i class="iconfont icon-shouye left"></i>数据总览</a>
+		                <a class="menuFA menuLA" href="javascript:void(0)" url="/dataoverview"><i class="iconfont icon-shouye left"></i>数据总览</a>
 		            </li>
 		        	<li>
 		                <a class="menuFA" href="javascript:void(0)"><i class="iconfont icon-caigoudan left"></i>数据管理<i class="iconfont icon-dajiantouyou right"></i></a>
 		                <dl>
-		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/farminfo',this)">养殖场基本信息</a></dt>
-		                	<dt><a th:if="${session.userinfo.roleinfo.role_name!='user'}" href="javascript:void(0)" onclick="menuCAClick('/farminfo/animalstype',this)">认定畜种维护</a></dt>
-		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/animalsBreed',this)">畜牧业生产情况</a></dt>
-		                	<dt><a th:if="${session.userinfo.roleinfo.role_name!='user'}" href="javascript:void(0)" onclick="menuCAClick('/animalsBreed/animalsTarget',this)">畜牧业指标维护</a></dt>
-           			        <dt><a href="javascript:void(0)" onclick="menuCAClick('/cropsplant',this)">农作物产量面积情况</a></dt>
-		                	<dt><a th:if="${session.userinfo.roleinfo.role_name!='user'}" href="javascript:void(0)" onclick="menuCAClick('/cropsplant/cropstype',this)">农作物分类维护</a></dt>
-		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/waterinfo',this)">水质监测信息</a></dt>
-		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/climateinfo',this)">气候监测信息</a></dt>
-		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/soilinfo',this)">土壤监测信息</a></dt>
-		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/grassinfo',this)">草地生态监测信息</a></dt>
-		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/airinfo',this)">空气站监测信息</a></dt>
+		                	<dt><a class="menuLA" href="javascript:void(0)" url="/farminfo">养殖场基本信息</a></dt>
+		                	<dt><a class="menuLA" th:if="${session.userinfo.roleinfo.role_name!='user'}" href="javascript:void(0)" url="/farminfo/animalstype">认定畜种维护</a></dt>
+		                	<dt><a class="menuLA" href="javascript:void(0)" url="/animalsBreed">畜牧业生产情况</a></dt>
+		                	<dt><a class="menuLA" th:if="${session.userinfo.roleinfo.role_name!='user'}" href="javascript:void(0)" url="/animalsBreed/animalsTarget">畜牧业指标维护</a></dt>
+           			        <dt><a class="menuLA" href="javascript:void(0)" url="/cropsplant">农作物产量面积情况</a></dt>
+		                	<dt><a class="menuLA" th:if="${session.userinfo.roleinfo.role_name!='user'}" href="javascript:void(0)" url="/cropsplant/cropstype">农作物分类维护</a></dt>
+		                	<dt><a class="menuLA" href="javascript:void(0)" url="/waterinfo">水质监测信息</a></dt>
+		                	<dt><a class="menuLA" href="javascript:void(0)" url="/climateinfo">气候监测信息</a></dt>
+		                	<dt><a class="menuLA" href="javascript:void(0)" url="/soilinfo">土壤监测信息</a></dt>
+		                	<dt><a class="menuLA" href="javascript:void(0)" url="/grassinfo">草原生态监测信息</a></dt>
 		                </dl>
 		            </li>
 		        	<li>
 		                <a class="menuFA" href="javascript:void(0)"><i class="iconfont icon-icon left"></i>统计分析<i class="iconfont icon-dajiantouyou right"></i></a>
 		                <dl>
-		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/climateinfo/climateAnalysis',this)">气候信息分析</a></dt>
-		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/soilinfo/soilAnalysis',this)">土壤信息分析</a></dt>
-		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/cropsplant/cropsPlantAnalysis',this)">农作物产量面积分析</a></dt>
-		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/animalsBreed/animalsBreedAnalysis',this)">畜牧业生产情况分析</a></dt>
-		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/grassinfo/grassAnalysis',this)">草地生态情况分析</a></dt>
+		                	<dt><a class="menuLA" href="javascript:void(0)" url="/climateinfo/climateAnalysis">气候信息分析</a></dt>
+		                	<dt><a class="menuLA" href="javascript:void(0)" url="/soilinfo/soilAnalysis">土壤信息分析</a></dt>
+		                	<dt><a class="menuLA" href="javascript:void(0)" url="/cropsplant/cropsPlantAnalysis">农作物产量面积分析</a></dt>
+		                	<dt><a class="menuLA" href="javascript:void(0)" url="/animalsBreed/animalsBreedAnalysis">畜牧业生产情况分析</a></dt>
+		                	<dt><a class="menuLA" href="javascript:void(0)" url="/grassinfo/grassAnalysis">草地生态情况分析</a></dt>
 		                </dl>
 		            </li>
 		            <li>
 		                <a class="menuFA" href="javascript:void(0)"><i class="iconfont icon-dingdan left"></i>农业信息<i class="iconfont icon-dajiantouyou right"></i></a>
 		                <dl>
-		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/policymaintain',this)">政策文件维护</a></dt>
-		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('/agrinews',this)">农业信息维护</a></dt>
+		                	<dt><a class="menuLA" href="javascript:void(0)" url="/policymaintain">政策文件维护</a></dt>
+		                	<dt><a class="menuLA" href="javascript:void(0)" url="/agrinews">农业信息维护</a></dt>
 		                </dl>
 		            </li>
 		        	<li>
 		                <a class="menuFA" href="javascript:void(0)"><i class="iconfont icon-zhuyidapx left"></i>检测报警<i class="iconfont icon-dajiantouyou right"></i></a>
 		                <dl>
-		                	<dt><a href="javascript:void(0)" th:if="${session.userinfo.roleinfo.role_name!='user'}" onclick="menuCAClick('/monitorManage',this)">报警阀值</a></dt>
-		                	<dt><a href="javascript:void(0)" th:if="${session.userinfo.roleinfo.role_name!='user'}" onclick="menuCAClick('/monitorManage/monitorlog',this)">报警记录</a></dt>
+		                	<dt><a class="menuLA" href="javascript:void(0)" th:if="${session.userinfo.roleinfo.role_name!='user'}" url="/monitorManage">报警阀值</a></dt>
+		                	<dt><a class="menuLA" href="javascript:void(0)" th:if="${session.userinfo.roleinfo.role_name!='user'}" url="/monitorManage/monitorlog">报警记录</a></dt>
 		                </dl>
 		           	</li>
 		        	<li>
 		                <a class="menuFA" href="javascript:void(0)"><i class="iconfont icon-shezhi left"></i>系统管理<i class="iconfont icon-dajiantouyou right"></i></a>
 		                <dl>
-		                	<dt><a th:if="${session.userinfo.roleinfo.role_name=='sys'}" href="javascript:void(0)" onclick="menuCAClick('/userinfo',this)">用户管理</a></dt>
-		                	<dt><a th:if="${session.userinfo.roleinfo.role_name=='sys'}" href="javascript:void(0)" onclick="menuCAClick('/syslog',this)">系统日志</a></dt>
-		                	<dt><a href="javascript:void(0)" onclick="menuCAClick('tgls/print/outPrintData.html',this)">关于我们</a></dt>
+		                	<dt><a class="menuLA" th:if="${session.userinfo.roleinfo.role_name=='sys'}" href="javascript:void(0)" url="/userinfo">用户管理</a></dt>
+		                	<dt><a class="menuLA" th:if="${session.userinfo.roleinfo.role_name=='sys'}" href="javascript:void(0)" url="/syslog">系统日志</a></dt>
+		                	<dt><a class="menuLA" href="javascript:void(0)">关于我们</a></dt>
 		                </dl>
 		           	</li>
 		        </ul>

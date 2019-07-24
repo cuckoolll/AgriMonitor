@@ -22,9 +22,9 @@
     </select>
     
     <insert id="insert" parameterType="com.agri.monitor.entity.CropsType">
-    	insert into t_crops_type(type_name,stopflag,modifier,creator)
+    	insert into t_crops_type(type_name,stopflag,modifier,creator,create_time)
     	values
-	   (#{type_name},#{stopflag},#{modifier},#{creator})
+	   (#{type_name},#{stopflag},#{modifier},#{creator},now())
     </insert>
     
     <update id="update" parameterType="com.agri.monitor.entity.CropsType">

@@ -27,19 +27,19 @@
 	    </if>
     </select>
     <insert id="batchInsert" parameterType="java.util.List">
-    	insert into t_farm_info(county,towns,village,farm_name,farm_address,legal_person,phone_num,animals_type,animals_size,remarks,creator,modifier)
+    	insert into t_farm_info(county,towns,village,farm_name,farm_address,legal_person,phone_num,animals_type,animals_size,remarks,creator,modifier,create_time)
     	values
     	<foreach collection="list" item="item" index="index" separator=",">
 		   (#{item.county},#{item.towns},#{item.village},#{item.farm_name},#{item.farm_address},#{item.legal_person},#{item.phone_num},
-		   #{item.animals_type},#{item.animals_size},#{item.remarks},#{item.creator},#{item.modifier})
+		   #{item.animals_type},#{item.animals_size},#{item.remarks},#{item.creator},#{item.modifier},now())
 		</foreach>
     </insert>
     
     <insert id="insert" parameterType="com.agri.monitor.entity.FarmInfo">
-    	insert into t_farm_info(county,towns,village,farm_name,farm_address,legal_person,phone_num,animals_type,animals_size,remarks,creator,modifier)
+    	insert into t_farm_info(county,towns,village,farm_name,farm_address,legal_person,phone_num,animals_type,animals_size,remarks,creator,modifier,create_time)
     	values
 	   (#{county},#{towns},#{village},#{farm_name},#{farm_address},#{legal_person},#{phone_num},
-	   #{animals_type},#{animals_size},#{remarks},#{creator},#{modifier})
+	   #{animals_type},#{animals_size},#{remarks},#{creator},#{modifier},now())
     </insert>
     
     <update id="update" parameterType="com.agri.monitor.entity.FarmInfo">
@@ -68,7 +68,8 @@
 				from t_farm_info a where animals_type in 
 				<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
     				#{item}
-    			</foreach> group by animals_type ) a,t_animals_type b
+    			</foreach> 
+    			group by animals_type ) a,t_animals_type b
 		where a.animals_type=b.gid and b.stopflag=1
     </select>
     <select id="findNumByType" parameterType="java.util.List" resultType="map">
@@ -77,5 +78,11 @@
 		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
     		#{item}
     	</foreach>
+    </select>
+    <select id="findSumGroupTowns" resultType="map">
+        select a.towns,b.type_name,a.animals_size from 
+		(select towns,animals_type,sum(animals_size) animals_size
+		 from t_farm_info GROUP BY towns,animals_type) a,
+		t_animals_type b where a.animals_type=b.gid and b.stopflag=1	
     </select>
 </mapper>

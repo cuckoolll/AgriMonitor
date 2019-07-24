@@ -23,10 +23,10 @@ public class LoginController {
 		return userInfoService.findForLogin(userid, pw, request);
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="/loginout",method = RequestMethod.POST)
-	public void doLogin(HttpServletRequest request) {
+	@RequestMapping(value="/loginout")
+	public String doLogin(HttpServletRequest request) {
 		request.getSession().removeAttribute("userinfo");
+		return "redirect:/login.html";
 	}
 }
 

@@ -127,4 +127,14 @@ public class UserInfoService {
 		}
 		return userinfoMapper.findRole(gid);
 	}
+	
+	public boolean savepw(UserInfo userinfo, HttpServletRequest request) {
+		if (logger.isInfoEnabled()) {
+			logger.info("用户修改密码：" + userinfo.getUser_id());
+		}
+		userinfoMapper.updpw(userinfo);
+		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userinfo.getUser_id(), "用户修改密码：" + userinfo.getUser_id());
+		request.getSession().removeAttribute("userinfo");
+		return true;
+	}
 }

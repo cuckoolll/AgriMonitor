@@ -30,4 +30,7 @@ public interface FarmInfoMapper {
 	List<Map> findSumByType(List<Integer> type);
 	
 	List<Map> findNumByType(List<Integer> type);
+	
+	List<Map> findSumGroupTowns();
+
 }

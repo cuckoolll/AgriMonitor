@@ -30,9 +30,9 @@
 	</select>
 	
     <insert id="insert" parameterType="com.agri.monitor.entity.UserInfo">
-    	insert into t_user_info(user_id,user_password,user_role,user_showname)
+    	insert into t_user_info(user_id,user_password,user_role,user_showname,create_time)
     	values
-	   (#{user_id},#{user_password},#{user_role},#{user_showname})
+	   (#{user_id},#{user_password},#{user_role},#{user_showname},now())
     </insert>
     
     <update id="update" parameterType="com.agri.monitor.entity.UserInfo">
@@ -46,4 +46,8 @@
     		#{item}
     	</foreach>
     </delete>
+        
+    <update id="updpw" parameterType="com.agri.monitor.entity.UserInfo">
+    	update t_user_info set user_password=#{user_password} where user_id=#{user_id}
+    </update>
 </mapper>

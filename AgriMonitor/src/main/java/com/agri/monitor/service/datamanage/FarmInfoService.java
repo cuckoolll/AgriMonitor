@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -287,6 +288,59 @@ public class FarmInfoService {
 			}
 		}
 		info("处理养殖场数据监控结束");
+	}
+	
+	//首页养殖场统计图
+	public Map findSumGroupTowns(){
+		info("首页养殖场统计图开始");
+		Map ret = new HashMap<>();
+		List<Map> list = farmInfoMapper.findSumGroupTowns();
+		
+		if(null != list && list.size() > 0) {
+			//地图数据
+			Map<String, List<Map>> temmap = new HashMap<>();
+			for (Map map : list) {
+				List<Map> l = temmap.get(map.get("towns").toString());
+				if (null == l) {
+					l = new ArrayList<>();
+					l.add(map);
+					temmap.put(map.get("towns").toString(), l);
+				}else {
+					l.add(map);
+				}
+			}
+			List<Map> temlist = new ArrayList<>();
+			for (Entry<String, List<Map>> map : temmap.entrySet()) {
+				Map m = new HashMap<>();
+				m.put("name", map.getKey());
+				m.put("size", 100);
+				m.put("data", map.getValue());
+				temlist.add(m);
+			}
+			ret.put("mapdata", temlist);
+			
+			Map<String, Double> temmap1 = new HashMap<>();
+			//牲畜占比
+			for (Map map : list) {
+				Double d1 = temmap1.get(map.get("type_name").toString());
+				if(null == d1) {
+					temmap1.put(map.get("type_name").toString(),Double.valueOf(map.get("animals_size").toString()));
+				}else {
+					temmap1.put(map.get("type_name").toString(),Double.valueOf(map.get("animals_size").toString())+d1);
+				}
+			}
+			List<Map> temlist1 = new ArrayList<>();
+			for (Entry<String, Double> map : temmap1.entrySet()) {
+				Map m = new HashMap<>();
+				m.put("name", map.getKey());
+				m.put("value", map.getValue());
+				temlist1.add(m);
+			}
+			ret.put("piedata", temlist1);
+		}
+		
+		info("首页养殖场统计图结束");
+		return ret;
 	}
 	
 	private void info(String msg) {

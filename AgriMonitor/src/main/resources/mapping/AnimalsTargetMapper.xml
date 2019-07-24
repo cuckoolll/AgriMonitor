@@ -27,9 +27,9 @@
     </select>
     
     <insert id="insert" parameterType="com.agri.monitor.entity.AnimalsTarget">
-    	insert into t_animals_target(target_name,parent_id,stopflag,modifier,creator,isleaf)
+    	insert into t_animals_target(target_name,parent_id,stopflag,modifier,creator,isleaf,create_time)
     	values
-	   (#{target_name},#{parent_id},#{stopflag},#{modifier},#{creator},#{isleaf})
+	   (#{target_name},#{parent_id},#{stopflag},#{modifier},#{creator},#{isleaf},now())
     </insert>
     
     <update id="update" parameterType="com.agri.monitor.entity.AnimalsTarget">

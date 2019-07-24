@@ -30,4 +30,6 @@ public interface AnimalsBreedMapper {
 	void deleteByTowns(Map map);
 	
 	List<Map> getYearData(Map map);
+	
+	List<Map> getSumGroupYear(Map map);
 }
