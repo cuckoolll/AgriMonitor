@@ -1,4 +1,5 @@
-layui.use(['form','layer'], function(form,layer,table,upload) {
+layui.use(['form','layer'], function(form,layer) {
+	  
 	function menuFAMouseenter(_this){
 		_this.animate({
 		    borderWidth:'7px'
@@ -105,8 +106,46 @@ layui.use(['form','layer'], function(form,layer,table,upload) {
 			});
 		});
 	}
+	function monitorinfo(){
+		 $.post("/monitorManage/findmonitorinfo", {},function(res){
+		        if(res && res.length>0){
+		        	var str="";
+		        	$.each(res,function(index,item){
+		        		str+="<p class='item'>"+item+"</p>";
+		        	});
+		        	$("#monitorinfo").html(str);
+		        	
+		        	if(res.length>1){
+		        		var wrapper  = document.getElementsByClassName('wrapper')[0];
+		        		  var offset = 50
+		        		  var timer;
+		        		  setInterval(function () {
+		        		    if(timer) {
+		        		      clearInterval(timer);
+		        		    }
+		        		    var step = 1;
+		        		  
+		        		    timer = setInterval(function () {
+		        		      wrapper.style.transform = 'translateY(-' + (offset + step) + 'px)';
+		        		      if(step == 50) {
+		        		        clearInterval(timer);
+		        		      }
+		        		      step++;
+		        		    }, 10);
+		        		    
+		        		    offset += 50;
+		        		    var num = Math.floor(wrapper.offsetHeight / 50)
+		        		    if (! (offset%((num - 1)*50))) {
+		        		      offset = 0;
+		        		    }
+		        		  }, 8000);
+		        	}
+		        }
+		    });
+	}
 	
 	init();
+	monitorinfo();
 	bindEvent();
 });
 

@@ -62,4 +62,8 @@ public class MonitorLogService {
 		LogUtil.log(LogOptTypeEnum.UPDATE, LogOptSatusEnum.SUCESS, userid, "监控数据状态更新成功stopflag="+stopflag+",gid="+gid);
 		return result;
 	}
+	
+	public List<String> findmonitorinfo(){
+		return monitorLogMapper.findmonitorinfo();
+	}
 }

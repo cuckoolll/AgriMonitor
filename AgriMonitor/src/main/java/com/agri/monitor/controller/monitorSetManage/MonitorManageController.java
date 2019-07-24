@@ -143,5 +143,11 @@ public class MonitorManageController {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 		return monitorLogService.updatestatus(stopflag, gid, user.getUser_id());
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/findmonitorinfo",method=RequestMethod.POST)
+	public List<String> findmonitorinfo() {
+		return monitorLogService.findmonitorinfo();
+	}
 }
 
