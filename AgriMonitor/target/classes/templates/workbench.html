@@ -95,8 +95,8 @@
 		                	<dt><a class="menuLA" href="javascript:void(0)" url="/policymaintain">政策文件信息</a></dt>
 		                	<dt><a class="menuLA" href="javascript:void(0)" url="/agrinews">农业信息</a></dt>
 		                </dl>
-		           </li>
-		           <li th:if="${session.userinfo.roleinfo.role_name!='user'}">
+		            </li>
+		        	<li th:if="${session.userinfo.roleinfo.role_name!='user'}">
 		                <a class="menuFA" href="javascript:void(0)"><i class="iconfont icon-zhuyidapx left"></i>检测报警<i class="iconfont icon-dajiantouyou right"></i></a>
 		                <dl>
 		                	<dt><a class="menuLA" href="javascript:void(0)"  url="/monitorManage">报警阀值</a></dt>
