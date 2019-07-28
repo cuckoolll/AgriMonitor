@@ -78,7 +78,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    	  layer.open({
               		    title: "新增草地生态监测采样信息",
 						type: 2,
-						area: ['980px', '520px'],
+						area: ['980px', '510px'],
 						scrollbar: true,
 						content: '/grassinfo/update'
 					}, function(a){
@@ -94,7 +94,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		        	layer.open({
               		    title: "修改草地生态监测采样信息",
 						type: 2,
-						area: ['980px', '520px'],
+						area: ['980px', '510px'],
 						scrollbar: true,
 						content: '/grassinfo/update?gid='+checkStatus.data[0].gid
 					});

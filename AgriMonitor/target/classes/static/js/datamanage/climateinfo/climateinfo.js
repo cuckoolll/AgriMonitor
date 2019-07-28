@@ -76,7 +76,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    	  layer.open({
               		    title: "新增气候监测采样信息",
 						type: 2,
-						area: ['900px', '520px'],
+						area: ['900px', '550px'],
 						scrollbar: true,
 						content: '/climateinfo/update'
 					}, function(a){
@@ -92,7 +92,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		        	layer.open({
               		    title: "修改气候监测采样信息",
 						type: 2,
-						area: ['900px', '520px'],
+						area: ['900px', '550px'],
 						scrollbar: true,
 						content: '/climateinfo/update?gid='+checkStatus.data[0].gid
 					});

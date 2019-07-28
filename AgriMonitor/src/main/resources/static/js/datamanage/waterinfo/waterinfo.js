@@ -68,7 +68,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    	  layer.open({
               		    title: "新增水质监测采样信息",
 						type: 2,
-						area: ['800px', '500px'],
+						area: ['800px', '510px'],
 						scrollbar: true,
 						content: '/waterinfo/update'
 					}, function(a){
@@ -84,7 +84,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		        	layer.open({
               		    title: "修改水质监测采样信息",
 						type: 2,
-						area: ['800px', '500px'],
+						area: ['800px', '510px'],
 						scrollbar: true,
 						content: '/waterinfo/update?gid='+checkStatus.data[0].gid
 					});

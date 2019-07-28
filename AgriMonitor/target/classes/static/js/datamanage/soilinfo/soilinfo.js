@@ -74,7 +74,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    	  layer.open({
               		    title: "新增土壤监测采样信息",
 						type: 2,
-						area: ['900px', '520px'],
+						area: ['900px', '510px'],
 						scrollbar: true,
 						content: '/soilinfo/update'
 					}, function(a){
@@ -90,7 +90,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		        	layer.open({
               		    title: "修改土壤监测采样信息",
 						type: 2,
-						area: ['900px', '520px'],
+						area: ['900px', '510px'],
 						scrollbar: true,
 						content: '/soilinfo/update?gid='+checkStatus.data[0].gid
 					});

@@ -6,19 +6,14 @@ layui.use(['form','layer','table', 'laydate', 'upload'], function(form,layer,tab
 		var gid = getUrlParam("gid");
 		var isShow = getUrlParam("show") == '1' ? true : false;
 		
-		ue = UE.getEditor('container');
 		if (!isShow) {
 			$("#title").removeAttr("readonly");
 			$("#container").removeAttr("readonly");
 			$("#saveBtn").css("display", "block");
 		}
 		
-		
-		ue.ready(function() {
-			ue.setHeight(winH - 125);
-		}); 
-		
 		if(gid){//如果有值，为更新操作
+			ue = UE.getEditor('container', {toolbars:[], initialFrameWidth:'99%', initialFrameHeight:winH - 125});
 			//查询数据并赋值到表单中
 			$.post("/agrinews/findById", {gid:gid},function(res){
 		          if(res){
@@ -39,15 +34,13 @@ layui.use(['form','layer','table', 'laydate', 'upload'], function(form,layer,tab
 		        	  $("#saveBtn").attr('disabled',true);
 		          }
 	        });
+		} else {
+			ue = UE.getEditor('container', {initialFrameWidth:'99%', initialFrameHeight:winH - 125});
 		}
-	}
-	
-	function windowAlign() {
-		$(window).resize(function(){
-		    ue.ready(function() {
-				ue.setHeight(winH - 125);
-			}); 
-		});
+		
+		ue.ready(function() {
+			ue.setHeight(winH - 125);
+		}); 
 	}
 	
 	function bindEvent(){
@@ -65,8 +58,6 @@ layui.use(['form','layer','table', 'laydate', 'upload'], function(form,layer,tab
 	        });
 			return false;
 		});
-		
-		windowAlign();
 	}
 	
 	//获取url参数
