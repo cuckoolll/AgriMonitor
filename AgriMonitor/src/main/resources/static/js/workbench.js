@@ -64,9 +64,10 @@ layui.use(['form','layer'], function(form,layer) {
 	function init(){
 		var win_h = $(window).height();
 		var win_w = $(window).width();
-		var frameMenuW = $(".frameMenu").width();
+		var frameMenuW = $(".frameMenu").width() * (win_w/1920).toFixed(0);
 		var logoH = 60;
 		var frameTopH = $(".frameTop").height();
+		
 		
 		$(".frameMenu").height(win_h);
 		$(".frameMenu .menu").height(win_h - logoH);
