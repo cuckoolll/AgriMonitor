@@ -44,22 +44,22 @@ layui.config({
 			      {field: 'target_name', title: '指标名称',align:'left',rowspan:2,width:220},
 			      /*{field: 'county', title: '区（县、市）',align:'center',width:120,rowspan:2},*/
 			      /*{field: 'towns', title: '乡镇',align:'center',width:120,rowspan:2},*/
-			      {field: 'surplus_size', title: '月末存栏数',align:'center',rowspan:2},
-			      {field: 'female_size', title: '能繁殖母畜',align:'center',rowspan:2},
+			      {field: 'surplus_size', title: '月末存栏数',align:'center',rowspan:2,width:150},
+			      {field: 'female_size', title: '能繁殖母畜',align:'center',rowspan:2,width:150},
 			      {title: '增加',align:'center',colspan:2},
 			      {title: '减少',align:'center',colspan:3},
 			      {title: '产量',align:'center',colspan:4},
 			      {templet: '#oper-col', title: '操作',align:'center',rowspan:2,width:70}
 			    ],[
-		      {field: 'child_size', title: '产仔数',align:'center'},
-		      {field: 'survival_size', title: '成活数',align:'center'},
-		      {field: 'death_size', title: '损亡数',align:'center'},
-		      {field: 'maturity_size', title: '出栏数',align:'center'},
-		      {field: 'sell_size', title: '出售数',align:'center'},
-		      {field: 'meat_output', title: '肉产量',align:'center'},
-		      {field: 'milk_output', title: '奶产量',align:'center'},
-		      {field: 'egg_output', title: '蛋产量',align:'center'},
-		      {field: 'hair_output', title: '毛产量',align:'center'}
+		      {field: 'child_size', title: '产仔数',align:'center',width:150},
+		      {field: 'survival_size', title: '成活数',align:'center',width:150},
+		      {field: 'death_size', title: '损亡数',align:'center',width:150},
+		      {field: 'maturity_size', title: '出栏数',align:'center',width:150},
+		      {field: 'sell_size', title: '出售数',align:'center',width:150},
+		      {field: 'meat_output', title: '肉产量',align:'center',width:150},
+		      {field: 'milk_output', title: '奶产量',align:'center',width:150},
+		      {field: 'egg_output', title: '蛋产量',align:'center',width:150},
+		      {field: 'hair_output', title: '毛产量',align:'center',width:150}
 		    ]]
 		});
 		//文件上传

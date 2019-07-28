@@ -20,42 +20,42 @@
 	</head>
 
 	<body>
-		<div class="cBody" style="height: 330px">
+		<div class="cBody" style="margin-top: 10px;margin-right: 10px">
 		<input type="hidden" id="pw" th:value="${session.userinfo.user_password}"/>
 			<form id="addForm" class="layui-form">
 				<div class="layui-form-item">
 					<label class="layui-form-label">登录名：</label>
 	                <div class="layui-input-block">
-	                    <input type="text" readonly="readonly" id="user_id" name="user_id" th:value="${session.userinfo.user_id}" autocomplete="off"  style="width: 200px" class="layui-input">
+	                    <input type="text" readonly="readonly" id="user_id" name="user_id" th:value="${session.userinfo.user_id}" autocomplete="off"  style="width: 260px" class="layui-input">
 	                </div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">显示名：</label>
 					<div class="layui-input-block">
-						<input type="text" readonly="readonly" id="user_showname" th:value="${session.userinfo.user_showname}" autocomplete="off" class="layui-input" style="width: 200px">
+						<input type="text" readonly="readonly" id="user_showname" th:value="${session.userinfo.user_showname}" autocomplete="off" class="layui-input" style="width: 260px">
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">旧密码：</label>
 					<div class="layui-input-block">
-						<input type="password" id="old_password" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 200px">
+						<input type="password" id="old_password" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 260px">
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">新密码：</label>
 					<div class="layui-input-block">
-						<input type="password" id="new_password1" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 200px">
+						<input type="password" id="new_password1" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 260px">
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label">确认密码：</label>
 					<div class="layui-input-block">
-						<input type="password" id="new_password2" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 200px">
+						<input type="password" id="new_password2" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 260px">
 					</div>
 				</div>
 				<div style="" class="layui-form-item">
 					<div class="layui-input-block">
-						<button id="saveBtn" class="layui-btn" lay-submit lay-filter="submitBut">保存</button>
+						<button id="saveBtn" class="layui-btn" lay-submit lay-filter="submitBut" style="margin-left: 68px">保存</button>
 					</div>
 				</div>
 			</form>

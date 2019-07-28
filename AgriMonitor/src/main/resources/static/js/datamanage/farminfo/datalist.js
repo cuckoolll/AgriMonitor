@@ -18,14 +18,14 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 		    	{type:'checkbox'},
 		      {field: 'gid', title: 'ID',hide: true,align:'center'},
 		      {field: 'county', title: '区（县、市）',align:'center',width:120},
-		      {field: 'towns', title: '乡镇',align:'center',width:120},
-		      {field: 'farm_name', title: '养殖场名称',align:'center'},
-		      {field: 'farm_address', title: '地址',align:'center'},
-		      {field: 'legal_person', title: '法人',align:'center',width:100},
+		      {field: 'towns', title: '乡镇',align:'center',width:130},
+		      {field: 'farm_name', title: '养殖场名称',align:'center',width:200},
+		      {field: 'farm_address', title: '地址',align:'center',width:260},
+		      {field: 'legal_person', title: '法人',align:'center',width:150},
 		      {field: 'phone_num', title: '联系电话',align:'center',width:150},
-		      {field: 'animals_name', title: '认定畜种',align:'center'},
-		      {field: 'animals_size', title: '牲畜存栏（头、只）',align:'center'},
-		      {field: 'remarks', title: '备注',align:'center'}
+		      {field: 'animals_name', title: '认定畜种',align:'center',width:150},
+		      {field: 'animals_size', title: '牲畜存栏（头、只）',align:'center',width:200},
+		      {field: 'remarks', title: '备注',align:'center',width:200}
 		    ]]
 		});
 		//文件上传

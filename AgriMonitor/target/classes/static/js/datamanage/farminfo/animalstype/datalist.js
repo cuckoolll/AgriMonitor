@@ -35,7 +35,7 @@ layui.use(['form','layer','table'], function(form,layer,table,upload) {
 		    	  layer.open({
               		    title: "新增认定畜种",
 						type: 2,
-						area: ['400px', '280px'],
+						area: ['400px', '250px'],
 						scrollbar: true,
 						content: '/farminfo/animalstype/update'
 					});

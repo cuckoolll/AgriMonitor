@@ -40,7 +40,7 @@ layui.config({
 		    	  layer.open({
             		    title: "修改指标",
 						type: 2,
-						area: ['400px', '500px'],
+						area: ['400px', '330px'],
 						scrollbar: true,
 						content: '/animalsBreed/animalsTarget/update?gid='+data.gid
 					});
@@ -80,7 +80,7 @@ layui.config({
 			layer.open({
       		    title: "新增畜牧业指标",
 				type: 2,
-				area: ['400px', '500px'],
+				area: ['400px', '330px'],
 				scrollbar: true,
 				content: '/animalsBreed/animalsTarget/update'
 			});

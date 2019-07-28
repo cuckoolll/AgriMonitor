@@ -40,21 +40,21 @@ layui.config({
 	        treeLinkage: false,
 		    cols: [[ 
 			      {field: 'target_name', title: '指标名称',align:'left',rowspan:2,width:220},
-			      {field: 'nccl', title: '年初存栏数',align:'center',rowspan:2},
-			      {field: 'nfmc', title: '其中:能繁殖母畜',align:'center',rowspan:2},
+			      {field: 'nccl', title: '年初存栏数',align:'center',rowspan:2,width:150},
+			      {field: 'nfmc', title: '其中:能繁殖母畜',align:'center',rowspan:2,width:150},
 			      {title: '增加',align:'center',colspan:2},
 			      {title: '减少',align:'center',colspan:3},
 			      {title: '产量',align:'center',colspan:4}
 			    ],[
-		      {field: 'child_size', title: '产仔数',align:'center'},
-		      {field: 'survival_size', title: '成活数',align:'center'},
-		      {field: 'death_size', title: '损亡数',align:'center'},
-		      {field: 'maturity_size', title: '出栏数',align:'center'},
-		      {field: 'sell_size', title: '出售数',align:'center'},
-		      {field: 'meat_output', title: '肉产量',align:'center'},
-		      {field: 'milk_output', title: '奶产量',align:'center'},
-		      {field: 'egg_output', title: '蛋产量',align:'center'},
-		      {field: 'hair_output', title: '毛产量',align:'center'}
+		      {field: 'child_size', title: '产仔数',align:'center',width:150},
+		      {field: 'survival_size', title: '成活数',align:'center',width:150},
+		      {field: 'death_size', title: '损亡数',align:'center',width:150},
+		      {field: 'maturity_size', title: '出栏数',align:'center',width:150},
+		      {field: 'sell_size', title: '出售数',align:'center',width:150},
+		      {field: 'meat_output', title: '肉产量',align:'center',width:150},
+		      {field: 'milk_output', title: '奶产量',align:'center',width:150},
+		      {field: 'egg_output', title: '蛋产量',align:'center',width:150},
+		      {field: 'hair_output', title: '毛产量',align:'center',width:150}
 		    ]]
 		});
 	}
@@ -82,25 +82,25 @@ layui.config({
 			      {title: '出栏情况',align:'center',colspan:2},
 			      {title: '畜产品生产情况',align:'center',colspan:4}
 			    ],[
-			  {field: 'nccl', title: '年初存栏',align:'center'},
-			  {field: 'surplus_size', title: '月末存栏数',align:'center'},
-			  {field: 'female_size', title: '能繁殖母畜',align:'center'},
-		      {field: 'child_size', title: '产仔数',align:'center'},
-		      {field: 'czs_tq', title: '去年同期',align:'center'},
-		      {field: 'survival_size', title: '成活数',align:'center'},
-		      {field: 'chs_tq', title: '去年同期',align:'center'},
-		      {field: 'chl', title: '成活率',align:'center'},
-		      {field: 'chl_tq', title: '去年同期',align:'center'},
-		      {field: 'death_size', title: '损亡数',align:'center'},
-		      {field: 'sws_tq', title: '去年同期',align:'center'},
-		      {field: 'swl', title: '损亡率',align:'center'},
-		      {field: 'swl_tq', title: '去年同期',align:'center'},
-		      {field: 'maturity_size', title: '出栏数',align:'center'},
-		      {field: 'sell_size', title: '出售数',align:'center'},
-		      {field: 'meat_output', title: '肉产量',align:'center'},
-		      {field: 'milk_output', title: '奶产量',align:'center'},
-		      {field: 'egg_output', title: '蛋产量',align:'center'},
-		      {field: 'hair_output', title: '毛产量',align:'center'}
+			  {field: 'nccl', title: '年初存栏',align:'center',width:150},
+			  {field: 'surplus_size', title: '月末存栏数',align:'center',width:150},
+			  {field: 'female_size', title: '能繁殖母畜',align:'center',width:150},
+		      {field: 'child_size', title: '产仔数',align:'center',width:150},
+		      {field: 'czs_tq', title: '去年同期',align:'center',width:150},
+		      {field: 'survival_size', title: '成活数',align:'center',width:150},
+		      {field: 'chs_tq', title: '去年同期',align:'center',width:150},
+		      {field: 'chl', title: '成活率',align:'center',width:150},
+		      {field: 'chl_tq', title: '去年同期',align:'center',width:150},
+		      {field: 'death_size', title: '损亡数',align:'center',width:150},
+		      {field: 'sws_tq', title: '去年同期',align:'center',width:150},
+		      {field: 'swl', title: '损亡率',align:'center',width:150},
+		      {field: 'swl_tq', title: '去年同期',align:'center',width:150},
+		      {field: 'maturity_size', title: '出栏数',align:'center',width:150},
+		      {field: 'sell_size', title: '出售数',align:'center',width:150},
+		      {field: 'meat_output', title: '肉产量',align:'center',width:150},
+		      {field: 'milk_output', title: '奶产量',align:'center',width:150},
+		      {field: 'egg_output', title: '蛋产量',align:'center',width:150},
+		      {field: 'hair_output', title: '毛产量',align:'center',width:150}
 		    ]]
 		});
 	}

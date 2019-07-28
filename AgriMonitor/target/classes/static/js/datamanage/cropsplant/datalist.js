@@ -67,7 +67,7 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 		    	  layer.open({
               		    title: "新增农作物产量信息",
 						type: 2,
-						area: ['700px', '450px'],
+						area: ['700px', '460px'],
 						scrollbar: true,
 						content: '/cropsplant/update'
 					});
@@ -81,7 +81,7 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 		        	layer.open({
               		    title: "修改农作物产量信息",
 						type: 2,
-						area: ['700px', '450px'],
+						area: ['700px', '460px'],
 						scrollbar: true,
 						content: '/cropsplant/update?gid='+checkStatus.data[0].gid
 					});
