@@ -95,19 +95,18 @@
 		                	<dt><a class="menuLA" href="javascript:void(0)" url="/agrinews">农业信息维护</a></dt>
 		                </dl>
 		            </li>
-		        	<li>
+		        	<li th:if="${session.userinfo.roleinfo.role_name!='user'}">
 		                <a class="menuFA" href="javascript:void(0)"><i class="iconfont icon-zhuyidapx left"></i>检测报警<i class="iconfont icon-dajiantouyou right"></i></a>
 		                <dl>
-		                	<dt><a class="menuLA" href="javascript:void(0)" th:if="${session.userinfo.roleinfo.role_name!='user'}" url="/monitorManage">报警阀值</a></dt>
-		                	<dt><a class="menuLA" href="javascript:void(0)" th:if="${session.userinfo.roleinfo.role_name!='user'}" url="/monitorManage/monitorlog">报警记录</a></dt>
+		                	<dt><a class="menuLA" href="javascript:void(0)"  url="/monitorManage">报警阀值</a></dt>
+		                	<dt><a class="menuLA" href="javascript:void(0)"  url="/monitorManage/monitorlog">报警记录</a></dt>
 		                </dl>
 		           	</li>
-		        	<li>
+		        	<li th:if="${session.userinfo.roleinfo.role_name=='sys'}">
 		                <a class="menuFA" href="javascript:void(0)"><i class="iconfont icon-shezhi left"></i>系统管理<i class="iconfont icon-dajiantouyou right"></i></a>
 		                <dl>
-		                	<dt><a class="menuLA" th:if="${session.userinfo.roleinfo.role_name=='sys'}" href="javascript:void(0)" url="/userinfo">用户管理</a></dt>
-		                	<dt><a class="menuLA" th:if="${session.userinfo.roleinfo.role_name=='sys'}" href="javascript:void(0)" url="/syslog">系统日志</a></dt>
-		                	<dt><a class="menuLA" href="javascript:void(0)">关于我们</a></dt>
+		                	<dt><a class="menuLA" href="javascript:void(0)" url="/userinfo">用户管理</a></dt>
+		                	<dt><a class="menuLA" href="javascript:void(0)" url="/syslog">系统日志</a></dt>
 		                </dl>
 		           	</li>
 		        </ul>

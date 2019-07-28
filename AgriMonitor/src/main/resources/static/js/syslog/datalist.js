@@ -16,10 +16,10 @@ layui.use(['form','layer','table'], function(form,layer,table) {
 		    limits:[20,40,60,100],
 		    cols: [[ //表头
 		    	{type:'checkbox'},
-		      {field: 'operation_type', title: '操作类型',align:'center', templet: '#titleTpl'},
-		      {field: 'operation_status', title: '操作状态',align:'center', templet: '#titleTpl1'},
-		      {field: 'user_showname', title: '操作用户',align:'center'},
-		      {field: 'create_time', title: '操作时间',align:'center'},
+		      {field: 'operation_type', title: '操作类型',align:'center', templet: '#titleTpl',width:120},
+		      {field: 'operation_status', title: '操作状态',align:'center', templet: '#titleTpl1',width:120},
+		      {field: 'user_showname', title: '操作用户',align:'center',width:220},
+		      {field: 'create_time', title: '操作时间',align:'center',width:200},
 		      {field: 'operation_log', title: '操作日志',align:'center'}
 		    ]]
 		});
