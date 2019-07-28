@@ -13,20 +13,26 @@ layui.use(['form','layer','table', 'laydate', 'upload'], function(form,layer,tab
 		}
 		
 		if(gid){//如果有值，为更新操作
-			ue = UE.getEditor('container', {toolbars:[], initialFrameWidth:'99%', initialFrameHeight:winH - 125});
+//			ue = UE.getEditor('container', {toolbars:[], initialFrameWidth:'99%', initialFrameHeight:winH - 125});
 			//查询数据并赋值到表单中
 			$.post("/agrinews/findById", {gid:gid},function(res){
 		          if(res){
 		        	  $.each(res,function(key,val){
 	        			  $("[name='"+key+"']").val(val);
 	        			  if ("content" == key) {
-        					  ue.ready(function() {
-	        					  //设置编辑器的内容
-	        					  ue.setContent(val);
-	        					  if (isShow) {
-	        						  ue.setDisabled();
-	        					  }
-	        				  }); 
+//        					  ue.ready(function() {
+//	        					  //设置编辑器的内容
+//	        					  ue.setContent(val);
+//	        					  if (isShow) {
+//	        						  ue.setDisabled();
+//	        					  }
+//	        				  }); 
+	        				  $("body").empty();
+	        				  $("head").after("<body></body>");
+	        				  $("body").append("<h1>" + res.title + "</h1>");
+	        				  $("body").append("<h3>作者：" + res.author + "</h3>");
+	        				  $("body").append("<h3 style='margin-bottom:30px;'>时间：" + res.last_time + "</h3>");
+	        				  $("body").append(val);
 	        			  }
 		        	  });
 		          }else{
@@ -36,11 +42,11 @@ layui.use(['form','layer','table', 'laydate', 'upload'], function(form,layer,tab
 	        });
 		} else {
 			ue = UE.getEditor('container', {initialFrameWidth:'99%', initialFrameHeight:winH - 125});
+			
+			ue.ready(function() {
+				ue.setHeight(winH - 125);
+			}); 
 		}
-		
-		ue.ready(function() {
-			ue.setHeight(winH - 125);
-		}); 
 	}
 	
 	function bindEvent(){

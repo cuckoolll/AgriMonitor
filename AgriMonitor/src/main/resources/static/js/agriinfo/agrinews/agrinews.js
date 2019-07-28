@@ -23,7 +23,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		     cols: [[ //表头
 		    	 {type: 'checkbox', fixed: 'left'},
 		    	 {field: 'gid', title: 'gid',hide: true,align:'center'},
-		    	 {field: 'title', title: '标题', style:'color:#01AAED'},
+		    	 {field: 'title', title: '标题', templet: '#showNews'},
 		    	 {field: 'author', title: '作者'},
 		    	 {field: 'create_time', title: '创建时间', sort: true},
 		    	 {field: 'creator', title: '创建人'}
@@ -128,18 +128,18 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		  });
 		
 		//监听行单击事件
-		table.on('row(datalist)', function(obj){
-			var data = obj.data; //获取选中的数据
-			var showLayer = layer.open({
-      		    title: "查看农业信息",
-				type: 2,
-				area: ['800px', '600px'],
-				scrollbar: true,
-				maxmin: true, 
-				content: '/agrinews/newsedit?show=1&gid='+data.gid
-    	  });
-    	  layer.full(showLayer); 
-		});
+//		table.on('row(datalist)', function(obj){
+//			var data = obj.data; //获取选中的数据
+//			var showLayer = layer.open({
+//      		    title: data.title,
+//				type: 2,
+//				area: ['800px', '600px'],
+//				scrollbar: true,
+//				maxmin: true, 
+//				content: '/agrinews/newsedit?show=1&gid='+data.gid
+//    	  });
+//    	  layer.full(showLayer); 
+//		});
 		
 		//查询数据
 		$("#queryBtn").click(function(){
