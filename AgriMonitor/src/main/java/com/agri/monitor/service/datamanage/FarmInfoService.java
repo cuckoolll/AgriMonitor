@@ -158,7 +158,9 @@ public class FarmInfoService {
 	        	   }
 	        	   farminfo.setAnimals_type(type);
 	        	   farminfo.setAnimals_size(Integer.valueOf(row.getCell(5).getStringCellValue()));
-	        	   farminfo.setRemarks(row.getCell(6).getStringCellValue());
+	        	   if (row.getCell(6) != null) {
+	        		   farminfo.setRemarks(row.getCell(6).getStringCellValue());
+	        	   }
 	        	   farminfo.setCreator(user.getUser_id());
 	        	   farminfo.setModifier(user.getUser_id());
 	        	   farminfo.setCounty("刚察县");

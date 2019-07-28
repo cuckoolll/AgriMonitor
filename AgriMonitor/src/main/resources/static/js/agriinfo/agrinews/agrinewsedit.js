@@ -1,15 +1,22 @@
 layui.use(['form','layer','table', 'laydate', 'upload'], function(form,layer,table,laydate,upload) {
 	var winW = $(window).width();
+	var winH = $(window).height();
+	var ue;
 	function init(){
 		var gid = getUrlParam("gid");
 		var isShow = getUrlParam("show") == '1' ? true : false;
 		
-		var ue = UE.getEditor('container');
+		ue = UE.getEditor('container');
 		if (!isShow) {
 			$("#title").removeAttr("readonly");
 			$("#container").removeAttr("readonly");
 			$("#saveBtn").css("display", "block");
 		}
+		
+		
+		ue.ready(function() {
+			ue.setHeight(winH - 125);
+		}); 
 		
 		if(gid){//如果有值，为更新操作
 			//查询数据并赋值到表单中
@@ -35,6 +42,14 @@ layui.use(['form','layer','table', 'laydate', 'upload'], function(form,layer,tab
 		}
 	}
 	
+	function windowAlign() {
+		$(window).resize(function(){
+		    ue.ready(function() {
+				ue.setHeight(winH - 125);
+			}); 
+		});
+	}
+	
 	function bindEvent(){
 		//监听提交
 		form.on('submit(submitBut)', function(data) {
@@ -50,6 +65,8 @@ layui.use(['form','layer','table', 'laydate', 'upload'], function(form,layer,tab
 	        });
 			return false;
 		});
+		
+		windowAlign();
 	}
 	
 	//获取url参数

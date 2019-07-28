@@ -7,6 +7,7 @@ layui.use(['form','layer','table', 'laydate'], function(form,layer,table,laydate
 		
 		var gid = getUrlParam("gid");
 		if(gid){//如果有值，为更新操作
+			$("#quality_time").attr("disabled", true);
 			//查询数据并赋值到表单中
 			$.post("/waterinfo/findById", {gid:gid},function(res){
 		          if(res){

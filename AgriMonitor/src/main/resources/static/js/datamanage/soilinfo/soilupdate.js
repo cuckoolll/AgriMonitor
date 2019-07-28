@@ -8,6 +8,7 @@ layui.use(['form','layer','table', 'laydate'], function(form,layer,table,laydate
 		
 		var gid = getUrlParam("gid");
 		if(gid){//如果有值，为更新操作
+			$("#date_year").attr("disabled", true);
 			//查询数据并赋值到表单中
 			$.post("/soilinfo/findById", {gid:gid},function(res){
 		          if(res){

@@ -59,11 +59,13 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label span_title">有机质（g/kg）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="organic" required lay-verify="required" autocomplete="off" class="layui-input input_area">
+						<input type="text" name="organic" required lay-verify="required" required lay-verify="required|number" 
+						 	autocomplete="off" class="layui-input input_area">
 					</div>
 					<label class="layui-form-label span_title">全氮（g/kg）：</label>
-					<div class="layui-input-block">
-						<input type="text" name="nitrogen" autocomplete="off" class="layui-input input_area">
+					<div class="layui-input-inline">
+						<input type="text" name="nitrogen" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input input_area">
 					</div>
 				</div>
 				
@@ -71,40 +73,47 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label span_title">全磷含量(g/kg)：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="phosphorus" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="phosphorus" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input input_area"></input>
 					</div>
 					<label class="layui-form-label span_title">有效磷含量(mg/kg)：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="effective_phosphorus" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="effective_phosphorus" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input input_area"></input>
 					</div>
 				</div>
 				
 				<div class="layui-form-item">
 					<label class="layui-form-label span_title">全钾含量(g/kg)：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="potassium" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="potassium" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input input_area"></input>
 					</div>
 					<label class="layui-form-label span_title">pH：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="ph" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="ph" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input input_area"></input>
 					</div>
 				</div>
 				
 				<div class="layui-form-item">
 					<label class="layui-form-label span_title">盐度（%）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="salinity" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="salinity" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input input_area"></input>
 					</div>
 					<label class="layui-form-label span_title">速效钾含量(mg/kg)：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="available_potassium" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="available_potassium" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input input_area"></input>
 					</div>
 				</div>
 				
 				<div class="layui-form-item">
 					<label class="layui-form-label span_title">缓效钾含量(mg/kg)：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="slow_release_potassium" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="slow_release_potassium" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input input_area"></input>
 					</div>
 				</div>
 				

@@ -59,11 +59,13 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label span_title">极端最高气温（摄氏度）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="high_temperature" required lay-verify="required" autocomplete="off" class="layui-input input_area">
+						<input type="text" name="high_temperature" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input input_area">
 					</div>
 					<label class="layui-form-label span_title">极端最低气温（摄氏度）：</label>
-					<div class="layui-input-block">
-						<input type="text" name="low_temperature" autocomplete="off" class="layui-input input_area">
+					<div class="layui-input-inline">
+						<input type="text" name="low_temperature" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input input_area">
 					</div>
 				</div>
 				
@@ -71,51 +73,60 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label span_title">年降水量（毫米）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="year_precipitation" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="year_precipitation" required lay-verify="required|number" 
+						 	autocomplete="off" class="layui-input input_area"></input>
 					</div>
 					<label class="layui-form-label span_title">月最大降水量（毫米）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="mouth_high_precipitation" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="mouth_high_precipitation" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input input_area"></input>
 					</div>
 				</div>
 				
 				<div class="layui-form-item">
 					<label class="layui-form-label span_title">日最大降水量（毫米）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="day_high_precipitation" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="day_high_precipitation" required lay-verify="required|number" 
+						 	autocomplete="off" class="layui-input input_area"></input>
 					</div>
 					<label class="layui-form-label span_title">年平均最多风向（米每秒）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="year_avg_winds" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="year_avg_winds" required lay-verify="required|number"  
+							autocomplete="off" class="layui-input input_area"></input>
 					</div>
 				</div>
 				
 				<div class="layui-form-item">
 					<label class="layui-form-label span_title">极大风速（米每秒）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="high_winds" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="high_winds" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input input_area"></input>
 					</div>
 					<label class="layui-form-label span_title">年大风日数（天）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="year_high_winds_days" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="year_high_winds_days" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input input_area"></input>
 					</div>
 				</div>
 				
 				<div class="layui-form-item">
 					<label class="layui-form-label span_title">年平均气压（百帕）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="year_avg_pressure" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="year_avg_pressure" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input input_area"></input>
 					</div>
 					<label class="layui-form-label span_title">年雷暴日数（次）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="year_thunderstorm_days" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="year_thunderstorm_days" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input input_area"></input>
 					</div>
 				</div>
 				
 				<div class="layui-form-item">
 					<label class="layui-form-label span_title">年尘暴日数（次）：</label>
 					<div class="layui-input-block">
-						<input type="text" name="year_sandstorm_days" autocomplete="off" class="layui-input input_area"></input>
+						<input type="text" name="year_sandstorm_days" required lay-verify="required|number"  
+							autocomplete="off" class="layui-input input_area"></input>
 					</div>
 				</div>
 				

@@ -28,21 +28,21 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    	 [ 
 		    		 {type: 'checkbox', fixed: 'left',rowspan:2},
 				     {field: 'gid', title: 'ID',hide: true,align:'center',rowspan:2},
-				     {field: 'date_year', title: '年份',sort: true,rowspan:2,width:100},
+				     {field: 'date_year', title: '年份',sort: true,rowspan:2,},
 				     {title: '草场面积（万亩）',align:'center',colspan:2},
-				     {field: 'grass_retain_area', title: '多年生人工种草保留面积（万亩）',rowspan:2, width:240},
+				     {field: 'grass_retain_area', title: '多年生人工种草保留面积（万亩）',rowspan:2,},
 				     {title: '牧草产量（kg/hm2）',align:'center',colspan:2},
 				     {title: '鼠虫害危害面积（万亩）',align:'center',colspan:4}
 			     ],
 			     [
-			    	 {field: 'grass_area', title: '总面积', align:'center', width:100},
-			    	 {field: 'grass_usable_area', title: '可利用面积', align:'center', width:120},
-			    	 {field: 'grass_unforage', title: '禁牧', align:'center', width:100},
-			    	 {field: 'grass_animal_balance', title: '草畜平衡', align:'center', width:120},
-			    	 {field: 'plateau_pika_area', title: '高原鼠兔', align:'center', width:120},
-			    	 {field: 'plateau_zokor_area', title: '高原鼢鼠', align:'center', width:120},
-			    	 {field: 'grass_worm_area', title: '草原毛虫', align:'center', width:120},
-			    	 {field: 'grasshopper_area', title: '蝗虫', align:'center', width:120}
+			    	 {field: 'grass_area', title: '总面积', align:'center', },
+			    	 {field: 'grass_usable_area', title: '可利用面积', align:'center', },
+			    	 {field: 'grass_unforage', title: '禁牧', align:'center', },
+			    	 {field: 'grass_animal_balance', title: '草畜平衡', align:'center', },
+			    	 {field: 'plateau_pika_area', title: '高原鼠兔', align:'center',},
+			    	 {field: 'plateau_zokor_area', title: '高原鼢鼠', align:'center', },
+			    	 {field: 'grass_worm_area', title: '草原毛虫', align:'center', },
+			    	 {field: 'grasshopper_area', title: '蝗虫', align:'center', }
 			    ]]
 		  });
 		
