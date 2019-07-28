@@ -23,10 +23,10 @@ layui.use(['form','layer','table', 'laydate', 'upload'], function(form,layer,tab
 	        				  if (isShow) {
 	        					  $("body").empty();
 		        				  $("head").after("<body></body>");
-		        				  $("body").append("<h1>" + res.title + "</h1>");
-		        				  $("body").append("<h3>作者：" + res.author + "</h3>");
-		        				  $("body").append("<h3 style='margin-bottom:30px;'>时间：" + res.last_time + "</h3>");
-		        				  $("body").append(val);
+		        				  $("body").append("<h1 style='text-align:center'>" + res.title + "</h1>");
+		        				  $("body").append("<h3 style='text-align:center'>作者：" + res.author + "</h3>");
+		        				  $("body").append("<h3 style='margin-bottom:30px;text-align:center'>时间：" + res.last_time + "</h3>");
+		        				  $("body").append("<div style='margin-left:50px;margin-right:50px;'>" + val + "</div>");
 	        				  } else {
 	        					  ue = UE.getEditor('container', {initialFrameWidth:'99%', initialFrameHeight:winH - 125});
 	        					  ue.ready(function() {
