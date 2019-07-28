@@ -4,7 +4,7 @@ body{
 /**菜单**/
 .frameMenu{
 	width: 250px;
-	background-color: #1c1c1c;
+	background-color: #2d2e36;
 	float: left;
 }
 .frameMenu .logo{
@@ -54,7 +54,7 @@ body{
 	overflow-y: auto;
 }
 .frameMenu .menu ul li{
-	border-bottom: 1px solid #2c3441;
+	border-bottom: 1px solid #4f5050;
 }
 .frameMenu .menu ul li a{
 	display: block;
@@ -115,7 +115,7 @@ body{
 .frameTop{
 	width: 100%;
 	height: 60px;
-	background-color: #1c1c1c;
+	background-color: #2d2e36;
 	position: relative;
 }
 .frameTop .jt{
@@ -132,7 +132,7 @@ body{
 }
 .frameTop .topMenu ul li{
 	float: left;
-	border-left: 1px solid #2c3441;
+	border-left: 1px solid #4f5050;
 }
 .frameTop .topMenu ul li a{
 	padding: 0 15px;
