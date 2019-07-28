@@ -46,14 +46,14 @@
 						</div>
 						
 						<a id="queryBtn" class="layui-btn">检索</a>
-						<a th:if="${session.userinfo.roleinfo.role_name=='admin'}" class="layui-btn" id="importBtn">导入数据</a>
+						<a th:if="${session.userinfo.roleinfo.role_name!='user'}" class="layui-btn" id="importBtn">导入数据</a>
 						<a class="layui-btn" th:href="@{/excel/水质监测数据导入模板.xlsx}">模板下载</a>
 					</div>
 				</form>
 			</div>
 			
 			<table id="datalist" lay-filter="datalist" lay-data="{id: 'datalist'}"></table>
-			<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name=='admin'}">
+			<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name!='user'}">
   				<div class="layui-inline" lay-event="add">
 			 		<i class="layui-icon layui-icon-add-1"></i>
 			 	</div>

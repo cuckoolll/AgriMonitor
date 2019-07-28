@@ -47,14 +47,14 @@
 						</div>
 						
 						<a id="queryBtn" class="layui-btn">检索</a>
-						<a th:if="${session.userinfo.roleinfo.role_name=='admin'}" class="layui-btn" id="uploadBtn">上传文件</a>
+						<a th:if="${session.userinfo.roleinfo.role_name!='user'}" class="layui-btn" id="uploadBtn">上传文件</a>
 					</div>
 				</form>
 			</div>
 			
 			<table id="datalist" lay-filter="datalist" lay-data="{id: 'datalist'}"></table>
 
-			<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name=='admin'}">
+			<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name!='user'}">
 				<div class="layui-inline" lay-event="delete">	
 					<i class="layui-icon layui-icon-delete"></i>
 				</div>
