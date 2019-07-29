@@ -69,6 +69,11 @@
 		    <artifactId>commons-collections</artifactId>  
 		    <version>3.2.1</version>  
 		</dependency>  
+		<dependency> 
+			<groupId>net.sourceforge.nekohtml</groupId> 
+			<artifactId>nekohtml</artifactId> 
+			<version>1.9.22</version> 
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -77,9 +82,23 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!--打jar包启动类-->
+                <configuration>
+                    <mainClass>com.agri.monitor.AgriMonitorApplication</mainClass>
+                </configuration>
 			</plugin>
+			<!--打jar包需要-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 </project>
