@@ -31,6 +31,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
@@ -56,7 +57,8 @@ public class AnimalsBreedService {
 	private static final Logger logger = LoggerFactory.getLogger(AnimalsBreedService.class);
 	
 	private static ThreadLocal<Integer> rownum_local = new ThreadLocal<>(); 
-	
+	@Value("${temp.excel.dir}")
+	private String tempdir;
 	@Autowired
 	private AnimalsBreedMapper animalsBreedMapper;
 	@Autowired
@@ -295,10 +297,9 @@ public class AnimalsBreedService {
 		OutputStream out = null;
 		try {
 			out = response.getOutputStream();
-			String staticDir = ResourceUtils.getURL("classpath:static").getPath();
 			//复制原模板到临时文件中
-			destFile = new File(staticDir+"/excel/"+new Date().getTime()+".xls");
-			FileUtils.copyFile(ResourceUtils.getFile(staticDir+"/excel/animalsbreed.xls"),destFile);
+			destFile = new File(tempdir+new Date().getTime()+".xls");
+			FileUtils.copyFile(ResourceUtils.getFile(tempdir+"/animalsbreed.xls"),destFile);
 			is = new FileInputStream(destFile);
 			POIFSFileSystem pfs = new POIFSFileSystem(is);
 			//读取excel模板
@@ -532,10 +533,9 @@ public class AnimalsBreedService {
 		OutputStream out = null;
 		try {
 			out = response.getOutputStream();
-			String staticDir = ResourceUtils.getURL("classpath:static").getPath();
 			//复制原模板到临时文件中
-			destFile = new File(staticDir+"/excel/"+new Date().getTime()+".xls");
-			FileUtils.copyFile(ResourceUtils.getFile(staticDir+"/excel/year_export.xls"),destFile);
+			destFile = new File(tempdir+new Date().getTime()+".xls");
+			FileUtils.copyFile(ResourceUtils.getFile(tempdir+"/year_export.xls"),destFile);
 			is = new FileInputStream(destFile);
 			POIFSFileSystem pfs = new POIFSFileSystem(is);
 			//读取excel模板
@@ -598,10 +598,9 @@ public class AnimalsBreedService {
 		OutputStream out = null;
 		try {
 			out = response.getOutputStream();
-			String staticDir = ResourceUtils.getURL("classpath:static").getPath();
 			//复制原模板到临时文件中
-			destFile = new File(staticDir+"/excel/"+new Date().getTime()+".xls");
-			FileUtils.copyFile(ResourceUtils.getFile(staticDir+"/excel/month_export.xls"),destFile);
+			destFile = new File(tempdir+new Date().getTime()+".xls");
+			FileUtils.copyFile(ResourceUtils.getFile(tempdir+"/month_export.xls"),destFile);
 			is = new FileInputStream(destFile);
 			POIFSFileSystem pfs = new POIFSFileSystem(is);
 			//读取excel模板

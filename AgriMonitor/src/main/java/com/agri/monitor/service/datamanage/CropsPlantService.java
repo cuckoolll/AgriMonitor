@@ -29,6 +29,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
@@ -51,6 +52,8 @@ public class CropsPlantService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CropsPlantService.class);
 	
+	@Value("${temp.excel.dir}")
+	private String tempdir;
 	@Autowired
 	private CropsPlantMapper cropsPlantMapper;
 	@Autowired
@@ -217,10 +220,9 @@ public class CropsPlantService {
 		OutputStream out = null;
 		try {
 			out = response.getOutputStream();
-			String staticDir = ResourceUtils.getURL("classpath:static").getPath();
 			//复制原模板到临时文件中
-			destFile = new File(staticDir+"/excel/"+new Date().getTime()+".xls");
-			FileUtils.copyFile(ResourceUtils.getFile(staticDir+"/excel/cropsplant.xls"),destFile);
+			destFile = new File(tempdir+new Date().getTime()+".xls");
+			FileUtils.copyFile(ResourceUtils.getFile(tempdir+"/cropsplant.xls"),destFile);
 			is = new FileInputStream(destFile);
 			POIFSFileSystem pfs = new POIFSFileSystem(is);
 			//读取excel模板

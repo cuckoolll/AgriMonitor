@@ -125,25 +125,28 @@ public class FarmInfoService {
 	        
 	        Sheet sheet1 = wb.getSheetAt(0);
 	        int i = 0;
-	        String towns = null;
 	        List<FarmInfo> list = new ArrayList<>();
 	        for (Row row : sheet1) {
 	        	//解析所属乡镇
-	           if (i == 1) {
-	        	   towns = row.getCell(1).getStringCellValue();
-	        	   if(StringUtils.isEmpty(towns)) {
-	        		   result.put("code", -1);
-	        		   result.put("msg", "乡镇未填写");
-	        		   return result;
-	        	   }
-	           }
-	           if (i >= 3) {
+				/*
+				 * if (i == 1) { towns = row.getCell(1).getStringCellValue();
+				 * if(StringUtils.isEmpty(towns)) { result.put("code", -1); result.put("msg",
+				 * "乡镇未填写"); return result; } }
+				 */
+	           if (i >= 2) {
 	        	   FarmInfo farminfo = new FarmInfo();
-	        	   farminfo.setFarm_name(row.getCell(0).getStringCellValue());
-	        	   farminfo.setFarm_address(row.getCell(1).getStringCellValue());
-	        	   farminfo.setLegal_person(row.getCell(2).getStringCellValue());
-	        	   farminfo.setPhone_num(row.getCell(3).getStringCellValue());
-	        	   String name=row.getCell(4).getStringCellValue();
+	        	   String towns = row.getCell(0).getStringCellValue();
+	        	   if(StringUtils.isEmpty(towns)) {
+	        		   result.put("code", -1); 
+	        		   result.put("msg", "第"+(i+1)+"行乡镇未填写"); 
+	        		   return result; 
+	        	   }
+	        	   farminfo.setTowns(towns);
+	        	   farminfo.setFarm_name(row.getCell(1).getStringCellValue());
+	        	   farminfo.setFarm_address(row.getCell(2).getStringCellValue());
+	        	   farminfo.setLegal_person(row.getCell(3).getStringCellValue());
+	        	   farminfo.setPhone_num(row.getCell(4).getStringCellValue());
+	        	   String name=row.getCell(5).getStringCellValue();
 	        	   if(StringUtils.isEmpty(name)) {
 	        		   result.put("code", -1);
 	        		   result.put("msg", "第"+(i+1)+"行认定畜种未填写");
@@ -157,14 +160,13 @@ public class FarmInfoService {
 	        		   return result;
 	        	   }
 	        	   farminfo.setAnimals_type(type);
-	        	   farminfo.setAnimals_size(Integer.valueOf(row.getCell(5).getStringCellValue()));
-	        	   if (row.getCell(6) != null) {
+	        	   farminfo.setAnimals_size(Integer.valueOf(row.getCell(6).getStringCellValue()));
+	        	   if (row.getCell(7) != null) {
 	        		   farminfo.setRemarks(row.getCell(6).getStringCellValue());
 	        	   }
 	        	   farminfo.setCreator(user.getUser_id());
 	        	   farminfo.setModifier(user.getUser_id());
 	        	   farminfo.setCounty("刚察县");
-	        	   farminfo.setTowns(towns);
 	        	   list.add(farminfo);
 	           }
 	           i++;

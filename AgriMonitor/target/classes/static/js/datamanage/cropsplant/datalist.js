@@ -18,7 +18,7 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 		    toolbar: '#barDemo',
 		    url: '/cropsplant/datalist', //数据接口，
 		    height:winH-80,
-		    where: {date_year:$("#date_year").val()},
+		    where: {date_year:curyear},
 		    page: true, //开启分页
 		    limit:20,
 		    limits:[20,40,60,100],
