@@ -52,7 +52,7 @@
         <if test="quality_time != null and quality_time != ''">
         	and quality_time between #{quality_time} and last_day(#{quality_time})
        	</if>
-       	 order by quality_time desc limit #{currIndex},#{limit}
+       	 order by quality_time desc, gid limit #{currIndex},#{limit}
     </select>
     
     <select id="queryInfoCount" parameterType="com.agri.monitor.vo.AirQueryVO" resultType="int">

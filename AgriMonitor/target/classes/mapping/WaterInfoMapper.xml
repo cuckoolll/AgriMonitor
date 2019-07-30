@@ -36,7 +36,7 @@
         <if test="quality_time != null and quality_time != ''">
         	and quality_time = #{quality_time}
        	</if>
-       	 order by quality_time desc limit #{currIndex},#{limit}
+       	 order by quality_time desc, gid limit #{currIndex},#{limit}
     </select>
     
     <select id="queryInfoCount" parameterType="com.agri.monitor.vo.WaterQueryVO" resultType="int">

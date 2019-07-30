@@ -42,7 +42,7 @@
        	<if test="date_year != null and date_year != ''">
 			where date_year = #{date_year}
        	</if>
-       	 order by date_year desc limit #{currIndex},#{limit}
+       	 order by date_year desc, gid limit #{currIndex},#{limit}
     </select>
     
     <select id="queryInfoCount" parameterType="com.agri.monitor.vo.ClimateQueryVO" resultType="int">

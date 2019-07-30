@@ -170,7 +170,7 @@ public class ClimateInfoService {
 	        	   ClimateInfo climateinfo = new ClimateInfo();
 	        	   climateinfo.setCounty(county);
 	        	   climateinfo.setTowns(towns);
-	        	   climateinfo.setDate_year(row.getCell(0).getStringCellValue());
+	        	   climateinfo.setDate_year(String.valueOf(row.getCell(0).getNumericCellValue()));
 	        	   climateinfo.setYear_avg_temperature(row.getCell(1).getNumericCellValue());
 	        	   climateinfo.setHigh_temperature(row.getCell(2).getNumericCellValue());
 	        	   climateinfo.setLow_temperature(row.getCell(3).getNumericCellValue());

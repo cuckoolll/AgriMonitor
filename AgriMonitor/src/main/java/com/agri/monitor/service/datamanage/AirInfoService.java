@@ -8,7 +8,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -153,9 +155,15 @@ public class AirInfoService {
 	        	//解析所属乡镇
 	           if (i == 1) {
 	        	   county = "刚察县";
-	        	   preparer = row.getCell(1).getStringCellValue();
-	        	   auditor = row.getCell(3).getStringCellValue();
-	        	   paper_time = yyyyMMdd.format(row.getCell(7).getDateCellValue());
+	        	   if (row.getCell(1) != null) {
+	        		   preparer = row.getCell(1).getStringCellValue();
+	        	   }
+	        	   if (row.getCell(3) != null) {
+	        		   auditor = row.getCell(3).getStringCellValue();
+	        	   }
+	        	   if (row.getCell(7) != null && !"".equals(row.getCell(7).toString())) {
+        			   	paper_time = yyyyMMdd.format(row.getCell(7).getDateCellValue());
+	        	   }
 	           }
 	           if (i >= 3) {
 	        	   String city = row.getCell(0).getStringCellValue();
@@ -170,10 +178,16 @@ public class AirInfoService {
 	        	   airinfo.setQuality_time(yyyyMMdd.format(quality_time));
 	        	   airinfo.setSo2(row.getCell(3).getNumericCellValue());
 	        	   airinfo.setNo2((row.getCell(4).getNumericCellValue()));
-	        	   airinfo.setCo(row.getCell(5).getNumericCellValue());
-	        	   airinfo.setO3_8h(row.getCell(6).getNumericCellValue());
+	        	   if (row.getCell(5) != null && !"".equals(row.getCell(5).toString())) {
+	        		   airinfo.setCo(row.getCell(5).getNumericCellValue());
+	        	   }
+	        	   if (row.getCell(6) != null && !"".equals(row.getCell(6).toString())) {
+	        		   airinfo.setO3_8h(row.getCell(6).getNumericCellValue());
+	        	   }
 	        	   airinfo.setPm10(row.getCell(7).getNumericCellValue());
-	        	   airinfo.setPm2_5(row.getCell(8).getNumericCellValue());
+	        	   if (row.getCell(8) != null && !"".equals(row.getCell(8).toString())) {
+	        		   airinfo.setPm2_5(row.getCell(8).getNumericCellValue());
+	        	   }
 	        	   airinfo.setPreparer(preparer);
 	        	   airinfo.setAuditor(auditor);
 	        	   airinfo.setPaper_time(paper_time);
