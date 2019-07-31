@@ -1,4 +1,5 @@
 layui.use(['form','layer','table', 'laydate', 'upload'], function(form,layer,table,laydate,upload) {
+
 	function init(){
 		
 	}
@@ -21,6 +22,13 @@ layui.use(['form','layer','table', 'laydate', 'upload'], function(form,layer,tab
 //			    	}
 //			    }
 //		  });
+		
+		 $("#chosefile").change(function(){
+			 var files = $('#chosefile')[0].files[0];
+			 var filename = files.name;
+			 $("#file_name").val(filename);
+		 });
+		
 		 $("#uploadBtn").click(function(){
 		    var formData = new FormData();
 
