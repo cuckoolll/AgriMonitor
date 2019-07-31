@@ -9,8 +9,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 	function render() {
 		timeControl = laydate.render({
 			elem: '#quality_time',
-			type: 'month',
-			value: new Date()
+			type: 'month'
 		}); 
 		
 		dataTable = table.render({
