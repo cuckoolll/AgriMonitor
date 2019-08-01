@@ -45,12 +45,12 @@ layui.use(['form','layer'], function(form,layer) {
 			return;
 		}
 
-		if($(_this).attr("class") == "menuFA"){
-			$("#frameMainTitle span").html('<i class="iconfont icon-xianshiqi"></i>'+$(_this).text());
+		if($(_this).hasClass("menuFA")){
+			$("#nav").html($(_this).text());
 		}else{
 			//显示父菜单
-			$("#frameMainTitle span").html('<i class="iconfont icon-xianshiqi"></i>'+$(_this).parent().parent().siblings(".menuFA").text()
-					+"&nbsp;>&nbsp;"+$(_this).text());
+			$("#nav").html($(_this).parent().parent().siblings(".menuFA").text()
+					+"&nbsp;/&nbsp;"+$(_this).text());
 		}
 		
 		//处理菜单样式变化

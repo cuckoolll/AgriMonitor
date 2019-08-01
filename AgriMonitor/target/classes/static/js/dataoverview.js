@@ -35,7 +35,7 @@ function initchart(){
 	        	}
 			}
 	    },
-	    bmap: {center: [100.030020,37.235610],zoom:10,roam: true},
+	    bmap: {center: [100.030020,37.281610],zoom:11,roam: false},
 	    series : [
 	        {
 	            name: '各畜种存栏数据',
@@ -65,7 +65,7 @@ function initchart(){
 	chart1.setOption(option1); 
 	/**-----------------------------------------**/
 	option2 = {
-	    title : {text: '刚察县'+curyear+'养殖场各畜种存栏占比图',x:'center',subtext: '单位：头、只'},
+	    title : {text: '刚察县养殖场各畜种存栏占比图',x:'center',subtext: '单位：头、只'},
 	    tooltip : {
 	        trigger: 'item',
 	        formatter: "{a} <br/>{b} : {c} ({d}%)"
@@ -74,7 +74,7 @@ function initchart(){
 	        type: 'scroll',
 	        orient: 'vertical',
 	        right: 10,
-	        top: 20,
+	        top: 50,
 	        bottom: 20,
 	        data: ['']
 	    },
@@ -82,8 +82,8 @@ function initchart(){
 	        {
 	            name: '存栏数',
 	            type: 'pie',
-	            radius : '70%',
-	            center: ['40%', '52%'],
+	            radius : '50%',
+	            center: ['45%', '55%'],
 	            data: [{value:0, name:''}],
 	            itemStyle: {
 	                emphasis: {
@@ -109,7 +109,7 @@ function initchart(){
 	        type: 'scroll',
 	        orient: 'vertical',
 	        right: 10,
-	        top: 20,
+	        top: 50,
 	        bottom: 20,
 	        data: ['']
 	    },
@@ -117,8 +117,8 @@ function initchart(){
 	        {
 	            name: '面积',
 	            type: 'pie',
-	            radius : '70%',
-	            center: ['40%', '52%'],
+	            radius : '50%',
+	            center: ['45%', '55%'],
 	            data: [{value:0, name:''}],
 	            itemStyle: {
 	                emphasis: {
@@ -144,7 +144,7 @@ function initchart(){
 	        type: 'scroll',
 	        orient: 'vertical',
 	        right: 10,
-	        top: 20,
+	        top: 50,
 	        bottom: 20,
 	        data: ['']
 	    },
@@ -152,8 +152,8 @@ function initchart(){
 	        {
 	            name: '总产',
 	            type: 'pie',
-	            radius : '70%',
-	            center: ['40%', '52%'],
+	            radius : '50%',
+	            center: ['45%', '55%'],
 	            data: [{value:0, name:''}],
 	            itemStyle: {
 	                emphasis: {
