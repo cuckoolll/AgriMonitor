@@ -15,7 +15,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		dataTable = table.render({
 			 id:'datalist',
 			 elem: '#datalist',
-			 height:winH-80,
+			 height:winH-110,
 			 toolbar: '#barDemo',
 			 url: '/grassinfo/queryInfo', //数据接口
 			 method: 'post',
