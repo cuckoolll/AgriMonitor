@@ -1,12 +1,20 @@
-layui.use(['form','layer','util'], function(form,layer,util) {
+layui.use(['form','layer','util','laydate'], function(form,layer,util,laydate) {
 	var winH=$(window).height();
-	$("#main").height(winH/2-20);
-	$("#main1").height(winH/2-20);
+	$("#main").height(winH/2-60);
+	$("#main1").height(winH/2-60);
 
 	var curyear=util.toDateString(new Date(), 'yyyy');
 	var years=[curyear-9,curyear-8,curyear-7,curyear-6,curyear-5,curyear-4,curyear-3,curyear-2,curyear-1,curyear];
 	var myChart, myChart1;
-	function init(){
+	function init(year){
+		laydate.render({
+		    elem: '#date_year',
+		    type: 'year',
+		    value:curyear,
+			done: function(value, date, endDate) {
+				init(value);
+			}
+		 });
 		myChart = echarts.init(document.getElementById('main')); 
 		myChart1 = echarts.init(document.getElementById('main1')); 
 		option = {
@@ -108,7 +116,7 @@ layui.use(['form','layer','util'], function(form,layer,util) {
 		option1.title.text=$("#crops_type").find("option:selected").text()+"近十年播种面积情况";
 		myChart1.setOption(option1); 
 
-		$.post("/cropsplant/cropsPlantAnalysis/getdata", {type: $("#crops_type").val()},function(data){
+		$.post("/cropsplant/cropsPlantAnalysis/getdata", {type: $("#crops_type").val(),year: year},function(data){
 			if(data){
 				if(data.error){
 					layer.msg("查询数据失败");
@@ -131,8 +139,7 @@ layui.use(['form','layer','util'], function(form,layer,util) {
 	}
 	
 	form.on('select(crops_type)', function(data){
-		init();
+		init($("#date_year").val());
 	});  
-	
-	init();
+	init(curyear);
 });

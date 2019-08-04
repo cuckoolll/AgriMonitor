@@ -28,33 +28,50 @@
 	</head>
 
 	<body>
-		<div class="cBody">
-			<div class="queryArea">
-				<form class="layui-form" action="">
-					<div class="layui-form-item">
-						<label style="width: 90px" class="layui-form-label text-left">养殖场名称：</label>
-						<div class="layui-input-inline">
-							<input type="text" id="farmname" placeholder="输入养殖场名称" autocomplete="off" class="layui-input">
-						</div>
-						<label class="layui-form-label">认定畜种：</label>
-						<div class="layui-input-inline">
-					      <select id="type">
-					        <option value=""></option>
-					        <option th:each="type:${animalstype}" th:value="${type.gid}" th:text="${type.type_name}"></option>
-					      </select>
-					      </div>
-						<a id="queryBtn" class="layui-btn">检索</a>
-						<a th:if="${session.userinfo.roleinfo.role_name!='user'}" type="button" class="layui-btn" id="dataImportBtn"><i class="layui-icon"></i>导入数据</a>
-						<a th:href="@{/excel/刚察县规模养殖场基本统计表.xlsx}" class="layui-btn"><i class="layui-icon"></i>模板下载</a>
-					</div>
-				</form>
-			</div>
-			<table id="datalist"  lay-filter="datalist"></table>
-			
-			<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name!='user'}">
-  			 <div class="layui-inline" lay-event="add"><i class="layui-icon layui-icon-add-1"></i></div><div class="layui-inline" lay-event="update"><i class="layui-icon layui-icon-edit"></i></div><div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
-			</script>
-		</div>
+		  <div class="layui-fluid">
+		      <div class="layui-row layui-col-space10">
+					<div class="layui-col-xs12" style="height:66px">
+				      <!-- 填充内容 -->
+				      <div class="layui-card">
+				        <div class="layui-card-body">
+				        	<div class="queryArea">
+								<form class="layui-form" action="">
+									<div class="layui-form-item">
+										<label style="width: 90px" class="layui-form-label text-left">养殖场名称：</label>
+										<div class="layui-input-inline">
+											<input type="text" id="farmname" placeholder="输入养殖场名称" autocomplete="off" class="layui-input">
+										</div>
+										<label class="layui-form-label">认定畜种：</label>
+										<div class="layui-input-inline">
+									      <select id="type">
+									        <option value=""></option>
+									        <option th:each="type:${animalstype}" th:value="${type.gid}" th:text="${type.type_name}"></option>
+									      </select>
+									      </div>
+										<a id="queryBtn" class="layui-btn">检索</a>
+										<a th:if="${session.userinfo.roleinfo.role_name!='user'}" type="button" class="layui-btn" id="dataImportBtn"><i class="layui-icon"></i>导入数据</a>
+										<a th:href="@{/excel/刚察县规模养殖场基本统计表.xlsx}" class="layui-btn"><i class="layui-icon"></i>模板下载</a>
+									</div>
+								</form>
+							</div>
+				        </div>
+				      </div>
+				    </div>
+				</div>
+				<div class="layui-row layui-col-space10">
+					<div class="layui-col-xs12">
+				      <!-- 填充内容 -->
+				      <div class="layui-card">
+				        <div class="layui-card-body">
+				        	<table id="datalist"  lay-filter="datalist"></table>
+				        	<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name!='user'}">
+  							 <div class="layui-inline" lay-event="add"><i class="layui-icon layui-icon-add-1"></i></div><div class="layui-inline" lay-event="update"><i class="layui-icon layui-icon-edit"></i></div><div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
+							</script>
+				        </div>
+				      </div>
+				    </div>
+				</div>
+		    </div>
 		<script th:src="@{/js/datamanage/farminfo/datalist.js}"></script>
 	</body>
 </html>

@@ -5,7 +5,9 @@
 		select * from t_farm_info where gid=#{gid}
 	</select>
     <select id="findAllForPage" parameterType="com.agri.monitor.vo.FarmQueryVO" resultType="map">
-        select a.gid,a.county,a.towns,a.farm_name,a.farm_address,a.legal_person,a.phone_num,b.type_name animals_name,a.animals_size,a.remarks 
+        select a.gid,a.county,a.towns,IFNULL(a.farm_name,' ') farm_name,IFNULL(a.farm_address,' ') farm_address,
+        IFNULL(a.legal_person,' ') legal_person,IFNULL(a.phone_num,' ') phone_num,IFNULL(b.type_name,' ') animals_name,
+        IFNULL(a.animals_size,' ') animals_size,IFNULL(a.remarks,' ') remarks 
         from t_farm_info a,t_animals_type b where a.animals_type=b.gid
         <if test="farm_name != null and farm_name != ''">
         	<bind name="farm_name" value="'%' + farm_name + '%'"/>

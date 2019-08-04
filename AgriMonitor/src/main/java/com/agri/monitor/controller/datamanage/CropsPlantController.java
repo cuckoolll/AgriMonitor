@@ -173,8 +173,8 @@ public class CropsPlantController {
 	
 	@ResponseBody
 	@RequestMapping(value="/cropsPlantAnalysis/getdata",method=RequestMethod.POST)
-	public Map getdata(Model model,Integer type) {
-		return cropsPlantService.getdata(type);
+	public Map getdata(Model model,Integer type,Integer year) {
+		return cropsPlantService.getdata(type, year);
 	}
 	
 	@ResponseBody

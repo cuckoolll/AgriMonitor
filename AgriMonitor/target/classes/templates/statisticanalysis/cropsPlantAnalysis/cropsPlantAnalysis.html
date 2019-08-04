@@ -28,23 +28,53 @@
 	</head>
 
 	<body>
-		<div class="cBody" style="height: 100%">
-			<div class="queryArea">
-					<form class="layui-form" action="">
-						<div class="layui-form-item">
-							<label style="width: 90px" class="layui-form-label text-left">农作物类型：</label>
-							<div class="layui-input-inline">
-								<select id="crops_type" style="width: 200px" lay-filter="crops_type">
-							        <option th:each="type:${cropstype}" th:value="${type.gid}" th:text="${type.type_name}"></option>
-							    </select>
+	  <div class="layui-fluid">
+      <div class="layui-row layui-col-space10">
+			<div class="layui-col-xs12" style="height:66px">
+		      <!-- 填充内容 -->
+		      <div class="layui-card">
+		        <div class="layui-card-body">
+		        	<div class="queryArea">
+						<form class="layui-form" action="">
+							<div class="layui-form-item">
+							   <label style="width: 55px" class="layui-form-label text-left">年份：</label>
+								<div class="layui-input-inline">
+									<input type="text" id="date_year" class="layui-input" lay-filter='date_year'>
+								</div>
+								<label style="width: 90px" class="layui-form-label text-left">农作物类型：</label>
+								<div class="layui-input-inline">
+									<select id="crops_type" style="width: 200px" lay-filter="crops_type">
+								        <option th:each="type:${cropstype}" th:value="${type.gid}" th:text="${type.type_name}"></option>
+								    </select>
+								</div>
 							</div>
-						</div>
-					</form>
-				</div>
-		    <div id="main"></div>
-		    <div id="main1"></div>
-		    <script th:src="@{/temp/echarts.min.js}"></script>
+						</form>
+					</div>
+		        </div>
+		      </div>
+		    </div>
 		</div>
+		<div class="layui-row layui-col-space10">
+			<div class="layui-col-xs6">
+		      <div class="layui-card">
+			    <div class="layui-card-header"></div>
+		        <div class="layui-card-body">
+		        	<div id="main"></div>
+		        </div>
+		      </div>
+		    </div>
+		    <div class="layui-col-xs6">
+		      <div class="layui-card">
+		        <div class="layui-card-header"></div>
+		        <div class="layui-card-body">
+		    		<div id="main1"></div>
+		        </div>
+		      </div>
+		    </div>
+		</div>
+    </div>
+	
+	    <script th:src="@{/temp/echarts.min.js}"></script>
 		<script th:src="@{/js/statisticanalysis/cropsPlantAnalysis/cropsPlantAnalysis.js}"></script>
 	</body>
 </html>

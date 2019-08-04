@@ -78,17 +78,17 @@
     
     <select id="getYearData" parameterType="map" resultType="map">
         select a.*,b.gid fgid,b.parent_id,b.isleaf,b.target_name from(
-		select animals_target,sum(surplus_size) surplus_size,sum(female_size) female_size,
-        sum(child_size) child_size,sum(survival_size) survival_size,sum(death_size) death_size,
-			  sum(maturity_size) maturity_size,sum(sell_size) sell_size,sum(meat_output) meat_output,
-        sum(milk_output) milk_output,sum(egg_output) egg_output,sum(hair_output) hair_output
+		select animals_target,truncate(sum(surplus_size),2) surplus_size,truncate(sum(female_size),2) female_size,
+        truncate(sum(child_size),2) child_size,truncate(sum(survival_size),2) survival_size,truncate(sum(death_size),2) death_size,
+			  truncate(sum(maturity_size),2) maturity_size,truncate(sum(sell_size),2) sell_size,truncate(sum(meat_output),2) meat_output,
+        truncate(sum(milk_output),2) milk_output,truncate(sum(egg_output),2) egg_output,truncate(sum(hair_output),2) hair_output
  		from t_animals_breed where date_month between #{m1} and #{m2} group by animals_target) a,
 		t_animals_target b where a.animals_target=b.gid and b.stopflag=1
     </select>
     
     <select id="getSumGroupYear" parameterType="map" resultType="map">
-    	 SELECT a.date_month,sum(meat_output) meat_output,sum(milk_output) milk_output,
-    	 sum(egg_output) egg_output,sum(hair_output) hair_output 
+    	 SELECT a.date_month,truncate(sum(meat_output),2) meat_output,truncate(sum(milk_output),2) milk_output,
+    	 truncate(sum(egg_output),2) egg_output,truncate(sum(hair_output),2) hair_output 
 		from t_animals_breed a,t_animals_target b where a.animals_target=b.gid and b.stopflag=1
 		and b.isleaf=1 and a.date_month BETWEEN #{m1} and #{m2} group by a.date_month order by a.date_month 
     </select>

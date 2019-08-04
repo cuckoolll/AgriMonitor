@@ -254,3 +254,6 @@ i.bt{
 .queryArea .text-left{
 	text-align: left;
 }
+.queryArea .layui-form-item{
+	margin-bottom: 0px;
+}

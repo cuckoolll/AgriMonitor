@@ -157,9 +157,9 @@ public class AnimalsBreedController {
 		return animalsTargetService.animalsTargetTy(gids,user.getUser_id());
 	}
 	/****------------------------------*********/
-	@RequestMapping("/animalsBreedAnalysis")
+	@RequestMapping("/animalsBreedReport")
 	public String animalsBreedAnalysis(Model model) {
-		return "/statisticanalysis/animalsBreedAnalysis/animalsBreedAnalysis";
+		return "/statisticanalysis/animalsBreedAnalysis/animalsBreedReport";
 	}
 	@ResponseBody
 	@RequestMapping(value="/animalsBreedAnalysis/getYearData")

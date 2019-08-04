@@ -8,7 +8,7 @@
 		<meta name="renderer" content="webkit">
 		<!--国产浏览器高速模式-->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>养殖场基本信息</title>
+		<title>畜牧业生产情况分析</title>
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/base.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/iconfont.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
@@ -27,8 +27,15 @@
 		<!-- 公共样式 结束 -->
 	</head>
 
-	<body>
-		  <div class="layui-fluid">
+	<body style="background: white;overflow:auto;">
+		<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief" style="margin: 0px;border-top:1px solid #e6e6e6">
+		  <ul class="layui-tab-title">
+		    <li class="layui-this">月度报表</li>
+		    <li>年度报表</li>
+		  </ul>
+		  <div class="layui-tab-content" style="padding:0px">
+		    <div class="layui-tab-item layui-show" style="background: #f2f2f2;">
+		    <div class="layui-fluid">
 		      <div class="layui-row layui-col-space10">
 					<div class="layui-col-xs12" style="height:66px">
 				      <!-- 填充内容 -->
@@ -37,20 +44,11 @@
 				        	<div class="queryArea">
 								<form class="layui-form" action="">
 									<div class="layui-form-item">
-										<label style="width: 90px" class="layui-form-label text-left">养殖场名称：</label>
+										<label class="layui-form-label text-left">月度：</label>
 										<div class="layui-input-inline">
-											<input type="text" id="farmname" placeholder="输入养殖场名称" autocomplete="off" class="layui-input">
+											<input type="text" id="month" class="layui-input">
 										</div>
-										<label class="layui-form-label">认定畜种：</label>
-										<div class="layui-input-inline">
-									      <select id="type">
-									        <option value=""></option>
-									        <option th:each="type:${animalstype}" th:value="${type.gid}" th:text="${type.type_name}"></option>
-									      </select>
-									      </div>
-										<a id="queryBtn" class="layui-btn">检索</a>
-										<a th:if="${session.userinfo.roleinfo.role_name!='user'}" type="button" class="layui-btn" id="dataImportBtn"><i class="layui-icon"></i>导入数据</a>
-										<a th:href="@{/excel/刚察县规模养殖场基本统计表.xlsx}" class="layui-btn"><i class="layui-icon"></i>模板下载</a>
+										<a id="exportMonthData" class="layui-btn"><i class="layui-icon"></i>月报导出</a>
 									</div>
 								</form>
 							</div>
@@ -63,15 +61,50 @@
 				      <!-- 填充内容 -->
 				      <div class="layui-card">
 				        <div class="layui-card-body">
-				        	<table id="datalist"  lay-filter="datalist"></table>
-				        	<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name!='user'}">
-  							 <div class="layui-inline" lay-event="add"><i class="layui-icon layui-icon-add-1"></i></div><div class="layui-inline" lay-event="update"><i class="layui-icon layui-icon-edit"></i></div><div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
-							</script>
+				        	<table id="datalist1"  lay-filter="datalist1"></table>
 				        </div>
 				      </div>
 				    </div>
 				</div>
 		    </div>
-		<script th:src="@{/js/datamanage/farminfo/datalist.js}"></script>
+			</div>
+			
+		    <div class="layui-tab-item" style="background: #f2f2f2;">
+		    <div class="layui-fluid">
+		      <div class="layui-row layui-col-space10">
+					<div class="layui-col-xs12" style="height:66px">
+				      <div class="layui-card">
+				        <div class="layui-card-body">
+				        	<div class="queryArea">
+							<form class="layui-form" action="">
+								<div class="layui-form-item" style="margin-bottom: 0px">
+									<label class="layui-form-label text-left">年度：</label>
+									<div class="layui-input-inline">
+										<input type="text" id="year" class="layui-input">
+									</div>
+									<a id="exportYearData" class="layui-btn"><i class="layui-icon"></i>年报导出</a>
+								</div>
+							</form>
+							</div>
+				        </div>
+				      </div>
+				    </div>
+				</div>
+				<div class="layui-row layui-col-space10">
+					<div class="layui-col-xs12">
+				      <!-- 填充内容 -->
+				      <div class="layui-card">
+				        <div class="layui-card-body">
+				        	<table id="datalist" lay-filter="datalist"></table>
+				        </div>
+				      </div>
+				    </div>
+				</div>
+		    </div>
+			</div>
+		</div>
+		</div> 
+		 <script th:src="@{/temp/echarts.min.js}"></script>
+		<script th:src="@{/js/statisticanalysis/animalsBreedAnalysis/animalsBreedReport.js}"></script>
 	</body>
 </html>

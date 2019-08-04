@@ -291,10 +291,8 @@ public class CropsPlantService {
 		return null;
 	}
 	
-	public Map getdata(Integer type) {
+	public Map getdata(Integer type,Integer year) {
 		info("农作物产量情况分析，type=" + type);
-		Calendar c = Calendar.getInstance();
-		int year = c.get(Calendar.YEAR);
 		Double[] zcarr= {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 		Double[] dcarr= {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 		Double[] mjarr= {0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
