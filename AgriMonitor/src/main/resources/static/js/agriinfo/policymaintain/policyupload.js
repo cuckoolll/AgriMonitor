@@ -26,7 +26,7 @@ layui.use(['form','layer','table', 'laydate', 'upload'], function(form,layer,tab
 		 $("#chosefile").change(function(){
 			 var files = $('#chosefile')[0].files[0];
 			 var filename = files.name;
-			 $("#file_name").val(filename);
+			 $("#file_name").val(filename.split(".")[0]);
 		 });
 		
 		 $("#uploadBtn").click(function(){
