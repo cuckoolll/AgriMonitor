@@ -8,7 +8,7 @@
 		<meta name="renderer" content="webkit">
 		<!--国产浏览器高速模式-->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>农作物产量分析</title>
+		<title>畜牧业生产情况分析</title>
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/base.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/iconfont.css}">
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
@@ -37,11 +37,15 @@
 		        	<div class="queryArea">
 						<form class="layui-form" action="">
 							<div class="layui-form-item">
-								<label style="width: 90px" class="layui-form-label text-left">农作物类型：</label>
+								<label style="width: 60px" class="layui-form-label text-left">年度：</label>
 								<div class="layui-input-inline">
-									<select id="crops_type" style="width: 200px" lay-filter="crops_type">
-								        <option th:each="type:${cropstype}" th:value="${type.gid}" th:text="${type.type_name}"></option>
-								    </select>
+									<input type="text" id="year" class="layui-input">
+								</div>
+								<label class="layui-form-label" >指标名称：</label>
+								<div class="layui-input-inline">
+									<select id="target_type" name="target_type" required lay-verify="required">
+								    	<option th:each="type:${animalsTarget}" th:value="${type.gid}" th:text="${type.target_name}"></option>
+								   </select>
 								</div>
 							</div>
 						</form>
@@ -53,15 +57,15 @@
 		<div class="layui-row layui-col-space10">
 			<div class="layui-col-xs6">
 		      <div class="layui-card">
-		        <div class="layui-card-body">
-		        	<div id="main"></div>
+		        <div class="layui-card-body" style="height: 350px">
+		        	<div id="chart1" style="height: 100%"></div>
 		        </div>
 		      </div>
 		    </div>
 		    <div class="layui-col-xs6">
 		      <div class="layui-card">
-		        <div class="layui-card-body">
-		    		<div id="main1"></div>
+		        <div class="layui-card-body" style="height: 350px">
+		        	<div id="chart2"></div>
 		        </div>
 		      </div>
 		    </div>
@@ -78,7 +82,7 @@
 		</div>
     </div>
 	
-	    <script th:src="@{/temp/echarts.min.js}"></script>
-		<script th:src="@{/js/statisticanalysis/cropsPlantAnalysis/cropsPlantAnalysis.js}"></script>
+	   	<script th:src="@{/temp/echarts.min.js}"></script>
+		<script th:src="@{/js/statisticanalysis/animalsBreedAnalysis/animalsBreedAnalysis.js}"></script>
 	</body>
 </html>

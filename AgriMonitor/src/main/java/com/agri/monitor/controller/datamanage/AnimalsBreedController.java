@@ -158,8 +158,13 @@ public class AnimalsBreedController {
 	}
 	/****------------------------------*********/
 	@RequestMapping("/animalsBreedReport")
-	public String animalsBreedAnalysis(Model model) {
+	public String animalsBreedReport(Model model) {
 		return "/statisticanalysis/animalsBreedAnalysis/animalsBreedReport";
+	}
+	@RequestMapping("/animalsBreedAnalysis")
+	public String animalsBreedAnalysis(Model model) {
+		model.addAttribute("animalsTarget", CacheUtil.getCache(CacheTypeEnum.ANIMALSTARGET));
+		return "/statisticanalysis/animalsBreedAnalysis/animalsBreedAnalysis";
 	}
 	@ResponseBody
 	@RequestMapping(value="/animalsBreedAnalysis/getYearData")
@@ -198,6 +203,13 @@ public class AnimalsBreedController {
 	@RequestMapping(value="/getSumGroupYear")
 	public Map getSumGroupYear() {
 		return animalsBreedService.getSumGroupYear();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/monthDataAnalysis")
+	public Map monthDataAnalysis(Integer year,Integer target_type,HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		return animalsBreedService.monthDataAnalysis( year, target_type,user.getUser_id());
 	}
 }
 

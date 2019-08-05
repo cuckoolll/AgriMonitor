@@ -77,7 +77,7 @@
    <select id="getdata10" parameterType="int" resultType="map">
     	select a.date_year,a.planted_area,a.planted_output,TRUNCATE(a.planted_output*2/a.planted_area,2) dc
         from t_crops_plant a,t_crops_type b where a.crops_type=b.gid and b.stopflag=1
-		and a.crops_type=#{type} order by a.date_year desc limit 0,10
+		and a.crops_type=#{type} order by a.date_year limit 0,10
     </select>
     
     <select id="findNumByType" parameterType="java.util.List" resultType="map">
