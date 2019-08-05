@@ -28,7 +28,12 @@
 	</head>
 
 	<body>
-		<div class="cBody">
+		<div class="layui-fluid">
+	 	<div class="layui-row layui-col-space10">
+		<div class="layui-col-xs12" style="height:66px">
+	      	<!-- 填充内容 -->
+	      	<div class="layui-card">
+        	<div class="layui-card-body">
 			<div class="queryArea">
 				<form class="layui-form" action="">
 					<div class="layui-form-item">
@@ -45,20 +50,37 @@
 					</div>
 				</form>
 			</div>
-			<table id="datalist"  lay-filter="datalist"></table>
-			<script type="text/html" id="titleTpl">
- 			 {{#  if(d.stopflag==1){}}
-   				启用
-  			 {{#  } else if(d.stopflag==0) {}}
-   			 	停用
-  			{{#  } }}
-			</script>
-			<!-- 操作列 -->
-			<script type="text/html" id="oper-col" th:if="${session.userinfo.roleinfo.role_name!='user'}">
-    			<a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
-    			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-			</script>
+			
+			</div>
+	     	</div>
+		    </div>
 		</div>
+		
+		<div class="layui-row layui-col-space10">
+			<div class="layui-col-xs12">
+	      	<!-- 填充内容 -->
+	      	<div class="layui-card">
+        	<div class="layui-card-body">
+				<table id="datalist"  lay-filter="datalist"></table>
+				<script type="text/html" id="titleTpl">
+ 			 	{{#  if(d.stopflag==1){}}
+   					启用
+  				{{#  } else if(d.stopflag==0) {}}
+   			 		停用
+  				{{#  } }}
+				</script>
+				<!-- 操作列 -->
+				<script type="text/html" id="oper-col" th:if="${session.userinfo.roleinfo.role_name!='user'}">
+    				<a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+    				<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+				</script>
+			</div>
+			
+			</div>
+		    </div>
+		</div>
+    </div>
+			
 		<script th:src="@{/js/datamanage/animalsBreed/animalsTarget/datalist.js}"></script>
 	</body>
 </html>

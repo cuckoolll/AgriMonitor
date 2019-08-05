@@ -112,7 +112,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 			layer.open({
       		    title: "上传农业政策文件",
 				type: 2,
-				area: ['700px', '230px'],
+				area: ['700px', '250px'],
 				scrollbar: true,
 				content: '/policymaintain/upload',
 				end: function(index, layero){

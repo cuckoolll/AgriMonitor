@@ -28,7 +28,12 @@
 	</head>
 
 	<body>
-		<div class="cBody">
+		<div class="layui-fluid">
+	 	<div class="layui-row layui-col-space10">
+		<div class="layui-col-xs12" style="height:66px">
+	      	<!-- 填充内容 -->
+	      	<div class="layui-card">
+        	<div class="layui-card-body">
 			<div class="queryArea">
 				<form class="layui-form" action="">
 					<div class="layui-form-item">
@@ -46,27 +51,43 @@
 					</div>
 				</form>
 			</div>
-			<table id="datalist"  lay-filter="datalist"></table>
-			<script type="text/html" id="titleTpl">
- 			 {{#  if(d.monitor_type==1){}}
-   				养殖场牲畜总存栏监控
-  			 {{#  } else if(d.monitor_type==2) {}}
-   			 	单个养殖场牲畜存栏监控
-  			{{#  } else if(d.monitor_type==3) {}}
-   			 	畜牧业生产情况监控
-  			{{#  } else if(d.monitor_type==4) {}}
-   			 	农作物产量面积监控
-  			{{#  } }}
-			</script>
-			<script type="text/html" id="barDemo">
-  			 <div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
-			</script>
-			<script type="text/html" id="barDemo1">
-			{{#  if(d.stopflag==1){}}
-   				<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="ty">停止预警</a>
-  			{{#  } }}
-			</script>
+			
+			</div>
+	     	</div>
+		    </div>
 		</div>
+			
+		<div class="layui-row layui-col-space10">
+			<div class="layui-col-xs12">
+	      	<!-- 填充内容 -->
+	      	<div class="layui-card">
+        	<div class="layui-card-body">
+				<table id="datalist"  lay-filter="datalist"></table>
+				<script type="text/html" id="titleTpl">
+ 			 	{{#  if(d.monitor_type==1){}}
+   					养殖场牲畜总存栏监控
+  			 	{{#  } else if(d.monitor_type==2) {}}
+   			 		单个养殖场牲畜存栏监控
+  				{{#  } else if(d.monitor_type==3) {}}
+   			 		畜牧业生产情况监控
+  				{{#  } else if(d.monitor_type==4) {}}
+   			 		农作物产量面积监控
+  				{{#  } }}
+				</script>
+				<script type="text/html" id="barDemo">
+  				 <div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
+				</script>
+				<script type="text/html" id="barDemo1">
+				{{#  if(d.stopflag==1){}}
+   					<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="ty">停止预警</a>
+  				{{#  } }}
+				</script>
+			</div>
+			
+			</div>
+		    </div>
+		</div>
+    </div>
 		<script th:src="@{/js/monitorManage/monitorlog.js}"></script>
 	</body>
 </html>

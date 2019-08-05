@@ -10,7 +10,7 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 		    method:'post',
 		    toolbar: '#barDemo',
 		    url: '/monitorManage/loglist', //数据接口，
-		    height:winH-80,
+		    height:winH-110,
 		    page: true, //开启分页
 		    limit:20,
 		    limits:[20,40,60,100],

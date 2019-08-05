@@ -2,7 +2,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload', 'util'], function(tabl
 	var timeControl;	  
 	var winH=$(window).height();
 	
-	$("#charts").css("height",winH - 80);
+	$("#charts").css("height",winH / 2 - 60);
 	
 	var curyear=util.toDateString(new Date(), 'yyyy');
 	var years=[curyear-9,curyear-8,curyear-7,curyear-6,curyear-5,curyear-4,curyear-3,curyear-2,curyear-1,curyear];

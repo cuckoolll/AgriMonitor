@@ -13,7 +13,7 @@ layui.config({
 			id:"datalist",
 		    elem: '#datalist',
 		    url: '/animalsBreed/animalsTarget/datalist', //数据接口，
-		    height:winH-80,
+		    height:winH-110,
 		    treeColIndex: 1,
 	        treeSpid: 0,
 	        treeIdName: 'gid',
