@@ -28,7 +28,12 @@
 	</head>
 
 	<body>
-		<div class="cBody">
+		<div class="layui-fluid">
+	 	<div class="layui-row layui-col-space10">
+		<div class="layui-col-xs12" style="height:66px">
+	      	<!-- 填充内容 -->
+	      	<div class="layui-card">
+        	<div class="layui-card-body">
 			<div class="queryArea">
 				<form class="layui-form" action="">
 					<div class="layui-form-item">
@@ -51,35 +56,52 @@
 					</div>
 				</form>
 			</div>
-			<table id="datalist" lay-filter="datalist"></table>
-			<script type="text/html" id="titleTpl">
- 			 {{#  if(d.operation_type==1){}}
-   				查询
-  			 {{#  } else if(d.operation_type==2) {}}
-   			 	新增
-  			{{#  } else if(d.operation_type==3) {}}
-				修改
-			{{#  } else if(d.operation_type==4) {}}
-				删除
-			{{#  } else if(d.operation_type==5) {}}
-				导入
-			{{#  } else if(d.operation_type==6) {}}
-				登陆
-			{{#  } else if(d.operation_type==7) {}}
-				保存
-			{{#  }}}
-			</script>
-			<script type="text/html" id="titleTpl1">
- 			 {{#  if(d.operation_status==0){}}
-   				失败
-  			 {{#  } else if(d.operation_status==1) {}}
-   			 	成功
-			{{#  }}}
-			</script>
-			<script type="text/html" id="barDemo">
-  			 <div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
-			</script>
+			
+			</div>
+	     	</div>
+		    </div>
 		</div>
+			
+		<div class="layui-row layui-col-space10">
+			<div class="layui-col-xs12">
+	      	<!-- 填充内容 -->
+	      	<div class="layui-card">
+        	<div class="layui-card-body">
+			<table id="datalist" lay-filter="datalist"></table>
+				<script type="text/html" id="titleTpl">
+ 			 	{{#  if(d.operation_type==1){}}
+   					查询
+  			 	{{#  } else if(d.operation_type==2) {}}
+   			 		新增
+  				{{#  } else if(d.operation_type==3) {}}
+					修改
+				{{#  } else if(d.operation_type==4) {}}
+					删除
+				{{#  } else if(d.operation_type==5) {}}
+					导入
+				{{#  } else if(d.operation_type==6) {}}
+					登陆
+				{{#  } else if(d.operation_type==7) {}}
+					保存
+				{{#  }}}
+				</script>
+				<script type="text/html" id="titleTpl1">
+ 			 	{{#  if(d.operation_status==0){}}
+   					失败
+  			 	{{#  } else if(d.operation_status==1) {}}
+   			 		成功
+				{{#  }}}
+				</script>
+				<script type="text/html" id="barDemo">
+  				<div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
+				</script>
+			</div>
+			
+			</div>
+		    </div>
+		</div>
+    </div>
+			
 		<script th:src="@{/js/syslog/datalist.js}"></script>
 	</body>
 </html>
