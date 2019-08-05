@@ -254,6 +254,7 @@ public class SoilInfoService {
 		final Map result = new HashMap();
 		result.put("data", dataList);
 		result.put("code_number", code_numberList);
+		result.put("gridData", analysisData);
 		
 		return result;
 	}

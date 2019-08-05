@@ -256,8 +256,28 @@ public class GrassInfoService {
 		final List dataList = Arrays.asList(datas);
 		Collections.reverse(dataList);
 		
+		for (int i = year; i > year - 10; i--) {
+			boolean exist = false;
+			for (Map map : analysisData) {
+				if (map.get("date_year") != null) {
+					int tempYear = (Integer) map.get("date_year");
+					if (tempYear == i) {
+						exist = true;
+						continue;
+					}
+				}
+			}
+			if (!exist) {
+				Map o = new HashMap();
+				o.put("date_year", i);
+				o.put(grassIndex, 0);
+				analysisData.add(o);
+			}
+		}
+		
 		final Map result = new HashMap();
 		result.put("data", dataList);
+		result.put("gridData", analysisData);
 //		result.put("towns", townsList);
 //		result.put("date_year", date_yearList);
 		

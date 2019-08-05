@@ -1,15 +1,16 @@
 layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form, laydate, layer, upload) {
-	var timeControl;	  
+	var timeControl;	
+	var dataTable;
 	var winH=$(window).height();
 	
-	$("#charts").css("height",winH - 80);
+	$("#charts").css("height",winH / 2 - 90);
 	
     var charts = echarts.init(document.getElementById('charts'));
 	
     /**
      * 绘制柱状图 .
      */
-    function setBarOption(map) {
+    function setBarAndGridOption(map) {
     	var date_year = map.date_year;
     	var soilindex = map.soilindex;
     	var soilindexName = map.soilindexName;
@@ -18,7 +19,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
     	param.date_year = date_year;
     	param.soilindex = soilindex;
     	
-    	title = date_year + "年" + soilindexName + "分析图";
+    	title = date_year + "年" + soilindexName + "统计图";
     	
     	$.post("/soilinfo/queryAnalysisData", param, function(res){
     		charts.setOption({
@@ -47,6 +48,18 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
     	            data: res.data
     	        }]
         	});
+    		
+    		dataTable = table.render({
+   			 	id:'datalist',
+   			 	elem: '#datalist',
+   			 	height:winH/2-90,
+   			 	limit:res.gridData.length,
+   			 	data:res.gridData,
+   		     	cols: [[ //表头
+   		     		{field: 'code_number', title: '编号'},
+   		     		{field: soilindex, title: soilindexName, sort: true}
+	     		]]
+	  		});
     	});
     };
     
@@ -69,7 +82,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		map.soilindex = $("#soilindex").val();
 		map.soilindexName = $("#soilindex option:selected").text();
 
-		setBarOption(map);
+		setBarAndGridOption(map);
 		
 	}
 	
@@ -80,7 +93,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 //		});
 		
 		$(window).resize(function(){
-			$("#charts").css("height",winH - 80);
+			$("#charts").css("height",winH / 2 - 90);
 			charts.resize();
 		});
 		

@@ -2,7 +2,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload', 'util'], function(tabl
 	var timeControl;	  
 	var winH=$(window).height();
 	
-	$("#charts").css("height",winH - 80);
+	$("#charts").css("height",winH / 2 - 90);
 	
 	var curyear=util.toDateString(new Date(), 'yyyy');
 	var years=[curyear-9,curyear-8,curyear-7,curyear-6,curyear-5,curyear-4,curyear-3,curyear-2,curyear-1,curyear];
@@ -11,7 +11,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload', 'util'], function(tabl
     /**
      * 绘制折线图 .
      */
-    function setLineOption(map) {
+    function setLineAndGridOption(map) {
     	var towns = map.towns;
     	var grassindex = map.grassindex;
     	var grassindexName = map.grassindexName;
@@ -20,7 +20,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload', 'util'], function(tabl
     	param.towns = towns;
     	param.grassindex = grassindex;
     	
-    	title = grassindexName + "近十年分析图";
+    	title = grassindexName + "近十年统计图";
     	
     	$.post("/grassinfo/queryAnalysisData", param, function(res){
     		charts.setOption({
@@ -50,6 +50,19 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload', 'util'], function(tabl
     	        }
     	        ]
         	});
+    		
+    		dataTable = table.render({
+   			 	id:'datalist',
+   			 	elem: '#datalist',
+   			 	initSort: {field: 'date_year' ,type: 'desc'},
+   			 	height:winH/2-90,
+   			 	limit:res.gridData.length,
+   			 	data:res.gridData,
+   		     	cols: [[ //表头
+   		     		{field: 'date_year', title: '年份', sort: true},
+   		     		{field: grassindex, title: grassindexName, sort: true}
+	     		]]
+	  		});
     	});
     };
     
@@ -65,7 +78,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload', 'util'], function(tabl
     	param.date_year = date_year;
     	param.grassindex = grassindex;
     	
-    	title = date_year + "年" + grassindexName + "分析图";
+    	title = date_year + "年" + grassindexName + "统计图";
     	
     	$.post("/grassinfo/queryAnalysisData", param, function(res){
     		charts.setOption({
@@ -113,7 +126,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload', 'util'], function(tabl
 		map.grassindex = $("#grassindex").val();
 		map.grassindexName = $("#grassindex option:selected").text();
 		
-		setLineOption(map);
+		setLineAndGridOption(map);
 //		if (   (map.date_year == null || map.date_year == '' || map.date_year == 'undefined')
 //			&& (map.towns == null || map.towns == '' || map.towns == 'undefined')) {
 //			layer.msg("请至少选择一个查询条件（年份、乡镇）。");
@@ -135,7 +148,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload', 'util'], function(tabl
 //		});
 		
 		$(window).resize(function(){
-			$("#charts").css("height",winH - 80);
+			$("#charts").css("height",winH / 2 - 90);
 			charts.resize();
 		});
 		
