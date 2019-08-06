@@ -19,5 +19,11 @@ public class MonitorSetQueryVO extends CommonQueryVO{
 	public void setStopflag(Integer stopflag) {
 		this.stopflag = stopflag;
 	}
+
+	@Override
+	public String toString() {
+		return "MonitorSetQueryVO [monitor_type=" + monitor_type + ", stopflag=" + stopflag + "]";
+	}
+	
 	
 }

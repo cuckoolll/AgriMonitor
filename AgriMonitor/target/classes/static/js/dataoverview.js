@@ -1,5 +1,5 @@
-var chart1,chart2,chart3,chart4,chart5;
-var option1,option2,option3,option4,option5;
+var chart1,chart2,chart3,chart4,chart5,chart10;
+var option1,option2,option3,option4,option5,option10;
 
 var curyear=new Date().getFullYear();
 var data = [{name: '沙柳河镇', size:100},{name: '伊克乌兰乡', size:100},{name: '泉吉乡', size:100},{name: '吉尔孟乡', size:100},{name: '黄玉农场', size:100},{name: '哈尔盖镇', size:100}];
@@ -21,7 +21,7 @@ var convertData = function (data) {
 function initchart(){
 	option1 = {
 	    title: {text: '刚察县'+curyear+'养殖场畜种存栏数据统计图',left: 'center'},
-	    tooltip : {
+	    /*tooltip : {
 	        trigger: 'item',
 	        formatter: function(param){
 	        	if(param.data.data){
@@ -34,7 +34,7 @@ function initchart(){
 	        		return "无数据";
 	        	}
 			}
-	    },
+	    },*/
 	    bmap: {center: [100.030020,37.281610],zoom:11,roam: false},
 	    series : [
 	        {
@@ -45,7 +45,7 @@ function initchart(){
 	                return b.value - a.value;
 	            }).slice(0, 6)),
 	            symbolSize: function (val) {
-	                return val[2] / 10;
+	                return 30;
 	            },
 	            showEffectOn: 'render',
 	            rippleEffect: {brushType: 'stroke'},
@@ -69,6 +69,11 @@ function initchart(){
 	    tooltip : {
 	        trigger: 'item',
 	        formatter: "{a} <br/>{b} : {c} ({d}%)"
+	    },
+	    toolbox: {
+	        feature: {
+	            saveAsImage: {show: true}
+	        }
 	    },
 	    legend: {
 	        type: 'scroll',
@@ -105,6 +110,11 @@ function initchart(){
 	        trigger: 'item',
 	        formatter: "{a} <br/>{b} : {c} ({d}%)"
 	    },
+	    toolbox: {
+	        feature: {
+	            saveAsImage: {show: true}
+	        }
+	    },
 	    legend: {
 	        type: 'scroll',
 	        orient: 'vertical',
@@ -140,6 +150,11 @@ function initchart(){
 	        trigger: 'item',
 	        formatter: "{a} <br/>{b} : {c} ({d}%)"
 	    },
+	    toolbox: {
+	        feature: {
+	            saveAsImage: {show: true}
+	        }
+	    },
 	    legend: {
 	        type: 'scroll',
 	        orient: 'vertical',
@@ -170,10 +185,15 @@ function initchart(){
 	chart4.setOption(option4); 
 	/**-----------------------------------------**/
 	option5 = {
-			title : {text: '刚察县'+curyear+'畜牧业产量统计图',x:'center'},
+			title : {text: '刚察县'+curyear+'畜牧业产量统计图',x:'left'},
 		    tooltip : {trigger: 'axis',axisPointer : {type : 'shadow'}},
+		    toolbox: {
+		        feature: {
+		            saveAsImage: {show: true}
+		        }
+		    },
 		    legend: {
-		        data: ['肉产量', '奶产量','蛋产量','毛产量'],x:'right'},
+		        data: ['肉产量', '奶产量','蛋产量','毛产量'],x:'center'},
 		    grid: {
 		        left: '3%',
 		        right: '4%',
@@ -182,7 +202,7 @@ function initchart(){
 		    },
 		    yAxis:  {
 		        type: 'value',
-		        name: '产量(吨)'
+		        name: '单位(吨)'
 		    },
 		    xAxis: {
 		        type: 'category',
@@ -241,9 +261,64 @@ function initchart(){
 
 	chart5 = echarts.init(document.getElementById('chart5')); 
 	chart5.setOption(option5); 
+	
+	option10 = {
+			title : {text: '畜种存栏数统计图',x:'center'},
+			yAxis:  {type: 'value',name: '单位(万头)'},
+		    xAxis: {
+		        type: 'category',
+		        data: ['']
+		    },
+		    series: [{
+		        data: [''],
+		        type: 'bar'
+		    }]
+	};
+	chart10 = echarts.init(document.getElementById('chart10')); 
+	chart10.setOption(option10); 
 }
-
+function mousemove(params){
+	if($("#chartDiv").is(':hidden')){
+		option10.title.text=params.name+'畜种存栏数统计图';
+		$("#chartDiv").css("top",params.event.offsetY-50);
+		$("#chartDiv").css("left",params.event.offsetX-450);
+		$("#chartDiv").show();
+		
+		if(params.data.data&&params.data.data.length>0){
+			var fl=option10.xAxis.data;
+			var cl=[];
+			for (var i = 0; i < fl.length; i++) {
+				cl.push('');
+				for (var j = 0; j < params.data.data.length; j++) {
+					if(fl[i]==params.data.data[j].type_name){
+						cl[i]=params.data.data[j].animals_size;
+						break;
+					}
+				}
+			}
+			option10.series[0].data=cl;
+		}
+		chart10.dispose();
+	    chart10 = echarts.init(document.getElementById('chart10'));
+	    chart10.setOption(option10);
+	}
+}
+function mouseout(params){
+	if(!$("#chartDiv").is(':hidden')){
+		$("#chartDiv").hide();
+	}
+}
 function farmdata(){
+	$.post("/farminfo/getTypes", {},function(res){
+		if(res&&res.length>0){
+			var d=[];
+			for (var i = 0; i < res.length; i++) {
+				d.push(res[i].type_name);
+			}
+			option10.xAxis.data=d;
+		}
+	});
+	
 	$.post("/farminfo/findSumGroupTowns", {},function(res){
         if(res && res.mapdata && res.mapdata.length>0){
         	$.each(data,function(index,item){
@@ -260,6 +335,12 @@ function farmdata(){
       	  chart1.dispose();
       	  chart1 = echarts.init(document.getElementById('chart1'));
       	  chart1.setOption(option1); 
+      	  chart1.on('mousemove', function (params) {
+      		  mousemove(params);
+	      });
+          chart1.on('mouseout', function (params) {
+        	  mouseout(params);
+	      });
         }
         if(res && res.piedata && res.piedata.length>0){
         	$.each(res.piedata,function(index,item){

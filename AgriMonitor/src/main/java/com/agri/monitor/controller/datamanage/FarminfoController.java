@@ -2,6 +2,7 @@ package com.agri.monitor.controller.datamanage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +42,12 @@ public class FarminfoController {
 	public String toPage(Model model) {
 		model.addAttribute("animalstype", CacheUtil.getCache(CacheTypeEnum.ANIMALSTYPE));
 		return "/datamanage/farminfo/datalist";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/getTypes")
+	public List getTypes() {
+		return (List) CacheUtil.getCache(CacheTypeEnum.ANIMALSTYPE);
 	}
 	
 	@IgnoreSession
