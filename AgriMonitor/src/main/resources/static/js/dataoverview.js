@@ -280,8 +280,9 @@ function initchart(){
 function mousemove(params){
 	if($("#chartDiv").is(':hidden')){
 		option10.title.text=params.name+'畜种存栏数统计图';
-		$("#chartDiv").css("top",params.event.offsetY-50);
-		$("#chartDiv").css("left",params.event.offsetX-450);
+		console.log(params.event.offsetX +"-----" +params.event.offsetY);
+		$("#chartDiv").css("top",params.event.offsetY-190);
+		$("#chartDiv").css("left",params.event.offsetX-130);
 		$("#chartDiv").show();
 		
 		if(params.data.data&&params.data.data.length>0){

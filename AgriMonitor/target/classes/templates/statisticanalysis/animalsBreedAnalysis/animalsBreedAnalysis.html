@@ -43,7 +43,7 @@
 								</div>
 								<label class="layui-form-label" >指标名称：</label>
 								<div class="layui-input-inline">
-									<select id="target_type" name="target_type" required lay-verify="required">
+									<select id="target_type" name="target_type" required lay-verify="required" lay-filter="target_type">
 								    	<option th:each="type:${animalsTarget}" th:value="${type.gid}" th:text="${type.target_name}"></option>
 								   </select>
 								</div>
@@ -57,15 +57,17 @@
 		<div class="layui-row layui-col-space10">
 			<div class="layui-col-xs6">
 		      <div class="layui-card">
-		        <div class="layui-card-body" style="height: 350px">
+		        <div class="layui-card-body" style="height: 300px">
+		        <!-- --存栏情况图 -->
 		        	<div id="chart1" style="height: 100%"></div>
 		        </div>
 		      </div>
 		    </div>
 		    <div class="layui-col-xs6">
 		      <div class="layui-card">
-		        <div class="layui-card-body" style="height: 350px">
-		        	<div id="chart2"></div>
+		        <div class="layui-card-body" style="height: 300px">
+		        <!-- ---产仔情况图 -->
+		        	<div id="chart2" style="height: 100%"></div>
 		        </div>
 		      </div>
 		    </div>
