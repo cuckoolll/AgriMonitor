@@ -7,53 +7,64 @@
 <link rel="stylesheet" type="text/css" th:href="@{/temp/css/iconfont.css}">
 <link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
 <link rel="stylesheet" type="text/css" th:href="@{/temp/css/frameStyle.css}">
+<style type="text/css">
+.layui-card-header a{
+	color: blue;
+	cursor: pointer;
+}
+.layui-card-header a:hover{
+	color: blue;
+}
+</style>
 </head>
 <body style="overflow:auto; ">
 <div class="layui-fluid">
 	<div class="layui-row layui-col-space10">
-		<div class="layui-col-xs12" style="height: 440px">
+		<div class="layui-col-xs12" >
 	      <!-- 填充内容 -->
 	      <div class="layui-card">
-	        <div class="layui-card-header"></div>
-	        <div class="layui-card-body">
-	        	<div id="chart1" style="width: 100%;min-width: 900px;height: 371px"></div>
+	        <div class="layui-card-body" style="height: 440px">
+	        	<div id="chart1" style="width: 100%;min-width: 900px;height: 100%"></div>
 	        </div>
 	      </div>
 	    </div>
 	</div>
 	<div class="layui-row layui-col-space10">
-		<div class="layui-col-xs4" style="height: 440px">
+		<div class="layui-col-xs4">
 	      <div class="layui-card">
-	        <div class="layui-card-header"></div>
-	        <div class="layui-card-body">
-	        	<div id="chart2" style="width: 100%;min-width: 300px;height: 371px"></div>
+	        <div class="layui-card-header"><a ind="2">数据详情</a></div>
+	        <div class="layui-card-body" style="height: 360px">
+		        <div id="datalistdiv2" style="display: none">
+		       	 <table id="datalist2"></table>
+		        </div>
+	        	<div id="chart2" style="width: 100%;min-width: 300px;height:100%"></div>
 	        </div>
 	      </div>
 	    </div>
-	    <div class="layui-col-xs4" style="height: 440px">
+	    <div class="layui-col-xs4">
 	      <div class="layui-card">
 	        <div class="layui-card-header"></div>
-	        <div class="layui-card-body">
-	        	<div id="chart3" style="width: 100%;min-width: 300px;height: 371px"></div>
+	        <div class="layui-card-body" style="height: 360px">
+	        	<div id="chart3" style="width: 100%;min-width: 300px;height:100%"></div>
 	        </div>
 	      </div>
 	    </div>
-	    <div class="layui-col-xs4" style="height: 440px">
+	    <div class="layui-col-xs4">
 	      <div class="layui-card">
 	        <div class="layui-card-header"></div>
-	        <div class="layui-card-body">
-	        	<div id="chart4" style="width: 100%;min-width: 300px;height: 371px"></div>
+	        <div class="layui-card-body" style="height: 360px">
+	        	<div id="chart4" style="width: 100%;min-width: 300px;height: 100%"></div>
 	        </div>
 	      </div>
 	    </div>
 	</div>
 	<div class="layui-row layui-col-space10">
-		<div class="layui-col-xs12" style="height: 440px">
+		<div class="layui-col-xs12">
 	      <!-- 填充内容 -->
 	      <div class="layui-card">
 	        <div class="layui-card-header"></div>
-	        <div class="layui-card-body">
-	        	<div id="chart5" style="width: 100%;min-width: 900px;height: 371px"></div>
+	        <div class="layui-card-body" style="height: 360px">
+	        	<div id="chart5" style="width: 100%;min-width: 900px;height:100%"></div>
 	        </div>
 	      </div>
 	    </div>
@@ -69,6 +80,7 @@
 <div id="chart10" style="width: 100%;height: 200px"></div>
 </div>
 <script type="text/javascript" th:src="@{/temp/framework/jquery-1.11.3.min.js}" ></script>
+<script type="text/javascript" th:src="@{/temp/layui/layui.js}"></script>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=sg8e5IVRgVNHRitTPRxk482e"></script>
 <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
 <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>

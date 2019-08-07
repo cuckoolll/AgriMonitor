@@ -444,23 +444,23 @@ public class AnimalsBreedService {
 				BigDecimal survival_size = null!=map.get("survival_size")?new BigDecimal(map.get("survival_size").toString()):null;
 				BigDecimal child_size = null!=map.get("child_size")?new BigDecimal(map.get("child_size").toString()):null;
 				if(null != survival_size && null != child_size && child_size.doubleValue()!=0) {
-					map.put("chl", survival_size.divide(child_size,3,RoundingMode.HALF_UP).setScale(2, BigDecimal.ROUND_DOWN));
+					map.put("chl", survival_size.divide(child_size,5,RoundingMode.HALF_UP).setScale(5, BigDecimal.ROUND_DOWN).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_DOWN));
 				}
 				BigDecimal czs_tq = null!=map.get("czs_tq")?new BigDecimal(map.get("czs_tq").toString()):null;
 				BigDecimal chs_tq= null!=map.get("chs_tq")?new BigDecimal(map.get("chs_tq").toString()):null;
 				if(null != chs_tq && null != czs_tq && czs_tq.doubleValue()!=0) {
-					map.put("chl_tq", chs_tq.divide(czs_tq,3,RoundingMode.HALF_UP).setScale(2, BigDecimal.ROUND_DOWN));
+					map.put("chl_tq", chs_tq.divide(czs_tq,5,RoundingMode.HALF_UP).setScale(5, BigDecimal.ROUND_DOWN).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_DOWN));
 				}
 				//损亡情况
 				map.put("sws_tq", null!=tqmap?tqmap.get("death_size"):null);
 				BigDecimal death_size = null!=map.get("death_size")?new BigDecimal(map.get("death_size").toString()):null;
 				//损亡率
 				if(null != death_size && null != child_size && child_size.doubleValue()!=0) {
-					map.put("swl", death_size.divide(child_size,3,RoundingMode.HALF_UP).setScale(2, BigDecimal.ROUND_DOWN));
+					map.put("swl", death_size.divide(child_size,5,RoundingMode.HALF_UP).setScale(5, BigDecimal.ROUND_DOWN).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_DOWN));
 				}
 				BigDecimal sws_tq= null!=map.get("sws_tq")?new BigDecimal(map.get("sws_tq").toString()):null;
 				if(null != sws_tq && null != czs_tq && czs_tq.doubleValue()!=0) {
-					map.put("swl_tq", sws_tq.divide(czs_tq,3,RoundingMode.HALF_UP).setScale(2, BigDecimal.ROUND_DOWN));
+					map.put("swl_tq", sws_tq.divide(czs_tq,5,RoundingMode.HALF_UP).setScale(5, BigDecimal.ROUND_DOWN).multiply(new BigDecimal(100)).setScale(2, BigDecimal.ROUND_DOWN));
 				}
 			}
 		}
