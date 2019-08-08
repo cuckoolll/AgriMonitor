@@ -282,8 +282,8 @@ layui.use(['table'], function(table) {
 	function mousemove(params){
 		if($("#chartDiv").is(':hidden')){
 			option10.title.text=params.name+'畜种存栏数统计图';
-			$("#chartDiv").css("top",params.event.offsetY-190<0?params.event.offsetY+100:params.event.offsetY-190);
-			$("#chartDiv").css("left",params.event.offsetX-130);
+			$("#chartDiv").css("top",params.event.offsetY-230<0?params.event.offsetY+90:params.event.offsetY-230);
+			$("#chartDiv").css("left",params.event.offsetX-160);
 			$("#chartDiv").show();
 			
 			if(params.data.data&&params.data.data.length>0){
@@ -369,6 +369,14 @@ layui.use(['table'], function(table) {
 	      	    chart5.dispose();
 	      	    chart5 = echarts.init(document.getElementById('chart5'));
 	      	    chart5.setOption(option5); 
+	      	    
+	      	    var tabledata=[];
+	      	    for (var i = 0; i < 12; i++) {
+	      	    	tabledata.push({ym:option5.xAxis.data[i],
+	      	    		meat_output:option5.series[0].data[i],milk_output:option5.series[1].data[i],
+	      	    		egg_output:option5.series[2].data[i],hair_output:option5.series[3].data[i]});
+				}
+	      	    inittable5(tabledata);
 	        }
 	    });
 	}
@@ -388,6 +396,9 @@ layui.use(['table'], function(table) {
 	    	    chart4.dispose();
 	    	    chart4 = echarts.init(document.getElementById('chart4'));
 	    	    chart4.setOption(option4); 
+	    	    
+	    	    inittable3(res.planted_area);
+	    	    inittable4(res.planted_output);
 	        }
 	    });
 	}
@@ -406,11 +417,67 @@ layui.use(['table'], function(table) {
 		    data:data
 		});
 	}
+	function inittable3(data){
+		//表格渲染
+		datatable=table.render({
+			id:"datalist3",
+		    elem: '#datalist3',
+		    page:false,
+		    limit:200,
+		    height:360,
+		    cols: [[ //表头
+		      {field: 'name', title: '农作物名称',align:'center'},
+			  {field: 'value', title: '播种面积',align:'center'}
+		    ]],
+		    data:data
+		});
+	}
+	function inittable4(data){
+		//表格渲染
+		datatable=table.render({
+			id:"datalist4",
+		    elem: '#datalist4',
+		    page:false,
+		    limit:200,
+		    height:360,
+		    cols: [[ //表头
+		      {field: 'name', title: '农作物名称',align:'center'},
+			  {field: 'value', title: '总产(万公斤)',align:'center'}
+		    ]],
+		    data:data
+		});
+	}
+	function inittable5(data){
+		//表格渲染
+		datatable=table.render({
+			id:"datalist5",
+		    elem: '#datalist5',
+		    page:false,
+		    limit:200,
+		    height:360,
+		    cols: [[ //表头
+		      {field: 'ym', title: '月份',align:'center'},
+		      {field: 'meat_output', title: '肉产量',align:'center'},
+			  {field: 'milk_output', title: '奶产量',align:'center'},
+			  {field: 'egg_output', title: '蛋产量',align:'center'},
+			  {field: 'hair_output', title: '毛产量',align:'center'}
+		    ]],
+		    data:data
+		});
+	}
 	
 	function bindEvent(){
 		$("div.layui-card-header a").click(function(){
-			$("#chart"+$(this).attr("ind")).hide();
-			$("#datalistdiv"+$(this).attr("ind")).show();
+			var ind=$(this).attr("ind");
+			if($("#chart"+ind).is(':hidden')){
+				$(this).text("数据详情");
+				$("#chart"+ind).show();
+				$("#datalistdiv"+ind).hide();
+			}else{
+				$(this).text("<返回");
+				$("#chart"+ind).hide();
+				$("#datalistdiv"+ind).show();
+			}
 		});
 	}
 	
