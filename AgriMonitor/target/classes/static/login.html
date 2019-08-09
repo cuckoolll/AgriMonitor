@@ -54,13 +54,13 @@
 				<form class="layui-form zyl_pad_01" action="">
 					<div class="layui-col-sm12 layui-col-md12">
 						<div class="layui-form-item">
-							<input id="user_id" type="text" name="userName" lay-verify="required|userName" autocomplete="off" placeholder="账号" class="layui-input">
+							<input id="user_id" type="text" name="userName" autocomplete="off" placeholder="账号" class="layui-input">
 							<i class="layui-icon layui-icon-username zyl_lofo_icon"></i>
 						</div>
 					</div>
 					<div class="layui-col-sm12 layui-col-md12">
 						<div class="layui-form-item">
-							<input id="user_password" type="password" name="nuse" lay-verify="required|pass" autocomplete="off" placeholder="密码" class="layui-input">
+							<input id="user_password" type="password" name="nuse" autocomplete="off" placeholder="密码" class="layui-input">
 							<i class="layui-icon layui-icon-password zyl_lofo_icon"></i>
 						</div>
 					</div>
@@ -68,7 +68,7 @@
 						<div class="layui-row">
 							<div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
 								<div class="layui-form-item">
-									<input type="text" name="vercode" id="vercode" lay-verify="required|vercodes" autocomplete="off" placeholder="验证码" class="layui-input" maxlength="4">
+									<input type="text" name="vercode" id="vercode" autocomplete="off" placeholder="验证码" class="layui-input" maxlength="4">
 									<i class="layui-icon layui-icon-vercode zyl_lofo_icon"></i>
 								</div>
 							</div>
@@ -95,27 +95,9 @@
 		<!-- ZylVerificationCode Js-->
 		<script type="text/javascript" src="temp/assembly/zylVerificationCode/zylVerificationCode.js"></script>
 		<script>
-			layui.use(['carousel', 'form'], function(){
-				var carousel = layui.carousel
-				,form = layui.form;
+			layui.use(['carousel'], function(){
+				var carousel = layui.carousel;
 				
-				//自定义验证规则
-				form.verify({
-					userName: function(value){
-						
-					}
-					,pass: [/^[\S]{6,12}$/,'密码必须6到12位，且不能出现空格']
-					,vercodes: function(value){
-						//获取验证码
-						var zylVerCode = $(".zylVerCode").html();
-						if(value!=zylVerCode){
-							return '验证码错误（区分大小写）';
-						}
-					}
-					,content: function(value){
-						layedit.sync(editIndex);
-					}
-				});
 				
 				//设置轮播主体高度
 				var zyl_login_height = $(window).height()/1.3;
