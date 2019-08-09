@@ -47,7 +47,7 @@
 		<!-- 左侧菜单 - 开始 -->
 		<div class="frameMenu">
 		    <div class="menu">
-		    	<div style="height: 50px"></div>
+		    	<div style="color:#c2c2c2;height: 50px;white;font-size: 18px;padding-left: 20px;line-height: 50px;">青海省农林科学院</div>
 		        <ul>
 		        	<li>
 		                <a class="menuFA menuLA" href="javascript:void(0)" url="/dataoverview"><i class="iconfont icon-shouye left"></i>数据总览</a>
@@ -114,13 +114,9 @@
 			<!-- 头部栏 - 开始 -->
 			<div class="frameTop">
 				<div class="layui-header">
-					<div style="float: left;"><h1 style="display: inline-block;
-    vertical-align: middle;
-    margin: 10px 0;
-    padding: 5px 10px;">青海省农林科学院</h1></div>
+					<div style="float: left;line-height: 50px;padding-left: 10px"><a href="javascript:void(0)"><i class="iconfont icon-yonghu1"></i><span th:text="${session.userinfo.user_showname}"></span></a></div>
 					<div class="topMenu">
 					<ul>
-						<li><a href="javascript:void(0)"><i class="iconfont icon-yonghu1"></i><span th:text="${session.userinfo.user_showname}"></span></a></li>
 						<li><a id="updpw" href="javascript:void(0)"><i class="iconfont icon-xiugaimima"></i></a></li>
 						<li><a href="/loginout"><i class="iconfont icon-084tuichu"></i></a></li>
 					</ul>
