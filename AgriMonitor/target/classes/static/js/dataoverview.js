@@ -22,7 +22,6 @@ layui.use(['table'], function(table) {
 		
 	function initchart(){
 		option1 = {
-		    title: {text: '刚察县'+curyear+'养殖场畜种存栏数据统计图',left: 'center'},
 		    /*tooltip : {
 		        trigger: 'item',
 		        formatter: function(param){
