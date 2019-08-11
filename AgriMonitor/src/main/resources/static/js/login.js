@@ -32,14 +32,19 @@ layui.use(['form', 'layer'], function(form, layer){
 		if (user_id && user_password) {
 			var zylVerCode = $(".zylVerCode").html();
 			var vercode = $("#vercode").val();
-//			if (!vercode) {
-//				layer.msg("请输入验证码");
-//				return;
-//			}
-//			if (vercode != zylVerCode) {
-//				layer.msg("验证码错误（区分大小写）");
-//				return;
-//			}
+			if (!vercode) {
+				layer.msg("请输入验证码");
+				return;
+			}
+			
+			if (vercode.toUpperCase() != zylVerCode.toUpperCase()) {
+				layer.msg("验证码错误");
+				return;
+			} 
+			if (vercode.toLowerCase() != zylVerCode.toLowerCase()) {
+				layer.msg("验证码错误");
+				return;
+			}
 			$.post("/doLogin", {userid: user_id, pw: user_password},function(data){
 		          if(data && data.user_id){
 		        	  window.location.href="/workbench"; 

@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>刚察农业信息管理系统</title>
 <link href="css/style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="temp/layui/css/layui.css" media="all"/>
+<link rel="stylesheet" href="css/login.css" media="all"/>
+<!-- Jquery Js -->
+<script type="text/javascript" src="temp/framework/jquery-1.11.3.min.js"></script>
+<!-- Layui Js -->
+<script type="text/javascript" src="temp/layui/layui.js"></script>
+<!-- ZylVerificationCode Js-->
+<script type="text/javascript" src="temp/assembly/zylVerificationCode/zylVerificationCode.js"></script>
 </head>
 <body class="Login" style="background:url(temp/images/background01.jpg) no-repeat center;">
 <!--Login-开始-->
@@ -15,7 +23,7 @@
    	 </a>
 </div>
 
-<div class="Login_k" style="padding-top:100px">
+<div class="Login_k" style="padding-top:80px">
 	<div class="Login_T">用户登录<p></p></div>
     <!--登录-开始-->
     <form class="Login_dl">
@@ -25,6 +33,12 @@
         <div class="Login_row" style="background:url(temp/images/icon_02.png) no-repeat 20px center;">
             <input id="user_password" type="password" value="" class="Login_input Login_inp2" placeholder="密码" autocomplete="off"/>
         </div> 
+        <div class="Login_row" style="background:url(temp/images/icon_03.png) no-repeat 20px center;">
+            <input id="vercode" type="text" value="" maxlength="4" style="margin-left:5px;width:100px;display:inline" class="Login_input Login_inp3" placeholder="验证码" autocomplete="off"/>
+            <div class="Login_input zylVerCode" onclick="zylVerCode()" style="width:50px;height:52px;font-size:20px;display:inline;"></div>
+        </div>
+        
+        
         <a id="loginBtn" href="#" class="Login_dla">登录</a>
 
    </form>
