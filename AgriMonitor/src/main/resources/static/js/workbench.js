@@ -120,35 +120,43 @@ layui.use(['form','layer'], function(form,layer) {
 		        	});
 		        	$("#monitorinfo").html(str);
 		        	
-		        	if(res.length>1){
-		        		var wrapper  = document.getElementsByClassName('wrapper')[0];
+		        	//if(res.length>1){
+		        	      var wrapper;
 		        		  var offset = 50
 		        		  var timer;
 		        		  setInterval(function () {
+		        			wrapper  = document.getElementsByClassName('wrapper')[0];
 		        		    if(timer) {
 		        		      clearInterval(timer);
 		        		    }
-		        		    var step = 1;
-		        		  
-		        		    timer = setInterval(function () {
-		        		      wrapper.style.transform = 'translateY(-' + (offset + step) + 'px)';
-		        		      if(step == 50) {
-		        		        clearInterval(timer);
-		        		      }
-		        		      step++;
-		        		    }, 10);
-		        		    
-		        		    offset += 50;
-		        		    var num = Math.floor(wrapper.offsetHeight / 50)
-		        		    if (! (offset%((num - 1)*50))) {
-		        		      offset = 0;
-		        		    }
+		        		    if($("#monitorinfo p").length==1){
+		        		    	$("#monitorSpan").show();
+		        		    	wrapper.style="";
+		        		    }else if($("#monitorinfo p").length>1){
+		        			   var step = 1;
+		        			   timer = setInterval(function () {
+				        		      wrapper.style.transform = 'translateY(-' + (offset + step) + 'px)';
+				        		      if(step == 50) {
+				        		        clearInterval(timer);
+				        		      }
+				        		      step++;
+				        		    }, 10);
+				        		    
+				        		    offset += 50;
+				        		    var num = Math.floor(wrapper.offsetHeight / 50)
+				        		    if (! (offset%((num - 1)*50))) {
+				        		      offset = 0;
+				        		    }
+		        		   }else{
+		        			   $("#monitorSpan").hide();
+		       		           $(".box").hide();
+		        		   }
 		        		  }, 8000);
 		        	}
-		        } else {
-		        	$("#monitorSpan").hide();
-		        	$(".box").hide();
-		        }
+		        //} else {
+		        //	$("#monitorSpan").hide();
+		        //	$(".box").hide();
+		       // }
 		    });
 	}
 	
