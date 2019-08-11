@@ -76,6 +76,8 @@ layui.use(['form','layer'], function(form,layer) {
 		$(".frameMain .con").height(win_h - frameTopH);
 		$(".frameMain .con iframe").height(win_h - frameTopH);
 		
+		$("#monitorSpan").hide();
+		
 		//自定义滚动条
 		$(".menu").mCustomScrollbar();
 	}
@@ -110,6 +112,8 @@ layui.use(['form','layer'], function(form,layer) {
 	function monitorinfo(){
 		 $.post("/monitorManage/findmonitorinfo", {},function(res){
 		        if(res && res.length>0){
+		        	$("#monitorSpan").show();
+		        	$(".box").show();
 		        	var str="";
 		        	$.each(res,function(index,item){
 		        		str+="<p class='item'>"+item+"</p>";
@@ -141,6 +145,9 @@ layui.use(['form','layer'], function(form,layer) {
 		        		    }
 		        		  }, 8000);
 		        	}
+		        } else {
+		        	$("#monitorSpan").hide();
+		        	$(".box").hide();
 		        }
 		    });
 	}

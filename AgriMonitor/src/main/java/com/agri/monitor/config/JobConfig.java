@@ -41,7 +41,7 @@ public class JobConfig {
 	
 	//每周一1点运行该调度(清理一周的日志)
 	@Scheduled(cron = "0 0 01 ? * 1")
-	//@Scheduled(cron = "0/40 * * * * ?")
+//	@Scheduled(cron = "0/40 * * * * ?")
     private void sysLogTasks() {
 		info("清理一周的日志开始");
 		systemLogMapper.deleteAll();
@@ -58,7 +58,7 @@ public class JobConfig {
 	
 	//每周一2点运行该调度(数据监控)
 	@Scheduled(cron = "0 0 02 ? * 1")
-	//@Scheduled(cron = "0/10 * * * * ?")
+//	@Scheduled(cron = "0/10 * * * * ?")
     private void dataMonitorTasks() {
 		info("运行数据监控调度开始");
 		//将之前预警信息设置为停用状态
