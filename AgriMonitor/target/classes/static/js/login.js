@@ -37,10 +37,6 @@ layui.use(['form', 'layer'], function(form, layer){
 				return;
 			}
 			
-			if (vercode.toUpperCase() != zylVerCode.toUpperCase()) {
-				layer.msg("验证码错误");
-				return;
-			} 
 			if (vercode.toLowerCase() != zylVerCode.toLowerCase()) {
 				layer.msg("验证码错误");
 				return;
