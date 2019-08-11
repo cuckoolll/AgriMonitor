@@ -17,8 +17,8 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 		    cols: [[ //表头
 		    	{type:'checkbox'},
 		      {field: 'gid', title: 'ID',hide: true,align:'center'},
-		      {field: 'monitor_type', title: '监控指标',align:'center', templet: '#titleTpl'},
-		      {field: 'condition_showname', title: '数据监控条件',align:'center'},
+		      {field: 'monitor_type', title: '监测指标',align:'center', templet: '#titleTpl'},
+		      {field: 'condition_showname', title: '数据监测条件',align:'center'},
 		      {field: 'stopflag', title: '是否停用',align:'center', templet: '#titleTpl1'}
 		    ]]
 		});
@@ -32,7 +32,7 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 		    switch(obj.event){
 		      case 'add':
 		    	  layer.open({
-              		    title: "新增监控信息",
+              		    title: "新增监测信息",
 						type: 2,
 						area: ['700px', '450px'],
 						scrollbar: true,
@@ -46,7 +46,7 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 		          layer.msg('只能同时编辑一个');
 		        } else {
 		        	layer.open({
-              		    title: "修改监控信息",
+              		    title: "修改监测信息",
 						type: 2,
 						area: ['700px', '450px'],
 						scrollbar: true,
@@ -58,7 +58,7 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 		        if(data.length === 0){
 		          layer.msg('请选择一行');
 		        } else {
-		        	layer.confirm('确定要删除选择的监控信息吗？', function(index){
+		        	layer.confirm('确定要删除选择的监测信息吗？', function(index){
 		        	        layer.close(index);
 		        	        var gids=[];
 				        	$.each(data,function(index,item){
@@ -72,18 +72,18 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 				        		dataType:"json",
 				        		success:function(res){
 				        			if(res && res.code==0){
-							        	  layer.msg('删除监控信息数据成功');
+							        	  layer.msg('删除监测信息数据成功');
 							        	  datatable.reload({//表格数据重新加载
 											  where: {
 												  monitor_type: $("#monitor_type").val()
 											  },page: {curr: 1}
 							        	  });
 							          }else{
-							        	  layer.msg('删除监控信息数据失败');
+							        	  layer.msg('删除监测信息数据失败');
 							          }
 				        		},
 				        		error:function(){
-				        			layer.msg('删除监控信息数据失败');
+				        			layer.msg('删除监测信息数据失败');
 				        		}
 				        	});
 		        	});

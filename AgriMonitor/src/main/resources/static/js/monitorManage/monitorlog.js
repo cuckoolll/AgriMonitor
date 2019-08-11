@@ -97,6 +97,25 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 			});
 		});
 	}
-	render();
-	bindEvent();
+	
+	function initDatamonitor(){
+		$.ajax({
+    		type:"get",
+    		url:"/monitorManage/datamonitor",
+    		contentType:"application/json",
+    		dataType:"json",
+    		success:function(res){
+    			render();
+    			$("#preloaderDiv").hide();
+				bindEvent();
+    		},
+    		error:function(){
+    			render();
+    			$("#preloaderDiv").hide();
+				bindEvent();
+    		}
+    	});
+		
+	}
+	initDatamonitor();
 });

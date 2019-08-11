@@ -119,6 +119,12 @@ public class MonitorManageController {
 		return "/monitorManage/monitorlog";
 	}
 	@ResponseBody
+	@RequestMapping("datamonitor")
+	public String datamonitor(Model model) {
+		monitorLogService.dataMonitorTasks();
+		return "true";
+	}
+	@ResponseBody
 	@RequestMapping(value="/loglist",method=RequestMethod.POST)
 	public Map loglist(MonitorSetQueryVO queryVO, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");

@@ -52,7 +52,7 @@ layui.use(['form','layer','table'], function(form,layer,table) {
 	  		        		  }
 	  		        	  });
 	  		          }else{
-	  		        	  layer.msg('加载监控数据信息失败');
+	  		        	  layer.msg('加载监测数据信息失败');
 	  		        	  $("#saveBtn").attr('disabled',true);
 	  		          }
 	  	        });
@@ -77,12 +77,12 @@ layui.use(['form','layer','table'], function(form,layer,table) {
 			+"]"
 			$.post("/monitorManage/doSave", data.field,function(res){
 		          if(res && res.code==0){
-		        	  parent.layer.msg('保存监控数据数据成功');
+		        	  parent.layer.msg('保存监测数据数据成功');
 		        	  parent.layui.table.reload('datalist');
 		        	  var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 					  parent.layer.close(index); //再执行关闭
 		          }else{
-		        	  layer.msg('保存监控数据数据失败');
+		        	  layer.msg('保存监测数据数据失败');
 		          }
 	        });
 			return false;

@@ -37,14 +37,14 @@
 			<div class="queryArea">
 				<form class="layui-form" action="">
 					<div class="layui-form-item">
-						<label style="width: 90px" class="layui-form-label text-left">监控指标：</label>
+						<label style="width: 90px" class="layui-form-label text-left">监测指标：</label>
 						<div class="layui-input-inline">
 					      <select id="monitor_type">
 					        <option value="">全部</option>
-					        <option value="1">养殖场牲畜总存栏监控</option>
-							<option value="2">单个养殖场牲畜存栏监控</option>
-							<option value="3">畜牧业生产情况监控</option>
-							<option value="4">农作物产量面积监控</option>
+					        <option value="1">养殖场牲畜总存栏监测</option>
+							<option value="2">单个养殖场牲畜存栏监测</option>
+							<option value="3">畜牧业生产情况监测</option>
+							<option value="4">农作物产量面积监测</option>
 					      </select>
 					      </div>
 						<a id="queryBtn" class="layui-btn">检索</a>
@@ -65,13 +65,13 @@
 				<table id="datalist"  lay-filter="datalist"></table>
 				<script type="text/html" id="titleTpl">
  				 {{#  if(d.monitor_type==1){}}
-   					养殖场牲畜总存栏监控
+   					养殖场牲畜总存栏监测
   			 	{{#  } else if(d.monitor_type==2) {}}
-   			 		单个养殖场牲畜存栏监控
+   			 		单个养殖场牲畜存栏监测
   				{{#  } else if(d.monitor_type==3) {}}
-   			 		畜牧业生产情况监控
+   			 		畜牧业生产情况监测
   				{{#  } else if(d.monitor_type==4) {}}
-   			 		农作物产量面积监控
+   			 		农作物产量面积监测
   				{{#  } }}
 				</script>
 				<script type="text/html" id="titleTpl1">
