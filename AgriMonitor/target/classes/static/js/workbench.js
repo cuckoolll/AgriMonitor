@@ -73,8 +73,8 @@ layui.use(['form','layer'], function(form,layer) {
 		$(".frameMenu .menu").height(win_h - logoH);
 		$(".main").width(win_w - frameMenuW).height(win_h);
 		$(".frameMain").height(win_h - frameTopH);
-		$(".frameMain .con").height(win_h - frameTopH - 40);
-		$(".frameMain .con iframe").height(win_h - frameTopH - 40);
+		$(".frameMain .con").height(win_h - frameTopH);
+		$(".frameMain .con iframe").height(win_h - frameTopH);
 		
 		//自定义滚动条
 		$(".menu").mCustomScrollbar();
