@@ -1,6 +1,7 @@
 package com.agri.monitor.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +13,7 @@ public interface WaterInfoMapper {
 	
 	List<WaterInfo> findAll();
 	
-	List<WaterInfo> queryInfoByCountryAndTimeForPage(final WaterQueryVO queryVo);
+	List<Map> queryInfoByCountryAndTimeForPage(final WaterQueryVO queryVo);
 	
 	int queryInfoCount(final WaterQueryVO queryVo);
 	
@@ -25,4 +26,6 @@ public interface WaterInfoMapper {
 	void delInfoByGid(List<Integer> gids);
 
 	WaterInfo findById(Integer gid);
+	
+	List<String> queryQualityType(final WaterQueryVO queryVo);
 }

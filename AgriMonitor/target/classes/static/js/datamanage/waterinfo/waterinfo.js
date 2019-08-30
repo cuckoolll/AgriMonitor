@@ -11,29 +11,8 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 			elem: '#quality_time'
 		}); 
 		
-		dataTable = table.render({
-			 id:'datalist',
-			 elem: '#datalist',
-			 height:winH-110,
-			 toolbar: '#barDemo',
-			 url: '/waterinfo/queryWaterInfo', //数据接口
-			 method: 'post',
-			 where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
-		     page: true, //开启分页
-		     limit:20,
-			 limits:[20,40,60,100],
-		     cols: [[ //表头
-		    	 {type: 'checkbox', fixed: 'left'},
-		    	 {field: 'gid', title: 'gid',hide: true,align:'center'},
-//		    	 {field: 'county', title: '区（县、市）'},
-//		    	 {field: 'towns', title: '乡镇'},
-		    	 {field: 'quality_address', title: '采样地点'},
-		    	 {field: 'quality_time', title: '采样时间', sort: true},
-		    	 {field: 'quality_type', title: '分析项目'}, 
-		    	 {field: 'quality_result', title: '分析结果（mg/L）'},
-		    	 {field: 'remarks', title: '备注'}
-			 ]]
-		  });
+		//表格渲染
+		renderTable();
 		
 		//文件上传
 		upload.render({
@@ -56,6 +35,44 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    }
 		});
 	}
+	
+	function renderTable() {
+		var param = {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()};
+		$.post("/waterinfo/queryQualityType", param, function(res){
+			var cols = [];
+			cols.push({type: 'checkbox', fixed: 'left'});
+			cols.push({field: 'quality_address', title: '采样地点', width:200});
+			cols.push({field: 'quality_time', title: '采样时间' ,width:120 , sort: true});
+			for (var i = 0; i < res.length; i++) {
+				cols.push(res[i]);
+			}
+			dataTable = table.render({
+				 id:'datalist',
+				 elem: '#datalist',
+				 height:winH-110,
+				 toolbar: '#barDemo',
+				 url: '/waterinfo/queryWaterInfo', //数据接口
+				 method: 'post',
+				 where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
+			     page: true, //开启分页
+			     limit:20,
+				 limits:[20,40,60,100],
+			     cols: [cols]
+			  });
+		});
+	}
+	
+//	[ //表头
+//   	 {type: 'checkbox', fixed: 'left'},
+//   	 {field: 'gid', title: 'gid',hide: true,align:'center'},
+////   	 {field: 'county', title: '区（县、市）'},
+////   	 {field: 'towns', title: '乡镇'},
+//   	 {field: 'quality_address', title: '采样地点'},
+//   	 {field: 'quality_time', title: '采样时间', sort: true},
+//   	 {field: 'quality_type', title: '分析项目'}, 
+//   	 {field: 'quality_result', title: '分析结果（mg/L）'},
+//   	 {field: 'remarks', title: '备注'}
+//	 ]
 	
 	function bindEvent() {
 		//监听工具条
@@ -107,10 +124,11 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 			        		dataType:"json",
 			        		success:function(res){
 			        			if(res && res.code==0){
-			        				dataTable.reload({//表格数据重新加载
-					    				where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
-					  				  	page: {curr: 1}
-					    			});
+//			        				dataTable.reload({//表格数据重新加载
+//					    				where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
+//					  				  	page: {curr: 1}
+//					    			});
+			        				renderTable();
 			        				layer.msg('删除成功');
 							        obj.config.index;
 			        			}else{
@@ -128,10 +146,11 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		  });
 		//查询数据
 		$("#queryBtn").click(function(){
-			dataTable.reload({//表格数据重新加载
-				  where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
-				  page: {curr: 1}
-			});
+//			dataTable.reload({//表格数据重新加载
+//				  where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
+//				  page: {curr: 1}
+//			});
+			renderTable();
 		});
 	}
 	

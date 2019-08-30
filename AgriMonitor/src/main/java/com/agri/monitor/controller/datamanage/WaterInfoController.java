@@ -2,6 +2,7 @@ package com.agri.monitor.controller.datamanage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -51,7 +52,21 @@ public class WaterInfoController {
 	@IgnoreSession
 	public Map queryWaterInfo(WaterQueryVO queryVo, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-		return waterInfoService.queryInfoByCountryAndTimeForPage(queryVo, user.getUser_id());
+//		return waterInfoService.queryInfoByCountryAndTimeForPage(queryVo, user.getUser_id());
+		return waterInfoService.queryWaterInfoOnLine(queryVo, user.getUser_id());
+	}
+	
+	/**
+	 * 查询水质监测信息表头 .
+	 * @param queryVo .
+	 * @param request .
+	 * @return .
+	 */
+	@RequestMapping(value="/queryQualityType", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Map> queryQualityType(WaterQueryVO queryVo, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		return waterInfoService.queryQualityType(queryVo, user.getUser_id());
 	}
 	
 	@ResponseBody
