@@ -491,6 +491,7 @@ layui.use(['table'], function(table) {
 		        	});
 		        	$("#monitorinfo",parent.document).html(str);
 		        } else {
+		        	$("#monitorinfo",parent.document).html("");
 		        	$("#monitorSpan",parent.document).hide();
 		        	$(".box",parent.document).hide();
 		        }
