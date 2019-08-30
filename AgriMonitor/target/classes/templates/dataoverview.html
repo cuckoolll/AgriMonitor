@@ -20,77 +20,8 @@ text-align: right;
 }
 </style>
 </head>
-<body style="overflow:auto; ">
-<div class="layui-fluid">
-	<div class="layui-row layui-col-space10">
-		<div class="layui-col-xs12" >
-	      <!-- 填充内容 -->
-	      <div class="layui-card">
-	        <div class="layui-card-body" style="height: 440px">
-	        	<div id="chart1" style="width: 100%;min-width: 900px;height: 100%"></div>
-	        </div>
-	      </div>
-	    </div>
-	</div>
-	<div class="layui-row layui-col-space10">
-		<div class="layui-col-xs4">
-	      <div class="layui-card">
-	        <div class="layui-card-header"><a ind="2">数据详情</a></div>
-	        <div class="layui-card-body" style="height: 360px">
-		        <div id="datalistdiv2" style="display: none">
-		       	 <table id="datalist2"></table>
-		        </div>
-	        	<div id="chart2" style="width: 100%;min-width: 300px;height:100%"></div>
-	        </div>
-	      </div>
-	    </div>
-	    <div class="layui-col-xs4">
-	      <div class="layui-card">
-	        <div class="layui-card-header"><a ind="3">数据详情</a></div>
-	        <div class="layui-card-body" style="height: 360px">
-	        	<div id="datalistdiv3" style="display: none">
-		       	 <table id="datalist3"></table>
-		        </div>
-	        	<div id="chart3" style="width: 100%;min-width: 300px;height:100%"></div>
-	        </div>
-	      </div>
-	    </div>
-	    <div class="layui-col-xs4">
-	      <div class="layui-card">
-	        <div class="layui-card-header"><a ind="4">数据详情</a></div>
-	        <div class="layui-card-body" style="height: 360px">
-	        	<div id="datalistdiv4" style="display: none">
-		       	 <table id="datalist4"></table>
-		        </div>
-	        	<div id="chart4" style="width: 100%;min-width: 300px;height: 100%"></div>
-	        </div>
-	      </div>
-	    </div>
-	</div>
-	<div class="layui-row layui-col-space10">
-		<div class="layui-col-xs12">
-	      <!-- 填充内容 -->
-	      <div class="layui-card">
-	        <div class="layui-card-header"><a ind="5">数据详情</a></div>
-	        <div class="layui-card-body" style="height: 360px">
-	       		 <div id="datalistdiv5" style="display: none">
-		       	 <table id="datalist5"></table>
-		        </div>
-	        	<div id="chart5" style="width: 100%;min-width: 900px;height:100%"></div>
-	        </div>
-	      </div>
-	    </div>
-	</div>
-</div>
-<div id="chartDiv" style="display:none;height: 200px;width: 400px;top: 0px;position: absolute;-webkit-tap-highlight-color: rgba(0,0,0,0);position: fixed;
-    pointer-events: auto;margin: 0;
-    padding: 0;
-    background-color: #fff;
-    -webkit-background-clip: content;
-    border-radius: 2px;
-    box-shadow: 1px 1px 50px rgba(0,0,0,.3);    z-index: 19891015">
-<div id="chart10" style="width: 100%;height: 200px"></div>
-</div>
+<body>
+<div id="chart1" style="width: 100%;min-width: 900px;"></div>
 <script type="text/javascript" th:src="@{/temp/framework/jquery-1.11.3.min.js}" ></script>
 <script type="text/javascript" th:src="@{/temp/layui/layui.js}"></script>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=sg8e5IVRgVNHRitTPRxk482e"></script>
