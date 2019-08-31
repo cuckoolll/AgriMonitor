@@ -5,6 +5,9 @@ public class AgriNewsInfo {
 	private String title;
 	private String author;
 	private String content;
+	private String info_type;
+	private String info_type_name;
+	private String company;
 	private String creator;
 	private String create_time;
 	private String last_time;
@@ -33,6 +36,24 @@ public class AgriNewsInfo {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public String getInfo_type() {
+		return info_type;
+	}
+	public void setInfo_type(String info_type) {
+		this.info_type = info_type;
+	}
+	public String getCompany() {
+		return company;
+	}
+	public void setCompany(String company) {
+		this.company = company;
+	}
+	public String getInfo_type_name() {
+		return info_type_name;
+	}
+	public void setInfo_type_name(String info_type_name) {
+		this.info_type_name = info_type_name;
 	}
 	public String getLast_time() {
 		return last_time;

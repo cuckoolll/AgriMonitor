@@ -5,6 +5,8 @@
         select gid,
 			   title,
 			   author,
+			   info_type,
+			   company,
 			   date_format(create_time, '%Y-%m-%d') create_time,
 			   creator
           from t_agriculture_info 
@@ -35,12 +37,16 @@
     		(title,
 			 author,
 			 content,
+			 info_type,
+			 company,
 			 modifier,
 			 creator)
     	values
 		   (#{title},
 			#{author},
 			#{content},
+			#{info_type},
+			#{company},
 			#{modifier},
 			#{creator})
     </insert>
@@ -57,6 +63,8 @@
 			   title,
 			   author,
 			   content,
+			   info_type,
+			   company,
 			   create_time,
 			   creator,
 			   last_time,
@@ -69,6 +77,8 @@
     	update t_agriculture_info
     	   set title = #{title},
 			   content = #{content},
+			   info_type = #{info_type},
+			   company = #{company},
 			   modifier = #{modifier}
     	 where gid = #{gid}
     </update>

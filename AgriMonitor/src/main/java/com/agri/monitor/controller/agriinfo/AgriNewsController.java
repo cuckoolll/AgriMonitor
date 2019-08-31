@@ -17,7 +17,9 @@ import com.agri.monitor.annotation.IgnoreSession;
 import com.agri.monitor.entity.AgriNewsInfo;
 import com.agri.monitor.entity.SoilInfo;
 import com.agri.monitor.entity.UserInfo;
+import com.agri.monitor.enums.CacheTypeEnum;
 import com.agri.monitor.service.agriinfo.AgriNewsService;
+import com.agri.monitor.utils.CacheUtil;
 import com.agri.monitor.vo.AgriNewsQueryVO;
 
 @Controller
@@ -32,7 +34,8 @@ public class AgriNewsController {
 	 * @return .
 	 */
 	@RequestMapping("")
-	public String agrinews() {
+	public String agrinews(Model model) {
+		model.addAttribute("infotype", CacheUtil.getCache(CacheTypeEnum.INFOTYPE));
 		return "/agriinfo/agrinews/agrinews";
 	}
 	
@@ -52,12 +55,13 @@ public class AgriNewsController {
 	@IgnoreSession
 	@RequestMapping("/newsedit")
 	public String upload(Model model) {
+		model.addAttribute("infotype", CacheUtil.getCache(CacheTypeEnum.INFOTYPE));
 		return "/agriinfo/agrinews/agrinewsedit";
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/findById",method=RequestMethod.POST)
-	public AgriNewsInfo findById(Integer gid, HttpServletRequest request) { 
+	public AgriNewsInfo findById(Integer gid, HttpServletRequest request, Model model) { 
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo"); return
 		agriNewsService.findById(gid, user.getUser_id()); 
 	}

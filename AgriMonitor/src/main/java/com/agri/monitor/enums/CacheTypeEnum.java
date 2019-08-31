@@ -42,4 +42,9 @@ public enum CacheTypeEnum {
 	 * 草原生态指标
 	 */
 	GRASSINDEX,
+	
+	/**
+	 * 公示文件类别
+	 */
+	INFOTYPE,
 }

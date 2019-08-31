@@ -1,6 +1,10 @@
 package com.agri.monitor;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +17,8 @@ import com.agri.monitor.enums.CacheTypeEnum;
 import com.agri.monitor.mapper.AnimalsTargetMapper;
 import com.agri.monitor.mapper.AnimalsTypeMapper;
 import com.agri.monitor.mapper.CropsTypeMapper;
-import com.agri.monitor.mapper.GrassInfoMapper;
 import com.agri.monitor.mapper.UserinfoMapper;
+import com.agri.monitor.service.agriinfo.AgriNewsService;
 import com.agri.monitor.service.datamanage.ClimateInfoService;
 import com.agri.monitor.service.datamanage.GrassInfoService;
 import com.agri.monitor.service.datamanage.SoilInfoService;
@@ -49,6 +53,9 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 	
 	@Autowired
 	private GrassInfoService grassInfoService;
+	
+	@Autowired
+	private AgriNewsService agriNewsService;
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
@@ -85,6 +92,8 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 		CacheUtil.putCache(CacheTypeEnum.USER, userinfoMapper.findAllForPage(queryVO3));
 		//缓存草原生态指标
 		CacheUtil.putCache(CacheTypeEnum.GRASSINDEX, grassInfoService.getGrassIndex());
+		//缓存公示文件类别
+		CacheUtil.putCache(CacheTypeEnum.INFOTYPE, agriNewsService.getInfoType());
 	}
 
 }

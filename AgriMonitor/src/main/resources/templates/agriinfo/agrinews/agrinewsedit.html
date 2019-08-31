@@ -23,6 +23,12 @@
 	    <script type="text/javascript" th:src="@{/temp/ueditor/js/ueditor.config.js}"></script>
 	    <!-- 编辑器源码文件 -->
 	    <script type="text/javascript" th:src="@{/temp/ueditor/js/ueditor.all.min.js}"></script>
+	    
+        <style>
+        	.layui-form-select dl {
+           	 	z-index: 9999;
+        	}
+    	</style>
 	</head>
 
 	<body>
@@ -30,7 +36,7 @@
 			<form id="addForm" class="layui-form" action="">
 				<input type="hidden" name="gid"/>
 				<div id="titlearea" class="layui-form-item" style="padding-top: 10px">
-					<label class="layui-form-label"  style="width: 140px">标题：</label>
+					<label class="layui-form-label span_title">标题：</label>
 					<div class="layui-input-inline">
 						<input type="text" id="title" readonly="readonly" name="title" lay-verify="required" 
 							autocomplete="off" class="layui-input" style="width:400px">
@@ -41,8 +47,22 @@
 					</div>
 				</div>
 				
+				<div class="layui-form-item">
+					<label class="layui-form-label span_title">类别：</label>
+					<div class="layui-input-inline">
+						<select name="info_type">
+							<option th:each="type:${infotype}" th:value="${type.id}" th:text="${type.text}"></option>
+					   	</select>
+					</div>
+					<label class="layui-form-label span_title">单位：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="company" required lay-verify="required" 
+							autocomplete="off" class="layui-input input_area">
+					</div>
+				</div>
+				
 				<!-- 加载编辑器的容器 -->
-   				<textarea id="container" name="content" readonly="readonly" style="padding-left:15px;padding-bottom:5px;width:99%"></textarea>
+   				<textarea id="container" name="content" readonly="readonly" style="padding-left:15px;padding-bottom:5px;width:98%"></textarea>
 				
 			</form>
 			

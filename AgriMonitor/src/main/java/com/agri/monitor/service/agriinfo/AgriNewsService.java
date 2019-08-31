@@ -1,6 +1,7 @@
 package com.agri.monitor.service.agriinfo;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +41,18 @@ public class AgriNewsService {
 		result.put("code", 0);
 		result.put("msg", "成功");
 		result.put("count", agriNewsMapper.queryInfoCount(queryVo));
-		result.put("data", agriNewsMapper.queryInfoForPage(queryVo));
+		List<Map> list = agriNewsMapper.queryInfoForPage(queryVo);
+		List<Map> type = getInfoType();
+		for (Map info : list) {
+			for (Map map : type) {
+				String info_type = String.valueOf((Integer) info.get("info_type"));
+				if (((String) map.get("id")).equals(info_type)) {
+					info.put("info_type_name", (String)map.get("text"));
+					continue;
+				}
+			}
+		}
+		result.put("data", list);
 		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, 
 				"获取农业信息，入参=title:" + queryVo.getTitle());
 		return result;
@@ -96,5 +108,31 @@ public class AgriNewsService {
 			LogUtil.log(LogOptTypeEnum.SAVE, LogOptSatusEnum.FAIL, userid, "保存土壤监测数据异常：" + e.getMessage()); 
 		}
 		return result;
+	}
+	
+	public List<Map> getInfoType() {
+		List<Map> infoTypeList = new ArrayList();
+		
+		Map infoTypeMap0 = new HashMap();
+		infoTypeMap0.put("id", "0");
+		infoTypeMap0.put("text", "项目申报文件");
+		infoTypeList.add(infoTypeMap0);
+		
+		Map infoTypeMap1 = new HashMap();
+		infoTypeMap1.put("id", "1");
+		infoTypeMap1.put("text", "项目技术文档");
+		infoTypeList.add(infoTypeMap1);
+		
+		Map infoTypeMap2 = new HashMap();
+		infoTypeMap2.put("id", "2");
+		infoTypeMap2.put("text", "政策法规");
+		infoTypeList.add(infoTypeMap2);
+		
+		Map infoTypeMap3 = new HashMap();
+		infoTypeMap3.put("id", "3");
+		infoTypeMap3.put("text", "通知公告");
+		infoTypeList.add(infoTypeMap3);
+		
+		return infoTypeList;
 	}
 }

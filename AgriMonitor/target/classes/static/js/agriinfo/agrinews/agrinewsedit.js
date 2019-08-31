@@ -18,7 +18,13 @@ layui.use(['form','layer','table', 'laydate', 'upload'], function(form,layer,tab
 			$.post("/agrinews/findById", {gid:gid},function(res){
 		          if(res){
 		        	  $.each(res,function(key,val){
-	        			  $("[name='"+key+"']").val(val);
+		        		  if(key=='info_type'){
+		        			  $("[name='"+key+"'] option[value='"+val+"']").attr("selected","true");
+		        			  form.render('select');
+		        		  } else {
+		        			  $("[name='"+key+"']").val(val);
+		        		  }
+		        		  
 	        			  if ("content" == key) {
 	        				  if (isShow) {
 	        					  $("body").empty();

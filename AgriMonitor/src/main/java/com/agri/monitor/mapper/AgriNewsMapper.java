@@ -1,16 +1,16 @@
 package com.agri.monitor.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
 import com.agri.monitor.entity.AgriNewsInfo;
-import com.agri.monitor.entity.SoilInfo;
 import com.agri.monitor.vo.AgriNewsQueryVO;
 
 @Repository
 public interface AgriNewsMapper {
-	List<AgriNewsInfo> queryInfoForPage(final AgriNewsQueryVO queryVo);
+	List<Map> queryInfoForPage(final AgriNewsQueryVO queryVo);
 	
 	int queryInfoCount(final AgriNewsQueryVO queryVo);
 	
