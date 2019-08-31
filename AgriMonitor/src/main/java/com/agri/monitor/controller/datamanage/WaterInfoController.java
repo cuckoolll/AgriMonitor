@@ -43,6 +43,15 @@ public class WaterInfoController {
 	}
 	
 	/**
+	 * 水质监测页面 .
+	 * @return .
+	 */
+	@RequestMapping("/row")
+	public String waterMonitorRow() {
+		return "/datamanage/waterinfo/waterinfoRow";
+	}
+	
+	/**
 	 * 查询水质监测信息 .
 	 * @param request .
 	 * @return .
@@ -52,7 +61,20 @@ public class WaterInfoController {
 	@IgnoreSession
 	public Map queryWaterInfo(WaterQueryVO queryVo, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-//		return waterInfoService.queryInfoByCountryAndTimeForPage(queryVo, user.getUser_id());
+		return waterInfoService.queryInfoByCountryAndTimeForPage(queryVo, user.getUser_id());
+//		return waterInfoService.queryWaterInfoOnLine(queryVo, user.getUser_id());
+	}
+	
+	/**
+	 * 按行查询水质监测信息 .
+	 * @param request .
+	 * @return .
+	 */
+	@RequestMapping(value="/queryWaterInfoOnLine", method = RequestMethod.POST)
+	@ResponseBody
+	@IgnoreSession
+	public Map queryWaterInfoOnLine(WaterQueryVO queryVo, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 		return waterInfoService.queryWaterInfoOnLine(queryVo, user.getUser_id());
 	}
 	
