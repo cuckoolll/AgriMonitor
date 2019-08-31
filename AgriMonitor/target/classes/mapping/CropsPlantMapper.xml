@@ -9,8 +9,8 @@
         IFNULL(a.planted_output,' ') planted_output,IFNULL(b.type_name,' ') crops_name,
         IFNULL(TRUNCATE(a.planted_output*2/a.planted_area,2),' ') dc
         from t_crops_plant a,t_crops_type b where a.crops_type=b.gid
-	    <if test="date_year != null">
-	    	and a.date_year=#{date_year}
+	    <if test="date_year != null and date_year1 != null">
+	    	and a.date_year between #{date_year} and #{date_year1} 
 	    </if>
 	    <if test="crops_type != null  and crops_type != ''">
 	        and a.crops_type=#{crops_type}
@@ -22,8 +22,8 @@
     </select>
     <select id="findAllCount" parameterType="com.agri.monitor.vo.CropsPlantQueryVO" resultType="int">
         select count(a.gid) from t_crops_plant a,t_crops_type b where a.crops_type=b.gid
-        <if test="date_year != null">
-	    	and a.date_year=#{date_year}
+	     <if test="date_year != null and date_year1 != null">
+	    	and a.date_year between #{date_year} and #{date_year1} 
 	    </if>
 	    <if test="crops_type != null">
 	        and a.crops_type=#{crops_type}

@@ -10,6 +10,11 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 		    type: 'year',
 		    value:curyear
 		 });
+		laydate.render({
+		    elem: '#date_year1',
+		    type: 'year',
+		    value:curyear
+		 });
 		//表格渲染
 		datatable=table.render({
 			id:"datalist",
@@ -18,7 +23,7 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 		    toolbar: '#barDemo',
 		    url: '/cropsplant/datalist', //数据接口，
 		    height:winH-105,
-		    where: {date_year:curyear},
+		    where: {date_year:curyear,date_year1:curyear},
 		    page: true, //开启分页
 		    limit:20,
 		    limits:[20,40,60,100],
@@ -46,7 +51,7 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 		    			  layer.msg('导入数据成功');
 				    	  datatable.reload({//表格数据重新加载
 							  where: {
-								  date_year: $("#date_year").val(),crops_type: $("#crops_type").val()
+								  date_year: $("#date_year").val(),date_year1: $("#date_year1").val(),crops_type: $("#crops_type").val()
 							  },page: {curr: 1}
 				    	  });
 				      }else{
@@ -108,7 +113,7 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 							        	  layer.msg('删除农作物产量数据成功');
 							        	  datatable.reload({//表格数据重新加载
 											  where: {
-												  date_year: $("#date_year").val(),crops_type: $("#crops_type").val()
+												  date_year: $("#date_year").val(),date_year1: $("#date_year1").val(),crops_type: $("#crops_type").val()
 											  },page: {curr: 1}
 							        	  });
 							          }else{
@@ -128,7 +133,7 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 		$("#queryBtn").click(function(){
 			datatable.reload({//表格数据重新加载
 				  where: {
-					  date_year: $("#date_year").val(),crops_type: $("#crops_type").val()
+					  date_year: $("#date_year").val(),date_year1: $("#date_year1").val(),crops_type: $("#crops_type").val()
 				  },page: {curr: 1}
 			});
 		});
