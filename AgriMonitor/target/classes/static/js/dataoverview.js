@@ -102,6 +102,8 @@ layui.use(['table'], function(table) {
 		        			str+="<p class='item' style='color: yellow;'>"+item.log+"</p>";
 		        		}else if(item.ratio<0.1){
 		        			str+="<p class='item' style='color: blue;'>"+item.log+"</p>";
+		        		}else{
+		        			str+="<p class='item'>"+item.log+"</p>";
 		        		}
 		        	});
 		        	$("#monitorinfo",parent.document).html(str);
@@ -116,7 +118,4 @@ layui.use(['table'], function(table) {
 	monitorinfo();
 	initchart();
 	farmdata();
-	animalsBreedData();
-	cropsplantData();
-	bindEvent();
 });

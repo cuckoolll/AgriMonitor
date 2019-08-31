@@ -129,6 +129,8 @@ layui.use(['form','layer'], function(form,layer) {
 		        			str+="<p class='item' style='color: yellow;'>"+item.log+"</p>";
 		        		}else if(item.ratio<0.1){
 		        			str+="<p class='item' style='color: blue;'>"+item.log+"</p>";
+		        		}else{
+		        			str+="<p class='item'>"+item.log+"</p>";
 		        		}
 		        	});
 		        	$("#monitorinfo").html(str);

@@ -152,7 +152,7 @@ public class MonitorManageController {
 	
 	@ResponseBody
 	@RequestMapping(value="/findmonitorinfo",method=RequestMethod.POST)
-	public List<String> findmonitorinfo() {
+	public List<Map> findmonitorinfo() {
 		return monitorLogService.findmonitorinfo();
 	}
 }

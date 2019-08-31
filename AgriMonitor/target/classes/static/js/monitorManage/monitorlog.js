@@ -20,7 +20,7 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 		      {field: 'monitor_type', title: '监控指标',align:'center', templet: '#titleTpl'},
 		      /*{field: 'condition_showname', title: '数据监控条件',align:'center'}*/
 		      {field: 'log', title: '预警信息',align:'center'},
-		      {field: 'ratio', title: '预警级别',align:'center', templet: '#titleTpl1'},
+		      {field: 'ratio', title: '预警级别',align:'center', templet: '#titleTpl1',width:120},
 		      {field: 'create_time', title: '预警时间',align:'center',width:200},
 		      {toolbar: '#barDemo1', title: '操作',align:'center',width:100}
 		    ]]

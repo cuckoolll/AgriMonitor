@@ -278,9 +278,16 @@ public class FarmInfoService {
 							Double d2 = null != map2.get("value_set")?Double.valueOf(map2.get("value_set").toString()):null;
 							if(d1 != null && d2 != null) {
 								String log=null;
+								double ratio=0;
 								if (">".equals(conditions) && d1>d2) {
+									if(d2!=0) {
+										ratio = new BigDecimal((d1-d2)+"").divide(new BigDecimal(d2+"")).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+									}
 									log=map1.get("farm_name")+""+map1.get("type_name")+"实际存栏数"+d1+"，大于预警值"+d2;
 								}else if ("<".equals(conditions) && d1<d2) {
+									if(d2!=0) {
+										ratio = new BigDecimal((d2-d1)+"").divide(new BigDecimal(d2+"")).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+									}
 									log=map1.get("farm_name")+""+map1.get("type_name")+"实际存栏数"+d1+"，小于预警值"+d2;
 								} else if ("=".equals(conditions) && d1==d2) {
 									log=map1.get("farm_name")+""+map1.get("type_name")+"实际存栏数"+d1+"，等于预警值"+d2;
@@ -290,6 +297,7 @@ public class FarmInfoService {
 									MonitorLog l = new MonitorLog();
 									l.setStopflag(1);
 									l.setSetgid((Integer) map2.get("gid"));
+									l.setRatio(ratio);
 									l.setLog(log);
 									monitorLogMapper.insert(l);
 								}

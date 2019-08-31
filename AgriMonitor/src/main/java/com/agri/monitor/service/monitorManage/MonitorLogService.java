@@ -75,7 +75,7 @@ public class MonitorLogService {
 		return result;
 	}
 	
-	public List<String> findmonitorinfo(){
+	public List<Map> findmonitorinfo(){
 		return monitorLogMapper.findmonitorinfo();
 	}
 	//数据监控

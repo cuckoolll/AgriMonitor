@@ -27,5 +27,5 @@ public interface MonitorLogMapper {
 	void updateStatusAll();
 	void deleteAll();
 	
-	List<String> findmonitorinfo();
+	List<Map> findmonitorinfo();
 }

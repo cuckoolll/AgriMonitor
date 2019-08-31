@@ -59,7 +59,7 @@
     	delete from t_monitor_log
     </delete>
     
-    <select id="findmonitorinfo" resultType="string">
-       select log,ratio from t_monitor_log where stopflag=1;
+    <select id="findmonitorinfo" resultType="map">
+       select gid,log,ratio from t_monitor_log where stopflag=1;
     </select>
 </mapper>
