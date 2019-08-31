@@ -13,6 +13,8 @@ public class MonitorLog {
 	
 	private Integer stopflag;
 
+	private Double ratio;
+	
 	public Integer getGid() {
 		return gid;
 	}
@@ -51,6 +53,14 @@ public class MonitorLog {
 
 	public void setStopflag(Integer stopflag) {
 		this.stopflag = stopflag;
+	}
+
+	public Double getRatio() {
+		return ratio;
+	}
+
+	public void setRatio(Double ratio) {
+		this.ratio = ratio;
 	}
 	
 }

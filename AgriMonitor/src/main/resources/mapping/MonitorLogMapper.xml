@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.agri.monitor.mapper.MonitorLogMapper">
     <select id="findAllForPage" parameterType="com.agri.monitor.vo.MonitorSetQueryVO" resultType="map">
-		select a.gid,a.stopflag,b.monitor_type,b.condition_showname,a.log,a.create_time from t_monitor_log a,t_monitor_set b
+		select a.gid,a.stopflag,a.ratio,b.monitor_type,b.condition_showname,a.log,a.create_time from t_monitor_log a,t_monitor_set b
 		where a.setgid=b.gid 
         <if test="monitor_type != null">
 	        and b.monitor_type=#{monitor_type}
@@ -25,9 +25,9 @@
     </select>
     
     <insert id="insert" parameterType="com.agri.monitor.entity.MonitorLog">
-    	insert into t_monitor_log(setgid,log,stopflag)
+    	insert into t_monitor_log(setgid,log,stopflag,ratio)
     	values
-	   (#{setgid},#{log},#{stopflag})
+	   (#{setgid},#{log},#{stopflag},#{ratio})
     </insert>
     
     <delete id="delete" parameterType="java.util.List">
@@ -60,6 +60,6 @@
     </delete>
     
     <select id="findmonitorinfo" resultType="string">
-       select log from t_monitor_log where stopflag=1;
+       select log,ratio from t_monitor_log where stopflag=1;
     </select>
 </mapper>

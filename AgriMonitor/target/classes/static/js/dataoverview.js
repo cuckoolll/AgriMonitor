@@ -94,7 +94,15 @@ layui.use(['table'], function(table) {
 		        	$(".box",parent.document).show();
 		        	var str="";
 		        	$.each(res,function(index,item){
-		        		str+="<p class='item'>"+item+"</p>";
+		        		if(item.ratio==0 || item.ratio>=1){
+		        			str+="<p class='item'>"+item.log+"</p>";
+		        		}else if(item.ratio>=0.5 && item.ratio<1){
+		        			str+="<p class='item' style='color: orange;'>"+item.log+"</p>";
+		        		}else if(item.ratio>=0.1 && item.ratio<0.5){
+		        			str+="<p class='item' style='color: yellow;'>"+item.log+"</p>";
+		        		}else if(item.ratio<0.1){
+		        			str+="<p class='item' style='color: blue;'>"+item.log+"</p>";
+		        		}
 		        	});
 		        	$("#monitorinfo",parent.document).html(str);
 		        } else {

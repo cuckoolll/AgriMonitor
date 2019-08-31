@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -342,9 +343,16 @@ public class CropsPlantService {
 							Double d2 = null != map2.get("value_set")?Double.valueOf(map2.get("value_set").toString()):null;
 							if(d1 != null && d2 != null) {
 								String log=null;
+								double ratio=0;
 								if (">".equals(conditions) && d1>d2) {
+									if(d2!=0) {
+										ratio = new BigDecimal((d1-d2)+"").divide(new BigDecimal(d2+"")).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+									}
 									log=map1.get("date_year")+"年"+map1.get("type_name")+"实际"+getTargetName(target)+d1+"，大于预警值"+d2;
 								}else if ("<".equals(conditions) && d1<d2) {
+									if(d2!=0) {
+										ratio = new BigDecimal((d2-d1)+"").divide(new BigDecimal(d2+"")).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+									}
 									log=map1.get("date_year")+"年"+map1.get("type_name")+"实际"+getTargetName(target)+d1+"，小于预警值"+d2;
 								} else if ("=".equals(conditions) && d1==d2) {
 									log=map1.get("date_year")+"年"+map1.get("type_name")+"实际"+getTargetName(target)+d1+"，等于预警值"+d2;
@@ -355,6 +363,7 @@ public class CropsPlantService {
 									l.setStopflag(1);
 									l.setSetgid((Integer) map2.get("gid"));
 									l.setLog(log);
+									l.setRatio(ratio);
 									monitorLogMapper.insert(l);
 								}
 							}

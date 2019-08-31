@@ -112,6 +112,17 @@
    			 		农作物产量面积监测
   				{{#  } }}
 				</script>
+				<script type="text/html" id="titleTpl1">
+ 			 	{{#  if(d.ratio==0 || d.ratio>=1){}}
+   					一级
+  			 	{{#  } else if(d.ratio>=0.5 && d.ratio<1) {}}
+   			 		二级
+  				{{#  } else if(d.ratio>=0.1 && d.ratio<0.5) {}}
+   			 		三级
+  				{{#  } else if(d.ratio<0.1) {}}
+   			 		四级
+  				{{#  } }}
+				</script>
 				<script type="text/html" id="barDemo">
   				 <div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
 				</script>
