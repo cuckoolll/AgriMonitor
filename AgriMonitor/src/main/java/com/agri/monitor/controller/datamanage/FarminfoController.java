@@ -160,5 +160,10 @@ public class FarminfoController {
 	public Map findSumGroupTowns() {
 		return farmInfoService.findSumGroupTowns();
 	}
+	
+	@RequestMapping("/farmanalysis")
+	public String toFarmanalysisPage(Model model) {
+		return "/statisticanalysis/farm/farmanalysis";
+	}
 }
 
