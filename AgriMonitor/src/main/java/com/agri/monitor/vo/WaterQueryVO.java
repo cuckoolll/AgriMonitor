@@ -3,6 +3,7 @@ package com.agri.monitor.vo;
 public class WaterQueryVO extends CommonQueryVO {
 	private String county;
 	private String quality_time;
+	private String quality_time1;
 	private String quality_type;
 	private String quality_address;
 
@@ -17,6 +18,12 @@ public class WaterQueryVO extends CommonQueryVO {
 	}
 	public void setQuality_time(String quality_time) {
 		this.quality_time = quality_time;
+	}
+	public String getQuality_time1() {
+		return quality_time1;
+	}
+	public void setQuality_time1(String quality_time1) {
+		this.quality_time1 = quality_time1;
 	}
 	public String getQuality_type() {
 		return quality_type;

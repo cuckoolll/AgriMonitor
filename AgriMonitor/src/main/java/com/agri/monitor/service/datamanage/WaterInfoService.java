@@ -145,7 +145,7 @@ public class WaterInfoService {
 	public Map queryInfoByCountryAndTimeForPage(WaterQueryVO queryVo, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("获取水质监测信息，入参=quality_address:" + queryVo.getQuality_address() 
-				+ ", quality_time:" + queryVo.getQuality_time());
+				+ ", quality_time:" + queryVo.getQuality_time() + ",quality_time1:" + queryVo.getQuality_time1());
 		}
 
 		final Map<String, Object> result = new HashMap<String, Object>();
@@ -154,7 +154,8 @@ public class WaterInfoService {
 		result.put("count", waterInfoMapper.queryInfoCount(queryVo));
 		result.put("data", waterInfoMapper.queryInfoByCountryAndTimeForPage(queryVo));
 		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, 
-				"获取水质监测信息，入参=quality_address:" + queryVo.getQuality_address() + ", quality_time:" + queryVo.getQuality_time());
+				"获取水质监测信息，入参=quality_address:" + queryVo.getQuality_address() + ", quality_time:" + queryVo.getQuality_time()
+				+ ",quality_time1:" + queryVo.getQuality_time1());
 		return result;
 	}
 	

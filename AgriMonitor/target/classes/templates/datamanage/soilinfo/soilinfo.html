@@ -43,9 +43,16 @@
 					<div class="layui-form-item">
 						<label class="layui-form-label text-left">年份：</label>
 						<div class="layui-input-inline">
-							<input id="date_year" type="text" class="layui-input" readonly="readonly">
+							<!-- <input id="date_year" type="text" class="layui-input" readonly="readonly"> -->
+							<table>
+								<tr>
+									<td><input type="text" id="date_year" class="layui-input" readonly="readonly" style="width: 100px"></td>
+									<td>-</td>
+									<td><input type="text" id="date_year1" class="layui-input" readonly="readonly" style="width: 100px"></td>
+								</tr>
+							</table>
 						</div>
-						<label class="layui-form-label text-left">编号：</label>
+						<label class="layui-form-label text-left" style="margin-left:15px;">编号：</label>
 						<div class="layui-input-inline">
 							<input id="code_number" type="text" class="layui-input">
 						</div>

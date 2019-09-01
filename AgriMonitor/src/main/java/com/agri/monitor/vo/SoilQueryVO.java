@@ -4,6 +4,7 @@ public class SoilQueryVO extends CommonQueryVO {
 	private String county;
 	private String towns;
 	private String date_year;
+	private String date_year1;
 	private String code_number;
 
 	public String getCounty() {
@@ -17,6 +18,12 @@ public class SoilQueryVO extends CommonQueryVO {
 	}
 	public void setDate_year(String date_year) {
 		this.date_year = date_year;
+	}
+	public String getDate_year1() {
+		return date_year1;
+	}
+	public void setDate_year1(String date_year1) {
+		this.date_year1 = date_year1;
 	}
 	public String getTowns() {
 		return towns;

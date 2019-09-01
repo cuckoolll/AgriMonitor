@@ -40,17 +40,25 @@
 			   auditor,
 			   date_format(paper_time, '%Y-%m-%d') paper_time
           from t_air_quality 
+         where 1=1
     	<if test="city != null and city != ''">
     		<bind name="city" value="'%' + city + '%'"/>
-        	where city like #{city} 
-        </if>
-        <if test="city == null or city == ''">
-        	<if test="quality_time != null and quality_time != ''">
-        		where quality_time between #{quality_time} and last_day(#{quality_time})
-        	</if>
+        	and city like #{city} 
         </if>
         <if test="quality_time != null and quality_time != ''">
-        	and quality_time between #{quality_time} and last_day(#{quality_time})
+        	<if test="quality_time1 == null and quality_time1 == ''">
+        		and quality_time between #{quality_time} and last_day(#{quality_time})
+        	</if>
+       	</if>
+       	<if test="quality_time1 != null and quality_time != ''">
+       		<if test="quality_time == null and quality_time == ''">
+        		and quality_time between #{quality_time1} and last_day(#{quality_time1})
+        	</if>
+       	</if>
+       	<if test="quality_time != null and quality_time != ''">
+       		<if test="quality_time1 != null and quality_time != ''">
+       			and quality_time between #{quality_time} and last_day(#{quality_time1})
+       		</if>
        	</if>
        	 order by quality_time desc, gid limit #{currIndex},#{limit}
     </select>
@@ -58,17 +66,25 @@
     <select id="queryInfoCount" parameterType="com.agri.monitor.vo.AirQueryVO" resultType="int">
         select count(gid)
           from t_air_quality 
+    	 where 1=1
     	<if test="city != null and city != ''">
     		<bind name="city" value="'%' + city + '%'"/>
-        	where city like #{city} 
-        </if>
-        <if test="city == null or city == ''">
-        	<if test="quality_time != null and quality_time != ''">
-        		where quality_time between #{quality_time} and last_day(#{quality_time})
-        	</if>
+        	and city like #{city} 
         </if>
         <if test="quality_time != null and quality_time != ''">
-        	and quality_time between #{quality_time} and last_day(#{quality_time})
+        	<if test="quality_time1 == null and quality_time1 == ''">
+        		and quality_time between #{quality_time} and last_day(#{quality_time})
+        	</if>
+       	</if>
+       	<if test="quality_time1 != null and quality_time != ''">
+       		<if test="quality_time == null and quality_time == ''">
+        		and quality_time between #{quality_time1} and last_day(#{quality_time1})
+        	</if>
+       	</if>
+       	<if test="quality_time != null and quality_time != ''">
+       		<if test="quality_time1 != null and quality_time != ''">
+       			and quality_time between #{quality_time} and last_day(#{quality_time1})
+       		</if>
        	</if>
     </select>
     

@@ -1,6 +1,7 @@
 layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form, laydate, layer, upload) {
 	var dataTable;
-	var timeControl;	  
+	var timeControl;	
+	var timeControl1;
 	var winH=$(window).height();
 	
 	/**
@@ -9,6 +10,10 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 	function render() {
 		timeControl = laydate.render({
 			elem: '#quality_time'
+		}); 
+		
+		timeControl1 = laydate.render({
+			elem: '#quality_time1'
 		}); 
 		
 		//表格渲染
@@ -24,7 +29,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    	if(res){
 		    		if(res.code==0){
 		    			dataTable.reload({//表格数据重新加载
-		    				where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
+		    				where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val(),"quality_time1":$("#quality_time1").val()},
 		  				  	page: {curr: 1}
 		    			});
 		    			layer.msg(res.msg);
@@ -37,7 +42,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 	}
 	
 	function renderTable() {
-		var param = {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()};
+		var param = {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val(),"quality_time1":$("#quality_time1").val()};
 		$.post("/waterinfo/queryQualityType", param, function(res){
 			var cols = [];
 			cols.push({type: 'checkbox', fixed: 'left'});
@@ -53,7 +58,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 				 toolbar: '#barDemo',
 				 url: '/waterinfo/queryWaterInfoOnLine', //数据接口
 				 method: 'post',
-				 where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val()},
+				 where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val(),"quality_time1":$("#quality_time1").val()},
 			     page: true, //开启分页
 			     limit:20,
 				 limits:[20,40,60,100],

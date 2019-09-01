@@ -17,17 +17,16 @@
 	<select id="queryQualityType" parameterType="com.agri.monitor.vo.WaterQueryVO" resultType="String">
 		select quality_type
 		  from t_water_quality
-	  	<if test="quality_address != null and quality_address != ''">
+	  	 where 1=1
+    	<if test="quality_address != null and quality_address != ''">
     		<bind name="quality_address" value="'%' + quality_address + '%'"/>
-        	where quality_address like #{quality_address} 
-        </if>
-        <if test="quality_address == null or quality_address == ''">
-        	<if test="quality_time != null and quality_time != ''">
-        		where quality_time = #{quality_time}
-        	</if>
+        	and quality_address like #{quality_address} 
         </if>
         <if test="quality_time != null and quality_time != ''">
-        	and quality_time = #{quality_time}
+        	and quality_time &gt;= #{quality_time}
+       	</if>
+       	<if test="quality_time1 != null and quality_time1 != ''">
+        	and quality_time &lt;= #{quality_time1}
        	</if>
        	 group by quality_type
        	 order by quality_type
@@ -43,35 +42,33 @@
 			   quality_result,
 			   remarks
           from t_water_quality 
+          where 1=1
     	<if test="quality_address != null and quality_address != ''">
     		<bind name="quality_address" value="'%' + quality_address + '%'"/>
-        	where quality_address like #{quality_address} 
-        </if>
-        <if test="quality_address == null or quality_address == ''">
-        	<if test="quality_time != null and quality_time != ''">
-        		where quality_time = #{quality_time}
-        	</if>
+        	and quality_address like #{quality_address} 
         </if>
         <if test="quality_time != null and quality_time != ''">
-        	and quality_time = #{quality_time}
+        	and quality_time &gt;= #{quality_time}
        	</if>
-       	 order by quality_time desc, gid 
+       	<if test="quality_time1 != null and quality_time1 != ''">
+        	and quality_time &lt;= #{quality_time1}
+       	</if>
+       	 order by quality_time desc, gid limit #{currIndex},#{limit}
     </select>
     
     <select id="queryInfoCount" parameterType="com.agri.monitor.vo.WaterQueryVO" resultType="int">
         select count(gid)
           from t_water_quality 
+    	 where 1=1
     	<if test="quality_address != null and quality_address != ''">
     		<bind name="quality_address" value="'%' + quality_address + '%'"/>
-        	where quality_address like #{quality_address} 
-        </if>
-        <if test="quality_address == null or quality_address == ''">
-        	<if test="quality_time != null and quality_time != ''">
-        		where quality_time = #{quality_time}
-        	</if>
+        	and quality_address like #{quality_address} 
         </if>
         <if test="quality_time != null and quality_time != ''">
-        	and quality_time = #{quality_time}
+        	and quality_time &gt;= #{quality_time}
+       	</if>
+       	<if test="quality_time1 != null and quality_time1 != ''">
+        	and quality_time &lt;= #{quality_time1}
        	</if>
     </select>
     

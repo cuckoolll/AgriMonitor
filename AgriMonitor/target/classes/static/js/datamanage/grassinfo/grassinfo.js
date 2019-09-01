@@ -1,6 +1,7 @@
 layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form, laydate, layer, upload) {
 	var dataTable;
-	var timeControl;	  
+	var timeControl;
+	var timeControl1;	
 	var winH=$(window).height();
 	
 	/**
@@ -12,6 +13,11 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 			type: 'year'
 		}); 
 		
+		timeControl1 = laydate.render({
+			elem: '#date_year1',
+			type: 'year'
+		}); 
+		
 		dataTable = table.render({
 			 id:'datalist',
 			 elem: '#datalist',
@@ -19,7 +25,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 			 toolbar: '#barDemo',
 			 url: '/grassinfo/queryInfo', //数据接口
 			 method: 'post',
-			 where: {"date_year":$("#date_year").val()},
+			 where: {"date_year":$("#date_year").val(), "date_year1":$("#date_year1").val()},
 		     page: true, //开启分页
 		     limit:20,
 			 limits:[20,40,60,100],
@@ -56,7 +62,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    	if(res){
 		    		if(res.code==0){
 		    			dataTable.reload({//表格数据重新加载
-		    				where: {"date_year":$("#date_year").val()},
+		    				where: {"date_year":$("#date_year").val(), "date_year1":$("#date_year1").val()},
 		  				  	page: {curr: 1}
 		    			});
 		    			layer.msg(res.msg);
@@ -119,7 +125,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 			        		success:function(res){
 			        			if(res && res.code==0){
 			        				dataTable.reload({//表格数据重新加载
-					    				where: {"date_year":$("#date_year").val()},
+					    				where: {"date_year":$("#date_year").val(), "date_year1":$("#date_year1").val()},
 					  				  	page: {curr: 1}
 					    			});
 			        				layer.msg('删除成功');
@@ -140,7 +146,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		//查询数据
 		$("#queryBtn").click(function(){
 			dataTable.reload({//表格数据重新加载
-				  where: {"date_year":$("#date_year").val()},
+				  where: {"date_year":$("#date_year").val(), "date_year1":$("#date_year1").val()},
 				  page: {curr: 1}
 			});
 		});

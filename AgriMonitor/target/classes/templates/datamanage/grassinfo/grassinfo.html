@@ -43,10 +43,17 @@
 					<div class="layui-form-item">
 						<label class="layui-form-label text-left">年份：</label>
 						<div class="layui-input-inline">
-							<input id="date_year" type="text" class="layui-input" readonly="readonly">
+							<!-- <input id="date_year" type="text" class="layui-input" readonly="readonly"> -->
+							<table>
+								<tr>
+									<td><input type="text" id="date_year" class="layui-input" readonly="readonly" style="width: 100px"></td>
+									<td>-</td>
+									<td><input type="text" id="date_year1" class="layui-input" readonly="readonly" style="width: 100px"></td>
+								</tr>
+							</table>
 						</div>
 						
-						<a id="queryBtn" class="layui-btn">检索</a>
+						<a id="queryBtn" class="layui-btn" style="margin-left:15px;">检索</a>
 						<a th:if="${session.userinfo.roleinfo.role_name!='user'}" class="layui-btn" id="importBtn">导入数据</a>
 						<a class="layui-btn" th:href="@{/excel/草地生态监测数据导入模板.xlsx}">模板下载</a>
 					</div>

@@ -38,9 +38,13 @@
 			   year_avg_pressure,
 			   year_thunderstorm_days, 
 			   year_sandstorm_days
-          from t_climate_quality 
-       	<if test="date_year != null and date_year != ''">
-			where date_year = #{date_year}
+          from t_climate_quality
+         where 1=1 
+        <if test="date_year != null and date_year != ''">
+        	and date_year &gt;= #{date_year}
+       	</if>
+       	<if test="date_year1 != null and date_year1 != ''">
+        	and date_year &lt;= #{date_year1}
        	</if>
        	 order by date_year desc, gid limit #{currIndex},#{limit}
     </select>
@@ -48,8 +52,12 @@
     <select id="queryInfoCount" parameterType="com.agri.monitor.vo.ClimateQueryVO" resultType="int">
         select count(gid)
           from t_climate_quality 
-       	<if test="date_year != null and date_year != ''">
-			where date_year = #{date_year}
+       	 where 1=1 
+        <if test="date_year != null and date_year != ''">
+        	and date_year &gt;= #{date_year}
+       	</if>
+       	<if test="date_year1 != null and date_year1 != ''">
+        	and date_year &lt;= #{date_year1}
        	</if>
     </select>
     
