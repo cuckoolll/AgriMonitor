@@ -1,10 +1,6 @@
 package com.agri.monitor;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,7 +69,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 		queryVO.setLimit(Integer.MAX_VALUE);
 		CacheUtil.putCache(CacheTypeEnum.ANIMALSTARGET, animalsTargetMapper.findAllForPage(queryVO1));
 		//缓存乡镇信息
-		CacheUtil.putCache(CacheTypeEnum.TOWNS, Arrays.asList(new String[]{"沙柳河镇","哈尔盖镇","伊克乌兰乡","泉吉乡","吉尔孟乡"}));
+		CacheUtil.putCache(CacheTypeEnum.TOWNS, Arrays.asList(new String[]{"沙柳河镇","哈尔盖镇","伊克乌兰乡","泉吉乡","吉尔孟乡","黄玉农场"}));
 		//缓存气候指标信息
 		CacheUtil.putCache(CacheTypeEnum.CLIMATEINDEX, climateInfoService.getClimateIndex());
 		//缓存农作物类型

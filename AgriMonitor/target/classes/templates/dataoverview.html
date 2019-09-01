@@ -18,10 +18,30 @@ text-align: right;
 .layui-card-header a:hover{
 	color: blue;
 }
+#chartDiv p{
+	margin: 10px 10px;
+	font-size: 12px;
+}
 </style>
 </head>
 <body>
 <div id="chart1" style="width: 100%;min-width: 900px;"></div>
+
+<div id="chartDiv" style="display:none;height: 350px;width: 400px;top: 0px;position: absolute;-webkit-tap-highlight-color: rgba(0,0,0,0);position: fixed;
+    pointer-events: auto;margin: 0;
+    padding: 0;
+    background-color: #fff;
+    -webkit-background-clip: content;
+    border-radius: 2px;
+    box-shadow: 1px 1px 50px rgba(0,0,0,.3);    z-index: 19891015">
+<p id="dataload">数据加载中...</p>
+<p style="display: none" id="jrmx">无数据...</p>
+<p style="display: none" id="qjx">无数据...</p>
+<p style="display: none" id="hync">无数据...</p>
+<p style="display: none" id="ykwlx">无数据...</p>
+<p style="display: none" id="slhz">无数据...</p>
+<p style="display: none" id="hrgz">无数据...</p>
+</div>
 <script type="text/javascript" th:src="@{/temp/framework/jquery-1.11.3.min.js}" ></script>
 <script type="text/javascript" th:src="@{/temp/layui/layui.js}"></script>
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=sg8e5IVRgVNHRitTPRxk482e"></script>

@@ -22,7 +22,7 @@ layui.use(['table'], function(table) {
 	function initchart(){
 		$("#chart1").height($(window).height());
 		option1 = {
-		    tooltip : {
+		   /* tooltip : {
 		        trigger: 'item',
 		        formatter: function(param){
 		        	if(param.data.data){
@@ -35,7 +35,7 @@ layui.use(['table'], function(table) {
 		        		return "无数据";
 		        	}
 				}
-		    },
+		    },*/
 		    bmap: {center: [100.030020,37.221610],zoom:11,roam: false},
 		    series : [
 		        {
@@ -64,8 +64,91 @@ layui.use(['table'], function(table) {
 	      
 		chart1 = echarts.init(document.getElementById('chart1')); 
 		chart1.setOption(option1); 
+		chart1.on('mousemove', function (params) {
+    		  mousemove(params);
+	    });
+        chart1.on('mouseout', function (params) {
+      	  	mouseout(params);
+	    });
 	}
 
+	function mousemove(params){
+		if($("#chartDiv").is(':hidden')){
+			$("#chartDiv p").hide();
+			$("#chartDiv").css("top",params.event.offsetY-380<0?params.event.offsetY+50:params.event.offsetY-380);
+			$("#chartDiv").css("left",params.event.offsetX-160);
+			$("#chartDiv").show();
+			
+			if(params.data.data&&params.data.data.length>0){
+				if(params.name=='沙柳河镇'){
+					$("#slhz").show();
+				}else if(params.name=='哈尔盖镇'){
+					$("#hrgz").show();
+				}else if(params.name=='伊克乌兰乡'){
+					$("#ykwlx").show();
+				}else if(params.name=='泉吉乡'){
+					$("#qjx").show();
+				}else if(params.name=='吉尔孟乡'){
+					$("#jrmx").show();
+				}else if(params.name=='黄玉农场'){
+					$("#hync").show();
+				}
+			}
+		}
+	}
+	
+	function mouseout(params){
+		if(!$("#chartDiv").is(':hidden')){
+			$("#chartDiv").hide();
+		}
+	}
+	
+	function agridata(){
+		$.post("/agriBaseinfo/datalist", {page:1,limit:500},function(res){
+	        if(res && res.data && res.data.length>0){
+	        	$.each(res.data,function(index,item){
+	        		if(item.towns=='沙柳河镇'){
+	        			if($("#slhz").text()=='无数据...'){
+	        				$("#slhz").text('');
+	        			}
+	        			/*var str="下辖地"+item.village+"人口"+item.rksl+"人，国土面积"
+								+item.gtmj+"平方千米，耕地面积"+item.gdmj+"亩，高标准农田面积"
+								+item.gbzntmj+"亩，草场面积"+item.ccmj+"亩，农作物种类有"
+								+item.nzwzl+"，年种植面积"+item.nzzmj+"亩，种植方式为"+item.zzfs+"。<br>";*/
+	        			var str="下辖地"+item.village+"人口"+item.rksl+"人，国土面积"
+								+item.gtmj+"平方千米，耕地面积"+item.gdmj+"亩。<br>";
+						$("#slhz").html($("#slhz").html()+str);
+					}else if(item.towns=='哈尔盖镇'){
+						if($("#hrgz").text()=='无数据...'){
+	        				$("#hrgz").text('');
+	        			}
+						$("#hrgz").html( $("#hrgz").html()+str);
+					}else if(item.towns=='伊克乌兰乡'){
+						if($("#ykwlx").text()=='无数据...'){
+	        				$("#ykwlx").text('');
+	        			}
+						$("#ykwlx").html( $("#ykwlx").html()+str);
+					}else if(item.towns=='泉吉乡'){
+						if($("#qjx").text()=='无数据...'){
+	        				$("#qjx").text('');
+	        			}
+						$("#qjx").html( $("#qjx").html()+str);
+					}else if(item.towns=='吉尔孟乡'){
+						if($("#jrmx").text()=='无数据...'){
+	        				$("jrmx").text('');
+	        			}
+						$("#jrmx").html( $("#jrmx").html()+str);
+					}else if(item.towns=='黄玉农场'){
+						if($("#hync").text()=='无数据...'){
+	        				$("#hync").text('');
+	        			}
+						$("#hync").html( $("#hync").html()+str);
+					}
+	        	});
+	        }
+	    });
+	}
+	
 	function farmdata(){
 		$.post("/farminfo/findSumGroupTowns", {},function(res){
 	        if(res && res.mapdata && res.mapdata.length>0){
@@ -83,6 +166,13 @@ layui.use(['table'], function(table) {
 	      	  chart1.dispose();
 	      	  chart1 = echarts.init(document.getElementById('chart1'));
 	      	  chart1.setOption(option1); 
+	      	  
+		      	chart1.on('mousemove', function (params) {
+		    		  mousemove(params);
+			    });
+		        chart1.on('mouseout', function (params) {
+		      	  	mouseout(params);
+			    });
 	        }
 	    });
 	}
@@ -114,7 +204,7 @@ layui.use(['table'], function(table) {
 		        }
 		    });
 	}
-	
+	agridata();
 	monitorinfo();
 	initchart();
 	farmdata();
