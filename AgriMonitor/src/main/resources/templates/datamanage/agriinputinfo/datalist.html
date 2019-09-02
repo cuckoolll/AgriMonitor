@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<!-- Google Chrome Frame也可以让IE用上Chrome的引擎: -->
+		<meta name="renderer" content="webkit">
+		<!--国产浏览器高速模式-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>农产品信息表</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/base.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/iconfont.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
+		<!-- 滚动条插件 -->
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/jquery.mCustomScrollbar.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/frameStyle.css}">
+	    <!--[if lt IE 9]>
+	      	<script src="framework/html5shiv.min.js"></script>
+	      	<script src="framework/respond.min.js"></script>
+	    <![endif]-->
+		<script type="text/javascript" th:src="@{/temp/framework/jquery-1.11.3.min.js}" ></script>
+		<script type="text/javascript" th:src="@{/temp/layui/layui.js}"></script>
+		<script th:src="@{/temp/framework/jquery-ui-1.10.4.min.js}"></script>
+		<script th:src="@{/temp/framework/jquery.mousewheel.min.js}"></script>
+		<script th:src="@{/temp/framework/jquery.mCustomScrollbar.min.js}"></script>
+		<!-- 公共样式 结束 -->
+	</head>
+
+	<body>
+		  <div class="layui-fluid">
+		      <div class="layui-row layui-col-space10">
+					<div class="layui-col-xs12" style="height:66px">
+				      <!-- 填充内容 -->
+				      <div class="layui-card">
+				        <div class="layui-card-body">
+				        	<div class="queryArea">
+								<form class="layui-form" action="">
+									<div class="layui-form-item">
+										<label style="width: 60px" class="layui-form-label text-left">年份：</label>
+										<div class="layui-input-inline">
+											<table>
+											<tr>
+												<td><input type="text" id="date_year" class="layui-input" style="width: 80px"></td>
+												<td>-</td>
+												<td><input type="text" id="date_year1" class="layui-input" style="width: 80px"></td>
+											</tr>
+											</table>
+										</div>
+										<a id="queryBtn" class="layui-btn">检索</a>
+										<a th:if="${session.userinfo.roleinfo.role_name!='user'}" type="button" class="layui-btn" id="dataImportBtn"><i class="layui-icon"></i>导入数据</a>
+										<a class="layui-btn"><i class="layui-icon"></i>模板下载</a>
+									</div>
+								</form>
+							</div>
+				        </div>
+				      </div>
+				    </div>
+				</div>
+				<div class="layui-row layui-col-space10">
+					<div class="layui-col-xs12">
+				      <!-- 填充内容 -->
+				      <div class="layui-card">
+				        <div class="layui-card-body">
+				        	<table id="datalist"  lay-filter="datalist"></table>
+				        	<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name!='user'}">
+  							 <div class="layui-inline" lay-event="add"><i class="layui-icon layui-icon-add-1"></i></div><div class="layui-inline" lay-event="update"><i class="layui-icon layui-icon-edit"></i></div><div class="layui-inline" lay-event="delete"><i class="layui-icon layui-icon-delete"></i></div>
+							</script>
+				        </div>
+				      </div>
+				    </div>
+				</div>
+		    </div>
+		<script th:src="@{/js/datamanage/agriinputinfo/datalist.js}"></script>
+	</body>
+</html>
