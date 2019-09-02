@@ -20,7 +20,7 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 		    elem: '#datalist',
 		    method:'post',
 		    toolbar: '#barDemo',
-		    url: '/landresource/data', //数据接口，
+		    url: '/agriinputinfo/queryInfo', //数据接口，
 		    height:winH-105,
 		    page: true, //开启分页
 		    limit:20,
