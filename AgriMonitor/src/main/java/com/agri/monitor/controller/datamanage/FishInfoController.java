@@ -1,25 +1,19 @@
 package com.agri.monitor.controller.datamanage;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.annotation.IgnoreSession;
-import com.agri.monitor.entity.GrassInfo;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.enums.CacheTypeEnum;
-import com.agri.monitor.service.datamanage.GrassInfoService;
 import com.agri.monitor.utils.CacheUtil;
 import com.agri.monitor.vo.GrassQueryVO;
 
@@ -37,21 +31,24 @@ public class FishInfoController {
 	@RequestMapping("")
 	public String fishInfo(Model model) {
 		model.addAttribute("towns", CacheUtil.getCache(CacheTypeEnum.TOWNS));
-		return "/datamanage/fishInfo/fishInfo";
+		return "/datamanage/fishinfo/fishinfo";
 	}
 	
-//	/**
-//	 * 查询草原生态监测信息 .
-//	 * @param request .
-//	 * @return .
-//	 */
-//	@RequestMapping(value="/queryInfo", method = RequestMethod.POST)
-//	@ResponseBody
-//	@IgnoreSession
-//	public Map queryInfo(GrassQueryVO queryVo, HttpServletRequest request) {
-//		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+	/**
+	 * 查询草原生态监测信息 .
+	 * @param request .
+	 * @return .
+	 */
+	@RequestMapping(value="/queryInfo", method = RequestMethod.POST)
+	@ResponseBody
+	@IgnoreSession
+	public Map queryInfo(GrassQueryVO queryVo, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 //		return grassInfoService.queryInfoForPage(queryVo, user.getUser_id());
-//	}
+		Map map = new HashMap();
+		map.put("code", 0);
+		return map;
+	}
 //	
 //	@ResponseBody
 //	@RequestMapping(value="/dataImport",method=RequestMethod.POST)
