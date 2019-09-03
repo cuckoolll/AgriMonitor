@@ -85,6 +85,29 @@ layui.use(['form','layer'], function(form,layer) {
 		
 		//自定义滚动条
 		$(".menu").mCustomScrollbar();
+		
+		$.get("http://wthrcdn.etouch.cn/weather_mini?citykey=101150806", {},function(res){
+			 if(res){
+				 var o=eval("(" + res + ")");
+				 if(o && o.data.forecast){
+					 if(o.data.forecast.length==1){
+						 $("#tqxx").html("今日天气："+o.data.forecast[0].type+"&nbsp;&nbsp;"
+								 +o.data.forecast[0].high+"&nbsp;&nbsp;"
+								 +o.data.forecast[0].low+"&nbsp;&nbsp;"
+								 +o.data.forecast[0].fengxiang);
+					 }if(o.data.forecast.length>1){
+						 $("#tqxx").html("今日天气："+o.data.forecast[0].type+"&nbsp;&nbsp;"
+								 +o.data.forecast[0].high+"&nbsp;&nbsp;"
+								 +o.data.forecast[0].low+"&nbsp;&nbsp;"
+								 +o.data.forecast[0].fengxiang+"&nbsp;&nbsp;"
+								 +"明日天气："+o.data.forecast[0].type+"&nbsp;&nbsp;"
+								 +o.data.forecast[0].high+"&nbsp;&nbsp;"
+								 +o.data.forecast[0].low+"&nbsp;&nbsp;"
+								 +o.data.forecast[0].fengxiang);
+					 }
+				 }
+			 }
+		});
 	}
 	$(window).resize(function(){
 		init();

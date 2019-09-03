@@ -2,6 +2,7 @@ package com.agri.monitor.controller.datamanage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -81,6 +82,33 @@ public class AgriBaseinfoController {
 	@RequestMapping(value="/dataImport",method=RequestMethod.POST)
 	public Map dataImport(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
 		return agriBaseinfoService.dataImport(file, request);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/find4Maps",method=RequestMethod.POST)
+	public List<Map> find4Maps(HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		AgriBaseinfoQueryVO queryVO = new AgriBaseinfoQueryVO();
+		queryVO.setPage(1);
+		queryVO.setLimit(500);
+		List<Map> list = agriBaseinfoService.findAllForPage(queryVO, user.getUser_id());
+		List<Map> temlist = new ArrayList<>();
+		if(null != list && list.size() > 0) {
+			//地图数据
+			for (Map map : list) {
+				Map m = new HashMap<>();
+				if(null == map.get("village")) {
+					continue;
+				}
+				String str = map.get("village").toString().replace("村", "");
+				m.put("name", str);
+				m.put("size", 40);
+				m.put("data", map);
+				temlist.add(m);
+			}
+		}
+		
+		return temlist;
 	}
 }
 

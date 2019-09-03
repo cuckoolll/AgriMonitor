@@ -3,8 +3,28 @@ layui.use(['table'], function(table) {
 	var chart1,option1;
 	
 	var curyear=new Date().getFullYear();
-	var data = [{name: '沙柳河镇', size:100},{name: '伊克乌兰乡', size:100},{name: '泉吉乡', size:100},{name: '吉尔孟乡', size:100},{name: '黄玉农场', size:100},{name: '哈尔盖镇', size:100}];
-	var geoCoordMap = {'沙柳河镇':[100.15841,37.355063],'伊克乌兰乡':[100.09333,37.311518],'泉吉乡':[99.846799,37.294324],'吉尔孟乡':[99.619424,37.188703],'黄玉农场':[99.95554,37.250184],'哈尔盖镇':[100.417701,37.261455]};
+	var data = [{name: '新海', size:40},{name: '思乃', size:40},{name: '果洛仓贡麻', size:40},
+		{name: '潘保', size:40},{name: '红山', size:40},{name: '尕曲', size:40},
+		{name: '河东', size:40},{name: '公贡麻', size:40},{name: '亚秀麻', size:40},
+		{name: '环仓秀麻', size:40},{name: '果洛', size:40},{name: '藏秀麻', size:40},
+		{name: '切察', size:40},{name: '察拉', size:40},{name: '塘渠', size:40},
+		{name: '贡麻', size:40},{name: '亚秀', size:40},{name: '亚贡麻', size:40},
+		{name: '尚木多', size:40},{name: '角什科贡麻', size:40},{name: '角什科秀麻', size:40},
+		{name: '合茂', size:40},{name: '扎苏合', size:40},{name: '年乃索麻', size:40},
+		{name: '宁夏', size:40},{name: '切吉', size:40},{name: '新泉', size:40},
+		{name: '日芒', size:40},{name: '环仓贡麻', size:40},{name: '向阳', size:40},
+		{name: '秀脑贡麻', size:40},{name: '秀脑麻', size:40},{name: '黄玉农场', size:40}];
+	var geoCoordMap = {'新海':[100.143628,37.311171],'思乃':[100.129783,37.313673],'果洛仓贡麻':[100.137907,37.331978],
+			'潘保':[100.15874,37.3371],'红山':[100.157499,37.317058],'尕曲':[100.109484,37.325127],
+			'河东':[100.132599,37.32628],'公贡麻':[100.468444,37.243889],'亚秀麻':[100.417294,37.241782],
+			'环仓秀麻':[100.499189,37.311767],'果洛':[100.428021,37.246597],'藏秀麻':[100.411308,37.245003],
+			'切察':[100.424016,37.237044],'察拉':[100.440293,37.249555],'塘渠':[100.424751,37.230313],
+			'贡麻':[100.096395,37.329193],'亚秀':[100.009094,37.322635],'亚贡麻':[100.090446,37.32198],
+			'尚木多':[100.088397,37.313331],'角什科贡麻':[100.015093,37.300997],'角什科秀麻':[99.986676,37.259197],
+			'合茂':[99.875591,37.281508],'扎苏合':[99.799627,37.255552],'年乃索麻':[99.726555,37.054731],
+			'宁夏':[99.88031,37.259212],'切吉':[99.873005,37.277013],'新泉':[99.893959,37.274791],
+			'日芒':[99.634181,37.237279],'环仓贡麻':[99.578011,37.15639],'向阳':[99.551822,37.159719],
+			'秀脑贡麻':[99.554105,37.31428],'秀脑麻':[99.590886,37.168757],'黄玉农场':[99.95554,37.250184]};
 	
 	var convertData = function (data) {
 	    var res = [];
@@ -22,31 +42,34 @@ layui.use(['table'], function(table) {
 	function initchart(){
 		$("#chart1").height($(window).height());
 		option1 = {
-		   /* tooltip : {
+		    tooltip : {
 		        trigger: 'item',
 		        formatter: function(param){
 		        	if(param.data.data){
-		        		var s=param.name;
-		        		$.each(param.data.data,function(index,item){
-		            		s+="<br/>"+item.type_name+":"+item.animals_size
-		            	});
+		        		var s=param.name+"<br/>"
+		        		+"人口数量(人)："+(param.data.data.rksl||'-')+"<br/>"
+		        		+"国土面积："+(param.data.data.gtmj||'-')+"<br/>"
+		        		+"耕地面积："+(param.data.data.gdmj||'-')+"<br/>"
+		        		+"高标准农田面积："+(param.data.data.rksl||'-')+"<br/>"
+		        		+"草场面积："+(param.data.data.gbzntmj||'-')+"<br/>"
+		        		+"农作物种类："+(param.data.data.nzwzl||'-')+"<br/>"
+		        		+"年种植面积："+(param.data.data.nzzmj||'-')+"<br/>"
+		        		+"种植方式："+(param.data.data.zzfs||'-');
 		        		return s;
 		        	}else{
 		        		return "无数据";
 		        	}
 				}
-		    },*/
-		    bmap: {center: [100.030020,37.221610],zoom:11,roam: false},
+		    },
+		    bmap: {center: [100.080020,37.221610],zoom:11,roam: true},
 		    series : [
 		        {
-		            name: '各畜种存栏数据',
+		            name: '农业基本信息',
 		            type: 'effectScatter',
 		            coordinateSystem: 'bmap',
-		            data: convertData(data.sort(function (a, b) {
-		                return b.value - a.value;
-		            }).slice(0, 6)),
+		            data: convertData(data),
 		            symbolSize: function (val) {
-		                return 30;
+		                return 10;
 		            },
 		            showEffectOn: 'render',
 		            rippleEffect: {brushType: 'stroke'},
@@ -64,12 +87,12 @@ layui.use(['table'], function(table) {
 	      
 		chart1 = echarts.init(document.getElementById('chart1')); 
 		chart1.setOption(option1); 
-		chart1.on('mousemove', function (params) {
+		/*chart1.on('mousemove', function (params) {
     		  mousemove(params);
 	    });
         chart1.on('mouseout', function (params) {
       	  	mouseout(params);
-	    });
+	    });*/
 	}
 
 	function mousemove(params){
@@ -150,29 +173,27 @@ layui.use(['table'], function(table) {
 	}
 	
 	function farmdata(){
-		$.post("/farminfo/findSumGroupTowns", {},function(res){
-	        if(res && res.mapdata && res.mapdata.length>0){
+		$.post("/agriBaseinfo/find4Maps", {},function(res){
+	        if(res && res.length>0){
 	        	$.each(data,function(index,item){
-	        		$.each(res.mapdata,function(i,o){
-	            		if(item.name==o.name){
+	        		$.each(res,function(i,o){
+	        			if(item.name==o.name){
 	            			data[index]=o;
 	            			return false;
 	            		}
-	            	});
+	        		});
 	        	});
-	      	  option1.series[0].data=convertData(data.sort(function (a, b) {
-	              return b.value - a.value;
-	          }).slice(0, 6));
+	      	  option1.series[0].data=convertData(data);
 	      	  chart1.dispose();
 	      	  chart1 = echarts.init(document.getElementById('chart1'));
 	      	  chart1.setOption(option1); 
 	      	  
-		      	chart1.on('mousemove', function (params) {
+		      	/*chart1.on('mousemove', function (params) {
 		    		  mousemove(params);
 			    });
 		        chart1.on('mouseout', function (params) {
 		      	  	mouseout(params);
-			    });
+			    });*/
 	        }
 	    });
 	}
@@ -204,7 +225,7 @@ layui.use(['table'], function(table) {
 		        }
 		    });
 	}
-	agridata();
+	//agridata();
 	monitorinfo();
 	initchart();
 	farmdata();
