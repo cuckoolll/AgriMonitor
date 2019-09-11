@@ -3,11 +3,11 @@ package com.agri.monitor.entity;
 import java.util.Date;
 
 public class AgriBaseinfo {
-	private String gid;
+	private Integer gid;
 	private String county;
 	private String towns;
 	private String village;
-	private Double rksl;
+	private Integer rksl;
 	private Double gtmj;
 	private Double gdmj;
 	private Double gbzntmj;
@@ -20,10 +20,10 @@ public class AgriBaseinfo {
 	private String creator;
 	private String modifier;
 	private Date last_time;
-	public String getGid() {
+	public Integer getGid() {
 		return gid;
 	}
-	public void setGid(String gid) {
+	public void setGid(Integer gid) {
 		this.gid = gid;
 	}
 	public String getCounty() {
@@ -44,10 +44,10 @@ public class AgriBaseinfo {
 	public void setVillage(String village) {
 		this.village = village;
 	}
-	public Double getRksl() {
+	public Integer getRksl() {
 		return rksl;
 	}
-	public void setRksl(Double rksl) {
+	public void setRksl(Integer rksl) {
 		this.rksl = rksl;
 	}
 	public Double getGtmj() {

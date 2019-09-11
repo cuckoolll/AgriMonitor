@@ -133,7 +133,7 @@ public class AgriBaseinfoService {
 	        	   }
 	        	   
 	        	   info.setVillage(village);
-	        	   info.setRksl(null != row.getCell(2) ? row.getCell(2).getNumericCellValue() : 0);
+	        	   info.setRksl(null != row.getCell(2) ? (int) row.getCell(2).getNumericCellValue() : 0);
 	        	   info.setGtmj(null != row.getCell(3) ? row.getCell(3).getNumericCellValue(): 0);
 	        	   info.setGdmj(null != row.getCell(4) ? row.getCell(4).getNumericCellValue(): 0);
 	        	   info.setGbzntmj(null != row.getCell(5) ? row.getCell(5).getNumericCellValue(): 0);

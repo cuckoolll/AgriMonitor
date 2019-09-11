@@ -1,98 +1,73 @@
 package com.agri.monitor.controller.datamanage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.agri.monitor.annotation.IgnoreSession;
+import com.agri.monitor.entity.LandResource;
 import com.agri.monitor.entity.UserInfo;
-import com.agri.monitor.enums.CacheTypeEnum;
-import com.agri.monitor.utils.CacheUtil;
-import com.agri.monitor.vo.GrassQueryVO;
+import com.agri.monitor.service.datamanage.LandResourceService;
+import com.agri.monitor.vo.LandResourceQueryVO;
 
 @Controller
 @RequestMapping("/landresource")
 public class LandResourceController {
 	
-//	@Autowired
-//	private FishInfoService fishInfoService;
+	@Autowired
+	private LandResourceService landResourceService;
 	
-	/**
-	 * 渔业生产信息页面 .
-	 * @return .
-	 */
 	@RequestMapping("")
 	public String landresource(Model model) {
-		model.addAttribute("towns", CacheUtil.getCache(CacheTypeEnum.TOWNS));
 		return "/datamanage/landresource/datalist";
 	}
-	
-	/**
-	 * 查询草原生态监测信息 .
-	 * @param request .
-	 * @return .
-	 */
-	@RequestMapping(value="/queryInfo", method = RequestMethod.POST)
-	@ResponseBody
+
 	@IgnoreSession
-	public Map queryInfo(GrassQueryVO queryVo, HttpServletRequest request) {
-		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-//		return grassInfoService.queryInfoForPage(queryVo, user.getUser_id());
-		Map map = new HashMap();
-		map.put("code", 0);
-		return map;
+	@RequestMapping("update")
+	public String add(Model model) {
+		return "/datamanage/landresource/update";
 	}
-//	
-//	@ResponseBody
-//	@RequestMapping(value="/dataImport",method=RequestMethod.POST)
-//	public Map dataImport(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-//		return grassInfoService.dataImport(file, request);
-//	}
-//	
-//	@IgnoreSession
-//	@RequestMapping("/update")
-//	public String add(Model model) {
-//		return "/datamanage/grassinfo/grassupdate";
-//	}
-//
-//	@ResponseBody
-//	@RequestMapping(value="/save",method=RequestMethod.POST)
-//	public Map doUpdate(GrassInfo grassinfo, HttpServletRequest request) {
-//		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-//		return grassInfoService.saveOrUpdate(grassinfo, user.getUser_id());
-//	}
-//	
-//	@ResponseBody
-//	@RequestMapping(value="/delInfoByGid",method=RequestMethod.POST)
-//	public Map delInfoByGid(@RequestBody ArrayList<Integer> gids, HttpServletRequest request) {
-//		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-//		return grassInfoService.delInfoByGid(gids, user.getUser_id());
-//	}
-//	
-//	@ResponseBody
-//	@RequestMapping(value="/findById",method=RequestMethod.POST)
-//	public GrassInfo findById(Integer gid, HttpServletRequest request) {
-//		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-//		return grassInfoService.findById(gid, user.getUser_id());
-//	}
-//	
-//	@RequestMapping("/grassAnalysis")
-//	public String grassAnalysis(Model model) {
-//		model.addAttribute("grassindex", CacheUtil.getCache(CacheTypeEnum.GRASSINDEX));
-//		model.addAttribute("towns", CacheUtil.getCache(CacheTypeEnum.TOWNS));
-//		return "/statisticanalysis/grassanalysis/grassanalysis";
-//	}
-//	
-//	@ResponseBody
-//	@RequestMapping(value="/queryAnalysisData", method=RequestMethod.POST)
-//	public Map queryAnalysisData(HttpServletRequest request) {
-//		return grassInfoService.queryAnalysisData(request);
-//	}
+	
+	@ResponseBody
+	@RequestMapping(value="/doDel",method=RequestMethod.POST)
+	public Map doDel(@RequestBody ArrayList<Integer> gids, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		return landResourceService.doDel(gids, user.getUser_id());
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/doSave",method=RequestMethod.POST)
+	public Map doUpdate(LandResource info,HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		return landResourceService.saveOrUpdate(info,user.getUser_id());
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/findById",method=RequestMethod.POST)
+	public LandResource findById(Integer gid, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		return landResourceService.findById(gid, user.getUser_id());
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/datalist",method=RequestMethod.POST)
+	public Map datalist(LandResourceQueryVO queryVO, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		final Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", 0);
+		result.put("msg", "成功");
+		result.put("data", landResourceService.findAllForPage(queryVO, user.getUser_id()));
+		result.put("count", landResourceService.findAllCount(queryVO));
+		return result;
+	}
 }

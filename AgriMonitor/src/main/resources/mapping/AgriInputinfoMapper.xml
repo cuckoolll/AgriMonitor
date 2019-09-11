@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agri.monitor.mapper.AgriInputinfoMapper">
+	<select id="findById" parameterType="int" resultType="com.agri.monitor.entity.AgriInputinfo">
+		select * from t_agriinputinfo where gid=#{gid}
+	</select>
+    <select id="findAllForPage" parameterType="com.agri.monitor.vo.AgriInputinfoQueryVO" resultType="map">
+        select gid,IFNULL(n,' ') n,IFNULL(p,' ') p,IFNULL(yjf,' ') yjf,IFNULL(lyqd,' ') lyqd,
+        IFNULL(jgzl,' ') jgzl,IFNULL(zhlyjg,' ') zhlyjg,IFNULL(jgksj,' ') jgksj,
+        IFNULL(lmzl,' ') lmzl,IFNULL(lmsyl,' ') lmsyl,IFNULL(qcfl,' ') qcfl,  
+        IFNULL(qcfzl,' ') qcfzl,IFNULL(year,' ') year
+        from t_agriinputinfo where 1=1
+        <if test="syear != null and syear != ''">
+        	and year between #{syear} and #{eyear} 
+	    </if>
+	    order by year desc limit #{currIndex},#{limit}
+    </select>
+    <select id="findAllCount" parameterType="com.agri.monitor.vo.AgriInputinfoQueryVO" resultType="int">
+        select count(gid) from t_agriinputinfo where 1=1
+        <if test="syear != null and syear != ''">
+        	and year between #{syear} and #{eyear} 
+	    </if>
+    </select>
+    
+    <insert id="insert" parameterType="com.agri.monitor.entity.AgriInputinfo">
+    	insert into t_agriinputinfo(n,p,yjf,lyqd,jgzl,zhlyjg,jgksj,lmzl,lmsyl,qcfl,qcfzl,year)
+    	values
+	   (#{n},#{p},#{yjf},#{lyqd},#{jgzl},#{zhlyjg},#{jgksj},#{lmzl},#{lmsyl},#{qcfl},#{qcfzl},#{year})
+    </insert>
+    
+    <update id="update" parameterType="com.agri.monitor.entity.AgriInputinfo">
+    	update t_agriinputinfo set n=#{n},p=#{p},yjf=#{yjf},lyqd=#{lyqd},
+    	jgzl=#{jgzl},zhlyjg=#{zhlyjg},jgksj=#{jgksj},lmzl=#{lmzl},
+    	lmsyl=#{lmsyl},qcfl=#{qcfl},qcfzl=#{qcfzl},year=#{year}
+    	 where gid=#{gid}
+    </update>
+    
+    <delete id="delete" parameterType="java.util.List">
+    	delete from t_agriinputinfo where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+</mapper>

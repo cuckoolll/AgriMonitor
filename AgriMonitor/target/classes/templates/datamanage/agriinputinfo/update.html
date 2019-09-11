@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<!-- Google Chrome Frame也可以让IE用上Chrome的引擎: -->
+		<meta name="renderer" content="webkit">
+		<!--国产浏览器高速模式-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>农业基本信息</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
+	    <!--[if lt IE 9]>
+	      	<script src="framework/html5shiv.min.js"></script>
+	      	<script src="framework/respond.min.js"></script>
+	    <![endif]-->
+		<script type="text/javascript" th:src="@{/temp/framework/jquery-1.11.3.min.js}" ></script>
+		<script type="text/javascript" th:src="@{/temp/layui/layui.js}"></script>
+		<!-- 公共样式 结束 -->
+	</head>
+
+	<body>
+		<div class="cBody" style="padding: 10px 10px">
+			<form id="addForm" class="layui-form">
+				<input type="hidden" name="gid"/>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 170px">年份：</label>
+					<div class="layui-input-inline">
+						<input type="text" id="year" name="year" required lay-verify="required" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 170px">N：</label>
+					<div class="layui-input-block">
+						<input type="text" name="n" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 170px">P：</label>
+					<div class="layui-input-block">
+						<input type="text" name="p" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 170px">有机肥：</label>
+					<div class="layui-input-block">
+						<input type="text" name="yjf" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 170px">农药施用强度（折百量）：</label>
+					<div class="layui-input-block">
+						<input type="text" name="lyqd" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 170px">秸秆总量：</label>
+					<div class="layui-input-block">
+						<input type="text" name="jgzl" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 170px">综合利用的秸秆量：</label>
+					<div class="layui-input-block">
+						<input type="text" name="zhlyjg" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 170px">秸秆可收集资源量：</label>
+					<div class="layui-input-block">
+						<input type="text" name="jgksj" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 170px">回收利用的农膜总量：</label>
+					<div class="layui-input-block">
+						<input type="text" name="lmzl" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 170px">农膜使用总量：</label>
+					<div class="layui-input-block">
+						<input type="text" name="lmsyl" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 170px">综合利用的畜禽粪污量：</label>
+					<div class="layui-input-block">
+						<input type="text" name="qcfl" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 170px">畜禽粪污总量：</label>
+					<div class="layui-input-block">
+						<input type="text" name="qcfzl" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				
+				<div style="" class="layui-form-item">
+					<div class="layui-input-block" style="text-align: center">
+						<button id="saveBtn" class="layui-btn" lay-submit lay-filter="submitBut">保存</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<script th:src="@{/js/datamanage/agriinputinfo/update.js}"></script>
+	</body>
+
+</html>
