@@ -90,12 +90,9 @@ layui.use(['form','layer'], function(form,layer) {
 			 if(res){
 				 var o=eval("(" + res + ")");
 				 if(o && o.data.forecast){
-					 if(o.data.forecast.length==1){
-						 $("#tqxx").html("今日天气："+o.data.forecast[0].type+"&nbsp;&nbsp;"
-								 +o.data.forecast[0].high+"&nbsp;&nbsp;"
-								 +o.data.forecast[0].low+"&nbsp;&nbsp;"
-								 +o.data.forecast[0].fengxiang);
-					 }if(o.data.forecast.length>1){
+					 $("#tqxx").html("今日天气："+o.data.forecast[0].type+"&nbsp;&nbsp;"
+							 +o.data.forecast[0].high+"&nbsp;&nbsp;"
+							 +o.data.forecast[0].low);/*if(o.data.forecast.length>1){
 						 $("#tqxx").html("今日天气："+o.data.forecast[0].type+"&nbsp;&nbsp;"
 								 +o.data.forecast[0].high+"&nbsp;&nbsp;"
 								 +o.data.forecast[0].low+"&nbsp;&nbsp;"
@@ -104,7 +101,7 @@ layui.use(['form','layer'], function(form,layer) {
 								 +o.data.forecast[0].high+"&nbsp;&nbsp;"
 								 +o.data.forecast[0].low+"&nbsp;&nbsp;"
 								 +o.data.forecast[0].fengxiang);
-					 }
+					 }*/
 				 }
 			 }
 		});
