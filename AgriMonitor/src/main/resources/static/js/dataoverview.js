@@ -63,13 +63,13 @@ layui.use(['table'], function(table) {
 		        formatter: function(param){
 		        	if(param.data.data){
 		        		var s=param.name+"<br/>"
-		        		+"人口数量(人)："+(param.data.data.rksl||'-')+"<br/>"
-		        		+"国土面积："+(param.data.data.gtmj||'-')+"<br/>"
-		        		+"耕地面积："+(param.data.data.gdmj||'-')+"<br/>"
-		        		+"高标准农田面积："+(param.data.data.rksl||'-')+"<br/>"
-		        		+"草场面积："+(param.data.data.gbzntmj||'-')+"<br/>"
+		        		+"人口数量(人)："+(param.data.data.rksl||'-')+"人<br/>"
+		        		+"国土面积："+(param.data.data.gtmj||'-')+"平方千米<br/>"
+		        		+"耕地面积："+(param.data.data.gdmj||'-')+"亩<br/>"
+		        		+"高标准农田面积："+(param.data.data.rksl||'-')+"亩<br/>"
+		        		+"草场面积："+(param.data.data.gbzntmj||'-')+"亩<br/>"
 		        		+"农作物种类："+(param.data.data.nzwzl||'-')+"<br/>"
-		        		+"年种植面积："+(param.data.data.nzzmj||'-')+"<br/>"
+		        		+"年种植面积："+(param.data.data.nzzmj||'-')+"亩<br/>"
 		        		+"种植方式："+(param.data.data.zzfs||'-');
 		        		return s;
 		        	}else if(param.data.name=='哈尔盖镇'){
