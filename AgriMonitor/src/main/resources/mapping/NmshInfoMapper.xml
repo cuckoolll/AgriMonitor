@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agri.monitor.mapper.NmshInfoMapper">
+	<select id="findById" parameterType="int" resultType="com.agri.monitor.entity.NmshInfo">
+		select * from t_nmshinfo where gid=#{gid}
+	</select>
+    <select id="findAllForPage" parameterType="com.agri.monitor.vo.NmshInfoQueryVO" resultType="map">
+        select gid,IFNULL(xzcs,' ') xzcs,IFNULL(rjsr,' ') rjsr,IFNULL(srzzl,' ') srzzl,IFNULL(ljsjxzcs,' ') ljsjxzcs,
+        IFNULL(ljcll,' ') ljcll,IFNULL(wsclxzcs,' ') wsclxzcs,IFNULL(wscll,' ') wscll,IFNULL(year,' ') year
+        from t_nmshinfo where 1=1
+        <if test="syear != null and syear != ''">
+        	and year between #{syear} and #{eyear} 
+	    </if>
+	    order by year desc limit #{currIndex},#{limit}
+    </select>
+    <select id="findAllCount" parameterType="com.agri.monitor.vo.NmshInfoQueryVO" resultType="int">
+        select count(gid) from t_nmshinfo where 1=1
+        <if test="syear != null and syear != ''">
+        	and year between #{syear} and #{eyear} 
+	    </if>
+    </select>
+    
+    <insert id="insert" parameterType="com.agri.monitor.entity.NmshInfo">
+    	insert into t_nmshinfo(xzcs,rjsr,srzzl,ljsjxzcs,ljcll,wsclxzcs,wscll,year)
+    	values
+	   (#{xzcs},#{rjsr},#{srzzl},#{ljsjxzcs},#{ljcll},#{wsclxzcs},#{wscll},#{year})
+    </insert>
+    
+    <update id="update" parameterType="com.agri.monitor.entity.NmshInfo">
+    	update t_nmshinfo set xzcs=#{xzcs},rjsr=#{rjsr},srzzl=#{srzzl},ljsjxzcs=#{ljsjxzcs},
+    	ljcll=#{ljcll},wsclxzcs=#{wsclxzcs},wscll=#{wscll},year=#{year}
+    	 where gid=#{gid}
+    </update>
+    
+    <delete id="delete" parameterType="java.util.List">
+    	delete from t_nmshinfo where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+</mapper>
