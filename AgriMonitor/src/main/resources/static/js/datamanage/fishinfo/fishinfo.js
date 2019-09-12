@@ -43,33 +43,33 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 				     {title: '青海湖裸鲤卵苗分布密度数据',align:'center',colspan:5}
 			     ],
 			     [
-			    	 {field: 'water_place', title: '水位', align:'center', },
-			    	 {field: 'area', title: '面积', align:'center', },
-			    	 {field: 'salinity', title: '盐度', align:'center', },
-			    	 {field: 'ph', title: 'PH', align:'center', },
+			    	 {field: 'water_level', title: '水位', align:'center', },
+			    	 {field: 'water_area', title: '面积', align:'center', },
+			    	 {field: 'water_salinity', title: '盐度', align:'center', },
+			    	 {field: 'water_ph', title: 'PH', align:'center', },
 			    	 
-			    	 {field: 'total_tails', title: '总尾数', align:'center', width:100},
-			    	 {field: 'total_resource', title: '总资源量', align:'center', width:100},
+			    	 {field: 'naked_carp_count', title: '总尾数', align:'center', width:100},
+			    	 {field: 'naked_carp_quality', title: '总资源量', align:'center', width:100},
 			    	 
-			    	 {field: 'mayfly_density', title: '浮游植物密度', align:'center', width:120},
-			    	 {field: 'mayfly_avg_density', title: '平均密度', align:'center', width:100},
-			    	 {field: 'p1', title: '浮游植物生物量', align:'center', width:140},
-			    	 {field: 'p2', title: '平均生物量', align:'center', width:100},
+			    	 {field: 'phytoplankton_density', title: '浮游植物密度', align:'center', width:120},
+			    	 {field: 'phytoplankton_avg_density', title: '平均密度', align:'center', width:100},
+			    	 {field: 'phytoplankton_count', title: '浮游植物生物量', align:'center', width:140},
+			    	 {field: 'phytoplankton_avg_count', title: '平均生物量', align:'center', width:100},
 			    	 
-			    	 {field: 'p3', title: '浮游动物密度', align:'center', width:120},
-			    	 {field: 'p4', title: '平均密度', align:'center', width:100},
-			    	 {field: 'p5', title: '浮游动物生物量', align:'center', width:140},
-			    	 {field: 'p6', title: '平均生物量', align:'center', width:100},
+			    	 {field: 'zooplankter_density', title: '浮游动物密度', align:'center', width:120},
+			    	 {field: 'zooplankter_avg_density', title: '平均密度', align:'center', width:100},
+			    	 {field: 'zooplankter_count', title: '浮游动物生物量', align:'center', width:140},
+			    	 {field: 'zooplankter_avg_count', title: '平均生物量', align:'center', width:100},
 			    	 
-			    	 {field: 'p7', title: '密度', align:'center',},
-			    	 {field: 'p8', title: '单位面积生物量', align:'center', width:140},
-			    	 {field: 'p9', title: '平均密度', align:'center', width:100},
+			    	 {field: 'zoobenthos_density', title: '密度', align:'center',},
+			    	 {field: 'zoobenthos_avg_count', title: '单位面积生物量', align:'center', width:140},
+			    	 {field: 'zoobenthos_avg_density', title: '平均密度', align:'center', width:100},
 			    	 
-			    	 {field: 'p10', title: '布哈河', align:'center', width:100},
-			    	 {field: 'p11', title: '沙柳河', align:'center', width:100},
-			    	 {field: 'p12', title: '泉吉河', align:'center', width:100},
-			    	 {field: 'p13', title: '黑马河', align:'center', width:100},
-			    	 {field: 'p13', title: '哈尔盖河', align:'center', width:100}
+			    	 {field: 'naked_carp_seed_in_bhh', title: '布哈河', align:'center', width:100},
+			    	 {field: 'naked_carp_seed_in_slh', title: '沙柳河', align:'center', width:100},
+			    	 {field: 'naked_carp_seed_in_qjh', title: '泉吉河', align:'center', width:100},
+			    	 {field: 'naked_carp_seed_in_hmh', title: '黑马河', align:'center', width:100},
+			    	 {field: 'naked_carp_seed_in_hegh', title: '哈尔盖河', align:'center', width:100}
 			    ]]
 		  });
 		
@@ -103,7 +103,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    switch(obj.event){
 		      case 'add':
 		    	  layer.open({
-              		    title: "新增草地生态监测采样信息",
+              		    title: "新增渔业生产信息",
 						type: 2,
 						area: ['980px', '510px'],
 						scrollbar: true,
@@ -119,7 +119,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		        	layer.msg('只能同时编辑一个');
 		        } else {
 		        	layer.open({
-              		    title: "修改草地生态监测采样信息",
+              		    title: "修改渔业生产信息",
 						type: 2,
 						area: ['980px', '510px'],
 						scrollbar: true,

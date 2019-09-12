@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agri.monitor.mapper.FishInfoMapper">
+	<select id="findById" parameterType="int" resultType="com.agri.monitor.entity.FishInfo">
+		select gid, 
+			   date_year, 
+			   county,
+			   water_level,
+			   water_area,
+			   water_salinity,
+			   water_ph, 
+			   naked_carp_count,
+			   naked_carp_quality, 
+			   phytoplankton_density, 
+			   phytoplankton_avg_density,
+			   phytoplankton_count,
+			   phytoplankton_avg_count,
+			   zooplankter_density,
+			   zooplankter_avg_density,
+			   zooplankter_count,
+			   zooplankter_avg_count,
+			   zoobenthos_density,
+			   zoobenthos_avg_count,
+			   zoobenthos_avg_density,
+			   naked_carp_seed_in_bhh,
+			   naked_carp_seed_in_slh,
+			   naked_carp_seed_in_qjh,
+			   naked_carp_seed_in_hmh,
+			   naked_carp_seed_in_hegh
+		  from t_fish_quality 
+		 where gid = #{gid}
+	</select>
+
+    <select id="queryInfoForPage" parameterType="com.agri.monitor.vo.FishQueryVO" resultType="map">
+        select gid,
+			   date_year, 
+			   county,
+			   towns,
+			   water_level,
+			   water_area,
+			   water_salinity,
+			   water_ph, 
+			   naked_carp_count,
+			   naked_carp_quality, 
+			   phytoplankton_density, 
+			   phytoplankton_avg_density,
+			   phytoplankton_count,
+			   phytoplankton_avg_count,
+			   zooplankter_density,
+			   zooplankter_avg_density,
+			   zooplankter_count,
+			   zooplankter_avg_count,
+			   zoobenthos_density,
+			   zoobenthos_avg_count,
+			   zoobenthos_avg_density,
+			   naked_carp_seed_in_bhh,
+			   naked_carp_seed_in_slh,
+			   naked_carp_seed_in_qjh,
+			   naked_carp_seed_in_hmh,
+			   naked_carp_seed_in_hegh
+		  from t_fish_quality 
+		 where 1=1
+       	<if test="date_year != null and date_year != ''">
+        	and date_year &gt;= #{date_year}
+       	</if>
+       	<if test="date_year1 != null and date_year1 != ''">
+        	and date_year &lt;= #{date_year1}
+       	</if>
+       	 order by date_year desc, gid limit #{currIndex},#{limit}
+    </select>
+    
+    <select id="queryInfoCount" parameterType="com.agri.monitor.vo.FishQueryVO" resultType="int">
+        select count(gid)
+          from t_fish_quality 
+       	 where 1=1
+       	<if test="date_year != null and date_year != ''">
+        	and date_year &gt;= #{date_year}
+       	</if>
+       	<if test="date_year1 != null and date_year1 != ''">
+        	and date_year &lt;= #{date_year1}
+       	</if>
+    </select>
+    
+    <select id="queryGid" parameterType="com.agri.monitor.vo.FishQueryVO" resultType="java.lang.String">
+   		select gid
+     	  from t_fish_quality
+     	 where county = #{county}
+     	   and date_year = #{date_year}
+    </select>
+    
+    <insert id="insertInfo" parameterType="com.agri.monitor.entity.FishInfo">
+    	insert into t_fish_quality
+    		(date_year, 
+			 county,
+			 towns,
+			 water_level,
+		   	 water_area,
+			 water_salinity,
+			 water_ph, 
+			 naked_carp_count,
+			 naked_carp_quality, 
+			 phytoplankton_density, 
+			 phytoplankton_avg_density,
+			 phytoplankton_count,
+			 phytoplankton_avg_count,
+			 zooplankter_density,
+			 zooplankter_avg_density,
+			 zooplankter_count,
+			 zooplankter_avg_count,
+			 zoobenthos_density,
+			 zoobenthos_avg_count,
+			 zoobenthos_avg_density,
+			 naked_carp_seed_in_bhh,
+			 naked_carp_seed_in_slh,
+			 naked_carp_seed_in_qjh,
+			 naked_carp_seed_in_hmh,
+			 naked_carp_seed_in_hegh,
+			 creator,
+			 modifier)
+    	values
+		   (#{date_year}, 
+			#{county},
+			#{towns},
+			#{water_level},
+		   	#{water_area},
+			#{water_salinity},
+			#{water_ph}, 
+			#{naked_carp_count},
+			#{naked_carp_quality}, 
+			#{phytoplankton_density}, 
+			#{phytoplankton_avg_density},
+			#{phytoplankton_count},
+			#{phytoplankton_avg_count},
+			#{zooplankter_density},
+			#{zooplankter_avg_density},
+			#{zooplankter_count},
+			#{zooplankter_avg_count},
+			#{zoobenthos_density},
+			#{zoobenthos_avg_count},
+			#{zoobenthos_avg_density},
+			#{naked_carp_seed_in_bhh},
+			#{naked_carp_seed_in_slh},
+			#{naked_carp_seed_in_qjh},
+			#{naked_carp_seed_in_hmh},
+			#{naked_carp_seed_in_hegh},
+			#{creator},
+			#{modifier})
+    </insert>
+    
+    <update id="updateInfo" parameterType="com.agri.monitor.entity.FishInfo">
+    	update t_fish_quality
+    	   set water_level = #{water_level},
+		   	   water_area = #{water_area},
+			   water_salinity = #{water_salinity},
+			   water_ph = #{water_ph}, 
+			   naked_carp_count = #{naked_carp_count},
+			   naked_carp_quality = #{naked_carp_quality}, 
+			   phytoplankton_density = #{phytoplankton_density}, 
+			   phytoplankton_avg_density = #{phytoplankton_avg_density},
+			   phytoplankton_count = #{phytoplankton_count},
+			   phytoplankton_avg_count = #{phytoplankton_avg_count},
+			   zooplankter_density = #{zooplankter_density},
+			   zooplankter_avg_density = #{zooplankter_avg_density},
+			   zooplankter_count = #{zooplankter_count},
+			   zooplankter_avg_count = #{zooplankter_avg_count},
+			   zoobenthos_density = #{zoobenthos_density},
+			   zoobenthos_avg_count = #{zoobenthos_avg_count},
+			   zoobenthos_avg_density = #{zoobenthos_avg_density},
+			   naked_carp_seed_in_bhh = #{naked_carp_seed_in_bhh},
+			   naked_carp_seed_in_slh = #{naked_carp_seed_in_slh},
+			   naked_carp_seed_in_qjh = #{naked_carp_seed_in_qjh},
+			   naked_carp_seed_in_hmh = #{naked_carp_seed_in_hmh},
+			   naked_carp_seed_in_hegh = #{naked_carp_seed_in_hegh},
+    	   	   modifier = #{modifier}
+    	 where gid = #{gid}
+    </update>
+    
+    <delete id="delInfoByGid" parameterType="java.util.List">
+    	delete from t_fish_quality where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+    
+    <!-- <select id="queryAnalysisData" parameterType="java.util.Map" resultType="java.util.Map">
+    	select ${grassIndex},
+    		   towns,
+    		   date_year
+    	  from t_grass_quality 
+    	 <if test="towns != null and towns != ''">
+    	 	where towns = #{towns}
+    	 </if>
+    	 <if test="date_year != null and date_year != ''">
+    	 	where date_year = #{date_year}
+    	 </if>
+    	 <if test="towns != null and towns != ''">
+    	 	and towns = #{towns}
+    	 </if>
+    	 <if test="date_year != null and date_year != ''">
+    	 	and date_year = #{date_year}
+    	 </if>
+    	 order by date_year desc limit 0,10 
+    </select> -->
+</mapper>
