@@ -39,16 +39,16 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 				     {title: '优质农产品',align:'center',colspan:3}
 			     ],
 			     [
-			    	 {title: '种植业产品总产量', align:'center', rowspan:2},
-			    	 {title: '畜牧业产品总产量', align:'center', rowspan:2},
-			    	 {title: '渔业产品总产量', align:'center', rowspan:2},
+			    	 {field: 'plant_product_count', title: '种植业产品总产量', align:'center', rowspan:2},
+			    	 {field: 'animal_product_count', title: '畜牧业产品总产量', align:'center', rowspan:2},
+			    	 {field: 'fish_product_count', title: '渔业产品总产量', align:'center', rowspan:2},
 			    	 
 			    	 {title: '绿色、有机、地理标志农产品产量',align:'center',colspan:3}
 			    ],
 			    [
-			    	 {field: 'p4', title: '种植业', align:'center', },
-			    	 {field: 'p5', title: '畜牧业', align:'center',},
-			    	 {field: 'p6', title: '渔业', align:'center', }
+			    	 {field: 'high_quality_plant_count', title: '种植业', align:'center', },
+			    	 {field: 'high_quality_animal_count', title: '畜牧业', align:'center',},
+			    	 {field: 'high_quality_fish_count', title: '渔业', align:'center', }
 	    	 	]]
 		  });
 		
@@ -82,7 +82,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    switch(obj.event){
 		      case 'add':
 		    	  layer.open({
-              		    title: "新增草地生态监测采样信息",
+              		    title: "新增农产品信息",
 						type: 2,
 						area: ['980px', '510px'],
 						scrollbar: true,
@@ -98,7 +98,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		        	layer.msg('只能同时编辑一个');
 		        } else {
 		        	layer.open({
-              		    title: "修改草地生态监测采样信息",
+              		    title: "修改农产品信息",
 						type: 2,
 						area: ['980px', '510px'],
 						scrollbar: true,

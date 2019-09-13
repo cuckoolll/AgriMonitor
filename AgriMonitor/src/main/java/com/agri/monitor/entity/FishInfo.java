@@ -14,6 +14,7 @@ public class FishInfo {
 	private double naked_carp_quality; 
 	private double phytoplankton_density; 
 	private double phytoplankton_avg_density;
+	private double phytoplankton_count;
 	private double phytoplankton_avg_count;
 	private double zooplankter_density; 
 	private double zooplankter_avg_density; 
@@ -109,6 +110,12 @@ public class FishInfo {
 	}
 	public void setPhytoplankton_avg_density(double phytoplankton_avg_density) {
 		this.phytoplankton_avg_density = phytoplankton_avg_density;
+	}
+	public double getPhytoplankton_count() {
+		return phytoplankton_count;
+	}
+	public void setPhytoplankton_count(double phytoplankton_count) {
+		this.phytoplankton_count = phytoplankton_count;
 	}
 	public double getPhytoplankton_avg_count() {
 		return phytoplankton_avg_count;
