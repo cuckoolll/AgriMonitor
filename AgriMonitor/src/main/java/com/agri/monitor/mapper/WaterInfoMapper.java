@@ -15,6 +15,8 @@ public interface WaterInfoMapper {
 	
 	List<Map> queryInfoByCountryAndTimeForPage(final WaterQueryVO queryVo);
 	
+	List<Map> queryInfoByCountryAndTime(final WaterQueryVO queryVo);
+	
 	int queryInfoCount(final WaterQueryVO queryVo);
 	
 	void insertWaterInfo(WaterInfo waterinfo);

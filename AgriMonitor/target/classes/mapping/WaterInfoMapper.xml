@@ -56,6 +56,30 @@
        	 order by quality_time desc, gid limit #{currIndex},#{limit}
     </select>
     
+    <select id="queryInfoByCountryAndTime" parameterType="com.agri.monitor.vo.WaterQueryVO" resultType="map">
+        select gid,
+			   quality_address,
+			   county,
+			   towns,
+			   date_format(quality_time, '%Y-%m-%d') quality_time,
+			   quality_type,
+			   quality_result,
+			   remarks
+          from t_water_quality 
+          where 1=1
+    	<if test="quality_address != null and quality_address != ''">
+    		<bind name="quality_address" value="'%' + quality_address + '%'"/>
+        	and quality_address like #{quality_address} 
+        </if>
+        <if test="quality_time != null and quality_time != ''">
+        	and quality_time &gt;= #{quality_time}
+       	</if>
+       	<if test="quality_time1 != null and quality_time1 != ''">
+        	and quality_time &lt;= #{quality_time1}
+       	</if>
+       	 order by quality_time desc, gid
+    </select>
+    
     <select id="queryInfoCount" parameterType="com.agri.monitor.vo.WaterQueryVO" resultType="int">
         select count(gid)
           from t_water_quality 

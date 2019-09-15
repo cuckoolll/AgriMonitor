@@ -83,7 +83,7 @@ public class WaterInfoService {
 	 */
 	public Map queryWaterInfoOnLine(WaterQueryVO queryVo, String userid) {
 		if (logger.isInfoEnabled()) {
-			logger.info("获取水质监测信息，入参=quality_address:" + queryVo.getQuality_address() 
+			logger.info("获取水质监测项目对比数据，入参=quality_address:" + queryVo.getQuality_address() 
 				+ ", quality_time:" + queryVo.getQuality_time());
 		}
 		final Map<String, Object> result = new HashMap<String, Object>();
@@ -101,7 +101,7 @@ public class WaterInfoService {
 				colsMap.put(quailtyType, "param" + String.valueOf(i));
 				i++;
 			} 
-			final List<Map> queryInfo = waterInfoMapper.queryInfoByCountryAndTimeForPage(queryVo);
+			final List<Map> queryInfo = waterInfoMapper.queryInfoByCountryAndTime(queryVo);
 			for (Map info : queryInfo) {
 				final Map tempMap = new HashMap();
 				tempMap.put("address_time", info.get("quality_address") + "_" + info.get("quality_time"));
@@ -123,16 +123,16 @@ public class WaterInfoService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result.put("code", -1);
-			result.put("msg", "获取水质监测信息异常");
-			logger.error("获取水质监测信息异常" + e);
+			result.put("msg", "获取水质监测项目对比数据异常");
+			logger.error("获取水质监测项目对比数据异常" + e);
 			LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.FAIL, userid, 
-					"获取水质监测信息，入参=quality_address:" + queryVo.getQuality_address() + ", quality_time:" + queryVo.getQuality_time());
+					"获取水质监测项目对比数据，入参=quality_address:" + queryVo.getQuality_address() + ", quality_time:" + queryVo.getQuality_time());
 		}
 		
 		result.put("data", data);
 		
 		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, 
-				"获取水质监测信息，入参=quality_address:" + queryVo.getQuality_address() + ", quality_time:" + queryVo.getQuality_time());
+				"获取水质监测项目对比数据，入参=quality_address:" + queryVo.getQuality_address() + ", quality_time:" + queryVo.getQuality_time());
 		return result;
 	}
 	
