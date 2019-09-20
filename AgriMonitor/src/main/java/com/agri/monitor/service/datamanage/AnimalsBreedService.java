@@ -38,17 +38,29 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.entity.AnimalsBreed;
+import com.agri.monitor.entity.FishInfo;
+import com.agri.monitor.entity.GrassInfo;
 import com.agri.monitor.entity.MonitorLog;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.enums.CacheTypeEnum;
 import com.agri.monitor.enums.LogOptSatusEnum;
 import com.agri.monitor.enums.LogOptTypeEnum;
+import com.agri.monitor.mapper.AgriInputinfoMapper;
 import com.agri.monitor.mapper.AnimalsBreedMapper;
+import com.agri.monitor.mapper.FarmProductInfoMapper;
+import com.agri.monitor.mapper.GrassInfoMapper;
+import com.agri.monitor.mapper.LandResourceMapper;
 import com.agri.monitor.mapper.MonitorLogMapper;
+import com.agri.monitor.mapper.NmshInfoMapper;
 import com.agri.monitor.utils.CacheUtil;
 import com.agri.monitor.utils.LogUtil;
 import com.agri.monitor.utils.TreeBuilder;
+import com.agri.monitor.vo.AgriInputinfoQueryVO;
 import com.agri.monitor.vo.AnimalsBreedQueryVO;
+import com.agri.monitor.vo.FarmProductQueryVO;
+import com.agri.monitor.vo.GrassQueryVO;
+import com.agri.monitor.vo.LandResourceQueryVO;
+import com.agri.monitor.vo.NmshInfoQueryVO;
 import com.agri.monitor.vo.Node;
 
 @Service
@@ -62,7 +74,17 @@ public class AnimalsBreedService {
 	@Autowired
 	private AnimalsBreedMapper animalsBreedMapper;
 	@Autowired
+	private LandResourceMapper landResourceMapper;
+	@Autowired
+	private GrassInfoMapper grassInfoMapper;
+	@Autowired
+	private FarmProductInfoMapper productInfoMapper;
+	@Autowired
 	private MonitorLogMapper monitorLogMapper;
+	@Autowired
+	private AgriInputinfoMapper agriInputinfoMapper;
+	@Autowired
+	private NmshInfoMapper nmshInfoMapper;
 	public AnimalsBreed findById(Integer gid, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("获取养殖信息，GID=" + gid);
@@ -522,7 +544,9 @@ public class AnimalsBreedService {
 				}
 			}
 		}
-		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, "畜牧业生产情况年度数据分析");
+		if (userid!=null) {
+			LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, "畜牧业生产情况年度数据分析");
+		}
 		return list1;
 	}
 	/**
@@ -655,6 +679,164 @@ public class AnimalsBreedService {
 			}
 		}
 	}
+	
+	/**
+	 * 导出考核指标表
+	 * @param response
+	 */
+	public void exportKHZB(HttpServletResponse response, Integer syear, Integer eyear) {
+		File destFile = null;
+		InputStream is = null;
+		OutputStream out = null;
+		try {
+			out = response.getOutputStream();
+			//复制原模板到临时文件中
+			destFile = new File(tempdir+new Date().getTime()+".xls");
+			FileUtils.copyFile(ResourceUtils.getFile(tempdir+"/khzb_export.xls"),destFile);
+			is = new FileInputStream(destFile);
+			POIFSFileSystem pfs = new POIFSFileSystem(is);
+			//读取excel模板
+			HSSFWorkbook wb = new HSSFWorkbook(pfs);
+			HSSFSheet sheet = wb.getSheetAt(0);
+			
+			//种植业数据
+			Map<String, Map> zzydata = getzzydata(syear, eyear);
+			//草原生态数据
+			Map<String, GrassInfo> cystdata = getcystdata(syear, eyear);
+			//获取畜牧业生产数据
+			List<Map> cmydata1 = getYearData(syear, null);
+			List<Map> cmydata2 = getYearData(syear + 1, null);
+			List<Map> cmydata3 = getYearData(eyear, null);
+			//农产品信息数据
+			Map<String, FishInfo> ncpdata = getncpdata(syear, eyear);
+			//农业投入数据
+			Map<String, Map> nytrdata = getnytrdata(syear, eyear);
+			//农民生活数据
+			Map<String, Map> nmshdata = getnmshdata(syear, eyear);
+			
+			HSSFRow row2 = sheet.getRow(2);
+			row2.getCell(4).setCellValue(syear+"年");
+			row2.getCell(5).setCellValue((syear+1)+"年");
+			row2.getCell(6).setCellValue(eyear+"年");
+			//耕地面积
+			HSSFRow row3 = sheet.getRow(3);
+			
+			
+			//强制下载不打开
+    		response.setContentType("application/octet-stream");
+            //使用URLEncoder来防止文件名乱码或者读取错误
+            response.setHeader("Content-Disposition", "attachment; filename="+URLEncoder.encode(syear+"-"+eyear+"考核指标表.xls", "UTF-8"));
+            wb.write(out);
+        } catch (Exception e) {
+            logger.error("生成模板文件异常",e);
+            try {
+				out.write(new String("导出数据失败").getBytes("utf-8"));
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+        } finally {
+			if (is != null) {
+				try {
+					is.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (destFile != null) {
+				destFile.delete();
+			}
+			if (out != null) {
+				try {
+					out.flush();
+		            out.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	//种植业数据
+	private Map<String, Map> getzzydata(int syear, int eyear) {
+		LandResourceQueryVO query1 = new LandResourceQueryVO();
+		query1.setSyear(syear);
+		query1.setEyear(eyear);
+		query1.setPage(1);
+		query1.setLimit(Integer.MAX_VALUE);
+		List<Map> zzydata = landResourceMapper.findAllForPage(query1);
+		Map ret = new HashMap();
+		if(null != zzydata) {
+			for (Map map : zzydata) {
+				ret.put(map.get("year").toString(), map);
+			}
+		}
+		return ret;
+	}
+	private Map<String, GrassInfo> getcystdata(int syear, int eyear) {
+		GrassQueryVO query2 = new GrassQueryVO();
+		query2.setPage(1);
+		query2.setLimit(Integer.MAX_VALUE);
+		query2.setDate_year(syear+"");
+		query2.setDate_year1(eyear+"");
+		List<GrassInfo> cystdata = grassInfoMapper.queryInfoForPage(query2);
+		Map<String, GrassInfo> ret = new HashMap();
+		if(null != cystdata) {
+			for (GrassInfo o : cystdata) {
+				ret.put(o.getDate_year(), o);
+			}
+		}
+		return ret;
+		
+	}
+	//农产品信息数据
+	private Map<String, FishInfo> getncpdata(int syear, int eyear) {
+		FarmProductQueryVO query3 = new FarmProductQueryVO();
+		query3.setPage(1);
+		query3.setLimit(Integer.MAX_VALUE);
+		query3.setDate_year(syear+"");
+		query3.setDate_year1(eyear+"");
+		List<FishInfo> ncpdata = productInfoMapper.queryInfoForPage(query3);
+		Map<String, FishInfo> ret = new HashMap();
+		if(null != ncpdata) {
+			for (FishInfo o : ncpdata) {
+				ret.put(o.getDate_year(), o);
+			}
+		}
+		return ret;
+	}
+	//农业投入数据
+	private Map<String, Map> getnytrdata(int syear, int eyear) {
+		AgriInputinfoQueryVO query4 = new AgriInputinfoQueryVO();
+		query4.setSyear(syear);
+		query4.setEyear(eyear);
+		query4.setPage(1);
+		query4.setLimit(Integer.MAX_VALUE);
+		List<Map> nytrdata = agriInputinfoMapper.findAllForPage(query4);
+		Map<String, Map> ret = new HashMap();
+		if(null != nytrdata) {
+			for (Map o : nytrdata) {
+				ret.put(o.get("year").toString(), o);
+			}
+		}
+		return ret;
+		
+	}
+	//农民生活数据
+	private Map<String, Map> getnmshdata(int syear, int eyear) {
+		NmshInfoQueryVO query5 = new NmshInfoQueryVO();
+		query5.setSyear(syear);
+		query5.setEyear(eyear);
+		query5.setPage(1);
+		query5.setLimit(Integer.MAX_VALUE);
+		List<Map> nmshdata = nmshInfoMapper.findAllForPage(query5);
+		Map<String, Map> ret = new HashMap();
+		if(null != nmshdata) {
+			for (Map o : nmshdata) {
+				ret.put(o.get("year").toString(), o);
+			}
+		}
+		return ret;
+	}
+	
 	private void setRowVal(HSSFSheet sheet, List<Node> nodelist, String sp) {
 		for (Node node : nodelist) {
 			rownum_local.set(rownum_local.get()+1);
