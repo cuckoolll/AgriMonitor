@@ -2,6 +2,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 	var dataTable;
 	var timeControl;	  
 	var winH=$(window).height();
+	var info_type;
 	
 	/**
 	 * 表格渲染 .
@@ -20,7 +21,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 			 toolbar: '#barDemo',
 			 url: '/policymaintain/queryInfo', //数据接口
 			 method: 'post',
-			 where: {"create_time":$("#create_time").val(),"file_name":$("#file_name").val()},
+			 where: {"create_time":$("#create_time").val(),"file_name":$("#file_name").val(),"info_type":info_type},
 		     page: true, //开启分页
 		     limit:20,
 			 limits:[20,40,60,100],
@@ -28,6 +29,9 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    	 {type: 'checkbox', fixed: 'left'},
 		    	 {field: 'gid', title: 'gid',hide: true,align:'center'},
 		    	 {field: 'file_name', title: '文件标题'},
+		    	 {field: 'info_type', title: 'info_type', hide: true},
+		    	 {field: 'info_type_name', title: '文件类别'},
+		    	 {field: 'company', title:'单位'},
 		    	 {field: 'create_time', title: '创建时间', sort: true},
 		    	 {field: 'creator', title: '创建人'},
 		    	 {templet: '#oper-col', title: '操作',align:'center'}
@@ -37,7 +41,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 	
 	function doQuery() {
 		dataTable.reload({//表格数据重新加载
-			where: {"create_time":$("#create_time").val(),"file_name":$("#file_name").val()},
+			where: {"create_time":$("#create_time").val(),"file_name":$("#file_name").val(),"info_type":info_type},
 			  	page: {curr: 1}
 		});
 	}
@@ -51,6 +55,13 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 	    downloadForm.submit();
 	    downloadForm.remove(); 
 	}
+	
+	//获取url参数
+	function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
 	
 	function bindEvent() {
 		//监听工具条
@@ -112,9 +123,9 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 			layer.open({
       		    title: "上传农业政策文件",
 				type: 2,
-				area: ['700px', '250px'],
+				area: ['700px', '360px'],
 				scrollbar: true,
-				content: '/policymaintain/upload',
+				content: '/policymaintain/upload?info_type=' + info_type,
 				end: function(index, layero){
 					var code = sessionStorage.getItem('code');
 					if (code && code == 0) {
@@ -131,6 +142,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 	}
 	
 	function init() {
+		info_type = getUrlParam("info_type");
 		render();
 		bindEvent();
 	}

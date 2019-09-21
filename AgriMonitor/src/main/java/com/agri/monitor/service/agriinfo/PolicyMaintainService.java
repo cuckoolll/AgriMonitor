@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -60,16 +61,29 @@ public class PolicyMaintainService {
 	public Map queryInfoForPage(PolicyQueryVO queryVo, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("获取农业政策文件信息，入参=file_name:" + queryVo.getFile_name() 
-				+ ", create_time:" + queryVo.getCreate_time());
+				+ ", create_time:" + queryVo.getCreate_time() + ", info_type:" + queryVo.getInfo_type());
 		}
 
 		final Map<String, Object> result = new HashMap<String, Object>();
 		result.put("code", 0);
 		result.put("msg", "成功");
 		result.put("count", policyMaintainMapper.queryInfoCount(queryVo));
-		result.put("data", policyMaintainMapper.queryInfoForPage(queryVo));
+		List<Map> list = policyMaintainMapper.queryInfoForPage(queryVo);
+		List<Map> type = getInfoType();
+		for (Map info : list) {
+			for (Map map : type) {
+				String info_type = String.valueOf((Integer) info.get("info_type"));
+				if (((String) map.get("id")).equals(info_type)) {
+					info.put("info_type_name", (String)map.get("text"));
+					continue;
+				}
+			}
+		}
+		result.put("data", list);
 		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, 
-				"获取农业政策文件信息，入参=file_name:" + queryVo.getFile_name() + ", create_time:" + queryVo.getCreate_time());
+				"获取农业政策文件信息，入参=file_name:" + queryVo.getFile_name() 
+				+ ", create_time:" + queryVo.getCreate_time()
+				+ ", info_type:" + queryVo.getInfo_type());
 		return result;
 	}
 	
@@ -111,6 +125,8 @@ public class PolicyMaintainService {
 	    String filePath = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/policyfile/";
 	    String file_address = filePath + fileName;
 	    String file_name = request.getParameter("file_name");
+	    String info_type = request.getParameter("info_type");
+	    String company = request.getParameter("company");
 	    String gid = null;
 	    try {
 	    	gid = policyMaintainMapper.queryGid(file_name);
@@ -155,6 +171,8 @@ public class PolicyMaintainService {
 	    policy.setFile_name(file_name);
 	    policy.setFile_address(file_address);
 	    policy.setCreator(user.getUser_id());
+	    policy.setCompany(company);
+	    policy.setInfo_type(info_type);
 	    try {
 	    	policyMaintainMapper.insertInfo(policy);
 	    } catch (Exception e) {
@@ -209,5 +227,31 @@ public class PolicyMaintainService {
 	            logger.error("下载农业政策文件错误", e);
 	            LogUtil.log(LogOptTypeEnum.DOWNLOAD, LogOptSatusEnum.FAIL, user.getUser_id(), "下载农业政策文件错误" + e.getMessage());
 	        }
+	}
+	
+	public List<Map> getInfoType() {
+		List<Map> infoTypeList = new ArrayList();
+		
+		Map infoTypeMap0 = new HashMap();
+		infoTypeMap0.put("id", "0");
+		infoTypeMap0.put("text", "项目申报文件");
+		infoTypeList.add(infoTypeMap0);
+		
+		Map infoTypeMap1 = new HashMap();
+		infoTypeMap1.put("id", "1");
+		infoTypeMap1.put("text", "项目技术文档");
+		infoTypeList.add(infoTypeMap1);
+		
+		Map infoTypeMap2 = new HashMap();
+		infoTypeMap2.put("id", "2");
+		infoTypeMap2.put("text", "政策法规");
+		infoTypeList.add(infoTypeMap2);
+		
+		Map infoTypeMap3 = new HashMap();
+		infoTypeMap3.put("id", "3");
+		infoTypeMap3.put("text", "通知公告");
+		infoTypeList.add(infoTypeMap3);
+		
+		return infoTypeList;
 	}
 }

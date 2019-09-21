@@ -6,6 +6,8 @@ public class PolicyInfo {
 	private String file_address;
 	private String create_time;
 	private String creator;
+	private String info_type;
+	private String company;
 
 	public String getGid() {
 		return gid;
@@ -36,6 +38,18 @@ public class PolicyInfo {
 	}
 	public void setCreator(String creator) {
 		this.creator = creator;
+	}
+	public String getInfo_type() {
+		return info_type;
+	}
+	public void setInfo_type(String info_type) {
+		this.info_type = info_type;
+	}
+	public String getCompany() {
+		return company;
+	}
+	public void setCompany(String company) {
+		this.company = company;
 	}
 
 	
