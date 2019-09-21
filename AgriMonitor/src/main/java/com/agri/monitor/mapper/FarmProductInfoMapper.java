@@ -14,7 +14,7 @@ public interface FarmProductInfoMapper {
 	
 	List<FishInfo> findAll();
 	
-	List<FishInfo> queryInfoForPage(final FarmProductQueryVO queryVo);
+	List<Map> queryInfoForPage(final FarmProductQueryVO queryVo);
 	
 	int queryInfoCount(final FarmProductQueryVO queryVo);
 	

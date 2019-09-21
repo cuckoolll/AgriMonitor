@@ -13,7 +13,7 @@ public interface EnvironmentInfoMapper {
 	
 	List<EnvironmentInfo> findAll();
 	
-	List<EnvironmentInfo> queryInfoForPage(final EnvironmentQueryVO queryVo);
+	List<Map> queryInfoForPage(final EnvironmentQueryVO queryVo);
 	
 	int queryInfoCount(final EnvironmentQueryVO queryVo);
 	

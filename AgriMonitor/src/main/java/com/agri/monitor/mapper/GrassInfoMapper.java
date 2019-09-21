@@ -13,7 +13,7 @@ public interface GrassInfoMapper {
 	
 	List<GrassInfo> findAll();
 	
-	List<GrassInfo> queryInfoForPage(final GrassQueryVO queryVo);
+	List<Map> queryInfoForPage(final GrassQueryVO queryVo);
 	
 	int queryInfoCount(final GrassQueryVO queryVo);
 	

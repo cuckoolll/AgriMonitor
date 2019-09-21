@@ -1,6 +1,7 @@
 package com.agri.monitor.controller.datamanage;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -197,6 +198,16 @@ public class AnimalsBreedController {
     public void exportYearData(Integer year,HttpServletResponse response,HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 		animalsBreedService.exportYearData(response, year, user.getUser_id());
+	}
+	@RequestMapping("/khzbPage")
+    public String khzbPage() {
+		return "/datamanage/animalsBreed/khzbexport.html";
+	}
+	@RequestMapping("/animalsBreedAnalysis/exportKHZB")
+    public void exportKHZB(HttpServletResponse response) {
+		Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR);
+		animalsBreedService.exportKHZB(response, year-2, year);
 	}
 	
 	@ResponseBody
