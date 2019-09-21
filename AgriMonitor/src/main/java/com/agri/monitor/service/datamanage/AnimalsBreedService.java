@@ -715,13 +715,511 @@ public class AnimalsBreedService {
 			Map<String, Map> nmshdata = getnmshdata(syear, eyear);
 			
 			HSSFRow row2 = sheet.getRow(2);
-			row2.getCell(4).setCellValue(syear+"年");
-			row2.getCell(5).setCellValue((syear+1)+"年");
-			row2.getCell(6).setCellValue(eyear+"年");
+			row2.getCell(5).setCellValue(syear+"年");
+			row2.getCell(6).setCellValue((syear+1)+"年");
+			row2.getCell(7).setCellValue(eyear+"年");
 			//耕地面积
 			HSSFRow row3 = sheet.getRow(3);
-			
-			
+			if(zzydata.get(syear+"")!=null) {
+				row3.getCell(5).setCellValue(objToDou(zzydata.get(syear+"").get("gdmj"))/1000);
+			}
+			if(zzydata.get((syear+1)+"")!=null) {
+				row3.getCell(6).setCellValue(objToDou(zzydata.get((syear+1)+"").get("gdmj"))/1000);
+			}
+			if(zzydata.get(eyear+"")!=null) {
+				row3.getCell(7).setCellValue(objToDou(zzydata.get(eyear+"").get("gdmj"))/1000);
+			}
+			//高标准农田面积
+			HSSFRow row4 = sheet.getRow(4);
+			if(zzydata.get(syear+"")!=null) {
+				row4.getCell(5).setCellValue(objToDou(zzydata.get(syear+"").get("gbzltmj"))/1000);
+			}
+			if(zzydata.get((syear+1)+"")!=null) {
+				row4.getCell(6).setCellValue(objToDou(zzydata.get((syear+1)+"").get("gbzltmj"))/1000);
+			}
+			if(zzydata.get(eyear+"")!=null) {
+				row4.getCell(7).setCellValue(objToDou(zzydata.get(eyear+"").get("gbzltmj"))/1000);
+			}
+			//土壤有机质含量
+			HSSFRow row5 = sheet.getRow(5);
+			if(zzydata.get(syear+"")!=null) {
+				row5.getCell(5).setCellValue(objToDou(zzydata.get(syear+"").get("yjz")));
+			}
+			if(zzydata.get((syear+1)+"")!=null) {
+				row5.getCell(6).setCellValue(objToDou(zzydata.get((syear+1)+"").get("yjz")));
+			}
+			if(zzydata.get(eyear+"")!=null) {
+				row5.getCell(7).setCellValue(objToDou(zzydata.get(eyear+"").get("yjz")));
+			}
+			//播种面积
+			HSSFRow row7 = sheet.getRow(7);
+			if(zzydata.get(syear+"")!=null) {
+				row7.getCell(5).setCellValue(objToDou(zzydata.get(syear+"").get("qkmj"))/1000+objToDou(zzydata.get(syear+"").get("ycmj"))/1000+objToDou(zzydata.get(syear+"").get("ymmj"))/1000);
+			}
+			if(zzydata.get((syear+1)+"")!=null) {
+				row7.getCell(6).setCellValue(objToDou(zzydata.get((syear+1)+"").get("qkmj"))/1000+objToDou(zzydata.get((syear+1)+"").get("ycmj"))/1000+objToDou(zzydata.get((syear+1)+"").get("ymmj"))/1000);
+			}
+			if(zzydata.get(eyear+"")!=null && zzydata.get(eyear+"").get("yjz")!=null) {
+				row7.getCell(7).setCellValue(objToDou(zzydata.get(eyear+"").get("qkmj"))/1000+objToDou(zzydata.get(eyear+"").get("ycmj"))/1000+objToDou(zzydata.get(eyear+"").get("ymmj"))/1000);
+			}
+			//多年生人工草地保留面积
+			HSSFRow row8 = sheet.getRow(8);
+			if(cystdata.get(syear+"")!=null) {
+				row8.getCell(5).setCellValue(cystdata.get(syear+"").getGrass_retain_area());
+			}
+			if(cystdata.get((syear+1)+"")!=null) {
+				row8.getCell(6).setCellValue(cystdata.get((syear+1)+"").getGrass_retain_area());
+			}
+			if(cystdata.get(eyear+"")!=null) {
+				row8.getCell(7).setCellValue(cystdata.get(eyear+"").getGrass_retain_area());
+			}
+			//生猪出栏量
+			HSSFRow row9 = sheet.getRow(9);
+			if(cmydata1!=null && cmydata1.size() > 0) {
+				for (Map map : cmydata1) {
+					if(ObjToStr(map.get("target_name")).equals("猪")) {
+						row9.getCell(5).setCellValue(objToDou(map.get("maturity_size")));
+						break;
+					}
+				}
+			}
+			if(cmydata2!=null && cmydata2.size() > 0) {
+				for (Map map : cmydata2) {
+					if(ObjToStr(map.get("target_name")).equals("猪")) {
+						row9.getCell(6).setCellValue(objToDou(map.get("maturity_size")));
+						break;
+					}
+				}
+			}
+			if(cmydata3!=null && cmydata3.size() > 0) {
+				for (Map map : cmydata3) {
+					if(ObjToStr(map.get("target_name")).equals("猪")) {
+						row9.getCell(7).setCellValue(objToDou(map.get("maturity_size")));
+						break;
+					}
+				}
+			}
+			//肉牛出栏量
+			HSSFRow row10 = sheet.getRow(10);
+			if(cmydata1!=null && cmydata1.size() > 0) {
+				for (Map map : cmydata1) {
+					if(ObjToStr(map.get("target_name")).equals("牛")) {
+						row10.getCell(5).setCellValue(objToDou(map.get("maturity_size")));
+						break;
+					}
+				}
+			}
+			if(cmydata2!=null && cmydata2.size() > 0) {
+				for (Map map : cmydata2) {
+					if(ObjToStr(map.get("target_name")).equals("牛")) {
+						row10.getCell(6).setCellValue(objToDou(map.get("maturity_size")));
+						break;
+					}
+				}
+			}
+			if(cmydata3!=null && cmydata3.size() > 0) {
+				for (Map map : cmydata3) {
+					if(ObjToStr(map.get("target_name")).equals("牛")) {
+						row10.getCell(7).setCellValue(objToDou(map.get("maturity_size")));
+						break;
+					}
+				}
+			}
+			//奶牛存栏量
+			HSSFRow row11 = sheet.getRow(11);
+			if(cmydata1!=null && cmydata1.size() > 0) {
+				for (Map map : cmydata1) {
+					if(ObjToStr(map.get("target_name")).equals("奶牛")) {
+						row11.getCell(5).setCellValue(objToDou(map.get("nccl")));
+						break;
+					}
+				}
+			}
+			if(cmydata2!=null && cmydata2.size() > 0) {
+				for (Map map : cmydata2) {
+					if(ObjToStr(map.get("target_name")).equals("奶牛")) {
+						row11.getCell(6).setCellValue(objToDou(map.get("nccl")));
+						break;
+					}
+				}
+			}
+			if(cmydata3!=null && cmydata3.size() > 0) {
+				for (Map map : cmydata3) {
+					if(ObjToStr(map.get("target_name")).equals("奶牛")) {
+						row11.getCell(7).setCellValue(objToDou(map.get("nccl")));
+						break;
+					}
+				}
+			}
+			//肉羊出栏量
+			HSSFRow row12 = sheet.getRow(12);
+			if(cmydata1!=null && cmydata1.size() > 0) {
+				for (Map map : cmydata1) {
+					if(ObjToStr(map.get("target_name")).equals("羊")) {
+						row12.getCell(5).setCellValue(objToDou(map.get("maturity_size")));
+						break;
+					}
+				}
+			}
+			if(cmydata2!=null && cmydata2.size() > 0) {
+				for (Map map : cmydata2) {
+					if(ObjToStr(map.get("target_name")).equals("羊")) {
+						row12.getCell(6).setCellValue(objToDou(map.get("maturity_size")));
+						break;
+					}
+				}
+			}
+			if(cmydata3!=null && cmydata3.size() > 0) {
+				for (Map map : cmydata3) {
+					if(ObjToStr(map.get("target_name")).equals("羊")) {
+						row12.getCell(7).setCellValue(objToDou(map.get("maturity_size")));
+						break;
+					}
+				}
+			}
+			//肉禽出栏量
+			HSSFRow row13 = sheet.getRow(13);
+			if(cmydata1!=null && cmydata1.size() > 0) {
+				for (Map map : cmydata1) {
+					if(ObjToStr(map.get("target_name")).equals("家禽")) {
+						row13.getCell(5).setCellValue(objToDou(map.get("maturity_size")));
+						break;
+					}
+				}
+			}
+			if(cmydata2!=null && cmydata2.size() > 0) {
+				for (Map map : cmydata2) {
+					if(ObjToStr(map.get("target_name")).equals("家禽")) {
+						row13.getCell(6).setCellValue(objToDou(map.get("maturity_size")));
+						break;
+					}
+				}
+			}
+			if(cmydata3!=null && cmydata3.size() > 0) {
+				for (Map map : cmydata3) {
+					if(ObjToStr(map.get("target_name")).equals("家禽")) {
+						row13.getCell(7).setCellValue(objToDou(map.get("maturity_size")));
+						break;
+					}
+				}
+			}
+			//奶牛存栏量
+			HSSFRow row14 = sheet.getRow(14);
+			if(cmydata1!=null && cmydata1.size() > 0) {
+				for (Map map : cmydata1) {
+					if(ObjToStr(map.get("target_name")).equals("专用型蛋鸡")) {
+						row14.getCell(5).setCellValue(objToDou(map.get("nccl")));
+						break;
+					}
+				}
+			}
+			if(cmydata2!=null && cmydata2.size() > 0) {
+				for (Map map : cmydata2) {
+					if(ObjToStr(map.get("target_name")).equals("专用型蛋鸡")) {
+						row14.getCell(6).setCellValue(objToDou(map.get("nccl")));
+						break;
+					}
+				}
+			}
+			if(cmydata3!=null && cmydata3.size() > 0) {
+				for (Map map : cmydata3) {
+					if(ObjToStr(map.get("target_name")).equals("专用型蛋鸡")) {
+						row14.getCell(7).setCellValue(objToDou(map.get("nccl")));
+						break;
+					}
+				}
+			}
+			//猪肉产量
+			HSSFRow row22 = sheet.getRow(22);
+			if(cmydata1!=null && cmydata1.size() > 0) {
+				for (Map map : cmydata1) {
+					if(ObjToStr(map.get("target_name")).equals("猪")) {
+						row22.getCell(5).setCellValue(objToDou(map.get("meat_output")));
+						break;
+					}
+				}
+			}
+			if(cmydata2!=null && cmydata2.size() > 0) {
+				for (Map map : cmydata2) {
+					if(ObjToStr(map.get("target_name")).equals("猪")) {
+						row22.getCell(6).setCellValue(objToDou(map.get("meat_output")));
+						break;
+					}
+				}
+			}
+			if(cmydata3!=null && cmydata3.size() > 0) {
+				for (Map map : cmydata3) {
+					if(ObjToStr(map.get("target_name")).equals("猪")) {
+						row22.getCell(7).setCellValue(objToDou(map.get("meat_output")));
+						break;
+					}
+				}
+			}
+			//牛肉产量
+			HSSFRow row23 = sheet.getRow(23);
+			if(cmydata1!=null && cmydata1.size() > 0) {
+				for (Map map : cmydata1) {
+					if(ObjToStr(map.get("target_name")).equals("牛")) {
+						row23.getCell(5).setCellValue(objToDou(map.get("meat_output")));
+						break;
+					}
+				}
+			}
+			if(cmydata2!=null && cmydata2.size() > 0) {
+				for (Map map : cmydata2) {
+					if(ObjToStr(map.get("target_name")).equals("牛")) {
+						row23.getCell(6).setCellValue(objToDou(map.get("meat_output")));
+						break;
+					}
+				}
+			}
+			if(cmydata3!=null && cmydata3.size() > 0) {
+				for (Map map : cmydata3) {
+					if(ObjToStr(map.get("target_name")).equals("牛")) {
+						row23.getCell(7).setCellValue(objToDou(map.get("meat_output")));
+						break;
+					}
+				}
+			}
+			//羊肉产量
+			HSSFRow row24 = sheet.getRow(24);
+			if(cmydata1!=null && cmydata1.size() > 0) {
+				for (Map map : cmydata1) {
+					if(ObjToStr(map.get("target_name")).equals("羊")) {
+						row24.getCell(5).setCellValue(objToDou(map.get("meat_output")));
+						break;
+					}
+				}
+			}
+			if(cmydata2!=null && cmydata2.size() > 0) {
+				for (Map map : cmydata2) {
+					if(ObjToStr(map.get("target_name")).equals("羊")) {
+						row24.getCell(6).setCellValue(objToDou(map.get("meat_output")));
+						break;
+					}
+				}
+			}
+			if(cmydata3!=null && cmydata3.size() > 0) {
+				for (Map map : cmydata3) {
+					if(ObjToStr(map.get("target_name")).equals("羊")) {
+						row24.getCell(7).setCellValue(objToDou(map.get("meat_output")));
+						break;
+					}
+				}
+			}
+			//牛奶
+			HSSFRow row25 = sheet.getRow(25);
+			if(cmydata1!=null && cmydata1.size() > 0) {
+				for (Map map : cmydata1) {
+					if(ObjToStr(map.get("target_name")).equals("牛")) {
+						row25.getCell(5).setCellValue(objToDou(map.get("milk_output")));
+						break;
+					}
+				}
+			}
+			if(cmydata2!=null && cmydata2.size() > 0) {
+				for (Map map : cmydata2) {
+					if(ObjToStr(map.get("target_name")).equals("牛")) {
+						row25.getCell(6).setCellValue(objToDou(map.get("milk_output")));
+						break;
+					}
+				}
+			}
+			if(cmydata3!=null && cmydata3.size() > 0) {
+				for (Map map : cmydata3) {
+					if(ObjToStr(map.get("target_name")).equals("牛")) {
+						row25.getCell(7).setCellValue(objToDou(map.get("milk_output")));
+						break;
+					}
+				}
+			}
+			//禽肉
+			HSSFRow row26 = sheet.getRow(26);
+			if(cmydata1!=null && cmydata1.size() > 0) {
+				for (Map map : cmydata1) {
+					if(ObjToStr(map.get("target_name")).equals("家禽")) {
+						row26.getCell(5).setCellValue(objToDou(map.get("meat_output")));
+						break;
+					}
+				}
+			}
+			if(cmydata2!=null && cmydata2.size() > 0) {
+				for (Map map : cmydata2) {
+					if(ObjToStr(map.get("target_name")).equals("家禽")) {
+						row26.getCell(6).setCellValue(objToDou(map.get("meat_output")));
+						break;
+					}
+				}
+			}
+			if(cmydata3!=null && cmydata3.size() > 0) {
+				for (Map map : cmydata3) {
+					if(ObjToStr(map.get("target_name")).equals("家禽")) {
+						row26.getCell(7).setCellValue(objToDou(map.get("meat_output")));
+						break;
+					}
+				}
+			}
+			//禽蛋
+			HSSFRow row27 = sheet.getRow(27);
+			if(cmydata1!=null && cmydata1.size() > 0) {
+				for (Map map : cmydata1) {
+					if(ObjToStr(map.get("target_name")).equals("专用型蛋鸡")) {
+						row27.getCell(5).setCellValue(objToDou(map.get("egg_output")));
+						break;
+					}
+				}
+			}
+			if(cmydata2!=null && cmydata2.size() > 0) {
+				for (Map map : cmydata2) {
+					if(ObjToStr(map.get("target_name")).equals("专用型蛋鸡")) {
+						row27.getCell(6).setCellValue(objToDou(map.get("egg_output")));
+						break;
+					}
+				}
+			}
+			if(cmydata3!=null && cmydata3.size() > 0) {
+				for (Map map : cmydata3) {
+					if(ObjToStr(map.get("target_name")).equals("专用型蛋鸡")) {
+						row27.getCell(7).setCellValue(objToDou(map.get("egg_output")));
+						break;
+					}
+				}
+			}
+			//种植业
+			HSSFRow row31 = sheet.getRow(31);
+			//TODO
+			//化肥施用量（折纯量） 
+			HSSFRow row37 = sheet.getRow(37);
+			if(nytrdata.get(syear+"")!=null) {
+				row37.getCell(5).setCellValue(objToDou(nytrdata.get(syear+"").get("n"))+objToDou(nytrdata.get(syear+"").get("p"))+objToDou(nytrdata.get(syear+"").get("yjf")));
+			}
+			if(nytrdata.get((syear+1)+"")!=null) {
+				row37.getCell(6).setCellValue(objToDou(nytrdata.get((syear+1)+"").get("n"))+objToDou(nytrdata.get((syear+1)+"").get("p"))+objToDou(nytrdata.get((syear+1)+"").get("yjf")));
+			}
+			if(nytrdata.get(eyear+"")!=null) {
+				row37.getCell(7).setCellValue(objToDou(nytrdata.get(eyear+"").get("n"))+objToDou(nytrdata.get(eyear+"").get("p"))+objToDou(nytrdata.get(eyear+"").get("yjf")));
+			}
+			//农药施用量（折百量）
+			HSSFRow row38 = sheet.getRow(38);
+			if(nytrdata.get(syear+"")!=null) {
+				row38.getCell(5).setCellValue(objToDou(nytrdata.get(syear+"").get("lyqd")));
+			}
+			if(nytrdata.get((syear+1)+"")!=null) {
+				row38.getCell(6).setCellValue(objToDou(nytrdata.get((syear+1)+"").get("lyqd")));
+			}
+			if(nytrdata.get(eyear+"")!=null) {
+				row38.getCell(7).setCellValue(objToDou(nytrdata.get(eyear+"").get("lyqd")));
+			}
+			//综合利用的秸秆量
+			HSSFRow row39 = sheet.getRow(39);
+			if(nytrdata.get(syear+"")!=null) {
+				row39.getCell(5).setCellValue(objToDou(nytrdata.get(syear+"").get("zhlyjg")));
+			}
+			if(nytrdata.get((syear+1)+"")!=null) {
+				row39.getCell(6).setCellValue(objToDou(nytrdata.get((syear+1)+"").get("zhlyjg")));
+			}
+			if(nytrdata.get(eyear+"")!=null) {
+				row39.getCell(7).setCellValue(objToDou(nytrdata.get(eyear+"").get("zhlyjg")));
+			}
+			//秸秆可收集资源量
+			HSSFRow row40 = sheet.getRow(40);
+			if(nytrdata.get(syear+"")!=null) {
+				row40.getCell(5).setCellValue(objToDou(nytrdata.get(syear+"").get("jgksj")));
+			}
+			if(nytrdata.get((syear+1)+"")!=null) {
+				row40.getCell(6).setCellValue(objToDou(nytrdata.get((syear+1)+"").get("jgksj")));
+			}
+			if(nytrdata.get(eyear+"")!=null) {
+				row40.getCell(7).setCellValue(objToDou(nytrdata.get(eyear+"").get("jgksj")));
+			}
+			//回收利用的农膜总量
+			HSSFRow row41 = sheet.getRow(41);
+			if(nytrdata.get(syear+"")!=null) {
+				row41.getCell(5).setCellValue(objToDou(nytrdata.get(syear+"").get("lmzl")));
+			}
+			if(nytrdata.get((syear+1)+"")!=null) {
+				row41.getCell(6).setCellValue(objToDou(nytrdata.get((syear+1)+"").get("lmzl")));
+			}
+			if(nytrdata.get(eyear+"")!=null) {
+				row41.getCell(7).setCellValue(objToDou(nytrdata.get(eyear+"").get("lmzl")));
+			}
+			//农膜使用总量
+			HSSFRow row42 = sheet.getRow(42);
+			if(nytrdata.get(syear+"")!=null) {
+				row42.getCell(5).setCellValue(objToDou(nytrdata.get(syear+"").get("lmsyl")));
+			}
+			if(nytrdata.get((syear+1)+"")!=null) {
+				row42.getCell(6).setCellValue(objToDou(nytrdata.get((syear+1)+"").get("lmsyl")));
+			}
+			if(nytrdata.get(eyear+"")!=null) {
+				row42.getCell(7).setCellValue(objToDou(nytrdata.get(eyear+"").get("lmsyl")));
+			}
+			//综合利用的畜禽粪污量
+			HSSFRow row43 = sheet.getRow(43);
+			if(nytrdata.get(syear+"")!=null) {
+				row43.getCell(5).setCellValue(objToDou(nytrdata.get(syear+"").get("qcfl")));
+			}
+			if(nytrdata.get((syear+1)+"")!=null) {
+				row43.getCell(6).setCellValue(objToDou(nytrdata.get((syear+1)+"").get("qcfl")));
+			}
+			if(nytrdata.get(eyear+"")!=null) {
+				row43.getCell(7).setCellValue(objToDou(nytrdata.get(eyear+"").get("qcfl")));
+			}
+			//畜禽粪污总量
+			HSSFRow row44 = sheet.getRow(44);
+			if(nytrdata.get(syear+"")!=null) {
+				row44.getCell(5).setCellValue(objToDou(nytrdata.get(syear+"").get("qcfzl")));
+			}
+			if(nytrdata.get((syear+1)+"")!=null) {
+				row44.getCell(6).setCellValue(objToDou(nytrdata.get((syear+1)+"").get("qcfzl")));
+			}
+			if(nytrdata.get(eyear+"")!=null) {
+				row44.getCell(7).setCellValue(objToDou(nytrdata.get(eyear+"").get("qcfzl")));
+			}
+			//农村居民人均可支配收入
+			HSSFRow row45 = sheet.getRow(45);
+			if(nmshdata.get(syear+"")!=null) {
+				row45.getCell(5).setCellValue(objToDou(nmshdata.get(syear+"").get("rjsr")));
+			}
+			if(nmshdata.get((syear+1)+"")!=null) {
+				row45.getCell(6).setCellValue(objToDou(nmshdata.get((syear+1)+"").get("rjsr")));
+			}
+			if(nmshdata.get(eyear+"")!=null) {
+				row45.getCell(7).setCellValue(objToDou(nmshdata.get(eyear+"").get("rjsr")));
+			}
+			//实施生活垃圾集中手机处理的行政村数
+			HSSFRow row46 = sheet.getRow(46);
+			if(nmshdata.get(syear+"")!=null) {
+				row46.getCell(5).setCellValue(objToDou(nmshdata.get(syear+"").get("ljsjxzcs")));
+			}
+			if(nmshdata.get((syear+1)+"")!=null) {
+				row46.getCell(6).setCellValue(objToDou(nmshdata.get((syear+1)+"").get("ljsjxzcs")));
+			}
+			if(nmshdata.get(eyear+"")!=null) {
+				row46.getCell(7).setCellValue(objToDou(nmshdata.get(eyear+"").get("ljsjxzcs")));
+			}
+			//有生活污水处理设施的行政村数
+			HSSFRow row47 = sheet.getRow(47);
+			if(nmshdata.get(syear+"")!=null) {
+				row47.getCell(5).setCellValue(objToDou(nmshdata.get(syear+"").get("wsclxzcs")));
+			}
+			if(nmshdata.get((syear+1)+"")!=null) {
+				row47.getCell(6).setCellValue(objToDou(nmshdata.get((syear+1)+"").get("wsclxzcs")));
+			}
+			if(nmshdata.get(eyear+"")!=null) {
+				row47.getCell(7).setCellValue(objToDou(nmshdata.get(eyear+"").get("wsclxzcs")));
+			}
+			//行政村总数
+			HSSFRow row49 = sheet.getRow(49);
+			if(nmshdata.get(syear+"")!=null) {
+				row49.getCell(5).setCellValue(objToDou(nmshdata.get(syear+"").get("xzcs")));
+			}
+			if(nmshdata.get((syear+1)+"")!=null) {
+				row49.getCell(6).setCellValue(objToDou(nmshdata.get((syear+1)+"").get("xzcs")));
+			}
+			if(nmshdata.get(eyear+"")!=null) {
+				row49.getCell(7).setCellValue(objToDou(nmshdata.get(eyear+"").get("xzcs")));
+			}
 			//强制下载不打开
     		response.setContentType("application/octet-stream");
             //使用URLEncoder来防止文件名乱码或者读取错误
@@ -1060,5 +1558,11 @@ public class AnimalsBreedService {
 			return o.toString();
 		}
 		return "";
+	}
+	private double objToDou(Object o) {
+		if (null != o) {
+			return Double.valueOf(o.toString());
+		}
+		return 0;
 	}
 }
