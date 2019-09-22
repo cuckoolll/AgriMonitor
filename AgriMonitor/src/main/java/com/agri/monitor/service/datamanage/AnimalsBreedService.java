@@ -694,7 +694,7 @@ public class AnimalsBreedService {
 			out = response.getOutputStream();
 			//复制原模板到临时文件中
 			destFile = new File(tempdir+new Date().getTime()+".xls");
-			FileUtils.copyFile(ResourceUtils.getFile(tempdir+"/考核指标表模板.xls"),destFile);
+			FileUtils.copyFile(ResourceUtils.getFile(tempdir+"/khzb.xls"),destFile);
 			is = new FileInputStream(destFile);
 			POIFSFileSystem pfs = new POIFSFileSystem(is);
 			//读取excel模板

@@ -54,14 +54,17 @@ layui.use(['form','layer'], function(form,layer) {
 		}
 		
 		//处理菜单样式变化
-		if ($(_this).hasClass("menu3rd")) {
+		if ($(_this).hasClass("menu2rd")) {
+			$(_this).css("cssText", "background-color:#009688 !important;").css("color","#FFF").css("padding-left","40px");
+		} else if ($(_this).hasClass("menu3rd")) {
 			$(_this).css("cssText", "background-color:#009688 !important;").css("color","#FFF").css("padding-left","60px");
 		} else if ($(_this).hasClass("menuFA")) {
 			$(_this).css("cssText", "background-color:#009688 !important;").css("color","#FFF");
 		}
 		$(_this).parent().siblings().find(".menu3rd").css("cssText", "background-color:#transparent").css("color","#c2c2c2").css("padding-left","60px");
 		$(_this).parent().parent().parent().siblings().find(".menu3rd").css("cssText", "background-color:#transparent").css("color","#c2c2c2").css("padding-left","60px");
-
+		$(_this).parent().siblings().find(".menu2rd").css("cssText", "background-color:#transparent").css("color","#c2c2c2").css("padding-left","40px");
+		$(_this).parent().parent().parent().siblings().find(".menu2rd").css("cssText", "background-color:#transparent").css("color","#c2c2c2").css("padding-left","40px");
 		
 	}
 

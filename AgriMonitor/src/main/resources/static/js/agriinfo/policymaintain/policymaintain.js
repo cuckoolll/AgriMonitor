@@ -120,8 +120,17 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		});
 		
 		$("#uploadBtn").click(function(){
+			var title='上传文件';
+			if(info_type==0){
+				title='上传项目申报文件';
+			}else if(info_type==1){
+				title='上传项目技术文档';
+			}else if(info_type==2){
+				title='上传政策法规';
+			}
+			
 			layer.open({
-      		    title: "上传农业政策文件",
+      		    title: title,
 				type: 2,
 				area: ['700px', '360px'],
 				scrollbar: true,
