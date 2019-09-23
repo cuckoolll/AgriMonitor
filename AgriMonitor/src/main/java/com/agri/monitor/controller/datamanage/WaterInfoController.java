@@ -1,7 +1,6 @@
 package com.agri.monitor.controller.datamanage;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,12 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.annotation.IgnoreSession;
-import com.agri.monitor.entity.FarmInfo;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.entity.WaterInfo;
-import com.agri.monitor.enums.CacheTypeEnum;
+import com.agri.monitor.entity.WaterInfoRowFixed;
 import com.agri.monitor.service.datamanage.WaterInfoService;
-import com.agri.monitor.utils.CacheUtil;
 import com.agri.monitor.vo.WaterQueryVO;
 
 @Controller
@@ -49,6 +46,15 @@ public class WaterInfoController {
 	@RequestMapping("/row")
 	public String waterMonitorRow() {
 		return "/datamanage/waterinfo/waterinfoRow";
+	}
+	
+	/**
+	 * 水质监测页面 .
+	 * @return .
+	 */
+	@RequestMapping("/rowfixed")
+	public String waterMonitorRowFixed() {
+		return "/datamanage/waterinfo/waterinfoRowFixed";
 	}
 	
 	/**
@@ -79,6 +85,19 @@ public class WaterInfoController {
 	}
 	
 	/**
+	 * 按行查询水质监测信息 .
+	 * @param request .
+	 * @return .
+	 */
+	@RequestMapping(value="/queryWaterInfoRowFixed", method = RequestMethod.POST)
+	@ResponseBody
+	@IgnoreSession
+	public Map queryWaterInfoRowFixed(WaterQueryVO queryVo, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		return waterInfoService.queryInfoRowFixed(queryVo, user.getUser_id());
+	}
+	
+	/**
 	 * 查询水质监测信息表头 .
 	 * @param queryVo .
 	 * @param request .
@@ -103,11 +122,24 @@ public class WaterInfoController {
 		return "/datamanage/waterinfo/waterupdate";
 	}
 
+	@IgnoreSession
+	@RequestMapping("/updateRowFixed")
+	public String addRowFixed(Model model) {
+		return "/datamanage/waterinfo/waterUpdateRowFixed";
+	}
+	
 	@ResponseBody
 	@RequestMapping(value="/save",method=RequestMethod.POST)
 	public Map doUpdate(WaterInfo waterinfo,HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 		return waterInfoService.saveOrUpdate(waterinfo, user.getUser_id());
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/saveRowFixed",method=RequestMethod.POST)
+	public Map doUpdateRowFixed(WaterInfoRowFixed waterinfo,HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		return waterInfoService.saveOrUpdateRowFixed(waterinfo, user.getUser_id());
 	}
 	
 	@ResponseBody
@@ -118,9 +150,23 @@ public class WaterInfoController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/delInfoByGidRowFixed",method=RequestMethod.POST)
+	public Map delInfoByGidRowFixed(@RequestBody ArrayList<Integer> gids, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		return waterInfoService.delInfoByGidRowFixed(gids, user.getUser_id());
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/findById",method=RequestMethod.POST)
 	public WaterInfo findById(Integer gid, HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
 		return waterInfoService.findById(gid, user.getUser_id());
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/findByIdRowFixed",method=RequestMethod.POST)
+	public WaterInfoRowFixed findByIdRowFixed(Integer gid, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		return waterInfoService.findByIdRowFixed(gid, user.getUser_id());
 	}
 }

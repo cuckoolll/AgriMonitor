@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<!-- Google Chrome Frame也可以让IE用上Chrome的引擎: -->
+		<meta name="renderer" content="webkit">
+		<!--国产浏览器高速模式-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>水质监测基本信息</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
+	    <!--[if lt IE 9]>
+	      	<script src="framework/html5shiv.min.js"></script>
+	      	<script src="framework/respond.min.js"></script>
+	    <![endif]-->
+		<script type="text/javascript" th:src="@{/temp/framework/jquery-1.11.3.min.js}" ></script>
+		<script type="text/javascript" th:src="@{/temp/layui/layui.js}"></script>
+		<!-- 公共样式 结束 -->
+	</head>
+
+	<body>
+		<div class="cBody" style="margin-top:10px;height: 450px">
+			<form id="addForm" class="layui-form" action="">
+				<input type="hidden" name="gid"/>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">所属区域：</label>
+	                <div class="layui-input-inline">
+	                    <input type="text" name="county" readonly="readonly" class="layui-input" value="刚察县">
+	                </div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 140px">采样地点：</label>
+					<div class="layui-input-block">
+						<input type="text" name="quality_address" required lay-verify="required"
+							 autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+					<label class="layui-form-label" style="width: 140px">采样时间：</label>
+					<div class="layui-input-block">
+						<input id="quality_time" type="text" name="quality_time" required lay-verify="required" 
+							autocomplete="off" class="layui-input" style="width: 150px" readonly="readonly">
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">水温(℃)：</label>
+					<div class="layui-input-block">
+						<input type="text" name="water_temperature" required lay-verify="required" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+					<label class="layui-form-label" style="width: 140px">ph值：</label>
+					<div class="layui-input-block">
+						<input type="text" name="ph" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">溶解氧：</label>
+					<div class="layui-input-block">
+						<input type="text" name="dissolved_oxygen" required lay-verify="required" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+					<label class="layui-form-label" style="width: 140px">高锰酸盐指数：</label>
+					<div class="layui-input-block">
+						<input type="text" name="permanganate_index" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">化学需氧量：</label>
+					<div class="layui-input-block">
+						<input type="text" name="chemical_oxygen_demand" required lay-verify="required" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+					<label class="layui-form-label" style="width: 140px">五日生化需氧量：</label>
+					<div class="layui-input-block">
+						<input type="text" name="five_day_bod" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">氨氮：</label>
+					<div class="layui-input-block">
+						<input type="text" name="ammonia_nitrogen" required lay-verify="required" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+					<label class="layui-form-label" style="width: 140px">总磷：</label>
+					<div class="layui-input-block">
+						<input type="text" name="total_phosphorus" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">总氮：</label>
+					<div class="layui-input-block">
+						<input type="text" name="total_nitrogen" required lay-verify="required" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+					<label class="layui-form-label" style="width: 140px">氟化物：</label>
+					<div class="layui-input-block">
+						<input type="text" name="fluoride" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">铜：</label>
+					<div class="layui-input-block">
+						<input type="text" name="copper" required lay-verify="required" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+					<label class="layui-form-label" style="width: 140px">铅：</label>
+					<div class="layui-input-block">
+						<input type="text" name="lead" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">镉：</label>
+					<div class="layui-input-block">
+						<input type="text" name="cadmium" required lay-verify="required" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+					<label class="layui-form-label" style="width: 140px">锌：</label>
+					<div class="layui-input-block">
+						<input type="text" name="zinc" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">汞：</label>
+					<div class="layui-input-block">
+						<input type="text" name="mercury" required lay-verify="required" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+					<label class="layui-form-label" style="width: 140px">砷：</label>
+					<div class="layui-input-block">
+						<input type="text" name="arsenic" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">硒：</label>
+					<div class="layui-input-block">
+						<input type="text" name="selenium" required lay-verify="required" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+					<label class="layui-form-label" style="width: 140px">六价铬：</label>
+					<div class="layui-input-block">
+						<input type="text" name="hexavalent_chromium" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">挥发酚：</label>
+					<div class="layui-input-block">
+						<input type="text" name="volatile_penol" required lay-verify="required" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+					<label class="layui-form-label" style="width: 140px">氰化物：</label>
+					<div class="layui-input-block">
+						<input type="text" name="cyanide" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">石油类：</label>
+					<div class="layui-input-block">
+						<input type="text" name="petroleum" required lay-verify="required" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+					<label class="layui-form-label" style="width: 140px">阴离子表面活性剂：</label>
+					<div class="layui-input-block">
+						<input type="text" name="anionic_surfactant" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">硫化物：</label>
+					<div class="layui-input-block">
+						<input type="text" name="sulfide" required lay-verify="required" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+					<label class="layui-form-label" style="width: 140px">电导率：</label>
+					<div class="layui-input-block">
+						<input type="text" name="conductivity" required lay-verify="required|number" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 140px">粪大肠菌群：</label>
+					<div class="layui-input-block">
+						<input type="text" name="fecal_coliform" required lay-verify="required" 
+							autocomplete="off" class="layui-input" style="width: 450px">
+					</div>
+				</div>
+				
+				<div style="" class="layui-form-item">
+					<div class="layui-input-block" style="text-align: center">
+						<button class="layui-btn" lay-submit lay-filter="submitBut">保存</button>
+					</div>
+				</div>
+			</form>
+			
+			<script th:src="@{/js/datamanage/waterinfo/waterupdate.js}"></script>
+		</div>
+	</body>
+
+</html>

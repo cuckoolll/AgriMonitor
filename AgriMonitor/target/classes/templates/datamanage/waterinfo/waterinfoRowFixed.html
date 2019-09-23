@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<!-- Google Chrome Frame也可以让IE用上Chrome的引擎: -->
+		<meta name="renderer" content="webkit">
+		<!--国产浏览器高速模式-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- 公共样式 开始 -->
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/base.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/iconfont.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/laydate/theme/default/laydate.css}">
+		
+		<!-- 滚动条插件 -->
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/jquery.mCustomScrollbar.css}">
+		
+		<script type="text/javascript" th:src="@{/temp/framework/jquery-1.11.3.min.js}"></script>
+		<script type="text/javascript" th:src="@{/temp/framework/jquery-ui-1.10.4.min.js}"></script>
+		<script type="text/javascript" th:src="@{/temp/framework/jquery.mousewheel.min.js}"></script>
+		<script type="text/javascript" th:src="@{/temp/framework/jquery.mCustomScrollbar.min.js}"></script>
+		<script type="text/javascript" th:src="@{/temp/framework/cframe.js}"></script><!-- 仅供所有子页面使用 -->
+		<script type="text/javascript" th:src="@{/temp/layui/layui.js}"></script>
+		<script type="text/javascript" th:src="@{/temp/laydate/laydate.js}"></script>
+		<!-- 公共样式 结束 -->
+
+		<script type="text/javascript" th:src="@{/js/datamanage/waterinfo/waterinfoRowFixed.js}" ></script>
+
+	</head>
+
+	<body>
+   	<div class="layui-fluid">
+	 	<div class="layui-row layui-col-space10">
+		<div class="layui-col-xs12" style="height:66px">
+	      	<!-- 填充内容 -->
+	      	<div class="layui-card">
+        	<div class="layui-card-body">
+			<div class="queryArea">
+				<form class="layui-form" action="">
+					<div class="layui-form-item">
+						<label class="layui-form-label text-left">采样地点：</label>
+						<div class="layui-input-inline">
+							<input id="quality_address" type="text" class="layui-input">
+						</div>
+						<label class="layui-form-label text-left">采样时间：</label>
+						<div class="layui-input-inline">
+							<table>
+								<tr>
+									<td><input type="text" id="quality_time" class="layui-input" readonly="readonly" style="width: 100px"></td>
+									<td>-</td>
+									<td><input type="text" id="quality_time1" class="layui-input" readonly="readonly" style="width: 100px"></td>
+								</tr>
+							</table>
+						</div>
+						
+						<a id="queryBtn" class="layui-btn" style="margin-left:15px;">检索</a>
+						<!-- <a th:if="${session.userinfo.roleinfo.role_name!='user'}" class="layui-btn" id="importBtn">导入数据</a>
+						<a class="layui-btn" th:href="@{/excel/水质监测数据导入模板.xlsx}">模板下载</a> -->
+					</div>
+				</form>
+			</div>
+			
+			</div>
+	     	</div>
+		    </div>
+		</div>
+		<div class="layui-row layui-col-space10">
+			<div class="layui-col-xs12">
+	      	<!-- 填充内容 -->
+	      	<div class="layui-card">
+        	<div class="layui-card-body">
+				<table id="datalist" lay-filter="datalist" lay-data="{id: 'datalist'}"></table>
+				<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name!='user'}">
+  					<div class="layui-inline" lay-event="add">
+			 			<i class="layui-icon layui-icon-add-1"></i>
+			 		</div>
+					<div class="layui-inline" lay-event="update">
+						<i class="layui-icon layui-icon-edit"></i>
+					</div>
+					<div class="layui-inline" lay-event="delete">	
+						<i class="layui-icon layui-icon-delete"></i>
+					</div>
+				</script>
+			</div>
+			</div>
+		    </div>
+		</div>
+    </div>
+	</body>
+
+</html>

@@ -32,6 +32,52 @@
        	 order by quality_type
 	</select>
 
+    <select id="queryInfoRowFixed" parameterType="com.agri.monitor.vo.WaterQueryVO" resultType="map">
+        select gid,
+			   quality_address,
+			   county,
+			   towns,
+			   date_format(quality_time, '%Y-%m-%d') quality_time,
+			   water_temperature,
+			   ph,
+			   dissolved_oxygen,
+			   permanganate_index,
+			   chemical_oxygen_demand,
+			   five_day_bod,
+			   ammonia_nitrogen,
+			   total_phosphorus,
+			   total_nitrogen,
+			   fluoride,
+			   copper,
+			   lead,
+			   cadmium,
+			   zinc,
+			   mercury,
+			   arsenic,
+			   selenium,
+			   hexavalent_chromium,
+			   volatile_penol,
+			   cyanide,
+			   petroleum,
+			   anionic_surfactant,
+			   sulfide,
+			   conductivity,
+			   fecal_coliform
+          from t_water_row_quality 
+          where 1=1
+    	<if test="quality_address != null and quality_address != ''">
+    		<bind name="quality_address" value="'%' + quality_address + '%'"/>
+        	and quality_address like #{quality_address} 
+        </if>
+        <if test="quality_time != null and quality_time != ''">
+        	and quality_time &gt;= #{quality_time}
+       	</if>
+       	<if test="quality_time1 != null and quality_time1 != ''">
+        	and quality_time &lt;= #{quality_time1}
+       	</if>
+       	 order by quality_time desc, gid limit #{currIndex},#{limit}
+    </select>
+    
     <select id="queryInfoByCountryAndTimeForPage" parameterType="com.agri.monitor.vo.WaterQueryVO" resultType="map">
         select gid,
 			   quality_address,
@@ -96,6 +142,22 @@
        	</if>
     </select>
     
+    <select id="queryInfoCountRowFixed" parameterType="com.agri.monitor.vo.WaterQueryVO" resultType="int">
+        select count(gid)
+          from t_water_row_quality 
+    	 where 1=1
+    	<if test="quality_address != null and quality_address != ''">
+    		<bind name="quality_address" value="'%' + quality_address + '%'"/>
+        	and quality_address like #{quality_address} 
+        </if>
+        <if test="quality_time != null and quality_time != ''">
+        	and quality_time &gt;= #{quality_time}
+       	</if>
+       	<if test="quality_time1 != null and quality_time1 != ''">
+        	and quality_time &lt;= #{quality_time1}
+       	</if>
+    </select>
+    
     <select id="queryGid" parameterType="com.agri.monitor.vo.WaterQueryVO" resultType="java.lang.String">
    		select gid
      	  from t_water_quality
@@ -127,6 +189,73 @@
 			#{modifier})
     </insert>
     
+    <insert id="insertWaterInfoRowFixed" parameterType="com.agri.monitor.entity.WaterInfoRowFixed">
+    	insert into t_water_row_quality
+    		(quality_address,
+			 county,
+			 towns,
+			 quality_time,
+			 water_temperature,
+			 ph,
+			 dissolved_oxygen,
+			 permanganate_index,
+			 chemical_oxygen_demand,
+			 five_day_bod,
+			 ammonia_nitrogen,
+			 total_phosphorus,
+			 total_nitrogen,
+			 fluoride,
+			 copper,
+			 lead,
+			 cadmium,
+			 zinc,
+			 mercury,
+			 arsenic,
+			 selenium,
+			 hexavalent_chromium,
+			 volatile_penol,
+			 cyanide,
+			 petroleum,
+			 anionic_surfactant,
+			 sulfide,
+			 conductivity,
+			 fecal_coliform,
+			 creator,
+			 modifier)
+    	values
+		   (#{quality_address},
+			#{county},
+			#{towns},
+			#{quality_time},
+			#{water_temperature},
+			#{ph},
+			#{dissolved_oxygen},
+			#{permanganate_index},
+			#{chemical_oxygen_demand},
+			#{five_day_bod},
+			#{ammonia_nitrogen},
+			#{total_phosphorus},
+			#{total_nitrogen},
+			#{fluoride},
+			#{copper},
+			#{lead},
+			#{cadmium},
+			#{zinc},
+			#{mercury},
+			#{arsenic},
+			#{selenium},
+			#{hexavalent_chromium},
+			#{volatile_penol},
+			#{cyanide},
+			#{petroleum},
+			#{anionic_surfactant},
+			#{sulfide},
+			#{conductivity},
+			#{fecal_coliform},
+			#{creator},
+			#{modifier})
+    </insert>
+    
     <update id="updateWaterInfo" parameterType="com.agri.monitor.entity.WaterInfo">
     	update t_water_quality
     	   set quality_result = #{quality_result},
@@ -135,8 +264,48 @@
     	 where gid = #{gid}
     </update>
     
+    <update id="updateWaterInfoRowFixed" parameterType="com.agri.monitor.entity.WaterInfoRowFixed">
+    	update t_water_row_quality
+    	   set quality_address = #{quality_address},
+    	       quality_time = #{quality_time},
+    	       water_temperature = #{water_temperature},
+			   ph = #{ph},
+			   dissolved_oxygen = #{dissolved_oxygen},
+			   permanganate_index = #{permanganate_index},
+			   chemical_oxygen_demand = #{chemical_oxygen_demand},
+			   five_day_bod = #{five_day_bod},
+			   ammonia_nitrogen = #{ammonia_nitrogen},
+			   total_phosphorus = #{total_phosphorus},
+			   total_nitrogen = #{total_nitrogen},
+			   fluoride = #{fluoride},
+			   copper = #{copper},
+			   lead = #{lead},
+			   cadmium = #{cadmium},
+			   zinc = #{zinc},
+			   mercury = #{mercury},
+			   arsenic = #{arsenic},
+			   selenium = #{selenium},
+			   hexavalent_chromium = #{hexavalent_chromium},
+			   volatile_penol = #{volatile_penol},
+			   cyanide = #{cyanide},
+			   petroleum = #{petroleum},
+			   anionic_surfactant = #{anionic_surfactant},
+			   sulfide = #{sulfide},
+			   conductivity = #{conductivity},
+			   fecal_coliform = #{fecal_coliform},
+    	   	   modifier = #{modifier}
+    	 where gid = #{gid}
+    </update>
+    
     <delete id="delInfoByGid" parameterType="java.util.List">
     	delete from t_water_quality where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+    
+    <delete id="delInfoByGidRowFixed" parameterType="java.util.List">
+    	delete from t_water_row_quality where gid in
     	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
     		#{item}
     	</foreach>

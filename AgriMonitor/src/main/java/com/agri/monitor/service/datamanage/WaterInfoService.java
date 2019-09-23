@@ -2,7 +2,6 @@ package com.agri.monitor.service.datamanage;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,21 +16,18 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.agri.monitor.ApplicationRunnerImpl;
-import com.agri.monitor.entity.FarmInfo;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.entity.WaterInfo;
+import com.agri.monitor.entity.WaterInfoRowFixed;
 import com.agri.monitor.enums.LogOptSatusEnum;
 import com.agri.monitor.enums.LogOptTypeEnum;
 import com.agri.monitor.mapper.WaterInfoMapper;
 import com.agri.monitor.utils.LogUtil;
-import com.agri.monitor.utils.UrbanAreaUtil;
 import com.agri.monitor.vo.WaterQueryVO;
 
 @Service
@@ -137,6 +133,29 @@ public class WaterInfoService {
 	}
 	
 	/**
+	 * 按行查询水质监测数据 .
+	 * @param queryVo .
+	 * @param userid .
+	 * @return .
+	 */
+	public Map queryInfoRowFixed(WaterQueryVO queryVo, String userid) {
+		if (logger.isInfoEnabled()) {
+			logger.info("获取水质监测信息，入参=quality_address:" + queryVo.getQuality_address() 
+				+ ", quality_time:" + queryVo.getQuality_time() + ",quality_time1:" + queryVo.getQuality_time1());
+		}
+
+		final Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", 0);
+		result.put("msg", "成功");
+		result.put("count", waterInfoMapper.queryInfoCountRowFixed(queryVo));
+		result.put("data", waterInfoMapper.queryInfoRowFixed(queryVo));
+		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, 
+				"获取水质监测信息，入参=quality_address:" + queryVo.getQuality_address() + ", quality_time:" + queryVo.getQuality_time()
+				+ ",quality_time1:" + queryVo.getQuality_time1());
+		return result;
+	}
+	
+	/**
 	 * 按列查询水质监测数据 .
 	 * @param queryVo .
 	 * @param userid .
@@ -167,6 +186,14 @@ public class WaterInfoService {
 		return waterInfoMapper.findById(gid);
 	}
 	
+	public WaterInfoRowFixed findByIdRowFixed(Integer gid, String userid) {
+		if (logger.isInfoEnabled()) {
+			logger.info("获取水质监测信息，GID=" + gid);
+		}
+		LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, userid, "查询水质监测信息，GID="+gid);
+		return waterInfoMapper.findByIdRowFixed(gid);
+	}
+	
 	public Map saveOrUpdate(WaterInfo waterinfo, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("水质监测数据更新开始：" + waterinfo);
@@ -192,6 +219,31 @@ public class WaterInfoService {
 		return result;
 	}
 	
+	public Map saveOrUpdateRowFixed(WaterInfoRowFixed waterinfo, String userid) {
+		if (logger.isInfoEnabled()) {
+			logger.info("水质监测数据更新开始：" + waterinfo);
+		}
+		final Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", 0);
+		try {
+			waterinfo.setModifier(String.valueOf(userid));
+			//更新
+			if(!StringUtils.isEmpty(waterinfo.getGid())) {
+				waterInfoMapper.updateWaterInfoRowFixed(waterinfo);
+				LogUtil.log(LogOptTypeEnum.UPDATE, LogOptSatusEnum.SUCESS, userid, "水质监测数据更新"+waterinfo);
+			}else {//新增
+				waterinfo.setCreator(String.valueOf(userid));
+				waterInfoMapper.insertWaterInfoRowFixed(waterinfo);
+				LogUtil.log(LogOptTypeEnum.ADD, LogOptSatusEnum.SUCESS, userid, "新增水质监测数据"+waterinfo);
+			}
+		} catch (Exception e) {
+			result.put("code", -1);
+			logger.error("保存水质监测数据异常" + e);
+			LogUtil.log(LogOptTypeEnum.SAVE, LogOptSatusEnum.FAIL, userid, "保存水质监测数据异常："+e.getMessage());
+		}
+		return result;
+	}
+	
 	public Map delInfoByGid(List<Integer> gids, String userid) {
 		if (logger.isInfoEnabled()) {
 			logger.info("水质监测数据删除开始：" + gids);
@@ -200,6 +252,23 @@ public class WaterInfoService {
 		result.put("code", 0);
 		try {
 			waterInfoMapper.delInfoByGid(gids);
+			LogUtil.log(LogOptTypeEnum.DEL, LogOptSatusEnum.SUCESS, userid, "水质监测数据删除，GID="+gids);
+		} catch (Exception e) {
+			result.put("code", -1);
+			logger.error("删除水质监测信息异常" + e);
+			LogUtil.log(LogOptTypeEnum.DEL, LogOptSatusEnum.FAIL, userid, "水质监测数据删除异常："+e.getMessage());
+		}
+		return result;
+	}
+	
+	public Map delInfoByGidRowFixed(List<Integer> gids, String userid) {
+		if (logger.isInfoEnabled()) {
+			logger.info("水质监测数据删除开始：" + gids);
+		}
+		final Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", 0);
+		try {
+			waterInfoMapper.delInfoByGidRowFixed(gids);
 			LogUtil.log(LogOptTypeEnum.DEL, LogOptSatusEnum.SUCESS, userid, "水质监测数据删除，GID="+gids);
 		} catch (Exception e) {
 			result.put("code", -1);
