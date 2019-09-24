@@ -14,6 +14,41 @@
 		 where gid = #{gid}
 	</select>
 
+	<select id="findByIdRowFixed" parameterType="int" resultType="com.agri.monitor.entity.WaterInfoRowFixed">
+		select gid,
+			   quality_address,
+			   county,
+			   towns,
+			   date_format(quality_time, '%Y-%m-%d') quality_time,
+			   water_temperature,
+			   ph,
+			   dissolved_oxygen,
+			   permanganate_index,
+			   chemical_oxygen_demand,
+			   five_day_bod,
+			   ammonia_nitrogen,
+			   total_phosphorus,
+			   total_nitrogen,
+			   fluoride,
+			   copper,
+			   plumbum,
+			   cadmium,
+			   zinc,
+			   mercury,
+			   arsenic,
+			   selenium,
+			   hexavalent_chromium,
+			   volatile_penol,
+			   cyanide,
+			   petroleum,
+			   anionic_surfactant,
+			   sulfide,
+			   conductivity,
+			   fecal_coliform
+		  from t_water_row_quality 
+		 where gid = #{gid}
+	</select>
+
 	<select id="queryQualityType" parameterType="com.agri.monitor.vo.WaterQueryVO" resultType="String">
 		select quality_type
 		  from t_water_quality
@@ -49,7 +84,7 @@
 			   total_nitrogen,
 			   fluoride,
 			   copper,
-			   lead,
+			   plumbum,
 			   cadmium,
 			   zinc,
 			   mercury,
@@ -206,7 +241,7 @@
 			 total_nitrogen,
 			 fluoride,
 			 copper,
-			 lead,
+			 plumbum,
 			 cadmium,
 			 zinc,
 			 mercury,
@@ -238,7 +273,7 @@
 			#{total_nitrogen},
 			#{fluoride},
 			#{copper},
-			#{lead},
+			#{plumbum},
 			#{cadmium},
 			#{zinc},
 			#{mercury},
@@ -279,7 +314,7 @@
 			   total_nitrogen = #{total_nitrogen},
 			   fluoride = #{fluoride},
 			   copper = #{copper},
-			   lead = #{lead},
+			   plumbum = #{plumbum},
 			   cadmium = #{cadmium},
 			   zinc = #{zinc},
 			   mercury = #{mercury},

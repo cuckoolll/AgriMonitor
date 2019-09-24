@@ -9,7 +9,7 @@ layui.use(['form','layer','table', 'laydate'], function(form,layer,table,laydate
 		if(gid){//如果有值，为更新操作
 			$("#quality_time").attr("disabled", true);
 			//查询数据并赋值到表单中
-			$.post("/waterinfo/findById", {gid:gid},function(res){
+			$.post("/waterinfo/findByIdRowFixed", {gid:gid},function(res){
 		          if(res){
 		        	  $.each(res,function(key,val){
 	        			  $("[name='"+key+"']").val(val);
@@ -25,7 +25,7 @@ layui.use(['form','layer','table', 'laydate'], function(form,layer,table,laydate
 	function bindEvent(){
 		//监听提交
 		form.on('submit(submitBut)', function(data) {
-			$.post("/waterinfo/save", data.field,function(res){
+			$.post("/waterinfo/saveRowFixed", data.field,function(res){
 		          if(res && res.code==0){
 		        	  parent.layer.msg('保存水质监测数据成功');
 		        	  parent.layui.table.reload('datalist');

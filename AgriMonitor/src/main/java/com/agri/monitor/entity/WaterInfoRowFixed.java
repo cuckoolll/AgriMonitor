@@ -18,7 +18,7 @@ public class WaterInfoRowFixed {
 	private double total_nitrogen;
 	private double fluoride;
 	private String copper;
-	private String lead;
+	private String plumbum;
 	private String cadmium;
 	private String zinc;
 	private String mercury;
@@ -139,11 +139,11 @@ public class WaterInfoRowFixed {
 	public void setCopper(String copper) {
 		this.copper = copper;
 	}
-	public String getLead() {
-		return lead;
+	public String getPlumbum() {
+		return plumbum;
 	}
-	public void setLead(String lead) {
-		this.lead = lead;
+	public void setPlumbum(String plumbum) {
+		this.plumbum = plumbum;
 	}
 	public String getCadmium() {
 		return cadmium;
