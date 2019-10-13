@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<!-- Google Chrome Frame也可以让IE用上Chrome的引擎: -->
+		<meta name="renderer" content="webkit">
+		<!--国产浏览器高速模式-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>规模化畜禽养殖量信息</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
+	    <!--[if lt IE 9]>
+	      	<script src="framework/html5shiv.min.js"></script>
+	      	<script src="framework/respond.min.js"></script>
+	    <![endif]-->
+		<script type="text/javascript" th:src="@{/temp/framework/jquery-1.11.3.min.js}" ></script>
+		<script type="text/javascript" th:src="@{/temp/layui/layui.js}"></script>
+		<!-- 公共样式 结束 -->
+	</head>
+
+	<body>
+		<div class="cBody" style="padding: 10px 10px">
+			<form id="addForm" class="layui-form">
+				<input type="hidden" name="gid"/>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 180px">年份：</label>
+					<div class="layui-input-inline">
+						<input type="text" id="year" name="year" required lay-verify="required" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 180px">出栏的生猪数量（万头）：</label>
+					<div class="layui-input-block">
+						<input type="text" name="szcls" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 180px">出栏肉牛数量（万头）：</label>
+					<div class="layui-input-block">
+						<input type="text" name="rncls" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 180px">存栏的奶牛数量（万头）：</label>
+					<div class="layui-input-block">
+						<input type="text" name="nncls" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 180px">出栏的肉羊数量（万头）：</label>
+					<div class="layui-input-block">
+						<input type="text" name="rycls" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 180px">存栏的蛋鸡数量（万头）：</label>
+					<div class="layui-input-block">
+						<input type="text" name="djcls" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 180px">出栏的肉鸡数量（万头）：</label>
+					<div class="layui-input-block">
+						<input type="text" name="rjcls" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 180px">其他畜禽数量（万头）：</label>
+					<div class="layui-input-block">
+						<input type="text" name="qt" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				
+				<div style="" class="layui-form-item">
+					<div class="layui-input-block" style="text-align: center">
+						<button id="saveBtn" class="layui-btn" lay-submit lay-filter="submitBut">保存</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<script th:src="@{/js/datamanage/gmhyzxx/update.js}"></script>
+	</body>
+
+</html>

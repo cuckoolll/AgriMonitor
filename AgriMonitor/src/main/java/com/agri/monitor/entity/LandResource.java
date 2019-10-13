@@ -23,6 +23,14 @@ public class LandResource {
 	private Double yd;
 	private Double sxjhl;
 	private Double hxjhl;
+	private Double ggslyxs;
+	
+	public Double getGgslyxs() {
+		return ggslyxs;
+	}
+	public void setGgslyxs(Double ggslyxs) {
+		this.ggslyxs = ggslyxs;
+	}
 	public Integer getGid() {
 		return gid;
 	}

@@ -40,7 +40,9 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 				     {title: '浮游植物的定性和定量',align:'center',colspan:4},
 				     {title: '浮游动物的定性和定量',align:'center',colspan:4},
 				     {title: '底栖动物',align:'center',colspan:3},
-				     {title: '青海湖裸鲤卵苗分布密度数据',align:'center',colspan:5}
+				     {title: '青海湖裸鲤卵苗分布密度数据',align:'center',colspan:5},
+				     {field: 'scyzmj', title: '水产养殖总面积',sort: true,rowspan:2, width:150},
+				     {field: 'scbzhyzmj', title: '水产标准化健康养殖示范场（区）养殖面积',sort: true,rowspan:2, width:200}
 			     ],
 			     [
 			    	 {field: 'water_level', title: '水位', align:'center', },

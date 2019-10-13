@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agri.monitor.mapper.GmhyzxxMapper">
+	<select id="findById" parameterType="int" resultType="com.agri.monitor.entity.Gmhyzxx">
+		select * from t_gmhyzxx where gid=#{gid}
+	</select>
+    <select id="findAllForPage" parameterType="com.agri.monitor.vo.GmhyzxxQueryVO" resultType="map">
+        select gid,county,towns,village,IFNULL(szcls,' ') szcls,IFNULL(rncls,' ') rncls,IFNULL(nncls,' ') nncls,
+        IFNULL(rycls,' ') rycls,IFNULL(djcls,' ') djcls,IFNULL(rjcls,' ') rjcls,IFNULL(qt,' ') qt,IFNULL(year,' ') year
+        from t_gmhyzxx where 1=1
+        <if test="syear != null and syear != ''">
+        	and year between #{syear} and #{eyear} 
+	    </if>
+	    order by year desc limit #{currIndex},#{limit}
+    </select>
+    <select id="findAllCount" parameterType="com.agri.monitor.vo.GmhyzxxQueryVO" resultType="int">
+        select count(gid) from t_gmhyzxx where 1=1
+        <if test="syear != null and syear != ''">
+        	and year between #{syear} and #{eyear} 
+	    </if>
+    </select>
+    
+    <insert id="insert" parameterType="com.agri.monitor.entity.Gmhyzxx">
+    	insert into t_gmhyzxx(szcls,rncls,nncls,rycls,djcls,rjcls,qt,year)
+    	values
+	   (#{szcls},#{rncls},#{nncls},#{rycls},#{djcls},#{rjcls},#{qt},#{year})
+    </insert>
+    
+    <update id="update" parameterType="com.agri.monitor.entity.Gmhyzxx">
+    	update t_gmhyzxx set szcls=#{szcls},rncls=#{rncls},nncls=#{nncls},rycls=#{rycls},djcls=#{djcls},
+    	rjcls=#{rjcls},qt=#{qt},year=#{year} where gid=#{gid}
+    </update>
+    
+    <delete id="delete" parameterType="java.util.List">
+    	delete from t_gmhyzxx where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+</mapper>

@@ -13,7 +13,7 @@ public interface FishInfoMapper {
 	
 	List<FishInfo> findAll();
 	
-	List<FishInfo> queryInfoForPage(final FishQueryVO queryVo);
+	List<Map> queryInfoForPage(final FishQueryVO queryVo);
 	
 	int queryInfoCount(final FishQueryVO queryVo);
 	

@@ -47,6 +47,8 @@ import com.agri.monitor.mapper.AgriInputinfoMapper;
 import com.agri.monitor.mapper.AnimalsBreedMapper;
 import com.agri.monitor.mapper.EnvironmentInfoMapper;
 import com.agri.monitor.mapper.FarmProductInfoMapper;
+import com.agri.monitor.mapper.FishInfoMapper;
+import com.agri.monitor.mapper.GmhyzxxMapper;
 import com.agri.monitor.mapper.GrassInfoMapper;
 import com.agri.monitor.mapper.LandResourceMapper;
 import com.agri.monitor.mapper.MonitorLogMapper;
@@ -58,6 +60,8 @@ import com.agri.monitor.vo.AgriInputinfoQueryVO;
 import com.agri.monitor.vo.AnimalsBreedQueryVO;
 import com.agri.monitor.vo.EnvironmentQueryVO;
 import com.agri.monitor.vo.FarmProductQueryVO;
+import com.agri.monitor.vo.FishQueryVO;
+import com.agri.monitor.vo.GmhyzxxQueryVO;
 import com.agri.monitor.vo.GrassQueryVO;
 import com.agri.monitor.vo.LandResourceQueryVO;
 import com.agri.monitor.vo.NmshInfoQueryVO;
@@ -74,6 +78,8 @@ public class AnimalsBreedService {
 	@Autowired
 	private AnimalsBreedMapper animalsBreedMapper;
 	@Autowired
+	private FishInfoMapper fishInfoMapper;
+	@Autowired
 	private LandResourceMapper landResourceMapper;
 	@Autowired
 	private GrassInfoMapper grassInfoMapper;
@@ -85,6 +91,8 @@ public class AnimalsBreedService {
 	private AgriInputinfoMapper agriInputinfoMapper;
 	@Autowired
 	private NmshInfoMapper nmshInfoMapper;
+	@Autowired
+	private GmhyzxxMapper gmhyzxxMapper;
 	@Autowired
 	private EnvironmentInfoMapper environmentInfoMapper;
 	public AnimalsBreed findById(Integer gid, String userid) {
@@ -694,7 +702,7 @@ public class AnimalsBreedService {
 			out = response.getOutputStream();
 			//复制原模板到临时文件中
 			destFile = new File(tempdir+new Date().getTime()+".xls");
-			FileUtils.copyFile(ResourceUtils.getFile(tempdir+"/khzb.xls"),destFile);
+			FileUtils.copyFile(ResourceUtils.getFile("E:\\workspace\\sts\\AgriMonitor\\AgriMonitor\\src\\main\\resources\\static\\excel\\考核指标表模板.xls"),destFile);
 			is = new FileInputStream(destFile);
 			POIFSFileSystem pfs = new POIFSFileSystem(is);
 			//读取excel模板
@@ -710,6 +718,10 @@ public class AnimalsBreedService {
 			List<Map> cmydata1 = getYearData(syear, null);
 			List<Map> cmydata2 = getYearData(syear + 1, null);
 			List<Map> cmydata3 = getYearData(eyear, null);
+			//规模化畜禽养殖量数据
+			Map<String, Map> gmhyzdata = getgmhyzdata(syear, eyear);
+			//渔业数据
+			Map<String, Map> yydata = getyydata(syear, eyear);
 			//农产品信息数据
 			Map<String, Map> ncpdata = getncpdata(syear, eyear);
 			//农业投入数据
@@ -755,6 +767,17 @@ public class AnimalsBreedService {
 			}
 			if(zzydata.get(eyear+"")!=null) {
 				row5.getCell(7).setCellValue(objToDou(zzydata.get(eyear+"").get("yjz")));
+			}
+			//农田灌溉水有效利用系数
+			HSSFRow row6 = sheet.getRow(6);
+			if(zzydata.get(syear+"")!=null) {
+				row6.getCell(5).setCellValue(objToDou(zzydata.get(syear+"").get("ggslyxs")));
+			}
+			if(zzydata.get((syear+1)+"")!=null) {
+				row6.getCell(6).setCellValue(objToDou(zzydata.get((syear+1)+"").get("ggslyxs")));
+			}
+			if(zzydata.get(eyear+"")!=null) {
+				row6.getCell(7).setCellValue(objToDou(zzydata.get(eyear+"").get("ggslyxs")));
 			}
 			//播种面积
 			HSSFRow row7 = sheet.getRow(7);
@@ -934,6 +957,83 @@ public class AnimalsBreedService {
 					}
 				}
 			}
+			//出栏的生猪数量
+			HSSFRow row15 = sheet.getRow(15);
+			if(gmhyzdata.get(syear+"")!=null) {
+				row15.getCell(5).setCellValue(objToDou(gmhyzdata.get(syear+"").get("szcls")));
+			}
+			if(gmhyzdata.get((syear+1)+"")!=null) {
+				row15.getCell(6).setCellValue(objToDou(gmhyzdata.get((syear+1)+"").get("szcls")));
+			}
+			if(gmhyzdata.get(eyear+"")!=null) {
+				row15.getCell(7).setCellValue(objToDou(gmhyzdata.get(eyear+"").get("szcls")));
+			}
+			//出栏肉牛数量
+			HSSFRow row16 = sheet.getRow(16);
+			if(gmhyzdata.get(syear+"")!=null) {
+				row16.getCell(5).setCellValue(objToDou(gmhyzdata.get(syear+"").get("rncls")));
+			}
+			if(gmhyzdata.get((syear+1)+"")!=null) {
+				row16.getCell(6).setCellValue(objToDou(gmhyzdata.get((syear+1)+"").get("rncls")));
+			}
+			if(gmhyzdata.get(eyear+"")!=null) {
+				row16.getCell(7).setCellValue(objToDou(gmhyzdata.get(eyear+"").get("rncls")));
+			}
+			//存栏的奶牛数量
+			HSSFRow row17 = sheet.getRow(17);
+			if(gmhyzdata.get(syear+"")!=null) {
+				row17.getCell(5).setCellValue(objToDou(gmhyzdata.get(syear+"").get("nncls")));
+			}
+			if(gmhyzdata.get((syear+1)+"")!=null) {
+				row17.getCell(6).setCellValue(objToDou(gmhyzdata.get((syear+1)+"").get("nncls")));
+			}
+			if(gmhyzdata.get(eyear+"")!=null) {
+				row17.getCell(7).setCellValue(objToDou(gmhyzdata.get(eyear+"").get("nncls")));
+			}
+			//出栏的肉羊数量
+			HSSFRow row18 = sheet.getRow(18);
+			if(gmhyzdata.get(syear+"")!=null) {
+				row18.getCell(5).setCellValue(objToDou(gmhyzdata.get(syear+"").get("rycls")));
+			}
+			if(gmhyzdata.get((syear+1)+"")!=null) {
+				row18.getCell(6).setCellValue(objToDou(gmhyzdata.get((syear+1)+"").get("rycls")));
+			}
+			if(gmhyzdata.get(eyear+"")!=null) {
+				row18.getCell(7).setCellValue(objToDou(gmhyzdata.get(eyear+"").get("rycls")));
+			}
+			//存栏的蛋鸡数量
+			HSSFRow row19 = sheet.getRow(19);
+			if(gmhyzdata.get(syear+"")!=null) {
+				row19.getCell(5).setCellValue(objToDou(gmhyzdata.get(syear+"").get("djcls")));
+			}
+			if(gmhyzdata.get((syear+1)+"")!=null) {
+				row19.getCell(6).setCellValue(objToDou(gmhyzdata.get((syear+1)+"").get("djcls")));
+			}
+			if(gmhyzdata.get(eyear+"")!=null) {
+				row19.getCell(7).setCellValue(objToDou(gmhyzdata.get(eyear+"").get("djcls")));
+			}
+			//出栏的肉鸡数量
+			HSSFRow row20 = sheet.getRow(20);
+			if(gmhyzdata.get(syear+"")!=null) {
+				row20.getCell(5).setCellValue(objToDou(gmhyzdata.get(syear+"").get("rjcls")));
+			}
+			if(gmhyzdata.get((syear+1)+"")!=null) {
+				row20.getCell(6).setCellValue(objToDou(gmhyzdata.get((syear+1)+"").get("rjcls")));
+			}
+			if(gmhyzdata.get(eyear+"")!=null) {
+				row20.getCell(7).setCellValue(objToDou(gmhyzdata.get(eyear+"").get("rjcls")));
+			}
+			//其他规模化养殖的畜禽数量
+			HSSFRow row21 = sheet.getRow(21);
+			if(gmhyzdata.get(syear+"")!=null) {
+				row21.getCell(5).setCellValue(objToDou(gmhyzdata.get(syear+"").get("qt")));
+			}
+			if(gmhyzdata.get((syear+1)+"")!=null) {
+				row21.getCell(6).setCellValue(objToDou(gmhyzdata.get((syear+1)+"").get("qt")));
+			}
+			if(gmhyzdata.get(eyear+"")!=null) {
+				row21.getCell(7).setCellValue(objToDou(gmhyzdata.get(eyear+"").get("qt")));
+			}
 			//猪肉产量
 			HSSFRow row22 = sheet.getRow(22);
 			if(cmydata1!=null && cmydata1.size() > 0) {
@@ -1089,6 +1189,28 @@ public class AnimalsBreedService {
 						break;
 					}
 				}
+			}
+			//水产养殖总面积
+			HSSFRow row29 = sheet.getRow(29);
+			if(yydata.get(syear+"")!=null) {
+				row29.getCell(5).setCellValue(objToDou(yydata.get(syear+"").get("scyzmj")));
+			}
+			if(yydata.get((syear+1)+"")!=null) {
+				row29.getCell(6).setCellValue(objToDou(yydata.get((syear+1)+"").get("scyzmj")));
+			}
+			if(yydata.get(eyear+"")!=null) {
+				row29.getCell(7).setCellValue(objToDou(yydata.get(eyear+"").get("scyzmj")));
+			}
+			//水产标准化健康养殖示范场（区）养殖面积
+			HSSFRow row30 = sheet.getRow(30);
+			if(yydata.get(syear+"")!=null) {
+				row30.getCell(5).setCellValue(objToDou(yydata.get(syear+"").get("scbzhyzmj")));
+			}
+			if(yydata.get((syear+1)+"")!=null) {
+				row30.getCell(6).setCellValue(objToDou(yydata.get((syear+1)+"").get("scbzhyzmj")));
+			}
+			if(yydata.get(eyear+"")!=null) {
+				row30.getCell(7).setCellValue(objToDou(yydata.get(eyear+"").get("scbzhyzmj")));
 			}
 			//种植业
 			HSSFRow row31 = sheet.getRow(31);
@@ -1445,6 +1567,38 @@ public class AnimalsBreedService {
 		}
 		return ret;
 		
+	}
+	//规模化养殖数据
+	private Map<String, Map> getgmhyzdata(int syear, int eyear) {
+		GmhyzxxQueryVO query3 = new GmhyzxxQueryVO();
+		query3.setPage(1);
+		query3.setLimit(Integer.MAX_VALUE);
+		query3.setSyear(syear);
+		query3.setEyear(eyear);
+		List<Map> ncpdata = gmhyzxxMapper.findAllForPage(query3);
+		Map<String, Map> ret = new HashMap();
+		if(null != ncpdata) {
+			for (Map o : ncpdata) {
+				ret.put(o.get("year").toString(), o);
+			}
+		}
+		return ret;
+	}
+	//渔业数据
+	private Map<String, Map> getyydata(int syear, int eyear) {
+		FishQueryVO query3 = new FishQueryVO();
+		query3.setPage(1);
+		query3.setLimit(Integer.MAX_VALUE);
+		query3.setDate_year(syear+"");
+		query3.setDate_year1(eyear+"");
+		List<Map> ncpdata = fishInfoMapper.queryInfoForPage(query3);
+		Map<String, Map> ret = new HashMap();
+		if(null != ncpdata) {
+			for (Map o : ncpdata) {
+				ret.put(o.get("date_year").toString(), o);
+			}
+		}
+		return ret;
 	}
 	//农产品信息数据
 	private Map<String, Map> getncpdata(int syear, int eyear) {

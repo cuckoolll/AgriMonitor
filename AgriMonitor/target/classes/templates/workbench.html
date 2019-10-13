@@ -76,6 +76,7 @@
 		                			<dt><a style="padding-left:60px" class="menu3rd menuLA" href="javascript:void(0)" url="/animalsBreed/animalsBreedReport">畜牧业生产报表</a></dt>
 		                			<dt><a style="padding-left:60px" class="menu3rd menuLA" href="javascript:void(0)" url="/fishinfo">渔业生产信息</a></dt>
 		                			<dt><a style="padding-left:60px" class="menu3rd menuLA" href="javascript:void(0)" url="/farmproductinfo">农产品信息表</a></dt>
+		                			<dt><a style="padding-left:60px" class="menu3rd menuLA" href="javascript:void(0)" url="/gmhyzxx">规模化畜禽养殖量信息</a></dt>
 		                		</dl>
 		                	<dt>
 		                	
@@ -171,7 +172,7 @@
 		                </dl>
 		            </li>
 		            <li>
-		                <a class="menuFA" href="javascript:void(0)"><i class="iconfont icon-dingdan left"></i>公示文件<i class="iconfont icon-dajiantouyou right"></i></a>
+		                <a class="menuFA" href="javascript:void(0)"><i class="iconfont icon-dingdan left"></i>文档资料<i class="iconfont icon-dajiantouyou right"></i></a>
 		                <dl>
 		                	<dt><a class="menu3rd menuLA" href="javascript:void(0)" url="/policymaintain?info_type=0">项目申报文件</a></dt>
 		                	<dt><a class="menu3rd menuLA" href="javascript:void(0)" url="/policymaintain?info_type=1">项目技术文档</a></dt>
@@ -180,25 +181,25 @@
 		                </dl>
 		            </li>
 		        	<li th:if="${session.userinfo.roleinfo.role_name!='user'}">
-		                <a class="menuFA" href="javascript:void(0)"><i class="iconfont icon-zhuyidapx left"></i>监测报警<i class="iconfont icon-dajiantouyou right"></i></a>
-		                <dl>
-		                	<dt><a class="menu3rd menuLA" href="javascript:void(0)"  url="/monitorManage">报警阈值</a></dt>
-		                	<dt><a class="menu3rd menuLA" href="javascript:void(0)"  url="/monitorManage/monitorlog">报警记录</a></dt>
-		                </dl>
-		           	</li>
-		           	<li th:if="${session.userinfo.roleinfo.role_name!='user'}">
-		                <a class="menuFA" href="javascript:void(0)"><i class="iconfont icon-liuliangyunpingtaitubiao03 left"></i>分类维护<i class="iconfont icon-dajiantouyou right"></i></a>
-		                <dl>
-		                	<dt><a class="menu3rd menuLA" href="javascript:void(0)" url="/farminfo/animalstype">认定畜种维护</a></dt>
-		                	<dt><a class="menu3rd menuLA" href="javascript:void(0)" url="/animalsBreed/animalsTarget">畜牧业指标维护</a></dt>
-		                	<dt><a class="menu3rd menuLA" href="javascript:void(0)" url="/cropsplant/cropstype">农作物分类维护</a></dt>
-		                </dl>
-		           	</li>
-		        	<li th:if="${session.userinfo.roleinfo.role_name!='user'}">
 		                <a class="menuFA" href="javascript:void(0)"><i class="iconfont icon-shezhi left"></i>系统管理<i class="iconfont icon-dajiantouyou right"></i></a>
 		                <dl>
-		                	<dt><a class="menu3rd menuLA" th:if="${session.userinfo.roleinfo.role_name=='sys'}" href="javascript:void(0)" url="/userinfo">用户管理</a></dt>
-		                	<dt><a class="menu3rd menuLA" th:if="${session.userinfo.roleinfo.role_name=='sys'}" href="javascript:void(0)" url="/syslog">系统日志</a></dt>
+		                	<dt><a class="menu2rd menuLA" style="padding-left: 40px;" th:if="${session.userinfo.roleinfo.role_name=='sys'}" href="javascript:void(0)" url="/userinfo">用户管理</a></dt>
+		                	<dt><a class="menu2rd menuLA" style="padding-left: 40px;" th:if="${session.userinfo.roleinfo.role_name=='sys'}" href="javascript:void(0)" url="/syslog">系统日志</a></dt>
+		                	<dt th:if="${session.userinfo.roleinfo.role_name!='user'}">
+		                		<a class="menuFA" href="javascript:void(0)">分类维护<i class="iconfont icon-dajiantouyou right"></i></a>
+		                		<dl>
+		                			<dt><a class="menu3rd menuLA" href="javascript:void(0)" url="/farminfo/animalstype">认定畜种维护</a></dt>
+				                	<dt><a class="menu3rd menuLA" href="javascript:void(0)" url="/animalsBreed/animalsTarget">畜牧业指标维护</a></dt>
+				                	<dt><a class="menu3rd menuLA" href="javascript:void(0)" url="/cropsplant/cropstype">农作物分类维护</a></dt>
+		                		</dl>
+		                	<dt>
+		                	<dt th:if="${session.userinfo.roleinfo.role_name!='user'}">
+		                		<a class="menuFA" href="javascript:void(0)">监测报警<i class="iconfont icon-dajiantouyou right"></i></a>
+		                		<dl>
+		                			<dt><a class="menu3rd menuLA" href="javascript:void(0)"  url="/monitorManage">报警阈值</a></dt>
+		                			<dt><a class="menu3rd menuLA" href="javascript:void(0)"  url="/monitorManage/monitorlog">报警记录</a></dt>
+		                		</dl>
+		                	<dt>
 		                </dl>
 		           	</li>
 		        </ul>

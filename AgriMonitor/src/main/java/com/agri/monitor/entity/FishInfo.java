@@ -32,7 +32,21 @@ public class FishInfo {
 	private String creator; 
 	private String last_time; 
 	private String modifier;
+	private double scyzmj; 
+	private double scbzhyzmj; 
 	
+	public double getScyzmj() {
+		return scyzmj;
+	}
+	public void setScyzmj(double scyzmj) {
+		this.scyzmj = scyzmj;
+	}
+	public double getScbzhyzmj() {
+		return scbzhyzmj;
+	}
+	public void setScbzhyzmj(double scbzhyzmj) {
+		this.scbzhyzmj = scbzhyzmj;
+	}
 	public String getGid() {
 		return gid;
 	}

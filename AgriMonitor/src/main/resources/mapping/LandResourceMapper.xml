@@ -8,7 +8,7 @@
         select gid,county,towns,village,IFNULL(gdmj,' ') gdmj,IFNULL(gbzltmj,' ') gbzltmj,IFNULL(gbzltbz,' ') gbzltbz,
         IFNULL(qkmj,' ') qkmj,IFNULL(ycmj,' ') ycmj,IFNULL(ymmj,' ') ymmj,IFNULL(dc,' ') dc,IFNULL(zc,' ') zc,
          IFNULL(yjz,' ') yjz,IFNULL(qd,' ') qd,IFNULL(qlhl,' ') qlhl,IFNULL(yxlhl,' ') yxlhl,IFNULL(qjhl,' ') qjhl,
-          IFNULL(ph,' ') ph,IFNULL(yd,' ') yd,IFNULL(sxjhl,' ') sxjhl,IFNULL(hxjhl,' ') hxjhl,IFNULL(year,' ') year
+          IFNULL(ph,' ') ph,IFNULL(yd,' ') yd,IFNULL(sxjhl,' ') sxjhl,IFNULL(hxjhl,' ') hxjhl,IFNULL(ggslyxs,' ') ggslyxs,IFNULL(year,' ') year
         from t_landresource where 1=1
         <if test="syear != null and syear != ''">
         	and year between #{syear} and #{eyear} 
@@ -23,15 +23,15 @@
     </select>
     
     <insert id="insert" parameterType="com.agri.monitor.entity.LandResource">
-    	insert into t_landresource(gdmj,gbzltmj,gbzltbz,qkmj,ycmj,ymmj,dc,zc,yjz,qd,qlhl,yxlhl,qjhl,ph,yd,sxjhl,hxjhl,year)
+    	insert into t_landresource(gdmj,gbzltmj,gbzltbz,qkmj,ycmj,ymmj,dc,zc,yjz,qd,qlhl,yxlhl,qjhl,ph,yd,sxjhl,hxjhl,ggslyxs,year)
     	values
-	   (#{gdmj},#{gbzltmj},#{gbzltbz},#{qkmj},#{ycmj},#{ymmj},#{dc},#{zc},#{yjz},#{qd},#{qlhl},#{yxlhl},#{qjhl},#{ph},#{yd},#{sxjhl},#{hxjhl},#{year})
+	   (#{gdmj},#{gbzltmj},#{gbzltbz},#{qkmj},#{ycmj},#{ymmj},#{dc},#{zc},#{yjz},#{qd},#{qlhl},#{yxlhl},#{qjhl},#{ph},#{yd},#{sxjhl},#{hxjhl},#{ggslyxs},#{year})
     </insert>
     
     <update id="update" parameterType="com.agri.monitor.entity.LandResource">
     	update t_landresource set gdmj=#{gdmj},gbzltmj=#{gbzltmj},gbzltbz=#{gbzltbz},qkmj=#{qkmj},ycmj=#{ycmj},
     	ymmj=#{ymmj},dc=#{dc},zc=#{zc},yjz=#{yjz},qd=#{qd},qlhl=#{qlhl},yxlhl=#{yxlhl},
-    	qjhl=#{qjhl},ph=#{ph},yd=#{yd},sxjhl=#{sxjhl},hxjhl=#{hxjhl},year=#{year} where gid=#{gid}
+    	qjhl=#{qjhl},ph=#{ph},yd=#{yd},sxjhl=#{sxjhl},hxjhl=#{hxjhl},ggslyxs=#{ggslyxs},year=#{year} where gid=#{gid}
     </update>
     
     <delete id="delete" parameterType="java.util.List">
