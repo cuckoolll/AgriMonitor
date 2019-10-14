@@ -29,7 +29,11 @@ layui.use(['table'], function(table) {
 			'宁夏':[99.88031,37.259212],'切吉':[99.873005,37.277013],'新泉':[99.893959,37.274791],
 			'日芒':[99.634181,37.237279],'环仓贡麻':[99.578011,37.15639],'向阳':[99.551822,37.159719],
 			'秀脑贡麻':[99.554105,37.31428],'秀脑麻':[99.590886,37.168757]};
-	
+		var markPointData = [
+    {
+        "name": "刚察县",
+        "coord": [100.152458,37.331048]
+    }];
 	var convertData = function (data) {
 	    var res = [];
 	    for (var i = 0; i < data.length; i++) {
@@ -58,6 +62,11 @@ layui.use(['table'], function(table) {
 	function initchart(){
 		$("#chart1").height($(window).height());
 		option1 = {
+			title: {
+		        text: '刚察县概况',
+		        left: 'center',
+		        textStyle:{color:'#580000',fontSize:24,fontFamily:'楷体'}
+		    },
 		    tooltip : {
 		        trigger: 'item',
 		        formatter: function(param){
@@ -117,6 +126,19 @@ layui.use(['table'], function(table) {
 		        		      +"亩，全乡牲畜存栏21.436万头只，母畜比例、仔畜繁活率、商品率<br/>分别达到61.54%、88.55%、44.58%。"
 		        		      +"全乡出栏各类牲畜10.5万（头只匹），全年出售各类牲畜9.6万<br/>头（只）。村民收入主要依靠传统种养殖、外出务工、"
 		        		      +"转移性收入为主，2018年农牧民人均收入达<br/>13286.67元，农牧业增加值6310.66万元，2017年全乡提前实现全面脱贫。";
+	        	    }else if(param.data.name=='沙柳河镇'){
+		        		return "沙柳河镇位于刚察县县境南部，县府驻地。人口13393人（2017），以汉族为主，还有藏、回等少数民族，<br/>"
+	        		      +"面积1237.82平方千米。1957年设沙柳河乡，1958年同伊克乌兰区合并为伊克乌兰公社，1962年改为沙柳<br/>"
+	        		      +"河乡，1969年改为沙柳河公社，1984年改为沙柳河乡。2001年3月5日青海省人民政府青政函[2001]15号<br/>"
+	        		      +"文批复：撤销沙柳河乡，设立沙柳河镇。下辖新海、思乃、果洛仓贡麻、潘保、红山、尕曲、河东7个<br/>村（牧）委会。";
+	        	    }else if(param.data.name=='刚察县'){
+		        		return "刚察县为青海省海北藏族自治州辖县，省环湖重点牧业县之一，位于州境西部，青海湖北岸。<br/>" 
+		        		+ "县政府驻沙柳河镇，距州府驻地海晏县西海镇110公里。截止2012年，全县总人口4.2万人 ，<br/>其中少数民族" 
+		        		+ "占72.5%，藏族占63.38%，还有汉、蒙古、回、东乡等民族。面积1.2万平方公里<br/>。辖3乡2镇1场。古为羌地。" 
+		        		+ "境内主要河流有默勒河、克克塞河、江仓河、沙柳河、巴哈乌兰河<br/>、布哈河、哈尔盖河、吉尔孟河。属高原大陆性气候，" 
+		        		+ "年均温-0.6℃，年降水量370毫米。主要<br/>矿藏有煤、铁、铜、银、铀等。纯牧业县，牧养藏系绵羊，半细毛羊、牦牛、" 
+		        		+ "马等。境内青海<br/>湖盛产湟鱼。青（海）藏（西藏）铁路横贯全境，青（海）新（疆）公路、湟"
+		        		+"（源）嘉（峪关）<br/>公路通过境内，交通便利。 第一批国家农业可持续发展试验示范区。";
 	        	    }else{
 		        		return "无数据";
 		        	}
@@ -137,7 +159,25 @@ layui.use(['table'], function(table) {
 		                normal: {formatter: '{b}',position: 'right',show: true}
 		            },
 		            itemStyle: {normal: {color: '#990000'}},
-		            zlevel: 1
+		            zlevel: 1,
+					markPoint: { //图表标注。
+		                "symbol": 'path://M512 39.384615l169.353846 295.384615 342.646154 63.015385-240.246154 248.123077L827.076923 984.615385l-315.076923-145.723077L196.923077 984.615385l43.323077-334.769231L0 401.723077l342.646154-63.015385L512 39.384615',
+		                "symbolSize": 30,//图形大小
+		                "label": {
+		                    "normal": {
+		                        "show": true,
+		                    },
+		                    "emphasis": {
+		                        show: true,
+		                    }
+		                },
+		                "itemStyle": {
+		                    "normal": {
+		                        "color": 'red'
+		                    }
+		                },
+		                "data": markPointData
+		            }
 		        },
 		        {
 		            name: '农业基本信息',
@@ -260,10 +300,10 @@ layui.use(['table'], function(table) {
 	        	
 	      	  option1.series[0].data=convertData(data);
 	          option1.series[1].data=convertData1(xzdata);
-	      	  chart1.dispose();
-	      	  chart1 = echarts.init(document.getElementById('chart1'));
+	          
+	          chart1.dispose();
+      		  chart1 = echarts.init(document.getElementById('chart1'));
 	      	  chart1.setOption(option1); 
-	      	  
 		      	/*chart1.on('mousemove', function (params) {
 		    		  mousemove(params);
 			    });
