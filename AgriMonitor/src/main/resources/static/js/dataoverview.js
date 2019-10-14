@@ -78,7 +78,7 @@ layui.use(['table'], function(table) {
 	            })
 	        },
 	        style: api.style({
-	            fill: 'red',
+	            fill: '#E6E6FA',
 	            stroke: '#580000'
 	        })
 	    };
@@ -90,7 +90,8 @@ layui.use(['table'], function(table) {
 			title: {
 		        text: '刚察县概况',
 		        left: 'center',
-		        textStyle:{color:'#580000',fontSize:24,fontFamily:'楷体'}
+		        top:10,
+		        textStyle:{color:'red',fontSize:24,fontFamily:'楷体'}
 		    },
 		    tooltip : {
 		        trigger: 'item',
