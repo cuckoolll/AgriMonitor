@@ -1,6 +1,7 @@
 package com.agri.monitor.controller.datamanage;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -88,9 +89,13 @@ public class AgriBaseinfoController {
 	@RequestMapping(value="/find4Maps",method=RequestMethod.POST)
 	public List<Map> find4Maps(HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		
+		Calendar c = Calendar.getInstance();
 		AgriBaseinfoQueryVO queryVO = new AgriBaseinfoQueryVO();
 		queryVO.setPage(1);
 		queryVO.setLimit(500);
+		queryVO.setDate_year(c.get(Calendar.YEAR));
+		queryVO.setDate_year1(c.get(Calendar.YEAR));
 		List<Map> list = agriBaseinfoService.findAllForPage(queryVO, user.getUser_id());
 		List<Map> temlist = new ArrayList<>();
 		if(null != list && list.size() > 0) {

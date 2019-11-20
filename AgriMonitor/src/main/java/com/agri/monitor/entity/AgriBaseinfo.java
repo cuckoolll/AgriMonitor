@@ -7,6 +7,7 @@ public class AgriBaseinfo {
 	private String county;
 	private String towns;
 	private String village;
+	private Integer date_year;
 	private Integer rksl;
 	private Double gtmj;
 	private Double gdmj;
@@ -116,5 +117,10 @@ public class AgriBaseinfo {
 	public void setLast_time(Date last_time) {
 		this.last_time = last_time;
 	}
-	
+	public Integer getDate_year() {
+		return date_year;
+	}
+	public void setDate_year(Integer date_year) {
+		this.date_year = date_year;
+	}
 }

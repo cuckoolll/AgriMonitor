@@ -1,8 +1,19 @@
-layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
+layui.use(['form','layer','table','upload','laydate','util'], function(form,layer,table,upload,laydate,util) {
 	var winH=$(window).height();
 	var datatable;
+	var curyear=util.toDateString(new Date(), 'yyyy');
 	
 	function render(){
+		laydate.render({
+		    elem: '#date_year',
+		    type: 'year',
+		    value:curyear
+		 });
+		laydate.render({
+		    elem: '#date_year1',
+		    type: 'year',
+		    value:curyear
+		 });
 		//表格渲染
 		datatable=table.render({
 			id:"datalist",
@@ -11,6 +22,7 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 		    toolbar: '#barDemo',
 		    url: '/agriBaseinfo/datalist', //数据接口，
 		    height:winH-105,
+		    where: {date_year:curyear,date_year1:curyear},
 		    page: true, //开启分页
 		    limit:20,
 		    limits:[20,40,60,100],
@@ -20,6 +32,7 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 		      {field: 'county', title: '区（县、市）',align:'center',width:120},
 		      {field: 'towns', title: '乡镇',align:'center',width:130},
 		      {field: 'village', title: '下辖地',align:'center',width:150},
+		      {field: 'date_year', title: '年份',align:'center',width:130},
 		      {field: 'rksl', title: '人口数量（人）',align:'center',width:150},
 		      {field: 'gtmj', title: '国土面积（平方千米）',align:'center',width:150},
 		      {field: 'gdmj', title: '耕地面积（亩）',align:'center',width:150},
@@ -41,7 +54,7 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 		    		if(res.code==0){
 		    			  layer.msg('导入数据成功');
 				    	  datatable.reload({//表格数据重新加载
-							  where: {towns: $("#towns").val()},page: {curr: 1}
+							  where: {date_year: $("#date_year").val(),date_year1: $("#date_year1").val(),towns: $("#towns").val()},page: {curr: 1}
 				    	  });
 				      }else{
 				    	  layer.msg(res.msg);
@@ -101,7 +114,7 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 				        			if(res && res.code==0){
 							        	  layer.msg('删除农业基本数据成功');
 							        	  datatable.reload({//表格数据重新加载
-							        		  where: {towns: $("#towns").val()},page: {curr: 1}
+							        		  where: {date_year: $("#date_year").val(),date_year1: $("#date_year1").val(),towns: $("#towns").val()},page: {curr: 1}
 							        	  });
 							          }else{
 							        	  layer.msg('删除农业基本数据失败');
@@ -119,7 +132,7 @@ layui.use(['form','layer','table','upload'], function(form,layer,table,upload) {
 		//查询数据
 		$("#queryBtn").click(function(){
 			datatable.reload({//表格数据重新加载
-				where: {towns: $("#towns").val()},page: {curr: 1}
+				where: {date_year: $("#date_year").val(),date_year1: $("#date_year1").val(),towns: $("#towns").val()},page: {curr: 1}
 			});
 		});
 	}

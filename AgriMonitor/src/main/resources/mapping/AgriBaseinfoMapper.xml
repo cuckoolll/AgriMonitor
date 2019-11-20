@@ -5,12 +5,15 @@
 		select * from t_agribase_info where gid=#{gid}
 	</select>
     <select id="findAllForPage" parameterType="com.agri.monitor.vo.AgriBaseinfoQueryVO" resultType="map">
-        select gid,county,towns,village,IFNULL(rksl,' ') rksl,IFNULL(gtmj,' ') gtmj,
+        select gid,county,towns,village,date_year,IFNULL(rksl,' ') rksl,IFNULL(gtmj,' ') gtmj,
         IFNULL(gdmj,' ') gdmj,IFNULL(gbzntmj,' ') gbzntmj,IFNULL(ccmj,' ') ccmj,
         IFNULL(nzwzl,' ') nzwzl,IFNULL(nzzmj,' ') nzzmj,IFNULL(zzfs,' ') zzfs  
         from t_agribase_info where 1=1
         <if test="towns != null and towns != ''">
         	and towns=#{towns}
+	    </if>
+	    <if test="date_year != null and date_year1 != null">
+	    	and date_year between #{date_year} and #{date_year1} 
 	    </if>
 	    order by gid desc limit #{currIndex},#{limit}
     </select>
@@ -19,24 +22,27 @@
         <if test="towns != null and towns != ''">
         	and towns=#{towns}
 	    </if>
+	    <if test="date_year != null and date_year1 != null">
+	    	and date_year between #{date_year} and #{date_year1} 
+	    </if>
     </select>
     <insert id="batchInsert" parameterType="java.util.List">
-    	insert into t_agribase_info(county,towns,village,rksl,gtmj,gdmj,gbzntmj,ccmj,nzwzl,nzzmj,zzfs,creator,modifier,create_time)
+    	insert into t_agribase_info(county,towns,village,date_year,rksl,gtmj,gdmj,gbzntmj,ccmj,nzwzl,nzzmj,zzfs,creator,modifier,create_time)
     	values
     	<foreach collection="list" item="item" index="index" separator=",">
-		   (#{item.county},#{item.towns},#{item.village},#{item.rksl},#{item.gtmj},#{item.gdmj},#{item.gbzntmj},
+		   (#{item.county},#{item.towns},#{item.village},#{item.date_year},#{item.rksl},#{item.gtmj},#{item.gdmj},#{item.gbzntmj},
 		   #{item.ccmj},#{item.nzwzl},#{item.nzzmj},#{item.zzfs},#{item.creator},#{item.modifier},now())
 		</foreach>
     </insert>
     
     <insert id="insert" parameterType="com.agri.monitor.entity.AgriBaseinfo">
-    	insert into t_agribase_info(county,towns,village,rksl,gtmj,gdmj,gbzntmj,ccmj,nzwzl,nzzmj,zzfs,creator,modifier,create_time)
+    	insert into t_agribase_info(county,towns,village,date_year,rksl,gtmj,gdmj,gbzntmj,ccmj,nzwzl,nzzmj,zzfs,creator,modifier,create_time)
     	values
-	   (#{county},#{towns},#{village},#{rksl},#{gtmj},#{gdmj},#{gbzntmj},#{ccmj},#{nzwzl},#{nzzmj},#{zzfs},#{creator},#{modifier},now())
+	   (#{county},#{towns},#{village},#{date_year},#{rksl},#{gtmj},#{gdmj},#{gbzntmj},#{ccmj},#{nzwzl},#{nzzmj},#{zzfs},#{creator},#{modifier},now())
     </insert>
     
     <update id="update" parameterType="com.agri.monitor.entity.AgriBaseinfo">
-    	update t_agribase_info set county=#{county},towns=#{towns},village=#{village},rksl=#{rksl},
+    	update t_agribase_info set county=#{county},towns=#{towns},village=#{village},date_year=#{date_year},rksl=#{rksl},
     	gtmj=#{gtmj},gdmj=#{gdmj},gbzntmj=#{gbzntmj},ccmj=#{ccmj},
     	nzwzl=#{nzwzl},nzzmj=#{nzzmj},zzfs=#{zzfs},
     	modifier=#{modifier},last_time=#{last_time} where gid=#{gid}
