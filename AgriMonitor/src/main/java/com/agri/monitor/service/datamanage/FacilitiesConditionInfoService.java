@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 import com.agri.monitor.entity.FacilityConditionInfo;
 import com.agri.monitor.enums.LogOptSatusEnum;
 import com.agri.monitor.enums.LogOptTypeEnum;
+import com.agri.monitor.mapper.FacilitiesConditionInfoMapper;
 import com.agri.monitor.utils.LogUtil;
 import com.agri.monitor.vo.FacilityConditionQueryVO;
 
@@ -92,7 +93,7 @@ public class FacilitiesConditionInfoService {
 			LogUtil.log(LogOptTypeEnum.DEL, LogOptSatusEnum.SUCESS, userid, "农业装备信息删除，GID="+gids);
 		} catch (Exception e) {
 			result.put("code", -1);
-			logger.error("删除草地生态监测信息异常" + e);
+			logger.error("删除农业装备信息异常" + e);
 			LogUtil.log(LogOptTypeEnum.DEL, LogOptSatusEnum.FAIL, userid, "农业装备信息删除异常："+e.getMessage());
 		}
 		return result;
