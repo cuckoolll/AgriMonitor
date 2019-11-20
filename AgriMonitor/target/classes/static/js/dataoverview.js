@@ -1,4 +1,5 @@
-layui.use(['table'], function(table) {
+layui.use(['table','util'], function(table,util) {
+	var curyear=util.toDateString(new Date(), 'yyyy');
 	
 	var chart1,option1;
 	
@@ -279,7 +280,7 @@ layui.use(['table'], function(table) {
 	}
 	
 	function agridata(){
-		$.post("/agriBaseinfo/datalist", {page:1,limit:500},function(res){
+		$.post("/agriBaseinfo/datalist", {date_year:curyear,date_year1:curyear,page:1,limit:500},function(res){
 	        if(res && res.data && res.data.length>0){
 	        	$.each(res.data,function(index,item){
 	        		if(item.towns=='沙柳河镇'){

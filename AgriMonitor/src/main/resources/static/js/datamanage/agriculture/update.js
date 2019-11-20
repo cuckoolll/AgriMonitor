@@ -1,7 +1,8 @@
-layui.use(['form','layer','table'], function(form,layer,table) {
+layui.use(['form','layer','table','laydate','util'], function(form,layer,table,laydate,util) {
 	function init(){
 		var gid = getUrlParam("gid");
 		if(gid){//如果有值，为更新操作
+			$("[name=date_year]").attr("readonly","readonly");
 			//查询数据并赋值到表单中
 			$.post("/agriBaseinfo/findById", {gid:gid},function(res){
 		          if(res){
@@ -18,6 +19,13 @@ layui.use(['form','layer','table'], function(form,layer,table) {
 		        	  $("#saveBtn").attr('disabled',true);
 		          }
 	        });
+		}else{
+			var curyear=util.toDateString(new Date(), 'yyyy');
+			laydate.render({
+			    elem: '#date_year',
+			    type: 'year',
+			    value:curyear
+			 });
 		}
 	}
 	
