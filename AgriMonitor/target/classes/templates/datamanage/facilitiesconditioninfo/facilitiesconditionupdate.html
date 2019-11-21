@@ -8,7 +8,7 @@
 		<meta name="renderer" content="webkit">
 		<!--国产浏览器高速模式-->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>农业生态环境信息</title>
+		<title>农业装备信息</title>
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
 	    <!--[if lt IE 9]>
 	      	<script src="framework/html5shiv.min.js"></script>
@@ -49,61 +49,119 @@
 						<input id="date_year" type="text" name="date_year" required lay-verify="required" 
 							autocomplete="off" class="layui-input input_area" readonly="readonly">
 					</div>
-				</div>
-				
-				<div class="layui-form-item">
-					<label class="layui-form-label span_title">草原综合植被盖度(%)：</label>
+					<label class="layui-form-label span_title">名称：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="grass_vegetation_cover" required lay-verify="required" 
+						<input id="agri_address" type="text" name="agri_address" required lay-verify="required" 
 							autocomplete="off" class="layui-input input_area">
 					</div>
 				</div>
 				
-				
 				<div class="layui-form-item">
-					<label class="layui-form-label span_title">天然草原合理载畜量(羊单位)：</label>
+					<label class="layui-form-label span_title">大中型拖拉机（台）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="grass_grazing_capacity" required lay-verify="required"
+						<input type="text" name="large_medium_tractors" required lay-verify="required" 
 							autocomplete="off" class="layui-input input_area">
 					</div>
-					<label class="layui-form-label span_title">天然草原全年实际载畜量(羊单位)：</label>
+					<label class="layui-form-label span_title">小型和手扶拖拉机（台）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="grass_grazing_capacity_reality" lay-verify="required" 
+						<input type="text" name="small_walking_tractors" required lay-verify="required" 
+							autocomplete="off" class="layui-input input_area">
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label span_title">联合收割机（台）：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="combine_harvester" required lay-verify="required"
+							autocomplete="off" class="layui-input input_area">
+					</div>
+					<label class="layui-form-label span_title">机动脱粒机（台）：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="motor_thresher" lay-verify="required" 
 							autocomplete="off" class="layui-input input_area"></input>
 					</div>
 				</div>
 				
 				<div class="layui-form-item">
-					<label class="layui-form-label span_title">已建成农田林网的农田面积(公顷)：</label>
+					<label class="layui-form-label span_title">农用运输车（台）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="agroforestry_farm_area_built" lay-verify="required" 
+						<input type="text" name="agricultural_carriage_car" required lay-verify="required"
+							autocomplete="off" class="layui-input input_area">
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label span_title">乡村办水电站（个）：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="rural_hydropower_stations" lay-verify="required" 
 							autocomplete="off" class="layui-input input_area"></input>
 					</div>
-					<label class="layui-form-label span_title">应建农田林网的农田面积(公顷)：</label>
+					<label class="layui-form-label span_title">发电能力（万千瓦）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="agroforestry_farm_area_predict" lay-verify="required" 
+						<input type="text" name="generating_capacity" lay-verify="required" 
 							autocomplete="off" class="layui-input input_area"></input>
 					</div>
 				</div>
 				
 				<div class="layui-form-item">
-					<label class="layui-form-label span_title">森林面积(公顷)：</label>
+					<label class="layui-form-label span_title">发电量（万千瓦时）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="forestry_area" lay-verify="required" 
+						<input type="text" name="electric_energy" lay-verify="required" 
 							autocomplete="off" class="layui-input input_area"></input>
 					</div>
-					<label class="layui-form-label span_title">国土面积(公顷)：</label>
+					<label class="layui-form-label span_title">农村用电量（万千瓦时）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="land_area" lay-verify="required" 
+						<input type="text" name="rural_power_consumption" lay-verify="required" 
 							autocomplete="off" class="layui-input input_area"></input>
 					</div>
 				</div>
 				
 				<div class="layui-form-item">
-					<label class="layui-form-label span_title">湿地面积(公顷)：</label>
+					<label class="layui-form-label span_title">有效灌溉面积（千公顷）：</label>
 					<div class="layui-input-inline">
-						<input type="text" name="wetland_area" lay-verify="required" 
+						<input type="text" name="effective_irrigation_area" lay-verify="required" 
 							autocomplete="off" class="layui-input input_area"></input>
+					</div>
+					<label class="layui-form-label span_title">旱涝保收面积（千公顷）：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="waterlogging_drought_area" lay-verify="required" 
+							autocomplete="off" class="layui-input input_area"></input>
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label span_title">机电排灌面积（千公顷）：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="mechanical_irrigation_area" lay-verify="required" 
+							autocomplete="off" class="layui-input input_area"></input>
+					</div>
+					<label class="layui-form-label span_title">水库（座）：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="reservoir" lay-verify="required" 
+							autocomplete="off" class="layui-input input_area"></input>
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label span_title">水库（座）：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="reservoir" lay-verify="required" 
+							autocomplete="off" class="layui-input input_area"></input>
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label span_title">渠道面积：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="channel_area" lay-verify="required" 
+							autocomplete="off" class="layui-input input_area"></input>
+					</div>
+				</div>
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label span_title">备注：</label>
+					<div class="layui-input-inline">
+						<textarea name="remark" class="layui-textarea" style="width: 560px"></textarea>
 					</div>
 				</div>
 				
@@ -114,7 +172,7 @@
 				</div>
 			</form>
 			
-			<script th:src="@{/js/datamanage/environmentinfo/environmentupdate.js}"></script>
+			<script th:src="@{/js/datamanage/facilitiesconditioninfo/facilitiesconditionupdate.js}"></script>
 		</div>
 	</body>
 

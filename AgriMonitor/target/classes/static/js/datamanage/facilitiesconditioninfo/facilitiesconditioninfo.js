@@ -90,74 +90,74 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    ,data = checkStatus.data; //获取选中的数据
 		    switch(obj.event){
 		      case 'add':
-//		    	  layer.open({
-//              		    title: "新增农业生态环境信息",
-//						type: 2,
-//						area: ['980px', '510px'],
-//						scrollbar: true,
-//						content: '/environmentinfo/update'
-//					}, function(a){
-//						alert(a);
-//					});
+		    	  layer.open({
+              		    title: "新增农业装备信息",
+						type: 2,
+						area: ['980px', '510px'],
+						scrollbar: true,
+						content: '/facilitiesconditioninfo/update'
+					}, function(a){
+						alert(a);
+					});
 		      break;
 		      case 'update':
-//		        if(data.length === 0){
-//		        	layer.msg('请选择一行');
-//		        } else if(data.length > 1){
-//		        	layer.msg('只能同时编辑一个');
-//		        } else {
-//		        	layer.open({
-//              		    title: "修改农业生态环境信息",
-//						type: 2,
-//						area: ['980px', '510px'],
-//						scrollbar: true,
-//						content: '/environmentinfo/update?gid='+checkStatus.data[0].gid
-//					});
-//		        }
+		        if(data.length === 0){
+		        	layer.msg('请选择一行');
+		        } else if(data.length > 1){
+		        	layer.msg('只能同时编辑一个');
+		        } else {
+		        	layer.open({
+              		    title: "修改农业装备信息",
+						type: 2,
+						area: ['980px', '510px'],
+						scrollbar: true,
+						content: '/facilitiesconditioninfo/update?gid='+checkStatus.data[0].gid
+					});
+		        }
 		      break;
 		      case 'delete':
-//		        if(data.length === 0){
-//		        	layer.msg('至少选择一行数据删除');
-//		        } else {
-//		        	layer.confirm('确定要删除选择的信息吗？', function(index){
-//	        	        layer.close(index);
-//	        	        var gids=[];
-//			        	$.each(data,function(index,item){
-//			        		gids.push(item.gid);
-//			        	});
-//			        	$.ajax({
-//			        		type:"post",
-//			        		url:"/environmentinfo/delInfoByGid",
-//			        		contentType:"application/json",
-//			        		data: JSON.stringify(gids),
-//			        		dataType:"json",
-//			        		success:function(res){
-//			        			if(res && res.code==0){
-//			        				dataTable.reload({//表格数据重新加载
-//					    				where: {"date_year":$("#date_year").val(), "date_year1":$("#date_year1").val()},
-//					  				  	page: {curr: 1}
-//					    			});
-//			        				layer.msg('删除成功');
-//							        obj.config.index;
-//			        			}else{
-//			        				layer.msg('删除失败');
-//			        			}
-//			        		},
-//			        		error:function(){
-//			        			layer.msg('删除失败');
-//			        		}
-//			        	});
-//		        	});
-//		        }
+		        if(data.length === 0){
+		        	layer.msg('至少选择一行数据删除');
+		        } else {
+		        	layer.confirm('确定要删除选择的信息吗？', function(index){
+	        	        layer.close(index);
+	        	        var gids=[];
+			        	$.each(data,function(index,item){
+			        		gids.push(item.gid);
+			        	});
+			        	$.ajax({
+			        		type:"post",
+			        		url:"/facilitiesconditioninfo/delInfoByGid",
+			        		contentType:"application/json",
+			        		data: JSON.stringify(gids),
+			        		dataType:"json",
+			        		success:function(res){
+			        			if(res && res.code==0){
+			        				dataTable.reload({//表格数据重新加载
+					    				where: {"date_year":$("#date_year").val(), "date_year1":$("#date_year1").val(),"agri_address":$("#agri_address").val()},
+					  				  	page: {curr: 1}
+					    			});
+			        				layer.msg('删除成功');
+							        obj.config.index;
+			        			}else{
+			        				layer.msg('删除失败');
+			        			}
+			        		},
+			        		error:function(){
+			        			layer.msg('删除失败');
+			        		}
+			        	});
+		        	});
+		        }
 		      break;
 		    };
 		  });
 		//查询数据
 		$("#queryBtn").click(function(){
-//			dataTable.reload({//表格数据重新加载
-//				  where: {"date_year":$("#date_year").val(), "date_year1":$("#date_year1").val()},
-//				  page: {curr: 1}
-//			});
+			dataTable.reload({//表格数据重新加载
+				  where: {"date_year":$("#date_year").val(), "date_year1":$("#date_year1").val(),"agri_address":$("#agri_address").val()},
+				  page: {curr: 1}
+			});
 		});
 	}
 	

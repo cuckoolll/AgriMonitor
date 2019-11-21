@@ -10,13 +10,13 @@ layui.use(['form','layer','table', 'laydate'], function(form,layer,table,laydate
 		if(gid){//如果有值，为更新操作
 			$("#date_year").attr("disabled", true);
 			//查询数据并赋值到表单中
-			$.post("/environmentinfo/findById", {gid:gid},function(res){
+			$.post("/facilitiesconditioninfo/findById", {gid:gid},function(res){
 		          if(res){
 		        	  $.each(res,function(key,val){
 	        			  $("[name='"+key+"']").val(val);
 		        	  });
 		          }else{
-		        	  layer.msg('加载农业生态环境信息失败');
+		        	  layer.msg('加载农业装备信息失败');
 		        	  $("#saveBtn").attr('disabled',true);
 		          }
 	        });
@@ -26,14 +26,14 @@ layui.use(['form','layer','table', 'laydate'], function(form,layer,table,laydate
 	function bindEvent(){
 		//监听提交
 		form.on('submit(submitBut)', function(data) {
-			$.post("/environmentinfo/save", data.field,function(res){
+			$.post("/facilitiesconditioninfo/save", data.field,function(res){
 		          if(res && res.code==0){
-		        	  parent.layer.msg('保存农业生态环境信息成功');
+		        	  parent.layer.msg('保存农业装备信息成功');
 		        	  parent.layui.table.reload('datalist');
 		        	  var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 					  parent.layer.close(index); //再执行关闭
 		          }else{
-		        	  layer.msg('保存农业生态环境信息失败');
+		        	  layer.msg('保存农业装备信息失败');
 		          }
 	        });
 			return false;

@@ -2,18 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.agri.monitor.mapper.FacilitiesConditionInfoMapper">
 	<select id="findById" parameterType="int" resultType="com.agri.monitor.entity.FacilityConditionInfo">
-		select gid, 
+		select gid,
 			   date_year, 
 			   county,
-			   grass_vegetation_cover,
-			   grass_grazing_capacity,
-			   grass_grazing_capacity_reality,
-			   agroforestry_farm_area_built, 
-			   agroforestry_farm_area_predict,
-			   forestry_area, 
-			   land_area, 
-			   wetland_area
-		  from t_environment_quality 
+			   towns,
+			   village,
+			   agri_address,
+			   large_medium_tractors,
+			   small_walking_tractors,
+			   combine_harvester,
+			   motor_thresher, 
+			   agricultural_carriage_car,
+			   rural_hydropower_stations, 
+			   generating_capacity, 
+			   electric_energy,
+			   rural_power_consumption,
+			   effective_irrigation_area,
+			   waterlogging_drought_area,
+			   mechanical_irrigation_area,
+			   reservoir,
+			   channel_area,
+			   remark, 
+			   create_time, 
+			   creator, 
+			   last_time, 
+			   modifier
+		  from t_facility_condition 
 		 where gid = #{gid}
 	</select>
 
@@ -22,16 +36,33 @@
 			   date_year, 
 			   county,
 			   towns,
-			   grass_vegetation_cover,
-			   grass_grazing_capacity,
-			   grass_grazing_capacity_reality,
-			   agroforestry_farm_area_built, 
-			   agroforestry_farm_area_predict,
-			   forestry_area, 
-			   land_area, 
-			   wetland_area
-		  from t_environment_quality 
+			   village,
+			   agri_address,
+			   large_medium_tractors,
+			   small_walking_tractors,
+			   combine_harvester,
+			   motor_thresher, 
+			   agricultural_carriage_car,
+			   rural_hydropower_stations, 
+			   generating_capacity, 
+			   electric_energy,
+			   rural_power_consumption,
+			   effective_irrigation_area,
+			   waterlogging_drought_area,
+			   mechanical_irrigation_area,
+			   reservoir,
+			   channel_area,
+			   remark, 
+			   create_time, 
+			   creator, 
+			   last_time, 
+			   modifier
+		  from t_facility_condition 
 		 where 1=1
+		<if test="agri_address != null and agri_address != ''">
+    		<bind name="agri_address" value="'%' + agri_address + '%'"/>
+        	and agri_address like #{agri_address} 
+        </if>
        	<if test="date_year != null and date_year != ''">
         	and date_year &gt;= #{date_year}
        	</if>
@@ -41,10 +72,14 @@
        	 order by date_year desc, gid limit #{currIndex},#{limit}
     </select>
     
-    <select id="queryInfoCount" parameterType="com.agri.monitor.vo.EnvironmentQueryVO" resultType="int">
+    <select id="queryInfoCount" parameterType="com.agri.monitor.vo.FacilityConditionQueryVO" resultType="int">
         select count(gid)
-          from t_environment_quality 
+          from t_facility_condition 
        	 where 1=1
+       	<if test="agri_address != null and agri_address != ''">
+    		<bind name="agri_address" value="'%' + agri_address + '%'"/>
+        	and agri_address like #{agri_address} 
+        </if>
        	<if test="date_year != null and date_year != ''">
         	and date_year &gt;= #{date_year}
        	</if>
@@ -53,60 +88,83 @@
        	</if>
     </select>
     
-    <select id="queryGid" parameterType="com.agri.monitor.vo.EnvironmentQueryVO" resultType="java.lang.String">
-   		select gid
-     	  from t_environment_quality
-     	 where county = #{county}
-     	   and date_year = #{date_year}
-    </select>
-    
-    <insert id="insertInfo" parameterType="com.agri.monitor.entity.EnvironmentInfo">
-    	insert into t_environment_quality
-    		(date_year, 
-			 county,
-			 towns,
-			 grass_vegetation_cover,
-			 grass_grazing_capacity,
-			 grass_grazing_capacity_reality,
-			 agroforestry_farm_area_built, 
-			 agroforestry_farm_area_predict,
-			 forestry_area, 
-			 land_area, 
-			 wetland_area,
-			 creator,
-			 modifier)
+    <insert id="insertInfo" parameterType="com.agri.monitor.entity.FacilityConditionInfo">
+    	insert into t_facility_condition
+	   		(date_year, 
+		     county,
+		   	 towns,
+		   	 village,
+		   	 agri_address,
+		   	 large_medium_tractors,
+		   	 small_walking_tractors,
+		   	 combine_harvester,
+		  	 motor_thresher, 
+		  	 agricultural_carriage_car,
+		  	 rural_hydropower_stations, 
+		  	 generating_capacity, 
+		  	 electric_energy,
+	 	 	 rural_power_consumption,
+		  	 effective_irrigation_area,
+		  	 waterlogging_drought_area,
+		  	 mechanical_irrigation_area,
+		   	 reservoir,
+		  	 channel_area,
+		  	 remark, 
+		  	 creator, 
+		  	 modifier)
     	values
-		   (#{date_year}, 
+		   (#{date_year},
 			#{county},
 			#{towns},
-			#{grass_vegetation_cover},
-			#{grass_grazing_capacity},
-			#{grass_grazing_capacity_reality},
-			#{agroforestry_farm_area_built}, 
-			#{agroforestry_farm_area_predict},
-			#{forestry_area}, 
-			#{land_area}, 
-			#{wetland_area},
+			#{village},
+			#{agri_address},
+			#{large_medium_tractors},
+			#{small_walking_tractors},
+			#{combine_harvester},
+			#{motor_thresher},
+			#{agricultural_carriage_car},
+			#{rural_hydropower_stations},
+			#{generating_capacity},
+			#{electric_energy},
+			#{rural_power_consumption},
+			#{effective_irrigation_area},
+			#{waterlogging_drought_area},
+			#{mechanical_irrigation_area},
+			#{reservoir},
+			#{channel_area},
+			#{remark},
 			#{creator},
 			#{modifier})
     </insert>
     
-    <update id="updateInfo" parameterType="com.agri.monitor.entity.EnvironmentInfo">
-    	update t_environment_quality
-    	   set grass_vegetation_cover = #{grass_vegetation_cover},
-			   grass_grazing_capacity = #{grass_grazing_capacity},
-			   grass_grazing_capacity_reality = #{grass_grazing_capacity_reality},
-			   agroforestry_farm_area_built = #{agroforestry_farm_area_built}, 
-			   agroforestry_farm_area_predict = #{agroforestry_farm_area_predict},
-			   forestry_area = #{forestry_area}, 
-			   land_area = #{land_area}, 
-			   wetland_area = #{wetland_area},
+    <update id="updateInfo" parameterType="com.agri.monitor.entity.FacilityConditionInfo">
+    	update t_facility_condition
+    	   set date_year = #{date_year},
+			   county = #{county},
+			   towns = #{towns},
+			   village = #{village},
+			   agri_address = #{agri_address},
+			   large_medium_tractors = #{large_medium_tractors},
+			   small_walking_tractors = #{small_walking_tractors},
+			   combine_harvester = #{combine_harvester},
+			   motor_thresher = #{motor_thresher},
+			   agricultural_carriage_car = #{agricultural_carriage_car},
+			   rural_hydropower_stations = #{rural_hydropower_stations},
+			   generating_capacity = #{generating_capacity},
+			   electric_energy = #{electric_energy},
+			   rural_power_consumption = #{rural_power_consumption},
+			   effective_irrigation_area = #{effective_irrigation_area},
+			   waterlogging_drought_area = #{waterlogging_drought_area},
+			   mechanical_irrigation_area = #{mechanical_irrigation_area},
+			   reservoir = #{reservoir},
+			   channel_area = #{channel_area},
+			   remark = #{remark},
     	   	   modifier = #{modifier}
     	 where gid = #{gid}
     </update>
     
     <delete id="delInfoByGid" parameterType="java.util.List">
-    	delete from t_environment_quality where gid in
+    	delete from t_facility_condition where gid in
     	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
     		#{item}
     	</foreach>
