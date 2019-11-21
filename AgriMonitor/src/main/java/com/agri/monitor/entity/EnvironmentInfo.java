@@ -14,6 +14,10 @@ public class EnvironmentInfo {
 	private double forestry_area; 
 	private double land_area; 
 	private double wetland_area;
+	private double water_level;
+	private double water_area;
+	private double water_salinity;
+	private double water_ph; 
 	private String create_time; 
 	private String creator; 
 	private String last_time; 
@@ -96,6 +100,30 @@ public class EnvironmentInfo {
 	}
 	public void setWetland_area(double wetland_area) {
 		this.wetland_area = wetland_area;
+	}
+	public double getWater_level() {
+		return water_level;
+	}
+	public void setWater_level(double water_level) {
+		this.water_level = water_level;
+	}
+	public double getWater_area() {
+		return water_area;
+	}
+	public void setWater_area(double water_area) {
+		this.water_area = water_area;
+	}
+	public double getWater_salinity() {
+		return water_salinity;
+	}
+	public void setWater_salinity(double water_salinity) {
+		this.water_salinity = water_salinity;
+	}
+	public double getWater_ph() {
+		return water_ph;
+	}
+	public void setWater_ph(double water_ph) {
+		this.water_ph = water_ph;
 	}
 	public String getCreate_time() {
 		return create_time;

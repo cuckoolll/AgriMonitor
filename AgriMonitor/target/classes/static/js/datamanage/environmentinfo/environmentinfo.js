@@ -35,19 +35,24 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    		 {type: 'checkbox', fixed: 'left',rowspan:2},
 				     {field: 'gid', title: 'ID',hide: true,align:'center',rowspan:2},
 				     {field: 'date_year', title: '年份',sort: true,rowspan:2,width:80},
-				     {field: 'grass_vegetation_cover', title: '草原综合植被盖度',rowspan:2},
+				     {field: 'grass_vegetation_cover', title: '草原综合植被盖度',rowspan:2,width:150},
 				     {title: '天然草原草畜平衡率',align:'center',colspan:2},
 				     {title: '农田林网控制率',align:'center',colspan:2},
 				     {title: '森林覆盖率',align:'center',colspan:2},
-				     {field: 'wetland_area', title: '湿地面积', align:'center',rowspan:2, width:120}
+				     {field: 'wetland_area', title: '湿地面积', align:'center',rowspan:2, width:120},
+				     {title: '青海湖',align:'center',colspan:4}
 			     ],
 			     [
-			    	 {field: 'grass_grazing_capacity', title: '天然草原合理载畜量', align:'center'},
-			    	 {field: 'grass_grazing_capacity_reality', title: '天然草原全年实际载畜量', align:'center'},
-			    	 {field: 'agroforestry_farm_area_built', title: '已建成农田林网的农田面积', align:'center'},
-			    	 {field: 'agroforestry_farm_area_predict', title: '应建农田林网的农田面积', align:'center'},
+			    	 {field: 'grass_grazing_capacity', title: '天然草原合理载畜量', align:'center',width:150},
+			    	 {field: 'grass_grazing_capacity_reality', title: '天然草原全年实际载畜量', align:'center',width:150},
+			    	 {field: 'agroforestry_farm_area_built', title: '已建成农田林网的农田面积', align:'center',width:150},
+			    	 {field: 'agroforestry_farm_area_predict', title: '应建农田林网的农田面积', align:'center',width:150},
 			    	 {field: 'forestry_area', title: '森林面积', align:'center', width:120},
-			    	 {field: 'land_area', title: '国土面积', align:'center', width:120}
+			    	 {field: 'land_area', title: '国土面积', align:'center', width:120},
+			    	 {field: 'water_level', title: '水位', align:'center', },
+			    	 {field: 'water_area', title: '面积', align:'center', },
+			    	 {field: 'water_salinity', title: '盐度', align:'center', },
+			    	 {field: 'water_ph', title: 'PH', align:'center', }
 			    ]]
 		  });
 		
