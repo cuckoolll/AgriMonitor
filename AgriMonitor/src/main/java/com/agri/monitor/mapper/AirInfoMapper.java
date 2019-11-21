@@ -21,7 +21,7 @@ public interface AirInfoMapper {
 	
 	void updateInfo(AirInfo airinfo);
 	
-	String queryGid(final String city, final String station_name, final String quality_time);
+	String queryGid(/*final String city, final String station_name,*/ final String quality_time);
 
 	void delInfoByGid(List<Integer> gids);
 

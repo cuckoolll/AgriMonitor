@@ -161,39 +161,39 @@ public class AirInfoService {
 	        	   if (row.getCell(3) != null) {
 	        		   auditor = row.getCell(3).getStringCellValue();
 	        	   }
-	        	   if (row.getCell(7) != null && !"".equals(row.getCell(7).toString())) {
-        			   	paper_time = yyyyMMdd.format(row.getCell(7).getDateCellValue());
+	        	   if (row.getCell(6) != null && !"".equals(row.getCell(6).toString())) {
+        			   	paper_time = yyyyMMdd.format(row.getCell(6).getDateCellValue());
 	        	   }
 	           }
 	           if (i >= 3) {
-	        	   String city = row.getCell(0).getStringCellValue();
-	        	   String station_name = row.getCell(1).getStringCellValue();
-	        	   Date quality_time = row.getCell(2).getDateCellValue();
+//	        	   String city = row.getCell(0).getStringCellValue();
+//	        	   String station_name = row.getCell(1).getStringCellValue();
+	        	   Date quality_time = row.getCell(0).getDateCellValue();
 	        	   
 	        	   AirInfo airinfo = new AirInfo();
 	        	   airinfo.setCounty(county);
 	        	   airinfo.setTowns(towns);
-	        	   airinfo.setCity(city);
-	        	   airinfo.setStation_name(station_name);
+//	        	   airinfo.setCity(city);
+//	        	   airinfo.setStation_name(station_name);
 	        	   airinfo.setQuality_time(yyyyMMdd.format(quality_time));
-	        	   airinfo.setSo2(row.getCell(3).getNumericCellValue());
-	        	   airinfo.setNo2((row.getCell(4).getNumericCellValue()));
-	        	   if (row.getCell(5) != null && !"".equals(row.getCell(5).toString())) {
-	        		   airinfo.setCo(row.getCell(5).getNumericCellValue());
+	        	   airinfo.setSo2(row.getCell(1).getNumericCellValue());
+	        	   airinfo.setNo2((row.getCell(2).getNumericCellValue()));
+	        	   if (row.getCell(3) != null && !"".equals(row.getCell(3).toString())) {
+	        		   airinfo.setCo(row.getCell(3).getNumericCellValue());
 	        	   }
+	        	   if (row.getCell(4) != null && !"".equals(row.getCell(4).toString())) {
+	        		   airinfo.setO3_8h(row.getCell(4).getNumericCellValue());
+	        	   }
+	        	   airinfo.setPm10(row.getCell(5).getNumericCellValue());
 	        	   if (row.getCell(6) != null && !"".equals(row.getCell(6).toString())) {
-	        		   airinfo.setO3_8h(row.getCell(6).getNumericCellValue());
-	        	   }
-	        	   airinfo.setPm10(row.getCell(7).getNumericCellValue());
-	        	   if (row.getCell(8) != null && !"".equals(row.getCell(8).toString())) {
-	        		   airinfo.setPm2_5(row.getCell(8).getNumericCellValue());
+	        		   airinfo.setPm2_5(row.getCell(6).getNumericCellValue());
 	        	   }
 	        	   airinfo.setPreparer(preparer);
 	        	   airinfo.setAuditor(auditor);
 	        	   airinfo.setPaper_time(paper_time);
 	        	   airinfo.setModifier(user.getUser_id());
 	        	   
-	        	   String gid = airInfoMapper.queryGid(city, station_name, yyyyMMdd.format(quality_time));
+	        	   String gid = airInfoMapper.queryGid(/*city, station_name,*/ yyyyMMdd.format(quality_time));
 	        	   LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, user.getUser_id(), "查询空气站监测，返回GID=" + gid);
 	        	   
 	        	   try {

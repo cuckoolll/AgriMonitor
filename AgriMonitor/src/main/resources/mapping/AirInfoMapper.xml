@@ -91,9 +91,7 @@
     <select id="queryGid" parameterType="com.agri.monitor.vo.AirQueryVO" resultType="java.lang.String">
    		select gid
      	  from t_air_quality
-     	 where city = #{city}
-     	   and quality_time = #{quality_time}
-     	   and station_name = #{station_name}
+     	 where quality_time = #{quality_time}
     </select>
     
     <insert id="insertInfo" parameterType="com.agri.monitor.entity.AirInfo">
