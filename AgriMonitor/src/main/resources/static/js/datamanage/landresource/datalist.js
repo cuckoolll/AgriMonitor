@@ -32,7 +32,7 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 			      {title: '土地资源',align:'center',colspan:4},
 			      {title: '农作物种类及播种面积（（hm2））',align:'center',colspan:3},
 			      {title: '产量',align:'center',colspan:2},
-			      {title: '土壤理化性质',align:'center',colspan:9}
+//			      {title: '土壤理化性质',align:'center',colspan:9}
 			    ],[
 		      {field: 'gdmj', title: '耕地面积（hm2）',align:'center',width:150},
 		      {field: 'gbzltmj', title: '高标准农田面积（hm2）',align:'center',width:150},
@@ -43,15 +43,15 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 		      {field: 'ymmj', title: '燕麦',align:'center',width:100},
 		      {field: 'dc', title: '单产（kg）',align:'center',width:130},
 		      {field: 'zc', title: '总产（吨）',align:'center',width:130},
-		      {field: 'yjz', title: '有机质（g/kg）',align:'center',width:130},
-		      {field: 'qd', title: '全氮（g/kg）',align:'center',width:130},
-		      {field: 'qlhl', title: '全磷含量(g/kg)',align:'center',width:130},
-		      {field: 'yxlhl', title: '有效磷含量(mg/kg)',align:'center',width:130},
-		      {field: 'qjhl', title: '全钾含量(g/kg)',align:'center',width:130},
-		      {field: 'ph', title: 'pH',align:'center',width:130},
-		      {field: 'yd', title: '盐度（%）',align:'center',width:130},
-		      {field: 'sxjhl', title: '速效钾含量(mg/kg)',align:'center',width:130},
-		      {field: 'hxjhl', title: '缓效钾含量(mg/kg)',align:'center',width:130}
+//		      {field: 'yjz', title: '有机质（g/kg）',align:'center',width:130},
+//		      {field: 'qd', title: '全氮（g/kg）',align:'center',width:130},
+//		      {field: 'qlhl', title: '全磷含量(g/kg)',align:'center',width:130},
+//		      {field: 'yxlhl', title: '有效磷含量(mg/kg)',align:'center',width:130},
+//		      {field: 'qjhl', title: '全钾含量(g/kg)',align:'center',width:130},
+//		      {field: 'ph', title: 'pH',align:'center',width:130},
+//		      {field: 'yd', title: '盐度（%）',align:'center',width:130},
+//		      {field: 'sxjhl', title: '速效钾含量(mg/kg)',align:'center',width:130},
+//		      {field: 'hxjhl', title: '缓效钾含量(mg/kg)',align:'center',width:130}
 		    ]]
 		});
 	}
