@@ -5,7 +5,7 @@
 		select * from t_crops_plant where gid=#{gid}
 	</select>
     <select id="findAllForPage" parameterType="com.agri.monitor.vo.CropsPlantQueryVO" resultType="map">
-        select a.gid,a.county,a.towns,a.date_year,a.crops_type,IFNULL(a.planted_area,' ') planted_area,
+        select a.gid,a.county,a.towns,a.village,a.date_year,a.crops_type,IFNULL(a.planted_area,' ') planted_area,
         IFNULL(a.planted_output,' ') planted_output,IFNULL(b.type_name,' ') crops_name,
         IFNULL(TRUNCATE(a.planted_output*2/a.planted_area,2),' ') dc
         from t_crops_plant a,t_crops_type b where a.crops_type=b.gid

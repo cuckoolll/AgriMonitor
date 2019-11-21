@@ -30,8 +30,9 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 		    cols: [[ //表头
 		    	{type:'checkbox'},
 		      {field: 'gid', title: 'ID',hide: true,align:'center'},
-		     /* {field: 'county', title: '区（县、市）',align:'center',width:120},
-		      {field: 'towns', title: '乡镇',align:'center',width:120},*/
+		      {field: 'county', title: '区（县、市）',align:'center',width:120},
+		      {field: 'towns', title: '乡镇',align:'center',width:130},
+		      {field: 'village', title: '下辖地',align:'center',width:150},
 		      {field: 'date_year', title: '年份',align:'center'},
 		      {field: 'crops_name', title: '农作物类型',align:'center'},
 		      {field: 'planted_area', title: '农作物播种面积（万亩）',align:'center'},

@@ -3,7 +3,7 @@ layui.use(['form','layer','table','laydate','util'], function(form,layer,table,l
 		var gid = getUrlParam("gid");
 		if(gid){//如果有值，为更新操作
 			//查询数据并赋值到表单中
-			$("[name=towns]").attr("disabled","disabled");
+			//$("[name=towns]").attr("disabled","disabled");
 			$("[name=crops_type]").attr("disabled","disabled");
 			$("[name=date_year]").attr("readonly","readonly");
 			$.post("/cropsplant/findById", {gid:gid},function(res){

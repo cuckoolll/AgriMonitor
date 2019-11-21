@@ -29,17 +29,23 @@
 	                    <input type="text" id="date_year" name="date_year" class="layui-input">
 	                </div>
 				</div>
-				<div class="layui-form-item" style="display: none">
-					<label class="layui-form-label" style="width: 168px">所属区域：</label>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 170px">所属区域：</label>
 	                <div class="layui-input-inline">
 	                    <input type="text" name="county" readonly="readonly" class="layui-input" value="刚察县">
 	                </div>
 	                <div class="layui-input-inline">
-	                    <select name="towns">
+	                    <select name="towns" required lay-verify="required">
 	                    	<option value=""></option>
 	                        <option th:each="type:${towns}" th:value="${type}" th:text="${type}"></option>
 	                    </select>
 	                </div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 170px">下辖地：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="village" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 430px">
+					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label"  style="width: 168px">农作物类型：</label>
@@ -53,13 +59,13 @@
 				<div class="layui-form-item">
 					<label class="layui-form-label" style="width: 168px">农作物播种面积（万亩）：</label>
 					<div class="layui-input-block">
-						<input type="text" name="planted_area" required lay-verify="required|number" autocomplete="off" class="layui-input" style="width: 490px">
+						<input type="text" name="planted_area" required lay-verify="required|number" autocomplete="off" class="layui-input" style="width: 430px">
 					</div>
 				</div>
 				<div class="layui-form-item">
 					<label class="layui-form-label" style="width: 168px">农作物总产（万公斤）：</label>
 					<div class="layui-input-block">
-						<input type="text" name="planted_output" required lay-verify="required|number" autocomplete="off" class="layui-input" style="width: 490px">
+						<input type="text" name="planted_output" required lay-verify="required|number" autocomplete="off" class="layui-input" style="width: 430px">
 					</div>
 				</div>
 				
