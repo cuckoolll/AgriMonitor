@@ -23,6 +23,7 @@ import com.agri.monitor.entity.AgriBaseinfo;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.enums.CacheTypeEnum;
 import com.agri.monitor.service.datamanage.AgriBaseinfoService;
+import com.agri.monitor.service.datamanage.AreainfoService;
 import com.agri.monitor.utils.CacheUtil;
 import com.agri.monitor.vo.AgriBaseinfoQueryVO;
 
@@ -32,6 +33,9 @@ public class AgriBaseinfoController {
 	
 	@Autowired
 	private AgriBaseinfoService agriBaseinfoService;
+	
+	@Autowired
+	private AreainfoService areainfoService;
 	
 	@RequestMapping("")
 	public String toPage(Model model) {
@@ -87,8 +91,10 @@ public class AgriBaseinfoController {
 	
 	@ResponseBody
 	@RequestMapping(value="/find4Maps",method=RequestMethod.POST)
-	public List<Map> find4Maps(HttpServletRequest request) {
+	public Map find4Maps(HttpServletRequest request) {
 		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		
+		final Map<String, Object> result = new HashMap<String, Object>();
 		
 		Calendar c = Calendar.getInstance();
 		AgriBaseinfoQueryVO queryVO = new AgriBaseinfoQueryVO();
@@ -112,8 +118,9 @@ public class AgriBaseinfoController {
 				temlist.add(m);
 			}
 		}
-		
-		return temlist;
+		result.put("data", temlist);
+		result.put("areainfo", areainfoService.findAll(user.getUser_id()));
+		return result;
 	}
 }
 

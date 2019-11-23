@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<!-- Google Chrome Frame也可以让IE用上Chrome的引擎: -->
+		<meta name="renderer" content="webkit">
+		<!--国产浏览器高速模式-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>行政信息维护</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/base.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/iconfont.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
+		<!-- 滚动条插件 -->
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/jquery.mCustomScrollbar.css}">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/css/frameStyle.css}">
+	    <!--[if lt IE 9]>
+	      	<script src="framework/html5shiv.min.js"></script>
+	      	<script src="framework/respond.min.js"></script>
+	    <![endif]-->
+		<script type="text/javascript" th:src="@{/temp/framework/jquery-1.11.3.min.js}" ></script>
+		<script type="text/javascript" th:src="@{/temp/layui/layui.js}"></script>
+		<script th:src="@{/temp/framework/jquery-ui-1.10.4.min.js}"></script>
+		<script th:src="@{/temp/framework/jquery.mousewheel.min.js}"></script>
+		<script th:src="@{/temp/framework/jquery.mCustomScrollbar.min.js}"></script>
+		<!-- 公共样式 结束 -->
+	</head>
+
+	<body>
+	  <div class="layui-fluid">
+			<div class="layui-row layui-col-space10">
+				<div class="layui-col-xs12">
+			      <!-- 填充内容 -->
+			      <div class="layui-card">
+			        <div class="layui-card-body">
+			        	<table class="layui-hide" id="demo" lay-filter="test"></table>
+ 
+						<script type="text/html" id="barDemo">
+ 							 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑查看</a>
+						</script>
+			        </div>
+			      </div>
+			    </div>
+			</div>
+	    </div>
+		<script th:src="@{/js/datamanage/areainfo/datalist.js}"></script>
+	</body>
+</html>
