@@ -8,7 +8,10 @@
         select gid,IFNULL(n,' ') n,IFNULL(p,' ') p,IFNULL(yjf,' ') yjf,IFNULL(lyqd,' ') lyqd,
         IFNULL(jgzl,' ') jgzl,IFNULL(zhlyjg,' ') zhlyjg,IFNULL(jgksj,' ') jgksj,
         IFNULL(lmzl,' ') lmzl,IFNULL(lmsyl,' ') lmsyl,IFNULL(qcfl,' ') qcfl,  
-        IFNULL(qcfzl,' ') qcfzl,IFNULL(year,' ') year
+        IFNULL(qcfzl,' ') qcfzl,IFNULL(year,' ') year,
+        IFNULL(k,' ') k,IFNULL(fhf,' ') fhf
+        ,IFNULL(ljf,' ') ljf,IFNULL(dm_syl,' ') dm_syl,IFNULL(dm_fgmj,' ') dm_fgmj,IFNULL(lysyl,' ') lysyl
+        ,IFNULL(lycyl,' ') lycyl,IFNULL(bz,' ') bz
         from t_agriinputinfo where 1=1
         <if test="syear != null and syear != ''">
         	and year between #{syear} and #{eyear} 
@@ -23,16 +26,19 @@
     </select>
     
     <insert id="insert" parameterType="com.agri.monitor.entity.AgriInputinfo">
-    	insert into t_agriinputinfo(n,p,yjf,lyqd,jgzl,zhlyjg,jgksj,lmzl,lmsyl,qcfl,qcfzl,year)
+    	insert into t_agriinputinfo(n,p,yjf,lyqd,jgzl,zhlyjg,jgksj,lmzl,lmsyl,qcfl,qcfzl,year,
+    	k,fhf,ljf,dm_syl,dm_fgmj,lysyl,lycyl,bz)
     	values
-	   (#{n},#{p},#{yjf},#{lyqd},#{jgzl},#{zhlyjg},#{jgksj},#{lmzl},#{lmsyl},#{qcfl},#{qcfzl},#{year})
+	   (#{n},#{p},#{yjf},#{lyqd},#{jgzl},#{zhlyjg},#{jgksj},#{lmzl},#{lmsyl},#{qcfl},#{qcfzl},#{year}
+	   ,#{k},#{fhf},#{ljf},#{dm_syl},#{dm_fgmj},#{lysyl},#{lycyl},#{bz})
     </insert>
     
     <update id="update" parameterType="com.agri.monitor.entity.AgriInputinfo">
     	update t_agriinputinfo set n=#{n},p=#{p},yjf=#{yjf},lyqd=#{lyqd},
     	jgzl=#{jgzl},zhlyjg=#{zhlyjg},jgksj=#{jgksj},lmzl=#{lmzl},
-    	lmsyl=#{lmsyl},qcfl=#{qcfl},qcfzl=#{qcfzl},year=#{year}
-    	 where gid=#{gid}
+    	lmsyl=#{lmsyl},qcfl=#{qcfl},qcfzl=#{qcfzl},year=#{year},
+    	k=#{k},fhf=#{fhf},ljf=#{ljf},dm_syl=#{dm_syl},dm_fgmj=#{dm_fgmj},
+    	lysyl=#{lysyl},lycyl=#{lycyl},bz=#{bz} where gid=#{gid}
     </update>
     
     <delete id="delete" parameterType="java.util.List">

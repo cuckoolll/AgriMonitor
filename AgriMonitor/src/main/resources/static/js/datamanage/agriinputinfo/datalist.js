@@ -29,22 +29,31 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 		    	{type:'checkbox',rowspan:3},
 			      {field: 'gid', title: 'ID',hide: true,align:'center',rowspan:3},
 			      {field: 'year', title: '年份',align:'center',rowspan:3,width:90},
-			      {title: '农业投入品',align:'center',colspan:4},
-			      {title: '农业废弃物',align:'center',colspan:7}
+			      {title: '农业投入品',align:'center',colspan:11},
+			      {title: '农业废弃物',align:'center',colspan:7},
+			      {field: 'bz',title: '备注',align:'center',rowspan:3}
 			    ],[ 
-			      {title: '化肥施用强度（折纯量）',align:'center',colspan:3},
-			      {field: 'lyqd',title: '农药施用强度（折百量）',align:'center',rowspan:2,width:200},
+			      {title: '农用化肥施用量（折纯）',align:'center',colspan:6},
+			      {title: '地膜使用量（公斤 ）及覆盖面积（公顷）',align:'center',colspan:2},
+			      {field: 'lyqd',title: '农药施用强度（折百量）',align:'center',rowspan:2,width:190},
+			      {field: 'lysyl',title: '农药使用量（公斤）',align:'center',rowspan:2,width:180},
+			      {field: 'lycyl',title: '农用柴油使用量（吨）',align:'center',rowspan:2,width:190},
 			      {field: 'jgzl', title: '秸秆总量',align:'center',rowspan:2,width:140},
-			      {field: 'zhlyjg', title: '综合利用的秸秆量',align:'center',rowspan:2,width:140},
-			      {field: 'jgksj', title: '秸秆可收集资源量',align:'center',rowspan:2,width:140},
-			      {field: 'lmzl', title: '回收利用的农膜总量',align:'center',rowspan:2,width:140},
+			      {field: 'zhlyjg', title: '综合利用的秸秆量',align:'center',rowspan:2,width:180},
+			      {field: 'jgksj', title: '秸秆可收集资源量',align:'center',rowspan:2,width:190},
+			      {field: 'lmzl', title: '回收利用的农膜总量',align:'center',rowspan:2,width:190},
 			      {field: 'lmsyl', title: '农膜使用总量',align:'center',rowspan:2,width:140},
 			      {field: 'qcfl', title: '综合利用的畜禽粪污量',align:'center',rowspan:2,width:140},
 			      {field: 'qcfzl', title: '畜禽粪污总量',align:'center',rowspan:2,width:140}
 			    ],[
-		      {field: 'n', title: 'N',align:'center',width:100},
-		      {field: 'p', title: 'P',align:'center',width:100},
-		      {field: 'yjf', title: '有机肥',align:'center',width:100}
+		      {field: 'n', title: '氮肥',align:'center',width:100},
+		      {field: 'p', title: '磷肥',align:'center',width:100},
+		      {field: 'k', title: '钾肥',align:'center',width:100},
+		      {field: 'fhf', title: '复合肥',align:'center',width:100},
+		      {field: 'yjf', title: '商品有机肥',align:'center',width:100},
+		      {field: 'ljf', title: '农家肥',align:'center',width:100},
+		      {field: 'dm_syl', title: '使用量',align:'center',width:140},
+		      {field: 'dm_fgmj', title: '覆盖面积',align:'center',width:140}
 		    ]]
 		});
 	}

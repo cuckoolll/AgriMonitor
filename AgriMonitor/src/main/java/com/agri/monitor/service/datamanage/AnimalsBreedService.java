@@ -1283,13 +1283,19 @@ public class AnimalsBreedService {
 			//化肥施用量（折纯量） 
 			HSSFRow row37 = sheet.getRow(37);
 			if(nytrdata.get(syear+"")!=null) {
-				row37.getCell(5).setCellValue(objToDou(nytrdata.get(syear+"").get("n"))+objToDou(nytrdata.get(syear+"").get("p"))+objToDou(nytrdata.get(syear+"").get("yjf")));
+				row37.getCell(5).setCellValue(objToDou(nytrdata.get(syear+"").get("n"))+objToDou(nytrdata.get(syear+"").get("p"))+
+						objToDou(nytrdata.get(syear+"").get("k"))+objToDou(nytrdata.get(syear+"").get("fhf"))+objToDou(nytrdata.get(syear+"").get("yjf"))
+					   +objToDou(nytrdata.get(syear+"").get("ljf")));
 			}
 			if(nytrdata.get((syear+1)+"")!=null) {
-				row37.getCell(6).setCellValue(objToDou(nytrdata.get((syear+1)+"").get("n"))+objToDou(nytrdata.get((syear+1)+"").get("p"))+objToDou(nytrdata.get((syear+1)+"").get("yjf")));
+				row37.getCell(6).setCellValue(objToDou(nytrdata.get((syear+1)+"").get("n"))+objToDou(nytrdata.get((syear+1)+"").get("p"))+
+						objToDou(nytrdata.get((syear+1)+"").get("k"))+objToDou(nytrdata.get((syear+1)+"").get("fhf"))+objToDou(nytrdata.get((syear+1)+"").get("yjf"))
+						+objToDou(nytrdata.get((syear+1)+"").get("ljf")));
 			}
 			if(nytrdata.get(eyear+"")!=null) {
-				row37.getCell(7).setCellValue(objToDou(nytrdata.get(eyear+"").get("n"))+objToDou(nytrdata.get(eyear+"").get("p"))+objToDou(nytrdata.get(eyear+"").get("yjf")));
+				row37.getCell(7).setCellValue(objToDou(nytrdata.get(eyear+"").get("n"))+objToDou(nytrdata.get(eyear+"").get("p"))+
+						objToDou(nytrdata.get(eyear+"").get("k"))+objToDou(nytrdata.get(eyear+"").get("fhf"))+objToDou(nytrdata.get(eyear+"").get("yjf"))+
+						objToDou(nytrdata.get(eyear+"").get("ljf")));
 			}
 			//农药施用量（折百量）
 			HSSFRow row38 = sheet.getRow(38);

@@ -4,8 +4,15 @@ public class AgriInputinfo {
 	private Integer gid;
 	private Double n;
 	private Double p;
+	private Double k;
+	private Double fhf;
 	private Double yjf;
+	private Double ljf;
+	private Double dm_syl;
+	private Double dm_fgmj;
 	private Double lyqd;
+	private Double lysyl;
+	private Double lycyl;
 	private Double jgzl;
 	private Double zhlyjg;
 	private Double jgksj;
@@ -14,6 +21,7 @@ public class AgriInputinfo {
 	private Double qcfl;
 	private Double qcfzl;
 	private Integer year;
+	private String bz;
 	
 	public Integer getYear() {
 		return year;
@@ -93,5 +101,52 @@ public class AgriInputinfo {
 	public void setQcfzl(Double qcfzl) {
 		this.qcfzl = qcfzl;
 	}
-	
+	public Double getK() {
+		return k;
+	}
+	public void setK(Double k) {
+		this.k = k;
+	}
+	public Double getFhf() {
+		return fhf;
+	}
+	public void setFhf(Double fhf) {
+		this.fhf = fhf;
+	}
+	public Double getLjf() {
+		return ljf;
+	}
+	public void setLjf(Double ljf) {
+		this.ljf = ljf;
+	}
+	public Double getDm_syl() {
+		return dm_syl;
+	}
+	public void setDm_syl(Double dm_syl) {
+		this.dm_syl = dm_syl;
+	}
+	public Double getDm_fgmj() {
+		return dm_fgmj;
+	}
+	public void setDm_fgmj(Double dm_fgmj) {
+		this.dm_fgmj = dm_fgmj;
+	}
+	public Double getLysyl() {
+		return lysyl;
+	}
+	public void setLysyl(Double lysyl) {
+		this.lysyl = lysyl;
+	}
+	public Double getLycyl() {
+		return lycyl;
+	}
+	public void setLycyl(Double lycyl) {
+		this.lycyl = lycyl;
+	}
+	public String getBz() {
+		return bz;
+	}
+	public void setBz(String bz) {
+		this.bz = bz;
+	}
 }
