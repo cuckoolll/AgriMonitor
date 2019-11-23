@@ -9,10 +9,16 @@ layui.use(['form','layer','table','laydate','util'], function(form,layer,table,l
 		var gid = getUrlParam("gid");
 		if(gid){//如果有值，为更新操作
 			//查询数据并赋值到表单中
+			$("[name=date_year]").attr("readonly","readonly");
 			$.post("/farmerlifeinfo/findById", {gid:gid},function(res){
 		          if(res){
 		        	  $.each(res,function(key,val){
-		        		  $("[name='"+key+"']").val(val);
+		        		  if(key=='towns'){
+		        			  $("[name='"+key+"'] option[value='"+val+"']").attr("selected","true");
+		        			  form.render('select');
+		        		  }else{
+		        			  $("[name='"+key+"']").val(val);
+		        		  }
 		        	  });
 		          }else{
 		        	  layer.msg('加载农民生活信息失败');

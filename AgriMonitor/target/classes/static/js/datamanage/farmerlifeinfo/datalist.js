@@ -26,15 +26,23 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 		    limit:20,
 		    limits:[20,40,60,100],
 		    cols: [[ 
-		    	{type:'checkbox'},
-			      {field: 'year',title: '年份',align:'center'},
-			      {field: 'xzcs',title: '行政村总数',align:'center',width:120},
-			      {field: 'rjsr', title: '农村居民人均可支配收入',align:'center',width:200},
-			      {field: 'srzzl', title: '农村居民人均可支配收入年增长率',align:'center',width:250},
-			      {field: 'ljsjxzcs', title: '实施生活垃圾集中收集处理的行政村数',align:'center',width:280},
-			      {field: 'ljcll', title: '农村生活垃圾处理率',align:'center',width:200},
-			      {field: 'wsclxzcs', title: '有生活污水处理设施的行政村数',align:'center',width:240},
-			      {field: 'wscll', title: '农村生活污水处理率',align:'center',width:200}
+		    	{type:'checkbox',rowspan:2},
+			     {field: 'county', title: '区（县、市）',width:120,rowspan:2, align:'center'},
+			     {field: 'towns', title: '乡镇',rowspan:2, align:'center',width:130},
+			     {field: 'village', title: '下辖地',rowspan:2, align:'center',width:150},
+			      {field: 'year',title: '年份',align:'center',rowspan:2,width:100},
+			      {title: '人均总收入',align:'center',colspan:4, align:'center'},
+			      {field: 'rjkzpsr',title: '人均可支配收入',align:'center',rowspan:2,width:150},
+			      {field: 'srzzl',title: '人均可支配收入年增长率',align:'center',rowspan:2,width:200},
+			      {field: 'ljsj',title: '实施生活垃圾集中收集',align:'center',rowspan:2,width:200},
+			      {field: 'ljcll',title: '农村生活垃圾处理率',align:'center',rowspan:2,width:170},
+			      {field: 'wsclxzcs',title: '有生活污水处理设施',align:'center',rowspan:2,width:170},
+			      {field: 'wscll',title: '农村生活污水处理率',align:'center',rowspan:2,width:170}
+			    ],
+			    [{field: 'rjsr_ny', title: '农业收入', align:'center',width:150},
+			    {field: 'rjsr_cmy', title: '畜牧业收入', align:'center',width:150},
+			    {field: 'rjsr_ly', title: '林业收入', align:'center',width:150},
+			    {field: 'rjsr_fwy', title: '服务业收入', align:'center',width:150}
 			    ]]
 		});
 	}

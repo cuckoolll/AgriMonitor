@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.agri.monitor.annotation.IgnoreSession;
 import com.agri.monitor.entity.NmshInfo;
 import com.agri.monitor.entity.UserInfo;
+import com.agri.monitor.enums.CacheTypeEnum;
 import com.agri.monitor.service.datamanage.NmshInfoService;
+import com.agri.monitor.utils.CacheUtil;
 import com.agri.monitor.vo.NmshInfoQueryVO;
 
 @Controller
@@ -35,6 +37,7 @@ public class FarmerLifeInfoController {
 	@IgnoreSession
 	@RequestMapping("update")
 	public String add(Model model) {
+		model.addAttribute("towns", CacheUtil.getCache(CacheTypeEnum.TOWNS));
 		return "/datamanage/farmerlifeinfo/update";
 	}
 	

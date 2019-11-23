@@ -8,7 +8,6 @@
 		<meta name="renderer" content="webkit">
 		<!--国产浏览器高速模式-->
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>农业基本信息</title>
 		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
 	    <!--[if lt IE 9]>
 	      	<script src="framework/html5shiv.min.js"></script>
@@ -24,51 +23,87 @@
 			<form id="addForm" class="layui-form">
 				<input type="hidden" name="gid"/>
 				<div class="layui-form-item">
-					<label class="layui-form-label" style="width: 270px">年份：</label>
+					<label class="layui-form-label" style="width: 180px">年份：</label>
 					<div class="layui-input-inline">
-						<input type="text" id="year" name="year" required lay-verify="required" autocomplete="off" class="layui-input" style="width:290px">
+						<input type="text" id="year" name="year" required lay-verify="required" autocomplete="off" class="layui-input" style="width:400px">
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label"  style="width: 270px">行政村总数：</label>
-					<div class="layui-input-block">
-						<input type="text" name="xzcs" lay-verify="number" autocomplete="off" class="layui-input" style="width:290px">
+					<label class="layui-form-label" style="width: 180px">所属区域：</label>
+	                <div class="layui-input-inline">
+	                    <input type="text" name="county" readonly="readonly" class="layui-input" value="刚察县">
+	                </div>
+	                <div class="layui-input-inline">
+	                    <select name="towns" required lay-verify="required">
+	                    	<option value=""></option>
+	                        <option th:each="type:${towns}" th:value="${type}" th:text="${type}"></option>
+	                    </select>
+	                </div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 180px">下辖地：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="village" autocomplete="off" class="layui-input" style="width:400px">
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label"  style="width: 270px">农村居民人均可支配收入：</label>
+					<label class="layui-form-label"  style="width: 180px">农业收入：</label>
 					<div class="layui-input-block">
-						<input type="text" name="rjsr" lay-verify="number" autocomplete="off" class="layui-input" style="width:290px">
+						<input type="text" name="rjsr_ny" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label"  style="width: 270px">农村居民人均可支配收入年增长率：</label>
+					<label class="layui-form-label"  style="width: 180px">畜牧业收入：</label>
 					<div class="layui-input-block">
-						<input type="text" name="srzzl" lay-verify="number" autocomplete="off" class="layui-input" style="width:290px">
+						<input type="text" name="rjsr_cmy" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label"  style="width: 270px">实施生活垃圾集中收集处理的行政村数：</label>
+					<label class="layui-form-label"  style="width: 180px">林业收入：</label>
 					<div class="layui-input-block">
-						<input type="text" name="ljsjxzcs" lay-verify="number" autocomplete="off" class="layui-input" style="width:290px">
+						<input type="text" name="rjsr_ly" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label"  style="width: 270px">农村生活垃圾处理率：</label>
+					<label class="layui-form-label"  style="width: 180px">服务业收入：</label>
 					<div class="layui-input-block">
-						<input type="text" name="ljcll" lay-verify="number" autocomplete="off" class="layui-input" style="width:290px">
+						<input type="text" name="rjsr_fwy" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label"  style="width: 270px">有生活污水处理设施的行政村数：</label>
+					<label class="layui-form-label"  style="width: 180px">人均可支配收入：</label>
 					<div class="layui-input-block">
-						<input type="text" name="wsclxzcs" lay-verify="number" autocomplete="off" class="layui-input" style="width:290px">
+						<input type="text" name="rjkzpsr" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
 					</div>
 				</div>
 				<div class="layui-form-item">
-					<label class="layui-form-label"  style="width: 270px">农村生活污水处理率：</label>
+					<label class="layui-form-label"  style="width: 180px">人均可支配收入年增长率：</label>
 					<div class="layui-input-block">
-						<input type="text" name="wscll" lay-verify="number" autocomplete="off" class="layui-input" style="width:290px">
+						<input type="text" name="srzzl" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 180px">实施生活垃圾集中收集数：</label>
+					<div class="layui-input-block">
+						<input type="text" name="ljsj" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 180px">农村生活垃圾处理率：</label>
+					<div class="layui-input-block">
+						<input type="text" name="ljcll" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 180px">有生活污水处理设施数：</label>
+					<div class="layui-input-block">
+						<input type="text" name="wsclxzcs" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 180px">农村生活污水处理率：</label>
+					<div class="layui-input-block">
+						<input type="text" name="wscll" lay-verify="number" autocomplete="off" class="layui-input" style="width:400px">
 					</div>
 				</div>
 				

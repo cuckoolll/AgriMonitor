@@ -5,7 +5,9 @@
 		select * from t_nmshinfo where gid=#{gid}
 	</select>
     <select id="findAllForPage" parameterType="com.agri.monitor.vo.NmshInfoQueryVO" resultType="map">
-        select gid,IFNULL(xzcs,' ') xzcs,IFNULL(rjsr,' ') rjsr,IFNULL(srzzl,' ') srzzl,IFNULL(ljsjxzcs,' ') ljsjxzcs,
+        select gid,county,towns,IFNULL(village,' ') village,IFNULL(rjsr_ny,' ') rjsr_ny,IFNULL(rjsr_cmy,' ') rjsr_cmy,
+        IFNULL(rjsr_ly,' ') rjsr_ly,IFNULL(rjsr_fwy,' ') rjsr_fwy,IFNULL(rjkzpsr,' ') rjkzpsr,
+        IFNULL(srzzl,' ') srzzl,IFNULL(ljsj,' ') ljsj,
         IFNULL(ljcll,' ') ljcll,IFNULL(wsclxzcs,' ') wsclxzcs,IFNULL(wscll,' ') wscll,IFNULL(year,' ') year
         from t_nmshinfo where 1=1
         <if test="syear != null and syear != ''">
@@ -21,13 +23,17 @@
     </select>
     
     <insert id="insert" parameterType="com.agri.monitor.entity.NmshInfo">
-    	insert into t_nmshinfo(xzcs,rjsr,srzzl,ljsjxzcs,ljcll,wsclxzcs,wscll,year)
+    	insert into t_nmshinfo(county,towns,village,rjsr_ny,rjsr_cmy,rjsr_ly,rjsr_fwy,srzzl,rjkzpsr,
+    	ljsj,ljcll,wsclxzcs,wscll,year)
     	values
-	   (#{xzcs},#{rjsr},#{srzzl},#{ljsjxzcs},#{ljcll},#{wsclxzcs},#{wscll},#{year})
+	   (#{county},#{towns},#{village},#{rjsr_ny},#{rjsr_cmy},#{rjsr_ly},#{rjsr_fwy}
+	   ,#{srzzl},#{rjkzpsr},#{ljsj},#{ljcll},#{wsclxzcs},#{wscll},#{year})
     </insert>
     
     <update id="update" parameterType="com.agri.monitor.entity.NmshInfo">
-    	update t_nmshinfo set xzcs=#{xzcs},rjsr=#{rjsr},srzzl=#{srzzl},ljsjxzcs=#{ljsjxzcs},
+    	update t_nmshinfo set county=#{county},towns=#{towns},village=#{village},rjsr_ny=#{rjsr_ny},
+    	rjsr_cmy=#{rjsr_cmy},rjsr_ly=#{rjsr_ly},rjsr_fwy=#{rjsr_fwy},
+    	rjkzpsr=#{rjkzpsr},srzzl=#{srzzl},ljsj=#{ljsj},
     	ljcll=#{ljcll},wsclxzcs=#{wsclxzcs},wscll=#{wscll},year=#{year}
     	 where gid=#{gid}
     </update>

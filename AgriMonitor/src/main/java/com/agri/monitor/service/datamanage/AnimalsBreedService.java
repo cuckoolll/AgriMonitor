@@ -702,7 +702,7 @@ public class AnimalsBreedService {
 			out = response.getOutputStream();
 			//复制原模板到临时文件中
 			destFile = new File(tempdir+new Date().getTime()+".xls");
-			FileUtils.copyFile(ResourceUtils.getFile("E:\\workspace\\sts\\AgriMonitor\\AgriMonitor\\src\\main\\resources\\static\\excel\\考核指标表模板.xls"),destFile);
+			FileUtils.copyFile(ResourceUtils.getFile(tempdir+"/khzb.xls"),destFile);
 			is = new FileInputStream(destFile);
 			POIFSFileSystem pfs = new POIFSFileSystem(is);
 			//读取excel模板
@@ -727,7 +727,9 @@ public class AnimalsBreedService {
 			//农业投入数据
 			Map<String, Map> nytrdata = getnytrdata(syear, eyear);
 			//农民生活数据
-			Map<String, Map> nmshdata = getnmshdata(syear, eyear);
+			List<Map> nmshdata1 = getnmshdata(syear);
+			List<Map> nmshdata2 = getnmshdata(syear + 1);
+			List<Map> nmshdata3 = getnmshdata(eyear);
 			//农业生态信息
 			Map<String, Map> nystdata = getnystdata(syear, eyear);
 			
@@ -1368,48 +1370,24 @@ public class AnimalsBreedService {
 			}
 			//农村居民人均可支配收入
 			HSSFRow row45 = sheet.getRow(45);
-			if(nmshdata.get(syear+"")!=null) {
-				row45.getCell(5).setCellValue(objToDou(nmshdata.get(syear+"").get("rjsr")));
-			}
-			if(nmshdata.get((syear+1)+"")!=null) {
-				row45.getCell(6).setCellValue(objToDou(nmshdata.get((syear+1)+"").get("rjsr")));
-			}
-			if(nmshdata.get(eyear+"")!=null) {
-				row45.getCell(7).setCellValue(objToDou(nmshdata.get(eyear+"").get("rjsr")));
-			}
+			row45.getCell(5).setCellValue(objToDou(getRjkzpsr(nmshdata1)));
+			row45.getCell(6).setCellValue(objToDou(getRjkzpsr(nmshdata2)));
+			row45.getCell(7).setCellValue(objToDou(getRjkzpsr(nmshdata3)));
 			//实施生活垃圾集中手机处理的行政村数
 			HSSFRow row46 = sheet.getRow(46);
-			if(nmshdata.get(syear+"")!=null) {
-				row46.getCell(5).setCellValue(objToDou(nmshdata.get(syear+"").get("ljsjxzcs")));
-			}
-			if(nmshdata.get((syear+1)+"")!=null) {
-				row46.getCell(6).setCellValue(objToDou(nmshdata.get((syear+1)+"").get("ljsjxzcs")));
-			}
-			if(nmshdata.get(eyear+"")!=null) {
-				row46.getCell(7).setCellValue(objToDou(nmshdata.get(eyear+"").get("ljsjxzcs")));
-			}
+			row46.getCell(5).setCellValue(getLjjzcl(nmshdata1));
+			row46.getCell(6).setCellValue(getLjjzcl(nmshdata2));
+			row46.getCell(7).setCellValue(getLjjzcl(nmshdata3));
 			//有生活污水处理设施的行政村数
 			HSSFRow row47 = sheet.getRow(47);
-			if(nmshdata.get(syear+"")!=null) {
-				row47.getCell(5).setCellValue(objToDou(nmshdata.get(syear+"").get("wsclxzcs")));
-			}
-			if(nmshdata.get((syear+1)+"")!=null) {
-				row47.getCell(6).setCellValue(objToDou(nmshdata.get((syear+1)+"").get("wsclxzcs")));
-			}
-			if(nmshdata.get(eyear+"")!=null) {
-				row47.getCell(7).setCellValue(objToDou(nmshdata.get(eyear+"").get("wsclxzcs")));
-			}
+			row47.getCell(5).setCellValue(getWscl(nmshdata1));
+			row47.getCell(6).setCellValue(getWscl(nmshdata2));
+			row47.getCell(7).setCellValue(getWscl(nmshdata3));
 			//行政村总数
 			HSSFRow row48 = sheet.getRow(48);
-			if(nmshdata.get(syear+"")!=null) {
-				row48.getCell(5).setCellValue(objToDou(nmshdata.get(syear+"").get("xzcs")));
-			}
-			if(nmshdata.get((syear+1)+"")!=null) {
-				row48.getCell(6).setCellValue(objToDou(nmshdata.get((syear+1)+"").get("xzcs")));
-			}
-			if(nmshdata.get(eyear+"")!=null) {
-				row48.getCell(7).setCellValue(objToDou(nmshdata.get(eyear+"").get("xzcs")));
-			}
+			row48.getCell(5).setCellValue(null!=nmshdata1?nmshdata1.size():0);
+			row48.getCell(6).setCellValue(null!=nmshdata2?nmshdata2.size():0);
+			row48.getCell(7).setCellValue(null!=nmshdata3?nmshdata3.size():0);
 			//农业生态信息
 			HSSFRow r2 = sheet1.getRow(2);
 			r2.getCell(5).setCellValue(syear+"年");
@@ -1634,20 +1612,50 @@ public class AnimalsBreedService {
 		
 	}
 	//农民生活数据
-	private Map<String, Map> getnmshdata(int syear, int eyear) {
+	private List<Map> getnmshdata(int syear) {
 		NmshInfoQueryVO query5 = new NmshInfoQueryVO();
 		query5.setSyear(syear);
-		query5.setEyear(eyear);
+		query5.setEyear(syear);
 		query5.setPage(1);
 		query5.setLimit(Integer.MAX_VALUE);
-		List<Map> nmshdata = nmshInfoMapper.findAllForPage(query5);
-		Map<String, Map> ret = new HashMap();
-		if(null != nmshdata) {
-			for (Map o : nmshdata) {
-				ret.put(o.get("year").toString(), o);
+		return nmshInfoMapper.findAllForPage(query5);
+	}
+	//计算人均可支配收入
+	private BigDecimal getRjkzpsr(List<Map> data) {
+		BigDecimal b = new BigDecimal(0);
+		if(null != data && data.size() > 0) {
+			for (Map map : data) {
+				b=b.add(new BigDecimal(map.get("rjkzpsr").toString()));
+			}
+			return b.divide(new BigDecimal(data.size()), 2,RoundingMode.HALF_UP);
+		}
+		return b;
+	}
+	//计算垃圾集中处理村数
+	private int getLjjzcl(List<Map> data) {
+		int num=0;
+		if(null != data && data.size() > 0) {
+			for (Map map : data) {
+				int i = Integer.valueOf(map.get("ljsj").toString());
+				if(i>0) {
+					num++;
+				}
 			}
 		}
-		return ret;
+		return num;
+	}
+	//计算污水处理村数
+	private int getWscl(List<Map> data) {
+		int num=0;
+		if(null != data && data.size() > 0) {
+			for (Map map : data) {
+				int i = Integer.valueOf(map.get("wsclxzcs").toString());
+				if(i>0) {
+					num++;
+				}
+			}
+		}
+		return num;
 	}
 	//农业生态数据
 	private Map<String, Map> getnystdata(int syear, int eyear) {
