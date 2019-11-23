@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<!-- Google Chrome Frame也可以让IE用上Chrome的引擎: -->
+		<meta name="renderer" content="webkit">
+		<!--国产浏览器高速模式-->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" th:href="@{/temp/layui/css/layui.css}">
+	    <!--[if lt IE 9]>
+	      	<script src="framework/html5shiv.min.js"></script>
+	      	<script src="framework/respond.min.js"></script>
+	    <![endif]-->
+		<script type="text/javascript" th:src="@{/temp/framework/jquery-1.11.3.min.js}" ></script>
+		<script type="text/javascript" th:src="@{/temp/layui/layui.js}"></script>
+		<!-- 公共样式 结束 -->
+	</head>
+
+	<body>
+		<div class="cBody" style="padding: 10px 10px">
+			<form id="addForm" class="layui-form">
+				<input type="hidden" name="gid"/>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 168px">年份：</label>
+	                <div class="layui-input-inline">
+	                    <input type="text" id="date_year" name="date_year" class="layui-input">
+	                </div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 170px">所属区域：</label>
+	                <div class="layui-input-inline">
+	                    <input type="text" name="county" readonly="readonly" class="layui-input" value="刚察县">
+	                </div>
+	                <div class="layui-input-inline">
+	                    <select name="towns" required lay-verify="required">
+	                    	<option value=""></option>
+	                        <option th:each="type:${towns}" th:value="${type}" th:text="${type}"></option>
+	                    </select>
+	                </div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 170px">下辖地：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="village" required lay-verify="required" autocomplete="off" class="layui-input" style="width: 555px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 170px">户数（户）：</label>
+					<div class="layui-input-block">
+						<input type="text" name="hs" lay-verify="number" autocomplete="off" class="layui-input" style="width: 555px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 170px">人口数（男）：</label>
+					<div class="layui-input-block">
+						<input type="text" name="rks_n" lay-verify="number" autocomplete="off" class="layui-input" style="width: 555px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 170px">人口数（女）：</label>
+					<div class="layui-input-block">
+						<input type="text" name="rks_v" lay-verify="number" autocomplete="off" class="layui-input" style="width: 555px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 170px">农业从业人数（人）：</label>
+					<div class="layui-input-block">
+						<input type="text" name="nyrs" lay-verify="number" autocomplete="off" class="layui-input" style="width: 555px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 170px">畜牧业从业人数（人）：</label>
+					<div class="layui-input-block">
+						<input type="text" name="cmyrs" lay-verify="number" autocomplete="off" class="layui-input" style="width: 555px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 170px">林业从业人数（人）：</label>
+					<div class="layui-input-block">
+						<input type="text" name="lyrs" lay-verify="number" autocomplete="off" class="layui-input" style="width: 555px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label"  style="width: 170px">服务业从业人数（人）：</label>
+					<div class="layui-input-block">
+						<input type="text" name="fwyrs" lay-verify="number" autocomplete="off" class="layui-input" style="width: 555px">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label" style="width: 170px">备注：</label>
+					<div class="layui-input-inline">
+						<input type="text" name="bz" autocomplete="off" class="layui-input" style="width: 555px">
+					</div>
+				</div>
+				
+				<div style="" class="layui-form-item">
+					<div class="layui-input-block" style="text-align: center">
+						<button id="saveBtn" class="layui-btn" lay-submit lay-filter="submitBut">保存</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<script th:src="@{/js/datamanage/proteamandemployinfo/update.js}"></script>
+	</body>
+
+</html>

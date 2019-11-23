@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agri.monitor.mapper.ProTeamAndEmployInfoMapper">
+	<select id="findById" parameterType="int" resultType="com.agri.monitor.entity.ProTeamAndEmployInfo">
+		select * from t_proteam_employ_info where gid=#{gid}
+	</select>
+    <select id="findAllForPage" parameterType="com.agri.monitor.vo.ProTeamAndEmployInfoQueryVO" resultType="map">
+        select gid,county,towns,village,date_year,IFNULL(hs,' ') hs,IFNULL(rks_n,' ') rks_n,
+        IFNULL(rks_v,' ') rks_v,IFNULL(nyrs,' ') nyrs,IFNULL(cmyrs,' ') cmyrs,
+        IFNULL(lyrs,' ') lyrs,IFNULL(fwyrs,' ') fwyrs,IFNULL(bz,' ') bz  
+        from t_proteam_employ_info where 1=1
+        <if test="towns != null and towns != ''">
+        	and towns=#{towns}
+	    </if>
+	    <if test="date_year != null and date_year1 != null">
+	    	and date_year between #{date_year} and #{date_year1} 
+	    </if>
+	    order by gid desc limit #{currIndex},#{limit}
+    </select>
+    <select id="findAllCount" parameterType="com.agri.monitor.vo.ProTeamAndEmployInfoQueryVO" resultType="int">
+        select count(gid) from t_proteam_employ_info where 1=1
+        <if test="towns != null and towns != ''">
+        	and towns=#{towns}
+	    </if>
+	    <if test="date_year != null and date_year1 != null">
+	    	and date_year between #{date_year} and #{date_year1} 
+	    </if>
+    </select>
+
+    <insert id="insert" parameterType="com.agri.monitor.entity.ProTeamAndEmployInfo">
+    	insert into t_proteam_employ_info(county,towns,village,date_year,hs,rks_n,rks_v,nyrs,cmyrs,lyrs,fwyrs,bz,creator,modifier,create_time)
+    	values
+	   (#{county},#{towns},#{village},#{date_year},#{hs},#{rks_n},#{rks_v},#{nyrs},#{cmyrs},#{lyrs},#{fwyrs},#{bz},#{creator},#{modifier},now())
+    </insert>
+    
+    <update id="update" parameterType="com.agri.monitor.entity.ProTeamAndEmployInfo">
+    	update t_proteam_employ_info set county=#{county},towns=#{towns},village=#{village},date_year=#{date_year},hs=#{hs},
+    	rks_n=#{rks_n},rks_v=#{rks_v},nyrs=#{nyrs},cmyrs=#{cmyrs},
+    	lyrs=#{lyrs},fwyrs=#{fwyrs},bz=#{bz},
+    	modifier=#{modifier},last_time=#{last_time} where gid=#{gid}
+    </update>
+    
+    <delete id="delete" parameterType="java.util.List">
+    	delete from t_proteam_employ_info where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+    <delete id="deleteByTows" parameterType="map">
+    	delete from t_proteam_employ_info where towns=#{towns} and village=#{village}
+    </delete>
+</mapper>

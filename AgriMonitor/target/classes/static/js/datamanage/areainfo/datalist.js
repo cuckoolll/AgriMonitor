@@ -9,7 +9,7 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 		    elem: '#demo',
 		    method:'post',
 		    url: '/areainfo/datalist', //数据接口，
-		    height:winH-105,
+		    height:winH-45,
 		    page: false, //开启分页
 		    cols: [[ //表头
 		      {field: 'gid', title: 'ID',hide: true,align:'center'},

@@ -1,39 +1,45 @@
-layui.use(['form','layer','table', 'laydate'], function(form,layer,table,laydate) {
+layui.use(['form','layer','table','laydate','util'], function(form,layer,table,laydate,util) {
 	function init(){
-		//日期控件渲染
-		laydate.render({
-			elem: '#date_year',
-			type: 'year'
-		}); 
-		
 		var gid = getUrlParam("gid");
 		if(gid){//如果有值，为更新操作
-			$("#date_year").attr("disabled", true);
+			$("[name=date_year]").attr("readonly","readonly");
 			//查询数据并赋值到表单中
-			$.post("/environmentinfo/findById", {gid:gid},function(res){
+			$.post("/proteamandemployinfo/findById", {gid:gid},function(res){
 		          if(res){
 		        	  $.each(res,function(key,val){
-	        			  $("[name='"+key+"']").val(val);
+		        		  if(key=='towns'){
+		        			  $("[name='"+key+"'] option[value='"+val+"']").attr("selected","true");
+		        			  form.render('select');
+		        		  }else{
+		        			  $("[name='"+key+"']").val(val);
+		        		  }
 		        	  });
 		          }else{
-		        	  layer.msg('加载农业生态环境信息失败');
+		        	  layer.msg('加载农业生产组织及从业人员信息失败');
 		        	  $("#saveBtn").attr('disabled',true);
 		          }
 	        });
+		}else{
+			var curyear=util.toDateString(new Date(), 'yyyy');
+			laydate.render({
+			    elem: '#date_year',
+			    type: 'year',
+			    value:curyear
+			 });
 		}
 	}
 	
 	function bindEvent(){
 		//监听提交
 		form.on('submit(submitBut)', function(data) {
-			$.post("/environmentinfo/save", data.field,function(res){
+			$.post("/proteamandemployinfo/doSave", data.field,function(res){
 		          if(res && res.code==0){
-		        	  parent.layer.msg('保存农业生态环境信息成功');
+		        	  parent.layer.msg('保存农业生产组织及从业人员数据成功');
 		        	  parent.layui.table.reload('datalist');
 		        	  var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 					  parent.layer.close(index); //再执行关闭
 		          }else{
-		        	  layer.msg('保存农业生态环境信息失败');
+		        	  layer.msg('保存农业生产组织及从业人员数据失败');
 		          }
 	        });
 			return false;
