@@ -204,10 +204,15 @@ public class AnimalsBreedController {
 		return "/datamanage/animalsBreed/khzbexport.html";
 	}
 	@RequestMapping("/animalsBreedAnalysis/exportKHZB")
-    public void exportKHZB(HttpServletResponse response) {
+    public void exportKHZB(HttpServletResponse response,HttpServletRequest r) {
 		Calendar c = Calendar.getInstance();
 		int year = c.get(Calendar.YEAR);
-		animalsBreedService.exportKHZB(response, year-2, year);
+		animalsBreedService.exportKHZB(response,r, year-2, year);
+	}
+	@ResponseBody
+	@RequestMapping("/animalsBreedAnalysis/getKHZBData")
+    public Map getKHZBData(HttpServletResponse response) {
+		return animalsBreedService.getKHZBData();
 	}
 	
 	@ResponseBody

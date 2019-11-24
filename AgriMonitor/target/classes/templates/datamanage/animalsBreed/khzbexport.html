@@ -25,6 +25,58 @@
 		<script th:src="@{/temp/framework/jquery.mousewheel.min.js}"></script>
 		<script th:src="@{/temp/framework/jquery.mCustomScrollbar.min.js}"></script>
 		<!-- 公共样式 结束 -->
+		<style type="text/css">
+		th{
+        font-weight: bold;
+        text-align: center;
+		}
+		td{
+		 height: 45px;
+		 vertical-align: center;
+		}
+		td textarea{
+			height: 100%;
+			width: 99%;
+		}
+		</style>
+				<style type="text/css">
+		#preloader_1{
+    position:relative;margin-left: 47%;
+    margin-top: 254px;
+}
+#preloader_1 span{
+    display:block;
+    bottom:0px;
+    width: 9px;
+    height: 5px;
+    background:#9b59b6;
+    position:absolute;
+    animation: preloader_1 1.5s  infinite ease-in-out;
+}  
+#preloader_1 span:nth-child(2){
+    left:11px;
+    animation-delay: .2s;  
+}
+#preloader_1 span:nth-child(3){
+    left:22px;
+    animation-delay: .4s;
+}
+#preloader_1 span:nth-child(4){
+    left:33px;
+    animation-delay: .6s;
+}
+#preloader_1 span:nth-child(5){
+    left:44px;
+    animation-delay: .8s;
+}
+@keyframes preloader_1 {
+    0% {height:10px;transform:translateY(0px);background:#9b59b6;}
+    25% {height:20px;transform:translateY(0px);background:#3498db;}
+    50% {height:60px;transform:translateY(15px);background:#9b59b6;}
+    75% {height:20px;transform:translateY(0px);background:#9b59b6;}
+    100% {height:10px;transform:translateY(0px);background:#9b59b6;}
+}
+		</style>
 	</head>
 
 	<body>
@@ -37,14 +89,600 @@
 		        	<div class="queryArea">
 						<form class="layui-form" action="">
 							<div class="layui-form-item">
-									<a id="exportData" class="layui-btn"><i class="layui-icon"></i>导出近三年数据</a>
+									<a id="exportData" class="layui-btn"><i class="layui-icon"></i>导出数据</a>
 								<a th:href="@{/excel/考核指标表模板.xls}" class="layui-btn"><i class="layui-icon"></i>模板下载</a>
 							</div>
 						</form>
+						
 					</div>
 		        </div>
 		      </div>
 		    </div>
+		</div>
+		<div class="layui-row layui-col-space10">
+			<div class="layui-col-xs12" style="height:66px">
+		      <!-- 填充内容 -->
+		      <div class="layui-card">
+		      <div class="layui-card-body" id="datatable" style="overflow-y:auto ">
+		      <div style="width: 100%;line-height: 40px;text-align: center;font-size: 20px;font-weight: bold;">国家农业可持续发展试验示范区（农业绿色发展先行区）考核指标体系（试行）</div>
+		      <form id="addForm" action="/animalsBreed/animalsBreedAnalysis/exportKHZB" method="post">
+					<table width="100%" border="1">
+					  <tr>
+					     <th width="6%">&nbsp;</th>
+					    <th colspan="2">指标</th>
+					    <th width="6%">单位</th>
+					    <th width="8%">目标值</th>
+					    <th name="year_1" width="8%">&nbsp;</th>
+					    <th name="year_2" width="8%">&nbsp;</th>
+					    <th name="year_3" width="8%">&nbsp;</th>
+					    <th width="5%">完成情况</th>
+					    <th width="7%">数据来源</th>
+					    <th width="7%">数据采集方式</th>
+					    <th width="18%">备注</th>
+					  </tr>
+					  <tr>
+					    <td rowspan="5">种植业</td>
+					    <td colspan="2">耕地面积</td>
+					    <td>千公顷</td>
+					    <td>&nbsp;</td>
+					    <td  name="gdmj_1">&nbsp;</td>
+					    <td  name="gdmj_2">&nbsp;</td>
+					    <td  name="gdmj_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>自然资源部门</td>
+					    <td>&nbsp;</td>
+					    <td><textarea name="gdmj"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td colspan="2">高标准农田面积</td>
+					    <td>千公顷</td>
+					    <td>&nbsp;</td>
+					    <td name="gbzmj_1">&nbsp;</td>
+					    <td name="gbzmj_2">&nbsp;</td>
+					    <td name="gbzmj_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村部门</td>
+					    <td>&nbsp;</td>
+					    <td><textarea name="gbzmj"  rows="3"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td colspan="2">土壤有机质含量</td>
+					    <td>克/千克</td>
+					    <td>&nbsp;</td>
+					    <td name="tryjzhl_1">&nbsp;</td>
+					    <td name="tryjzhl_2">&nbsp;</td>
+					    <td name="tryjzhl_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村部门</td>
+					    <td>&nbsp;</td>
+					    <td><textarea name="tryjzhl"  rows="3"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td colspan="2">农田灌溉水有效利用系数</td>
+					    <td>/</td>
+					    <td>&nbsp;</td>
+					    <td name="ntggslyxs_1">&nbsp;</td>
+					    <td name="ntggslyxs_2">&nbsp;</td>
+					    <td name="ntggslyxs_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>水利部门</td>
+					    <td>&nbsp;</td>
+					    <td><textarea name="ntggslyxs"  rows="3"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td colspan="2">播种面积</td>
+					    <td>千公顷</td>
+					    <td>&nbsp;</td>
+					    <td name="bzmj_1">&nbsp;</td>
+					    <td name="bzmj_2">&nbsp;</td>
+					    <td name="bzmj_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村部门</td>
+					    <td>&nbsp;</td>
+					    <td><textarea name="bzmj"  rows="3"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td rowspan="21">畜牧业</td>
+					    <td colspan="2">多年生人工草地保留面积</td>
+					    <td>&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td name="dnsrgcdmj_1">&nbsp;</td>
+					    <td name="dnsrgcdmj_2">&nbsp;</td>
+					    <td name="dnsrgcdmj_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					    <td><textarea name="dnsrgcdmj"  rows="3"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td width="9%" rowspan="6">畜禽养殖量</td>
+					    <td width="11%">生猪出栏量</td>
+					    <td>万头</td>
+					    <td>&nbsp;</td>
+					    <td name="szcll_1">&nbsp;</td>
+					    <td name="szcll_2">&nbsp;</td>
+					    <td name="szcll_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					    <td rowspan="6"><textarea name="szcll"  rows="8"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td>肉牛出栏量</td>
+					    <td>万头</td>
+					    <td>&nbsp;</td>
+					    <td name="rncll_1">&nbsp;</td>
+					    <td name="rncll_2">&nbsp;</td>
+					    <td name="rncll_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td>奶牛存栏量</td>
+					    <td>万头</td>
+					    <td>&nbsp;</td>
+					    <td name="nncll_1">&nbsp;</td>
+					    <td name="nncll_2">&nbsp;</td>
+					    <td name="nncll_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td>肉羊出栏量</td>
+					    <td>万只</td>
+					    <td>&nbsp;</td>
+					    <td name="rycll_1">&nbsp;</td>
+					    <td name="rycll_2">&nbsp;</td>
+					    <td name="rycll_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td>肉禽出栏量</td>
+					    <td>万只</td>
+					    <td>&nbsp;</td>
+					    <td name="rqcll_1">&nbsp;</td>
+					    <td name="rqcll_2">&nbsp;</td>
+					    <td name="rqcll_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td>蛋禽存栏量</td>
+					    <td>万只</td>
+					    <td>&nbsp;</td>
+					    <td name="dqcll_1">&nbsp;</td>
+					    <td name="dqcll_2">&nbsp;</td>
+					    <td name="dqcll_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td rowspan="7">规模化畜禽养殖量</td>
+					    <td>年出栏量&gt;500头的生猪规模化养殖场（户）出栏的生猪数量</td>
+					    <td>万头</td>
+					    <td>&nbsp;</td>
+					    <td name="szsl_1">&nbsp;</td>
+					    <td name="szsl_2">&nbsp;</td>
+					    <td name="szsl_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					    <td  rowspan="7"><textarea name="szsl"  rows="8"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td>年出栏量&gt;50头肉牛的规模化养殖场（户）的出栏肉牛数量</td>
+					    <td>万头</td>
+					    <td>&nbsp;</td>
+					    <td name="rnsl_1">&nbsp;</td>
+					    <td name="rnsl_2">&nbsp;</td>
+					    <td name="rnsl_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td>年存栏量&gt;100头的奶牛规模化养殖场（户）存栏的奶牛数量</td>
+					    <td>万头</td>
+					    <td>&nbsp;</td>
+					    <td name="nnsl_1">&nbsp;</td>
+					    <td name="nnsl_2">&nbsp;</td>
+					    <td name="nnsl_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td>年出栏量&gt;100只肉羊规模化养殖场（户）出栏的肉羊数量</td>
+					    <td>万只</td>
+					    <td>&nbsp;</td>
+					    <td name="rysl_1">&nbsp;</td>
+					    <td name="rysl_2">&nbsp;</td>
+					    <td name="rysl_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td>年存栏量&gt;2000只蛋禽规模化养殖场（户）存栏的蛋鸡数量</td>
+					    <td>万只</td>
+					    <td>&nbsp;</td>
+					    <td name="djsl_1">&nbsp;</td>
+					    <td name="djsl_2">&nbsp;</td>
+					    <td name="djsl_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td>年出栏量&gt;10000只的肉禽规模化养殖场（户）出栏的肉鸡数量</td>
+					    <td>万只</td>
+					    <td>&nbsp;</td>
+					    <td name="rjsl_1">&nbsp;</td>
+					    <td name="rjsl_2">&nbsp;</td>
+					    <td name="rjsl_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td>其他规模化养殖的畜禽数量</td>
+					    <td>万头（只）</td>
+					    <td>&nbsp;</td>
+					    <td name="qtgmhl_1">&nbsp;</td>
+					    <td name="qtgmhl_2">&nbsp;</td>
+					    <td name="qtgmhl_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td rowspan="7">畜禽产品产量</td>
+					    <td>猪肉</td>
+					    <td>万吨</td>
+					    <td>&nbsp;</td>
+					    <td name="zr_1">&nbsp;</td>
+					    <td name="zr_2">&nbsp;</td>
+					    <td name="zr_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					    <td  rowspan="7"><textarea name="zr"  rows="8"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td>牛肉</td>
+					    <td>万吨</td>
+					    <td>&nbsp;</td>
+					    <td name="nr_1">&nbsp;</td>
+					    <td name="nr_2">&nbsp;</td>
+					    <td name="nr_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td>羊肉</td>
+					    <td>万吨</td>
+					    <td>&nbsp;</td>
+					    <td name="yr_1">&nbsp;</td>
+					    <td name="yr_2">&nbsp;</td>
+					    <td name="yr_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td>牛奶</td>
+					    <td>万吨</td>
+					    <td>&nbsp;</td>
+					    <td name="nn_1">&nbsp;</td>
+					    <td name="nn_2">&nbsp;</td>
+					    <td name="nn_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td>禽肉</td>
+					    <td>万吨</td>
+					    <td>&nbsp;</td>
+					    <td name="qr_1">&nbsp;</td>
+					    <td name="qr_2">&nbsp;</td>
+					    <td name="qr_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td>禽蛋</td>
+					    <td>万吨</td>
+					    <td>&nbsp;</td>
+					    <td name="qd_1">&nbsp;</td>
+					    <td name="qd_2">&nbsp;</td>
+					    <td name="qd_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td>蜂蜜</td>
+					    <td>万吨</td>
+					    <td>&nbsp;</td>
+					    <td name="fm_1">&nbsp;</td>
+					    <td name="fm_2">&nbsp;</td>
+					    <td name="fm_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td rowspan="2">渔业</td>
+					    <td colspan="2">水产养殖总面积</td>
+					    <td>千公顷</td>
+					    <td>&nbsp;</td>
+					    <td name="scyzzmj_1">&nbsp;</td>
+					    <td name="scyzzmj_2">&nbsp;</td>
+					    <td name="scyzzmj_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村部门</td>
+					    <td>&nbsp;</td>
+					    <td><textarea name="scyzzmj"  rows="3"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td colspan="2">水产标准化健康养殖示范场（区）养殖面积</td>
+					    <td>千公顷</td>
+					    <td>&nbsp;</td>
+					    <td name="sczzhyzmj_1">&nbsp;</td>
+					    <td name="sczzhyzmj_2">&nbsp;</td>
+					    <td name="sczzhyzmj_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>渔业部门</td>
+					    <td>&nbsp;</td>
+					    <td><textarea name="sczzhyzmj"  rows="3"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td rowspan="3">优质农产品</td>
+					    <td rowspan="3">绿色、有机、地理标志农产品产量</td>
+					    <td>种植业</td>
+					    <td>万吨</td>
+					    <td>&nbsp;</td>
+					    <td name="zzy_1">&nbsp;</td>
+					    <td name="zzy_2">&nbsp;</td>
+					    <td name="zzy_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村部门</td>
+					    <td>&nbsp;</td>
+					    <td rowspan="3"><textarea name="zzy"  rows="5"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td>畜牧业</td>
+					    <td>万吨</td>
+					    <td>&nbsp;</td>
+					    <td name="cmy_1">&nbsp;</td>
+					    <td name="cmy_2">&nbsp;</td>
+					    <td name="cmy_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村部门</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td>渔业</td>
+					    <td>万吨</td>
+					    <td>&nbsp;</td>
+					    <td name="yy_1">&nbsp;</td>
+					    <td name="yy_2">&nbsp;</td>
+					    <td name="yy_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村部门</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td rowspan="3">农产品</td>
+					    <td colspan="2">种植业产品总产量</td>
+					    <td>万吨</td>
+					    <td>&nbsp;</td>
+					    <td name="zzycpzl_1">&nbsp;</td>
+					    <td name="zzycpzl_2">&nbsp;</td>
+					    <td name="zzycpzl_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村部门</td>
+					    <td>&nbsp;</td>
+					    <td rowspan="3"><textarea name="zzycpzl"  rows="5"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td colspan="2">畜牧业产品总产量</td>
+					    <td>万吨</td>
+					    <td>&nbsp;</td>
+					    <td name="cmycpzl_1">&nbsp;</td>
+					    <td name="cmycpzl_2">&nbsp;</td>
+					    <td name="cmycpzl_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村部门</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td colspan="2">渔业产品总产量</td>
+					    <td>万吨</td>
+					    <td>&nbsp;</td>
+					    <td name="yycpzl_1">&nbsp;</td>
+					    <td name="yycpzl_2">&nbsp;</td>
+					    <td name="yycpzl_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村部门</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td rowspan="2">农业投入品</td>
+					    <td colspan="2">化肥施用量（折纯量）</td>
+					    <td>万吨</td>
+					    <td>&nbsp;</td>
+					    <td name="hfsyl_1">&nbsp;</td>
+					    <td name="hfsyl_2">&nbsp;</td>
+					    <td name="hfsyl_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>统计部门成本收益年鉴、农业农村部门</td>
+					    <td>&nbsp;</td>
+					    <td><textarea name="hfsyl"  rows="3"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td colspan="2">农药施用量（折百量）</td>
+					    <td>万吨</td>
+					    <td>&nbsp;</td>
+					    <td name="nysyl_1">&nbsp;</td>
+					    <td name="nysyl_2">&nbsp;</td>
+					    <td name="nysyl_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>统计部门成本收益年鉴、农业农村部门</td>
+					    <td>&nbsp;</td>
+					    <td><textarea name="nysyl"  rows="3"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td rowspan="6">农业废弃物</td>
+					    <td colspan="2">综合利用的秸秆量</td>
+					    <td>万吨</td>
+					    <td>&nbsp;</td>
+					    <td name="zhlyjgl_1">&nbsp;</td>
+					    <td name="zhlyjgl_2">&nbsp;</td>
+					    <td name="zhlyjgl_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村部门</td>
+					    <td>&nbsp;</td>
+					    <td><textarea name="zhlyjgl"  rows="3"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td colspan="2">秸秆可收集资源量</td>
+					    <td>万吨</td>
+					    <td>&nbsp;</td>
+					    <td name="jgksjzyl_1">&nbsp;</td>
+					    <td name="jgksjzyl_2">&nbsp;</td>
+					    <td name="jgksjzyl_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村部门</td>
+					    <td>&nbsp;</td>
+					    <td><textarea name="jgksjzyl"  rows="3"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td colspan="2">回收利用的农膜总量</td>
+					    <td>万吨</td>
+					    <td>&nbsp;</td>
+					    <td name="hslynmzl_1">&nbsp;</td>
+					    <td name="hslynmzl_2">&nbsp;</td>
+					    <td name="hslynmzl_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村部门</td>
+					    <td>&nbsp;</td>
+					    <td><textarea name="hslynmzl"  rows="3"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td colspan="2">农膜使用总量</td>
+					    <td>万吨</td>
+					    <td>&nbsp;</td>
+					    <td name="nmsyzl_1">&nbsp;</td>
+					    <td name="nmsyzl_2">&nbsp;</td>
+					    <td name="nmsyzl_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村部门</td>
+					    <td>&nbsp;</td>
+					    <td><textarea name="nmsyzl"  rows="3"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td colspan="2">综合利用的畜禽粪污量</td>
+					    <td>万吨</td>
+					    <td>&nbsp;</td>
+					    <td name="zhlycqfwl_1">&nbsp;</td>
+					    <td name="zhlycqfwl_2">&nbsp;</td>
+					    <td name="zhlycqfwl_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					    <td><textarea name="zhlycqfwl"  rows="3"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td colspan="2">畜禽粪污总量</td>
+					    <td>万吨</td>
+					    <td>&nbsp;</td>
+					    <td name="cqfwzl_1">&nbsp;</td>
+					    <td name="cqfwzl_2">&nbsp;</td>
+					    <td name="cqfwzl_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村（畜牧）部门</td>
+					    <td>&nbsp;</td>
+					    <td><textarea name="cqfwzl"  rows="3"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td rowspan="4">农民生活</td>
+					    <td colspan="2">农村居民人均可支配收入</td>
+					    <td>个</td>
+					    <td>&nbsp;</td>
+					    <td name="ncjmrjkzpsr_1">&nbsp;</td>
+					    <td name="ncjmrjkzpsr_2">&nbsp;</td>
+					    <td name="ncjmrjkzpsr_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>统计年鉴</td>
+					    <td>&nbsp;</td>
+					    <td><textarea name="ncjmrjkzpsr"  rows="3"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td colspan="2">实施生活垃圾集中处理的行政村数</td>
+					    <td>个</td>
+					    <td>&nbsp;</td>
+					    <td name="ssshljjzcl_1">&nbsp;</td>
+					    <td name="ssshljjzcl_2">&nbsp;</td>
+					    <td name="ssshljjzcl_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>住建部门</td>
+					    <td>&nbsp;</td>
+					    <td><textarea name="ssshljjzcl"  rows="3"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td colspan="2">有生活污水处理设施的行政村数</td>
+					    <td>个</td>
+					    <td>&nbsp;</td>
+					    <td name="yshwsclss_1">&nbsp;</td>
+					    <td name="yshwsclss_2">&nbsp;</td>
+					    <td name="yshwsclss_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>生态环境、住建部门</td>
+					    <td>&nbsp;</td>
+					    <td><textarea name="yshwsclss"  rows="3"></textarea></td>
+					  </tr>
+					  <tr>
+					    <td colspan="2">行政村总数</td>
+					    <td>个</td>
+					    <td>&nbsp;</td>
+					    <td name="xzczs_1">&nbsp;</td>
+					    <td name="xzczs_2">&nbsp;</td>
+					    <td name="xzczs_3">&nbsp;</td>
+					    <td>&nbsp;</td>
+					    <td>农业农村部门</td>
+					    <td>&nbsp;</td>
+					    <td><textarea name="xzczs"  rows="3"></textarea></td>
+					  </tr>
+					</table>
+					</form>						
+		     </div>
+		    </div>
+		    </div>
+		</div>
+    </div>
+        <div id="preloaderDiv" style="opacity: 0.8;display:none;height: 2000px;width: 100%;top: 0px;position: absolute;-webkit-tap-highlight-color: rgba(0,0,0,0);position: fixed;
+    pointer-events: auto;margin: 0;
+    padding: 0;
+    background-color: #fff;
+    -webkit-background-clip: content;
+    border-radius: 2px;
+    box-shadow: 1px 1px 50px rgba(0,0,0,.3);    z-index: 19891015">
+    	<div id="preloader_1" >
+	    <span></span>
+	    <span></span>
+	    <span></span>
+	    <span></span>
+	    <span></span>
 		</div>
     </div>
 		<script th:src="@{/js/datamanage/animalsBreed/khzbexport.js}"></script>

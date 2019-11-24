@@ -689,12 +689,684 @@ public class AnimalsBreedService {
 			}
 		}
 	}
-	
+	public Map getKHZBData() {
+		Map ret = new HashMap();
+		Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR);
+		
+		ret.put("year_1", (year-2)+"年");
+		ret.put("year_2", (year-1)+"年");
+		ret.put("year_3", year+"年");
+		
+		//种植业数据
+		Map<String, Map> zzydata = getzzydata(year-2, year);
+		//草原生态数据
+		Map<String, Map> cystdata = getcystdata(year-2, year);
+		//获取畜牧业生产数据
+		List<Map> cmydata1 = getYearData(year-2, null);
+		List<Map> cmydata2 = getYearData(year-1, null);
+		List<Map> cmydata3 = getYearData(year, null);
+		//规模化畜禽养殖量数据
+		Map<String, Map> gmhyzdata = getgmhyzdata(year-2, year);
+		//渔业数据
+		Map<String, Map> yydata = getyydata(year-2, year);
+		//农产品信息数据
+		Map<String, Map> ncpdata = getncpdata(year-2, year);
+		//农业投入数据
+		Map<String, Map> nytrdata = getnytrdata(year-2, year);
+		//农民生活数据
+		List<Map> nmshdata1 = getnmshdata(year-2);
+		List<Map> nmshdata2 = getnmshdata(year-1);
+		List<Map> nmshdata3 = getnmshdata(year);
+		//农业生态信息
+		Map<String, Map> nystdata = getnystdata(year-2, year);
+		
+		//耕地面积
+		if(zzydata.get((year-2)+"")!=null) {
+			ret.put("gdmj_1", objToDou(zzydata.get((year-2)+"").get("gdmj"))/1000);
+		}
+		if(zzydata.get((year-1)+"")!=null) {
+			ret.put("gdmj_2", objToDou(zzydata.get((year-1)+"").get("gdmj"))/1000);
+		}
+		if(zzydata.get((year)+"")!=null) {
+			ret.put("gdmj_3", objToDou(zzydata.get((year)+"").get("gdmj"))/1000);
+		}
+		//高标准农田面积
+		if(zzydata.get((year-2)+"")!=null) {
+			ret.put("gbzmj_1", objToDou(zzydata.get((year-2)+"").get("gbzltmj"))/1000);
+		}
+		if(zzydata.get((year-1)+"")!=null) {
+			ret.put("gbzmj_2", objToDou(zzydata.get((year-1)+"").get("gbzltmj"))/1000);
+		}
+		if(zzydata.get((year)+"")!=null) {
+			ret.put("gbzmj_3", objToDou(zzydata.get((year)+"").get("gbzltmj"))/1000);
+		}
+		//土壤有机质含量
+		if(zzydata.get((year-2)+"")!=null) {
+			ret.put("tryjzhl_1", objToDou(zzydata.get((year-2)+"").get("yjz")));
+				}
+		if(zzydata.get((year-1)+"")!=null) {
+			ret.put("tryjzhl_2", objToDou(zzydata.get((year-1)+"").get("yjz")));
+		}
+		if(zzydata.get(year+"")!=null) {
+			ret.put("tryjzhl_3", objToDou(zzydata.get(year+"").get("yjz")));
+		}
+		//农田灌溉水有效利用系数
+		if(zzydata.get((year-2)+"")!=null) {
+			ret.put("ntggslyxs_1", objToDou(zzydata.get((year-2)+"").get("ggslyxs")));	
+				}
+		if(zzydata.get((year-1)+"")!=null) {
+			ret.put("ntggslyxs_2", objToDou(zzydata.get((year-1)+"").get("ggslyxs")));
+		}
+		if(zzydata.get(year+"")!=null) {
+			ret.put("ntggslyxs_3", objToDou(zzydata.get(year+"").get("ggslyxs")));
+		}
+		//播种面积
+		if(zzydata.get((year-2)+"")!=null) {
+			ret.put("bzmj_1", objToDou(zzydata.get((year-2)+"").get("qkmj"))/1000+objToDou(zzydata.get((year-2)+"").get("ycmj"))/1000+objToDou(zzydata.get((year-2)+"").get("ymmj"))/1000);
+				}
+		if(zzydata.get((year-1)+"")!=null) {
+			ret.put("bzmj_2", objToDou(zzydata.get((year-1)+"").get("qkmj"))/1000+objToDou(zzydata.get((year-1)+"").get("ycmj"))/1000+objToDou(zzydata.get((year-1)+"").get("ymmj"))/1000);
+		}
+		if(zzydata.get(year+"")!=null) {
+			ret.put("bzmj_3", objToDou(zzydata.get(year+"").get("qkmj"))/1000+objToDou(zzydata.get(year+"").get("ycmj"))/1000+objToDou(zzydata.get(year+"").get("ymmj"))/1000);
+		}
+		
+		//多年生人工草地保留面积
+		if(cystdata.get((year-2)+"")!=null) {
+			ret.put("dnsrgcdmj_1", objToDou(cystdata.get((year-2)+"").get("grass_retain_area")));	
+				}
+		if(cystdata.get((year-1)+"")!=null) {
+			ret.put("dnsrgcdmj_2", objToDou(cystdata.get((year-1)+"").get("grass_retain_area")));
+		}
+		if(cystdata.get(year+"")!=null) {
+			ret.put("dnsrgcdmj_3", objToDou(cystdata.get(year+"").get("grass_retain_area")));
+		}
+		//生猪出栏量
+		if(cmydata1!=null && cmydata1.size() > 0) {
+			for (Map map : cmydata1) {
+				if(ObjToStr(map.get("target_name")).equals("猪")) {
+					ret.put("szcll_1", objToDou(map.get("maturity_size")));
+					break;
+				}
+			}
+		}
+		if(cmydata2!=null && cmydata2.size() > 0) {
+			for (Map map : cmydata2) {
+				if(ObjToStr(map.get("target_name")).equals("猪")) {
+					ret.put("szcll_2", objToDou(map.get("maturity_size")));
+					break;
+				}
+			}
+		}
+		if(cmydata3!=null && cmydata3.size() > 0) {
+			for (Map map : cmydata3) {
+				if(ObjToStr(map.get("target_name")).equals("猪")) {
+					ret.put("szcll_3", objToDou(map.get("maturity_size")));
+					break;
+				}
+			}
+		}
+		//肉牛出栏量
+		if(cmydata1!=null && cmydata1.size() > 0) {
+			for (Map map : cmydata1) {
+				if(ObjToStr(map.get("target_name")).equals("牛")) {
+					ret.put("rncll_1",objToDou(map.get("maturity_size")));
+					break;
+				}
+			}
+		}
+		if(cmydata2!=null && cmydata2.size() > 0) {
+			for (Map map : cmydata2) {
+				if(ObjToStr(map.get("target_name")).equals("牛")) {
+					ret.put("rncll_2",objToDou(map.get("maturity_size")));
+					break;
+				}
+			}
+		}
+		if(cmydata3!=null && cmydata3.size() > 0) {
+			for (Map map : cmydata3) {
+				if(ObjToStr(map.get("target_name")).equals("牛")) {
+					ret.put("rncll_3",objToDou(map.get("maturity_size")));
+					break;
+				}
+			}
+		}
+		//奶牛存栏量
+		if(cmydata1!=null && cmydata1.size() > 0) {
+			for (Map map : cmydata1) {
+				if(ObjToStr(map.get("target_name")).equals("奶牛")) {
+					ret.put("nncll_1",objToDou(map.get("nccl")));
+					break;
+				}
+			}
+		}
+		if(cmydata2!=null && cmydata2.size() > 0) {
+			for (Map map : cmydata2) {
+				if(ObjToStr(map.get("target_name")).equals("奶牛")) {
+					ret.put("nncll_2",objToDou(map.get("nccl")));
+					break;
+				}
+			}
+		}
+		if(cmydata3!=null && cmydata3.size() > 0) {
+			for (Map map : cmydata3) {
+				if(ObjToStr(map.get("target_name")).equals("奶牛")) {
+					ret.put("nncll_3",objToDou(map.get("nccl")));
+					break;
+				}
+			}
+		}
+		//肉羊出栏量
+		if(cmydata1!=null && cmydata1.size() > 0) {
+			for (Map map : cmydata1) {
+				if(ObjToStr(map.get("target_name")).equals("羊")) {
+					ret.put("rycll_1",objToDou(map.get("maturity_size")));
+					break;
+				}
+			}
+		}
+		if(cmydata2!=null && cmydata2.size() > 0) {
+			for (Map map : cmydata2) {
+				if(ObjToStr(map.get("target_name")).equals("羊")) {
+					ret.put("rycll_2",objToDou(map.get("maturity_size")));
+					break;
+				}
+			}
+		}
+		if(cmydata3!=null && cmydata3.size() > 0) {
+			for (Map map : cmydata3) {
+				if(ObjToStr(map.get("target_name")).equals("羊")) {
+					ret.put("rycll_3",objToDou(map.get("maturity_size")));
+					break;
+				}
+			}
+		}
+		//肉禽出栏量
+		if(cmydata1!=null && cmydata1.size() > 0) {
+			for (Map map : cmydata1) {
+				if(ObjToStr(map.get("target_name")).equals("家禽")) {
+					ret.put("rqcll_1",objToDou(map.get("maturity_size")));
+					break;
+				}
+			}
+		}
+		if(cmydata2!=null && cmydata2.size() > 0) {
+			for (Map map : cmydata2) {
+				if(ObjToStr(map.get("target_name")).equals("家禽")) {
+					ret.put("rqcll_2",objToDou(map.get("maturity_size")));
+					break;
+				}
+			}
+		}
+		if(cmydata3!=null && cmydata3.size() > 0) {
+			for (Map map : cmydata3) {
+				if(ObjToStr(map.get("target_name")).equals("家禽")) {
+					ret.put("rqcll_3",objToDou(map.get("maturity_size")));
+					break;
+				}
+			}
+		}
+		//蛋禽存栏量
+		if(cmydata1!=null && cmydata1.size() > 0) {
+			for (Map map : cmydata1) {
+				if(ObjToStr(map.get("target_name")).equals("专用型蛋鸡")) {
+					ret.put("dqcll_1",objToDou(map.get("nccl")));
+					break;
+				}
+			}
+		}
+		if(cmydata2!=null && cmydata2.size() > 0) {
+			for (Map map : cmydata2) {
+				if(ObjToStr(map.get("target_name")).equals("专用型蛋鸡")) {
+					ret.put("dqcll_2",objToDou(map.get("nccl")));
+					break;
+				}
+			}
+		}
+		if(cmydata3!=null && cmydata3.size() > 0) {
+			for (Map map : cmydata3) {
+				if(ObjToStr(map.get("target_name")).equals("专用型蛋鸡")) {
+					ret.put("dqcll_3",objToDou(map.get("nccl")));
+					break;
+				}
+			}
+		}
+		//出栏的生猪数量
+		if(gmhyzdata.get((year-2)+"")!=null) {
+			ret.put("szsl_1",objToDou(gmhyzdata.get((year-2)+"").get("szcls")));
+		}
+		if(gmhyzdata.get((year-1)+"")!=null) {
+			ret.put("szsl_2",objToDou(gmhyzdata.get((year-1)+"").get("szcls")));
+		}
+		if(gmhyzdata.get(year+"")!=null) {
+			ret.put("szsl_3",objToDou(gmhyzdata.get(year+"").get("szcls")));
+		}
+		//出栏肉牛数量
+		if(gmhyzdata.get((year-2)+"")!=null) {
+			ret.put("rnsl_1",objToDou(gmhyzdata.get((year-2)+"").get("rncls")));
+		}
+		if(gmhyzdata.get((year-1)+"")!=null) {
+			ret.put("rnsl_2",objToDou(gmhyzdata.get((year-1)+"").get("rncls")));
+		}
+		if(gmhyzdata.get(year+"")!=null) {
+			ret.put("rnsl_3",objToDou(gmhyzdata.get(year+"").get("rncls")));
+		}
+		//存栏的奶牛数量
+		if(gmhyzdata.get((year-2)+"")!=null) {
+			ret.put("nnsl_1",objToDou(gmhyzdata.get((year-2)+"").get("nncls")));
+		}
+		if(gmhyzdata.get((year-1)+"")!=null) {
+			ret.put("nnsl_2",objToDou(gmhyzdata.get((year-1)+"").get("nncls")));
+		}
+		if(gmhyzdata.get(year+"")!=null) {
+			ret.put("nnsl_3",objToDou(gmhyzdata.get(year+"").get("nncls")));
+		}
+		//出栏的肉羊数量
+		if(gmhyzdata.get((year-2)+"")!=null) {
+			ret.put("rysl_1",objToDou(gmhyzdata.get((year-2)+"").get("rycls")));
+		}
+		if(gmhyzdata.get((year-1)+"")!=null) {
+			ret.put("rysl_2",objToDou(gmhyzdata.get((year-1)+"").get("rycls")));
+		}
+		if(gmhyzdata.get(year+"")!=null) {
+			ret.put("rysl_3",objToDou(gmhyzdata.get(year+"").get("rycls")));
+		}
+		//存栏的蛋鸡数量
+		if(gmhyzdata.get((year-2)+"")!=null) {
+			ret.put("djsl_1",objToDou(gmhyzdata.get((year-2)+"").get("djcls")));
+		}
+		if(gmhyzdata.get((year-1)+"")!=null) {
+			ret.put("djsl_2",objToDou(gmhyzdata.get((year-1)+"").get("djcls")));
+		}
+		if(gmhyzdata.get(year+"")!=null) {
+			ret.put("djsl_3",objToDou(gmhyzdata.get(year+"").get("djcls")));
+		}
+		//出栏的肉鸡数量
+		if(gmhyzdata.get((year-2)+"")!=null) {
+			ret.put("rjsl_1",objToDou(gmhyzdata.get((year-2)+"").get("rjcls")));
+		}
+		if(gmhyzdata.get((year-1)+"")!=null) {
+			ret.put("rjsl_2",objToDou(gmhyzdata.get((year-1)+"").get("rjcls")));
+		}
+		if(gmhyzdata.get(year+"")!=null) {
+			ret.put("rjsl_3",objToDou(gmhyzdata.get(year+"").get("rjcls")));
+		}
+		//其他规模化养殖的畜禽数量
+		if(gmhyzdata.get((year-2)+"")!=null) {
+			ret.put("qtgmhl_1",objToDou(gmhyzdata.get((year-2)+"").get("qt")));
+		}
+		if(gmhyzdata.get((year-1)+"")!=null) {
+			ret.put("qtgmhl_2",objToDou(gmhyzdata.get((year-1)+"").get("qt")));
+		}
+		if(gmhyzdata.get(year+"")!=null) {
+			ret.put("qtgmhl_3",objToDou(gmhyzdata.get(year+"").get("qt")));
+		}
+		//猪肉产量
+		if(cmydata1!=null && cmydata1.size() > 0) {
+			for (Map map : cmydata1) {
+				if(ObjToStr(map.get("target_name")).equals("猪")) {
+					ret.put("zr_1",objToDou(map.get("meat_output")));
+					break;
+				}
+			}
+		}
+		if(cmydata2!=null && cmydata2.size() > 0) {
+			for (Map map : cmydata2) {
+				if(ObjToStr(map.get("target_name")).equals("猪")) {
+					ret.put("zr_2",objToDou(map.get("meat_output")));
+					break;
+				}
+			}
+		}
+		if(cmydata3!=null && cmydata3.size() > 0) {
+			for (Map map : cmydata3) {
+				if(ObjToStr(map.get("target_name")).equals("猪")) {
+					ret.put("zr_3",objToDou(map.get("meat_output")));
+					break;
+				}
+			}
+		}
+		//牛肉产量
+		if(cmydata1!=null && cmydata1.size() > 0) {
+			for (Map map : cmydata1) {
+				if(ObjToStr(map.get("target_name")).equals("牛")) {
+					ret.put("nr_1",objToDou(map.get("meat_output")));
+					break;
+				}
+			}
+		}
+		if(cmydata2!=null && cmydata2.size() > 0) {
+			for (Map map : cmydata2) {
+				if(ObjToStr(map.get("target_name")).equals("牛")) {
+					ret.put("nr_2",objToDou(map.get("meat_output")));
+					break;
+				}
+			}
+		}
+		if(cmydata3!=null && cmydata3.size() > 0) {
+			for (Map map : cmydata3) {
+				if(ObjToStr(map.get("target_name")).equals("牛")) {
+					ret.put("nr_3",objToDou(map.get("meat_output")));
+					break;
+				}
+			}
+		}
+		//羊肉产量
+		if(cmydata1!=null && cmydata1.size() > 0) {
+			for (Map map : cmydata1) {
+				if(ObjToStr(map.get("target_name")).equals("羊")) {
+					ret.put("yr_1",objToDou(map.get("meat_output")));
+					break;
+				}
+			}
+		}
+		if(cmydata2!=null && cmydata2.size() > 0) {
+			for (Map map : cmydata2) {
+				if(ObjToStr(map.get("target_name")).equals("羊")) {
+					ret.put("yr_2",objToDou(map.get("meat_output")));
+					break;
+				}
+			}
+		}
+		if(cmydata3!=null && cmydata3.size() > 0) {
+			for (Map map : cmydata3) {
+				if(ObjToStr(map.get("target_name")).equals("羊")) {
+					ret.put("yr_3",objToDou(map.get("meat_output")));
+					break;
+				}
+			}
+		}
+		//牛奶
+		if(cmydata1!=null && cmydata1.size() > 0) {
+			for (Map map : cmydata1) {
+				if(ObjToStr(map.get("target_name")).equals("牛")) {
+					ret.put("nn_1",objToDou(map.get("milk_output")));
+					break;
+				}
+			}
+		}
+		if(cmydata2!=null && cmydata2.size() > 0) {
+			for (Map map : cmydata2) {
+				if(ObjToStr(map.get("target_name")).equals("牛")) {
+					ret.put("nn_2",objToDou(map.get("milk_output")));
+					break;
+				}
+			}
+		}
+		if(cmydata3!=null && cmydata3.size() > 0) {
+			for (Map map : cmydata3) {
+				if(ObjToStr(map.get("target_name")).equals("牛")) {
+					ret.put("nn_3",objToDou(map.get("milk_output")));
+					break;
+				}
+			}
+		}
+		//禽肉
+		if(cmydata1!=null && cmydata1.size() > 0) {
+			for (Map map : cmydata1) {
+				if(ObjToStr(map.get("target_name")).equals("家禽")) {
+					ret.put("qr_1",objToDou(map.get("meat_output")));
+					break;
+				}
+			}
+		}
+		if(cmydata2!=null && cmydata2.size() > 0) {
+			for (Map map : cmydata2) {
+				if(ObjToStr(map.get("target_name")).equals("家禽")) {
+					ret.put("qr_2",objToDou(map.get("meat_output")));
+					break;
+				}
+			}
+		}
+		if(cmydata3!=null && cmydata3.size() > 0) {
+			for (Map map : cmydata3) {
+				if(ObjToStr(map.get("target_name")).equals("家禽")) {
+					ret.put("qr_3",objToDou(map.get("meat_output")));
+					break;
+				}
+			}
+		}
+		//禽蛋
+		if(cmydata1!=null && cmydata1.size() > 0) {
+			for (Map map : cmydata1) {
+				if(ObjToStr(map.get("target_name")).equals("专用型蛋鸡")) {
+					ret.put("qd_1",objToDou(map.get("egg_output")));
+					break;
+				}
+			}
+		}
+		if(cmydata2!=null && cmydata2.size() > 0) {
+			for (Map map : cmydata2) {
+				if(ObjToStr(map.get("target_name")).equals("专用型蛋鸡")) {
+					ret.put("qd_2",objToDou(map.get("egg_output")));
+					break;
+				}
+			}
+		}
+		if(cmydata3!=null && cmydata3.size() > 0) {
+			for (Map map : cmydata3) {
+				if(ObjToStr(map.get("target_name")).equals("专用型蛋鸡")) {
+					ret.put("qd_3",objToDou(map.get("egg_output")));
+					break;
+				}
+			}
+		}
+		//蜂蜜
+		if(cmydata1!=null && cmydata1.size() > 0) {
+			for (Map map : cmydata1) {
+				if(ObjToStr(map.get("target_name")).equals("蜂蜜")) {
+					ret.put("fm_1",objToDou(map.get("milk_output")));
+					break;
+				}
+			}
+		}
+		if(cmydata2!=null && cmydata2.size() > 0) {
+			for (Map map : cmydata2) {
+				if(ObjToStr(map.get("target_name")).equals("蜂蜜")) {
+					ret.put("fm_2",objToDou(map.get("milk_output")));
+					break;
+				}
+			}
+		}
+		if(cmydata3!=null && cmydata3.size() > 0) {
+			for (Map map : cmydata3) {
+				if(ObjToStr(map.get("target_name")).equals("蜂蜜")) {
+					ret.put("fm_3",objToDou(map.get("milk_output")));
+					break;
+				}
+			}
+		}
+		//水产养殖总面积
+		if(yydata.get((year-2)+"")!=null) {
+			ret.put("scyzzmj_1",objToDou(yydata.get((year-2)+"").get("scyzmj")));
+		}
+		if(yydata.get((year-+1)+"")!=null) {
+			ret.put("scyzzmj_2",objToDou(yydata.get((year-+1)+"").get("scyzmj")));
+		}
+		if(yydata.get(year+"")!=null) {
+			ret.put("scyzzmj_3",objToDou(yydata.get(year+"").get("scyzmj")));
+		}
+		//水产标准化健康养殖示范场（区）养殖面积
+		if(yydata.get((year-2)+"")!=null) {
+			ret.put("sczzhyzmj_1",objToDou(yydata.get((year-2)+"").get("scbzhyzmj")));
+		}
+		if(yydata.get((year-+1)+"")!=null) {
+			ret.put("sczzhyzmj_2",objToDou(yydata.get((year-1)+"").get("scbzhyzmj")));
+		}
+		if(yydata.get(year+"")!=null) {
+			ret.put("sczzhyzmj_3",objToDou(yydata.get(year+"").get("scbzhyzmj")));
+		}
+		//种植业
+		if(ncpdata.get((year-2)+"")!=null) {
+			ret.put("zzy_1",objToDou(ncpdata.get((year-2)+"").get("high_quality_plant_count")));
+		}
+		if(ncpdata.get((year-1)+"")!=null) {
+			ret.put("zzy_2",objToDou(ncpdata.get((year-1)+"").get("high_quality_plant_count")));
+		}
+		if(ncpdata.get(year+"")!=null) {
+			ret.put("zzy_3",objToDou(ncpdata.get(year+"").get("high_quality_plant_count")));
+		}
+		//畜牧业
+		if(ncpdata.get((year-2)+"")!=null) {
+			ret.put("cmy_1",objToDou(ncpdata.get((year-2)+"").get("high_quality_animal_count")));
+		}
+		if(ncpdata.get((year-1)+"")!=null) {
+			ret.put("cmy_2",objToDou(ncpdata.get((year-1)+"").get("high_quality_animal_count")));
+		}
+		if(ncpdata.get(year+"")!=null) {
+			ret.put("cmy_3",objToDou(ncpdata.get(year+"").get("high_quality_animal_count")));
+		}
+		//渔业
+		if(ncpdata.get((year-2)+"")!=null) {
+			ret.put("yy_1",objToDou(ncpdata.get((year-2)+"").get("high_quality_fish_count")));
+		}
+		if(ncpdata.get((year-1)+"")!=null) {
+			ret.put("yy_2",objToDou(ncpdata.get((year-1)+"").get("high_quality_fish_count")));
+		}
+		if(ncpdata.get(year+"")!=null) {
+			ret.put("yy_3",objToDou(ncpdata.get(year+"").get("high_quality_fish_count")));
+		}
+		//种植业产品总产量
+		if(ncpdata.get((year-2)+"")!=null) {
+			ret.put("zzycpzl_1",objToDou(ncpdata.get((year-2)+"").get("plant_product_count")));
+		}
+		if(ncpdata.get((year-1)+"")!=null) {
+			ret.put("zzycpzl_2",objToDou(ncpdata.get((year-1)+"").get("plant_product_count")));
+		}
+		if(ncpdata.get(year+"")!=null) {
+			ret.put("zzycpzl_3",objToDou(ncpdata.get(year+"").get("plant_product_count")));
+		}
+		//畜牧业产品总产量
+		if(ncpdata.get((year-2)+"")!=null) {
+			ret.put("cmycpzl_1",objToDou(ncpdata.get((year-2)+"").get("animal_product_count")));
+		}
+		if(ncpdata.get((year-1)+"")!=null) {
+			ret.put("cmycpzl_2",objToDou(ncpdata.get((year-1)+"").get("animal_product_count")));
+		}
+		if(ncpdata.get(year+"")!=null) {
+			ret.put("cmycpzl_3",objToDou(ncpdata.get(year+"").get("animal_product_count")));
+		}
+		//渔业产品总产量
+		if(ncpdata.get((year-2)+"")!=null) {
+			ret.put("yycpzl_1",objToDou(ncpdata.get((year-2)+"").get("fish_product_count")));
+		}
+		if(ncpdata.get((year-1)+"")!=null) {
+			ret.put("yycpzl_2",objToDou(ncpdata.get((year-1)+"").get("fish_product_count")));
+		}
+		if(ncpdata.get(year+"")!=null) {
+			ret.put("yycpzl_3",objToDou(ncpdata.get(year+"").get("fish_product_count")));
+		}
+		//化肥施用量（折纯量） 
+		if(nytrdata.get((year-2)+"")!=null) {
+			ret.put("hfsyl_1",objToDou(nytrdata.get((year-2)+"").get("n"))+objToDou(nytrdata.get((year-2)+"").get("p"))+
+					objToDou(nytrdata.get((year-2)+"").get("k"))+objToDou(nytrdata.get((year-2)+"").get("fhf"))+objToDou(nytrdata.get((year-2)+"").get("yjf"))
+				   +objToDou(nytrdata.get((year-2)+"").get("ljf")));
+		}
+		if(nytrdata.get((year-1)+"")!=null) {
+			ret.put("hfsyl_2",objToDou(nytrdata.get((year-1)+"").get("n"))+objToDou(nytrdata.get((year-1)+"").get("p"))+
+					objToDou(nytrdata.get((year-1)+"").get("k"))+objToDou(nytrdata.get((year-1)+"").get("fhf"))+objToDou(nytrdata.get((year-1)+"").get("yjf"))
+					+objToDou(nytrdata.get((year-1)+"").get("ljf")));
+		}
+		if(nytrdata.get(year+"")!=null) {
+			ret.put("hfsyl_3",objToDou(nytrdata.get(year+"").get("n"))+objToDou(nytrdata.get(year+"").get("p"))+
+					objToDou(nytrdata.get(year+"").get("k"))+objToDou(nytrdata.get(year+"").get("fhf"))+objToDou(nytrdata.get(year+"").get("yjf"))+
+					objToDou(nytrdata.get(year+"").get("ljf")));
+		}
+		//农药施用量（折百量）
+		if(nytrdata.get((year-2)+"")!=null) {
+			ret.put("nysyl_1",objToDou(nytrdata.get((year-2)+"").get("lyqd")));
+		}
+		if(nytrdata.get((year-1)+"")!=null) {
+			ret.put("nysyl_2",objToDou(nytrdata.get((year-1)+"").get("lyqd")));
+		}
+		if(nytrdata.get(year+"")!=null) {
+			ret.put("nysyl_3",objToDou(nytrdata.get(year+"").get("lyqd")));
+		}
+		//综合利用的秸秆量
+		if(nytrdata.get((year-2)+"")!=null) {
+			ret.put("zhlyjgl_1",objToDou(nytrdata.get((year-2)+"").get("zhlyjg")));
+		}
+		if(nytrdata.get((year-1)+"")!=null) {
+			ret.put("zhlyjgl_2",objToDou(nytrdata.get((year-1)+"").get("zhlyjg")));
+		}
+		if(nytrdata.get(year+"")!=null) {
+			ret.put("zhlyjgl_3",objToDou(nytrdata.get(year+"").get("zhlyjg")));
+		}
+		//秸秆可收集资源量
+		if(nytrdata.get((year-2)+"")!=null) {
+			ret.put("jgksjzyl_1",objToDou(nytrdata.get((year-2)+"").get("jgksj")));
+		}
+		if(nytrdata.get((year-1)+"")!=null) {
+			ret.put("jgksjzyl_2",objToDou(nytrdata.get((year-1)+"").get("jgksj")));
+		}
+		if(nytrdata.get(year+"")!=null) {
+			ret.put("jgksjzyl_3",objToDou(nytrdata.get(year+"").get("jgksj")));
+		}
+		//回收利用的农膜总量
+		if(nytrdata.get((year-2)+"")!=null) {
+			ret.put("hslynmzl_1",objToDou(nytrdata.get((year-2)+"").get("lmzl")));
+		}
+		if(nytrdata.get((year-1)+"")!=null) {
+			ret.put("hslynmzl_2",objToDou(nytrdata.get((year-1)+"").get("lmzl")));
+		}
+		if(nytrdata.get(year+"")!=null) {
+			ret.put("hslynmzl_3",objToDou(nytrdata.get(year+"").get("lmzl")));
+		}
+		//农膜使用总量
+		if(nytrdata.get((year-2)+"")!=null) {
+			ret.put("nmsyzl_1",objToDou(nytrdata.get((year-2)+"").get("lmsyl")));
+		}
+		if(nytrdata.get((year-1)+"")!=null) {
+			ret.put("nmsyzl_2",objToDou(nytrdata.get((year-1)+"").get("lmsyl")));
+		}
+		if(nytrdata.get(year+"")!=null) {
+			ret.put("nmsyzl_3",objToDou(nytrdata.get(year+"").get("lmsyl")));
+		}
+		//综合利用的畜禽粪污量
+		if(nytrdata.get((year-2)+"")!=null) {
+			ret.put("zhlycqfwl_1",objToDou(nytrdata.get((year-2)+"").get("qcfl")));
+		}
+		if(nytrdata.get((year-1)+"")!=null) {
+			ret.put("zhlycqfwl_2",objToDou(nytrdata.get((year-1)+"").get("qcfl")));
+		}
+		if(nytrdata.get(year+"")!=null) {
+			ret.put("zhlycqfwl_3",objToDou(nytrdata.get(year+"").get("qcfl")));
+		}
+		//畜禽粪污总量
+		if(nytrdata.get((year-2)+"")!=null) {
+			ret.put("cqfwzl_1",objToDou(nytrdata.get((year-2)+"").get("qcfzl")));
+		}
+		if(nytrdata.get((year-1)+"")!=null) {
+			ret.put("cqfwzl_2",objToDou(nytrdata.get((year-1)+"").get("qcfzl")));
+		}
+		if(nytrdata.get(year+"")!=null) {
+			ret.put("cqfwzl_3",objToDou(nytrdata.get(year+"").get("qcfzl")));
+		}
+		//农村居民人均可支配收入
+		ret.put("ncjmrjkzpsr_1",objToDou(getRjkzpsr(nmshdata1)));
+		ret.put("ncjmrjkzpsr_2",objToDou(getRjkzpsr(nmshdata2)));
+		ret.put("ncjmrjkzpsr_3",objToDou(getRjkzpsr(nmshdata3)));
+		//实施生活垃圾集中手机处理的行政村数
+		ret.put("ssshljjzcl_1",getLjjzcl(nmshdata1));
+		ret.put("ssshljjzcl_2",getLjjzcl(nmshdata2));
+		ret.put("ssshljjzcl_3",getLjjzcl(nmshdata3));
+		//有生活污水处理设施的行政村数
+		ret.put("yshwsclss_1",getWscl(nmshdata1));
+		ret.put("yshwsclss_2",getWscl(nmshdata2));
+		ret.put("yshwsclss_3",getWscl(nmshdata3));
+		//行政村总数
+		ret.put("xzczs_1",null!=nmshdata1?nmshdata1.size():0);
+		ret.put("xzczs_2",null!=nmshdata2?nmshdata2.size():0);
+		ret.put("xzczs_3",null!=nmshdata3?nmshdata3.size():0);
+
+		return ret;
+	}
 	/**
 	 * 导出考核指标表
 	 * @param response
 	 */
-	public void exportKHZB(HttpServletResponse response, Integer syear, Integer eyear) {
+	public void exportKHZB(HttpServletResponse response,HttpServletRequest r, Integer syear, Integer eyear) {
 		File destFile = null;
 		InputStream is = null;
 		OutputStream out = null;
@@ -748,6 +1420,7 @@ public class AnimalsBreedService {
 			if(zzydata.get(eyear+"")!=null) {
 				row3.getCell(7).setCellValue(objToDou(zzydata.get(eyear+"").get("gdmj"))/1000);
 			}
+			row3.getCell(11).setCellValue(r.getParameter("gdmj"));
 			//高标准农田面积
 			HSSFRow row4 = sheet.getRow(4);
 			if(zzydata.get(syear+"")!=null) {
@@ -759,6 +1432,7 @@ public class AnimalsBreedService {
 			if(zzydata.get(eyear+"")!=null) {
 				row4.getCell(7).setCellValue(objToDou(zzydata.get(eyear+"").get("gbzltmj"))/1000);
 			}
+			row4.getCell(11).setCellValue(r.getParameter("gbzmj"));
 			//土壤有机质含量
 			HSSFRow row5 = sheet.getRow(5);
 			if(zzydata.get(syear+"")!=null) {
@@ -770,6 +1444,7 @@ public class AnimalsBreedService {
 			if(zzydata.get(eyear+"")!=null) {
 				row5.getCell(7).setCellValue(objToDou(zzydata.get(eyear+"").get("yjz")));
 			}
+			row5.getCell(11).setCellValue(r.getParameter("tryjzhl"));
 			//农田灌溉水有效利用系数
 			HSSFRow row6 = sheet.getRow(6);
 			if(zzydata.get(syear+"")!=null) {
@@ -781,6 +1456,7 @@ public class AnimalsBreedService {
 			if(zzydata.get(eyear+"")!=null) {
 				row6.getCell(7).setCellValue(objToDou(zzydata.get(eyear+"").get("ggslyxs")));
 			}
+			row6.getCell(11).setCellValue(r.getParameter("ntggslyxs"));
 			//播种面积
 			HSSFRow row7 = sheet.getRow(7);
 			if(zzydata.get(syear+"")!=null) {
@@ -792,6 +1468,7 @@ public class AnimalsBreedService {
 			if(zzydata.get(eyear+"")!=null) {
 				row7.getCell(7).setCellValue(objToDou(zzydata.get(eyear+"").get("qkmj"))/1000+objToDou(zzydata.get(eyear+"").get("ycmj"))/1000+objToDou(zzydata.get(eyear+"").get("ymmj"))/1000);
 			}
+			row7.getCell(11).setCellValue(r.getParameter("bzmj"));
 			//多年生人工草地保留面积
 			HSSFRow row8 = sheet.getRow(8);
 			if(cystdata.get(syear+"")!=null) {
@@ -803,6 +1480,7 @@ public class AnimalsBreedService {
 			if(cystdata.get(eyear+"")!=null) {
 				row8.getCell(7).setCellValue(objToDou(cystdata.get(eyear+"").get("grass_retain_area")));
 			}
+			row8.getCell(11).setCellValue(r.getParameter("dnsrgcdmj"));
 			//生猪出栏量
 			HSSFRow row9 = sheet.getRow(9);
 			if(cmydata1!=null && cmydata1.size() > 0) {
@@ -829,6 +1507,7 @@ public class AnimalsBreedService {
 					}
 				}
 			}
+			row9.getCell(11).setCellValue(r.getParameter("szcll"));
 			//肉牛出栏量
 			HSSFRow row10 = sheet.getRow(10);
 			if(cmydata1!=null && cmydata1.size() > 0) {
@@ -970,6 +1649,7 @@ public class AnimalsBreedService {
 			if(gmhyzdata.get(eyear+"")!=null) {
 				row15.getCell(7).setCellValue(objToDou(gmhyzdata.get(eyear+"").get("szcls")));
 			}
+			row15.getCell(11).setCellValue(r.getParameter("szsl"));
 			//出栏肉牛数量
 			HSSFRow row16 = sheet.getRow(16);
 			if(gmhyzdata.get(syear+"")!=null) {
@@ -1062,6 +1742,7 @@ public class AnimalsBreedService {
 					}
 				}
 			}
+			row22.getCell(11).setCellValue(r.getParameter("zr"));
 			//牛肉产量
 			HSSFRow row23 = sheet.getRow(23);
 			if(cmydata1!=null && cmydata1.size() > 0) {
@@ -1192,6 +1873,32 @@ public class AnimalsBreedService {
 					}
 				}
 			}
+			//蜂蜜
+			HSSFRow row28 = sheet.getRow(28);
+			if(cmydata1!=null && cmydata1.size() > 0) {
+				for (Map map : cmydata1) {
+					if(ObjToStr(map.get("target_name")).equals("蜂蜜")) {
+						row28.getCell(5).setCellValue(objToDou(map.get("milk_output")));
+						break;
+					}
+				}
+			}
+			if(cmydata2!=null && cmydata2.size() > 0) {
+				for (Map map : cmydata2) {
+					if(ObjToStr(map.get("target_name")).equals("蜂蜜")) {
+						row28.getCell(6).setCellValue(objToDou(map.get("milk_output")));
+						break;
+					}
+				}
+			}
+			if(cmydata3!=null && cmydata3.size() > 0) {
+				for (Map map : cmydata3) {
+					if(ObjToStr(map.get("target_name")).equals("蜂蜜")) {
+						row28.getCell(7).setCellValue(objToDou(map.get("milk_output")));
+						break;
+					}
+				}
+			}
 			//水产养殖总面积
 			HSSFRow row29 = sheet.getRow(29);
 			if(yydata.get(syear+"")!=null) {
@@ -1203,6 +1910,7 @@ public class AnimalsBreedService {
 			if(yydata.get(eyear+"")!=null) {
 				row29.getCell(7).setCellValue(objToDou(yydata.get(eyear+"").get("scyzmj")));
 			}
+			row29.getCell(11).setCellValue(r.getParameter("scyzzmj"));
 			//水产标准化健康养殖示范场（区）养殖面积
 			HSSFRow row30 = sheet.getRow(30);
 			if(yydata.get(syear+"")!=null) {
@@ -1214,6 +1922,7 @@ public class AnimalsBreedService {
 			if(yydata.get(eyear+"")!=null) {
 				row30.getCell(7).setCellValue(objToDou(yydata.get(eyear+"").get("scbzhyzmj")));
 			}
+			row30.getCell(11).setCellValue(r.getParameter("sczzhyzmj"));
 			//种植业
 			HSSFRow row31 = sheet.getRow(31);
 			if(ncpdata.get(syear+"")!=null) {
@@ -1225,6 +1934,7 @@ public class AnimalsBreedService {
 			if(ncpdata.get(eyear+"")!=null) {
 				row31.getCell(7).setCellValue(objToDou(ncpdata.get(eyear+"").get("high_quality_plant_count")));
 			}
+			row31.getCell(11).setCellValue(r.getParameter("zzy"));
 			//畜牧业
 			HSSFRow row32 = sheet.getRow(32);
 			if(ncpdata.get(syear+"")!=null) {
@@ -1258,6 +1968,7 @@ public class AnimalsBreedService {
 			if(ncpdata.get(eyear+"")!=null) {
 				row34.getCell(7).setCellValue(objToDou(ncpdata.get(eyear+"").get("plant_product_count")));
 			}
+			row34.getCell(11).setCellValue(r.getParameter("zzycpzl"));
 			//畜牧业产品总产量
 			HSSFRow row35 = sheet.getRow(35);
 			if(ncpdata.get(syear+"")!=null) {
@@ -1297,6 +2008,7 @@ public class AnimalsBreedService {
 						objToDou(nytrdata.get(eyear+"").get("k"))+objToDou(nytrdata.get(eyear+"").get("fhf"))+objToDou(nytrdata.get(eyear+"").get("yjf"))+
 						objToDou(nytrdata.get(eyear+"").get("ljf")));
 			}
+			row37.getCell(11).setCellValue(r.getParameter("hfsyl"));
 			//农药施用量（折百量）
 			HSSFRow row38 = sheet.getRow(38);
 			if(nytrdata.get(syear+"")!=null) {
@@ -1308,6 +2020,7 @@ public class AnimalsBreedService {
 			if(nytrdata.get(eyear+"")!=null) {
 				row38.getCell(7).setCellValue(objToDou(nytrdata.get(eyear+"").get("lyqd")));
 			}
+			row38.getCell(11).setCellValue(r.getParameter("nysyl"));
 			//综合利用的秸秆量
 			HSSFRow row39 = sheet.getRow(39);
 			if(nytrdata.get(syear+"")!=null) {
@@ -1319,6 +2032,7 @@ public class AnimalsBreedService {
 			if(nytrdata.get(eyear+"")!=null) {
 				row39.getCell(7).setCellValue(objToDou(nytrdata.get(eyear+"").get("zhlyjg")));
 			}
+			row39.getCell(11).setCellValue(r.getParameter("zhlyjgl"));
 			//秸秆可收集资源量
 			HSSFRow row40 = sheet.getRow(40);
 			if(nytrdata.get(syear+"")!=null) {
@@ -1330,6 +2044,7 @@ public class AnimalsBreedService {
 			if(nytrdata.get(eyear+"")!=null) {
 				row40.getCell(7).setCellValue(objToDou(nytrdata.get(eyear+"").get("jgksj")));
 			}
+			row40.getCell(11).setCellValue(r.getParameter("jgksjzyl"));
 			//回收利用的农膜总量
 			HSSFRow row41 = sheet.getRow(41);
 			if(nytrdata.get(syear+"")!=null) {
@@ -1341,6 +2056,7 @@ public class AnimalsBreedService {
 			if(nytrdata.get(eyear+"")!=null) {
 				row41.getCell(7).setCellValue(objToDou(nytrdata.get(eyear+"").get("lmzl")));
 			}
+			row41.getCell(11).setCellValue(r.getParameter("hslynmzl"));
 			//农膜使用总量
 			HSSFRow row42 = sheet.getRow(42);
 			if(nytrdata.get(syear+"")!=null) {
@@ -1352,6 +2068,7 @@ public class AnimalsBreedService {
 			if(nytrdata.get(eyear+"")!=null) {
 				row42.getCell(7).setCellValue(objToDou(nytrdata.get(eyear+"").get("lmsyl")));
 			}
+			row42.getCell(11).setCellValue(r.getParameter("nmsyzl"));
 			//综合利用的畜禽粪污量
 			HSSFRow row43 = sheet.getRow(43);
 			if(nytrdata.get(syear+"")!=null) {
@@ -1363,6 +2080,7 @@ public class AnimalsBreedService {
 			if(nytrdata.get(eyear+"")!=null) {
 				row43.getCell(7).setCellValue(objToDou(nytrdata.get(eyear+"").get("qcfl")));
 			}
+			row43.getCell(11).setCellValue(r.getParameter("zhlycqfwl"));
 			//畜禽粪污总量
 			HSSFRow row44 = sheet.getRow(44);
 			if(nytrdata.get(syear+"")!=null) {
@@ -1374,26 +2092,31 @@ public class AnimalsBreedService {
 			if(nytrdata.get(eyear+"")!=null) {
 				row44.getCell(7).setCellValue(objToDou(nytrdata.get(eyear+"").get("qcfzl")));
 			}
+			row44.getCell(11).setCellValue(r.getParameter("cqfwzl"));
 			//农村居民人均可支配收入
 			HSSFRow row45 = sheet.getRow(45);
 			row45.getCell(5).setCellValue(objToDou(getRjkzpsr(nmshdata1)));
 			row45.getCell(6).setCellValue(objToDou(getRjkzpsr(nmshdata2)));
 			row45.getCell(7).setCellValue(objToDou(getRjkzpsr(nmshdata3)));
+			row45.getCell(11).setCellValue(r.getParameter("ncjmrjkzpsr"));
 			//实施生活垃圾集中手机处理的行政村数
 			HSSFRow row46 = sheet.getRow(46);
 			row46.getCell(5).setCellValue(getLjjzcl(nmshdata1));
 			row46.getCell(6).setCellValue(getLjjzcl(nmshdata2));
 			row46.getCell(7).setCellValue(getLjjzcl(nmshdata3));
+			row46.getCell(11).setCellValue(r.getParameter("ssshljjzcl"));
 			//有生活污水处理设施的行政村数
 			HSSFRow row47 = sheet.getRow(47);
 			row47.getCell(5).setCellValue(getWscl(nmshdata1));
 			row47.getCell(6).setCellValue(getWscl(nmshdata2));
 			row47.getCell(7).setCellValue(getWscl(nmshdata3));
+			row47.getCell(11).setCellValue(r.getParameter("yshwsclss"));
 			//行政村总数
 			HSSFRow row48 = sheet.getRow(48);
 			row48.getCell(5).setCellValue(null!=nmshdata1?nmshdata1.size():0);
 			row48.getCell(6).setCellValue(null!=nmshdata2?nmshdata2.size():0);
 			row48.getCell(7).setCellValue(null!=nmshdata3?nmshdata3.size():0);
+			row48.getCell(11).setCellValue(r.getParameter("xzczs"));
 			//农业生态信息
 			HSSFRow r2 = sheet1.getRow(2);
 			r2.getCell(5).setCellValue(syear+"年");
