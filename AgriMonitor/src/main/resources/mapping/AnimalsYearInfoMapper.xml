@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.agri.monitor.mapper.AnimalsYearInfoMapper">
+	<select id="findById" parameterType="int" resultType="com.agri.monitor.entity.AnimalsYearInfo">
+		select gid, 
+			   date_year, 
+			   county,
+			   towns,
+			   village,
+			   agri_address,
+			   animals_target,
+			   year_begin_size,
+			   month_end_size,
+			   fertile_female,
+			   litter_size,
+			   grown_size, 
+			   sell_size,
+			   meat,
+			   milk,
+			   hair,
+			   create_time,
+			   creator,
+			   last_time,
+			   modifier
+		  from t_animals_year_info 
+		 where gid = #{gid}
+	</select>
+
+    <select id="queryInfoForPage" parameterType="com.agri.monitor.vo.AnimalsYearQueryVO" resultType="map">
+        select gid, 
+			   date_year, 
+			   county,
+			   towns,
+			   village,
+			   agri_address,
+			   animals_target,
+			   year_begin_size,
+			   month_end_size,
+			   fertile_female,
+			   litter_size,
+			   grown_size, 
+			   sell_size,
+			   meat,
+			   milk,
+			   hair,
+			   create_time,
+			   creator,
+			   last_time,
+			   modifier
+		  from t_animals_year_info 
+		 where 1=1
+		<if test="agri_address != null and agri_address != ''">
+    		<bind name="agri_address" value="'%' + agri_address + '%'"/>
+        	and agri_address like #{agri_address} 
+        </if>
+       	<if test="date_year != null and date_year != ''">
+        	and date_year &gt;= #{date_year}
+       	</if>
+       	<if test="date_year1 != null and date_year1 != ''">
+        	and date_year &lt;= #{date_year1}
+       	</if>
+       	 order by date_year desc, gid limit #{currIndex},#{limit}
+    </select>
+    
+    <select id="queryInfoCount" parameterType="com.agri.monitor.vo.AnimalsYearQueryVO" resultType="int">
+        select count(gid)
+          from t_animals_year_info 
+       	 where 1=1
+       	<if test="agri_address != null and agri_address != ''">
+    		<bind name="agri_address" value="'%' + agri_address + '%'"/>
+        	and agri_address like #{agri_address} 
+        </if>
+       	<if test="date_year != null and date_year != ''">
+        	and date_year &gt;= #{date_year}
+       	</if>
+       	<if test="date_year1 != null and date_year1 != ''">
+        	and date_year &lt;= #{date_year1}
+       	</if>
+    </select>
+    
+    <select id="queryGid" parameterType="com.agri.monitor.vo.AnimalsYearQueryVO" resultType="java.lang.String">
+   		select gid
+     	  from t_animals_year_info
+     	 where county = #{county}
+     	   and date_year = #{date_year}
+    </select>
+    
+    <insert id="insertInfo" parameterType="com.agri.monitor.entity.AnimalsYearInfo">
+    	insert into t_animals_year_info
+    		(date_year, 
+			 county,
+			 towns,
+			 village,
+			 agri_address,
+			 animals_target,
+			 year_begin_size,
+			 month_end_size,
+			 fertile_female,
+			 litter_size,
+			 grown_size, 
+			 sell_size,
+			 meat,
+			 milk,
+			 hair,
+			 creator,
+			 modifier)
+    	values
+		   (#{date_year}, 
+			#{county},
+			#{towns},
+			#{village},
+			#{agri_address},
+			#{animals_target},
+			#{year_begin_size},
+			#{month_end_size},
+			#{fertile_female},
+			#{litter_size},
+			#{grown_size}, 
+			#{sell_size},
+			#{meat},
+			#{milk},
+			#{hair},
+			#{creator},
+			#{modifier})
+    </insert>
+    
+    <update id="updateInfo" parameterType="com.agri.monitor.entity.AnimalsYearInfo">
+    	update t_animals_year_info
+    	   set date_year = #{date_year}, 
+			   county = #{county},
+			   towns = #{towns},
+			   village = #{village},
+			   agri_address = #{agri_address},
+			   animals_target = #{animals_target},
+			   year_begin_size = #{year_begin_size},
+			   month_end_size = #{month_end_size},
+			   fertile_female = #{fertile_female},
+			   litter_size = #{litter_size},
+			   grown_size = #{grown_size}, 
+			   sell_size = #{sell_size},
+			   meat = #{meat},
+			   milk = #{milk},
+			   hair = #{hair},
+			   creator = #{creator},
+			   modifier = #{modifier}
+    	 where gid = #{gid}
+    </update>
+    
+    <delete id="delInfoByGid" parameterType="java.util.List">
+    	delete from t_animals_year_info where gid in
+    	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+    		#{item}
+    	</foreach>
+    </delete>
+</mapper>
