@@ -75,6 +75,7 @@
 	      	<!-- 填充内容 -->
 	      	<div class="layui-card">
         	<div class="layui-card-body">
+        	 <div style="width: 100%;line-height: 40px;text-align: center;font-size: 20px;font-weight: bold;">农业设施条件信息表</div>
 				<table id="datalist" lay-filter="datalist" lay-data="{id: 'datalist'}"></table>
 				<script type="text/html" id="barDemo" th:if="${session.userinfo.roleinfo.role_name!='user'}">
   					<div class="layui-inline" lay-event="add">
