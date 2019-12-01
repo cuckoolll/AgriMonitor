@@ -1,4 +1,4 @@
-layui.use(['form','layer','table'], function(form,layer,table) {
+layui.use(['form','layer','table','element'], function(form,layer,table,element) {
 	var winH=$(window).height();
 	$('#datatable').height(winH-100);
 	

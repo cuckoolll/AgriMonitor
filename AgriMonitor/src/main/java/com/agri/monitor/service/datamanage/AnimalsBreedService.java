@@ -1360,6 +1360,87 @@ public class AnimalsBreedService {
 		ret.put("xzczs_2",null!=nmshdata2?nmshdata2.size():0);
 		ret.put("xzczs_3",null!=nmshdata3?nmshdata3.size():0);
 
+		//草原综合植被盖度
+		if(nystdata.get((year-2)+"")!=null) {
+			ret.put("cyzhzbgd_1",objToDou(nystdata.get((year-2)+"").get("grass_vegetation_cover")));
+		}
+		if(nystdata.get((year-1)+"")!=null) {
+			ret.put("cyzhzbgd_2",objToDou(nystdata.get((year-1)+"").get("grass_vegetation_cover")));
+		}
+		if(nystdata.get(year+"")!=null) {
+			ret.put("cyzhzbgd_3",objToDou(nystdata.get(year+"").get("grass_vegetation_cover")));
+		}
+		//天然草原合理载畜量
+		if(nystdata.get((year-2)+"")!=null) {
+			ret.put("trcyccphl_1",objToDou(nystdata.get((year-2)+"").get("grass_grazing_capacity")));
+		}
+		if(nystdata.get((year-1)+"")!=null) {
+			ret.put("trcyccphl_2",objToDou(nystdata.get((year-1)+"").get("grass_grazing_capacity")));
+		}
+		if(nystdata.get(year+"")!=null) {
+			ret.put("trcyccphl_3",objToDou(nystdata.get(year+"").get("grass_grazing_capacity")));
+		}
+		//天然草原全年实际载畜量
+		if(nystdata.get((year-2)+"")!=null) {
+			ret.put("trcyqnsjzcl_1",objToDou(nystdata.get((year-2)+"").get("grass_grazing_capacity_reality")));
+		}
+		if(nystdata.get((year-1)+"")!=null) {
+			ret.put("trcyqnsjzcl_2",objToDou(nystdata.get((year-1)+"").get("grass_grazing_capacity_reality")));
+		}
+		if(nystdata.get(year+"")!=null) {
+			ret.put("trcyqnsjzcl_3",objToDou(nystdata.get(year+"").get("grass_grazing_capacity_reality")));
+		}
+		//已建成农田林网的农田面积
+		if(nystdata.get((year-2)+"")!=null) {
+			ret.put("jcltlwltmj_1",objToDou(nystdata.get((year-2)+"").get("agroforestry_farm_area_built"))/1000);
+		}
+		if(nystdata.get((year-1)+"")!=null) {
+			ret.put("jcltlwltmj_2",objToDou(nystdata.get((year-1)+"").get("agroforestry_farm_area_built"))/1000);
+		}
+		if(nystdata.get(year+"")!=null) {
+			ret.put("jcltlwltmj_3",objToDou(nystdata.get(year+"").get("agroforestry_farm_area_built"))/1000);
+		}
+		//应建农田林网的农田面积
+		if(nystdata.get((year-2)+"")!=null) {
+			ret.put("yjltlwltmj_1",objToDou(nystdata.get((year-2)+"").get("agroforestry_farm_area_built"))/1000);
+		}
+		if(nystdata.get((year-1)+"")!=null) {
+			ret.put("yjltlwltmj_2",objToDou(nystdata.get((year-1)+"").get("agroforestry_farm_area_built"))/1000);
+		}
+		if(nystdata.get(year+"")!=null) {
+			ret.put("yjltlwltmj_3",objToDou(nystdata.get(year+"").get("agroforestry_farm_area_built"))/1000);
+		}
+		//森林面积
+		if(nystdata.get((year-2)+"")!=null) {
+			ret.put("slfgl_1",objToDou(nystdata.get((year-2)+"").get("forestry_area"))/1000);
+		}
+		if(nystdata.get((year-1)+"")!=null) {
+			ret.put("slfgl_2",objToDou(nystdata.get((year-1)+"").get("forestry_area"))/1000);
+		}
+		if(nystdata.get(year+"")!=null) {
+			ret.put("slfgl_3",objToDou(nystdata.get(year+"").get("forestry_area"))/1000);
+		}
+		//国土面积
+		if(nystdata.get((year-2)+"")!=null) {
+			ret.put("guotmj_1",objToDou(nystdata.get((year-2)+"").get("land_area"))/1000);
+		}
+		if(nystdata.get((year-1)+"")!=null) {
+			ret.put("guotmj_2",objToDou(nystdata.get((year-1)+"").get("land_area"))/1000);
+		}
+		if(nystdata.get(year+"")!=null) {
+			ret.put("guotmj_3",objToDou(nystdata.get(year+"").get("land_area"))/1000);
+		}
+		//湿地面积
+		if(nystdata.get((year-2)+"")!=null) {
+			ret.put("shidl_1",objToDou(nystdata.get((year-2)+"").get("wetland_area"))/1000);
+		}
+		if(nystdata.get((year-1)+"")!=null) {
+			ret.put("shidl_2",objToDou(nystdata.get((year-1)+"").get("wetland_area"))/1000);
+		}
+		if(nystdata.get(year+"")!=null) {
+			ret.put("shidl_3",objToDou(nystdata.get(year+"").get("wetland_area"))/1000);
+		}
+		
 		return ret;
 	}
 	/**
@@ -2133,6 +2214,7 @@ public class AnimalsBreedService {
 			if(nystdata.get(eyear+"")!=null) {
 				r3.getCell(7).setCellValue(objToDou(nystdata.get(eyear+"").get("grass_vegetation_cover")));
 			}
+			r3.getCell(11).setCellValue(r.getParameter("cyzhzbgd"));
 			//天然草原合理载畜量
 			HSSFRow r4 = sheet1.getRow(4);
 			if(nystdata.get(syear+"")!=null) {
@@ -2144,6 +2226,7 @@ public class AnimalsBreedService {
 			if(nystdata.get(eyear+"")!=null) {
 				r4.getCell(7).setCellValue(objToDou(nystdata.get(eyear+"").get("grass_grazing_capacity")));
 			}
+			r4.getCell(11).setCellValue(r.getParameter("trcyhlzcl"));
 			//天然草原全年实际载畜量
 			HSSFRow r5 = sheet1.getRow(5);
 			if(nystdata.get(syear+"")!=null) {
@@ -2166,6 +2249,7 @@ public class AnimalsBreedService {
 			if(nystdata.get(eyear+"")!=null) {
 				r6.getCell(7).setCellValue(objToDou(nystdata.get(eyear+"").get("agroforestry_farm_area_built"))/1000);
 			}
+			r6.getCell(11).setCellValue(r.getParameter("jcltlwltmj"));
 			//应建农田林网的农田面积
 			HSSFRow r7 = sheet1.getRow(7);
 			if(nystdata.get(syear+"")!=null) {
@@ -2188,6 +2272,7 @@ public class AnimalsBreedService {
 			if(nystdata.get(eyear+"")!=null) {
 				r8.getCell(7).setCellValue(objToDou(nystdata.get(eyear+"").get("forestry_area"))/1000);
 			}
+			r8.getCell(11).setCellValue(r.getParameter("slfgl"));
 			//国土面积
 			HSSFRow r9 = sheet1.getRow(9);
 			if(nystdata.get(syear+"")!=null) {
@@ -2210,6 +2295,7 @@ public class AnimalsBreedService {
 			if(nystdata.get(eyear+"")!=null) {
 				r10.getCell(7).setCellValue(objToDou(nystdata.get(eyear+"").get("wetland_area"))/1000);
 			}
+			r10.getCell(11).setCellValue(r.getParameter("shidl"));
 			//强制下载不打开
     		response.setContentType("application/octet-stream");
             //使用URLEncoder来防止文件名乱码或者读取错误

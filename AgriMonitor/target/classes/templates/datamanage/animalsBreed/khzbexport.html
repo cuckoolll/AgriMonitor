@@ -104,9 +104,16 @@
 		      <!-- 填充内容 -->
 		      <div class="layui-card">
 		      <div class="layui-card-body" id="datatable" style="overflow-y:auto ">
-		      <div style="width: 100%;line-height: 40px;text-align: center;font-size: 20px;font-weight: bold;">国家农业可持续发展试验示范区（农业绿色发展先行区）考核指标体系（试行）</div>
 		      <form id="addForm" action="/animalsBreed/animalsBreedAnalysis/exportKHZB" method="post">
-					<table width="100%" border="1">
+			  <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+			  <ul class="layui-tab-title">
+			    <li class="layui-this">必选指标</li>
+			    <li>生态指标</li>
+			  </ul>
+			  <div class="layui-tab-content">
+			    <div class="layui-tab-item layui-show">
+			    <div style="width: 100%;line-height: 40px;text-align: center;font-size: 20px;font-weight: bold;">国家农业可持续发展试验示范区（农业绿色发展先行区）考核指标体系（试行）</div>
+			    <table width="100%" border="1">
 					  <tr>
 					     <th width="6%">&nbsp;</th>
 					    <th colspan="2">指标</th>
@@ -663,8 +670,126 @@
 					    <td>&nbsp;</td>
 					    <td><textarea name="xzczs"  rows="3"></textarea></td>
 					  </tr>
-					</table>
-					</form>						
+					</table></div>
+			    <div class="layui-tab-item">
+				<div style="width: 100%;line-height: 40px;text-align: center;font-size: 20px;font-weight: bold;">农业生态菜单指标</div>
+				<table width="100%" border="1">
+				  <tr>
+				    <th width="6%">一级指标</th>
+				    <th colspan="2">指标</th>
+				    <th width="5%">单位</th>
+				    <th width="6%">目标值</th>
+				    <th width="8%" name="year_1">&nbsp;</th>
+				    <th width="8%" name="year_2">&nbsp;</th>
+				    <th width="8%" name="year_3">&nbsp;</th>
+				    <th width="6%">完成情况</th>
+				    <th width="8%">数据来源</th>
+				    <th width="8%">数据采集方式</th>
+				    <th>备注</th>
+				  </tr>
+				  <tr>
+				    <td rowspan="8">菜单指标</td>
+				    <td colspan="2">草原综合植被盖度</td>
+				    <td>%</td>
+				    <td>&nbsp;</td>
+				    <td name="cyzhzbgd_1">&nbsp;</td>
+				    <td name="cyzhzbgd_2">&nbsp;</td>
+				    <td name="cyzhzbgd_3">&nbsp;</td>
+				    <td>&nbsp;</td>
+				    <td>林业和草原部门</td>
+				    <td>&nbsp;</td>
+				    <td><textarea name="cyzhzbgd" rows="3"></textarea></td>
+				  </tr>
+				  <tr>
+				    <td width="10%" rowspan="2">天然草原草畜平衡率</td>
+				    <td>天然草原合理载畜量</td>
+				    <td>羊单位</td>
+				    <td>&nbsp;</td>
+				    <td name="trcyccphl_1">&nbsp;</td>
+				    <td name="trcyccphl_2">&nbsp;</td>
+				    <td name="trcyccphl_3">&nbsp;</td>
+				    <td>&nbsp;</td>
+				    <td>林业和草原部门</td>
+				    <td>&nbsp;</td>
+				    <td rowspan="2"><textarea name="trcyhlzcl" rows="3"></textarea></td>
+				  </tr>
+				  <tr>
+				    <td width="10%">天然草原全年实际载畜量</td>
+				    <td>羊单位</td>
+				    <td>&nbsp;</td>
+				    <td>&nbsp;</td>
+				    <td name="trcyqnsjzcl_1">&nbsp;</td>
+				    <td name="trcyqnsjzcl_2">&nbsp;</td>
+				    <td name="trcyqnsjzcl_3">&nbsp;</td>
+				    <td>林业和草原部门</td>
+				    <td>&nbsp;</td>
+				  </tr>
+				  <tr>
+				    <td rowspan="2">农 田 林 网 控 制 率</td>
+				    <td>已建成农田林网的农田面积</td>
+				    <td>千公顷</td>
+				    <td>&nbsp;</td>
+				    <td name="jcltlwltmj_1">&nbsp;</td>
+				    <td name="jcltlwltmj_2">&nbsp;</td>
+				    <td name="jcltlwltmj_3">&nbsp;</td>
+				    <td>&nbsp;</td>
+				    <td>林业和草原部门</td>
+				    <td>&nbsp;</td>
+				    <td rowspan="2"><textarea name="jcltlwltmj" rows="3"></textarea></td>
+				  </tr>
+				  <tr>
+				    <td>应建农田林网的农田面积</td>
+				    <td>千公顷</td>
+				    <td>&nbsp;</td>
+				    <td name="yjltlwltmj_1">&nbsp;</td>
+				    <td name="yjltlwltmj_2">&nbsp;</td>
+				    <td name="yjltlwltmj_3">&nbsp;</td>
+				    <td>&nbsp;</td>
+				    <td>林业和草原部门</td>
+				    <td>&nbsp;</td>
+				  </tr>
+				  <tr>
+				    <td rowspan="2">森林覆盖率</td>
+				    <td>森林面积</td>
+				    <td>千公顷</td>
+				    <td>&nbsp;</td>
+				    <td name="slfgl_1">&nbsp;</td>
+				    <td name="slfgl_2">&nbsp;</td>
+				    <td name="slfgl_3">&nbsp;</td>
+				    <td>&nbsp;</td>
+				    <td>林业和草原部门</td>
+				    <td>&nbsp;</td>
+				    <td rowspan="2"><textarea name="slfgl" rows="3"></textarea></td>
+				  </tr>
+				  <tr>
+				    <td>国土面积</td>
+				    <td>千公顷</td>
+				    <td>&nbsp;</td>
+				    <td name="guotmj_1">&nbsp;</td>
+				    <td name="guotmj_2">&nbsp;</td>
+				    <td name="guotmj_3">&nbsp;</td>
+				    <td>&nbsp;</td>
+				    <td>林业和草原部门</td>
+				    <td>&nbsp;</td>
+				  </tr>
+				  <tr>
+				    <td>湿地率</td>
+				    <td>湿地面积</td>
+				    <td>千公顷</td>
+				    <td>&nbsp;</td>
+				    <td name="shidl_1">&nbsp;</td>
+				    <td name="shidl_2">&nbsp;</td>
+				    <td name="shidl_3">&nbsp;</td>
+				    <td>&nbsp;</td>
+				    <td>林业和草原部门</td>
+				    <td>&nbsp;</td>
+				    <td><textarea name="shidl" rows="3"></textarea></td>
+				  </tr>
+				</table>
+				</div>
+			  </div>
+			</div> 
+			  </form>						
 		     </div>
 		    </div>
 		    </div>
