@@ -117,7 +117,8 @@
 			 naked_carp_seed_in_qjh,
 			 naked_carp_seed_in_hmh,
 			 naked_carp_seed_in_hegh,
-			 scyzmj,scbzhyzmj
+			 scyzmj,
+			 scbzhyzmj,
 			 creator,
 			 modifier)
     	values
@@ -146,7 +147,8 @@
 			#{naked_carp_seed_in_qjh},
 			#{naked_carp_seed_in_hmh},
 			#{naked_carp_seed_in_hegh},
-			#{scyzmj},#{scbzhyzmj}
+			#{scyzmj},
+			#{scbzhyzmj},
 			#{creator},
 			#{modifier})
     </insert>
@@ -175,7 +177,8 @@
 			   naked_carp_seed_in_qjh = #{naked_carp_seed_in_qjh},
 			   naked_carp_seed_in_hmh = #{naked_carp_seed_in_hmh},
 			   naked_carp_seed_in_hegh = #{naked_carp_seed_in_hegh},
-			   scyzmj=#{scyzmj},scbzhyzmj=#{scbzhyzmj},
+			   scyzmj=#{scyzmj},
+			   scbzhyzmj=#{scbzhyzmj},
     	   	   modifier = #{modifier}
     	 where gid = #{gid}
     </update>

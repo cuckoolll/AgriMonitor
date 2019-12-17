@@ -89,9 +89,9 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		  				  	page: {curr: 1}
 		    			});
 		    			layer.msg(res.msg);
-				      }else{
+		    		}else{
 				    	layer.msg(res.msg);
-				      }
+		    		}
 		    	}
 		    }
 		});
