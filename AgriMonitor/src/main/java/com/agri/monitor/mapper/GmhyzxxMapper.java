@@ -25,4 +25,5 @@ public interface GmhyzxxMapper {
 	
 	void deleteByTows(Map map);
 	
+	void batchInsert(List<Gmhyzxx> list);
 }

@@ -29,4 +29,6 @@ public interface FarmProductInfoMapper {
 	FarmProductInfo findById(Integer gid);
 
 	List<Map> queryAnalysisData(Map param);
+	
+	void batchInsert(List<FarmProductInfo> list);
 }

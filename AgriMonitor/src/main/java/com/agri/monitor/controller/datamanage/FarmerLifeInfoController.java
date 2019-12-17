@@ -12,7 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.annotation.IgnoreSession;
 import com.agri.monitor.entity.NmshInfo;
@@ -72,5 +74,11 @@ public class FarmerLifeInfoController {
 		result.put("data", nmshInfoService.findAllForPage(queryVO, user.getUser_id()));
 		result.put("count", nmshInfoService.findAllCount(queryVO));
 		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/dataImport",method=RequestMethod.POST)
+	public Map dataImport(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+		return nmshInfoService.dataImport(file, request);
 	}
 }

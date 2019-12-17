@@ -25,4 +25,5 @@ public interface NmshInfoMapper {
 	
 	void deleteByTows(Map map);
 	
+	void batchInsert(List<NmshInfo> list);
 }

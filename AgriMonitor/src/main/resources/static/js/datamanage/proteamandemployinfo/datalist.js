@@ -49,6 +49,26 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 			    	 {field: 'fwyrs', title: '服务业', align:'center'}
 			    ]]
 		});
+		//文件上传
+		upload.render({
+		    elem: '#dataImportBtn',
+		    url: '/proteamandemployinfo/dataImport',
+		    accept: 'file',
+		    exts: 'xls|xlsx',
+		    done: function(res){
+		    	if(res){
+		    		if(res.code==0){
+		    			datatable.reload({//表格数据重新加载
+		    				where: {date_year: $("#date_year").val(),date_year1: $("#date_year1").val(),towns: $("#towns").val()},
+		  				  	page: {curr: 1}
+		    			});
+		    			layer.msg(res.msg);
+				      }else{
+				    	layer.msg(res.msg);
+				      }
+		    	}
+		    }
+		});
 	}
 	
 	function bindEvent(){

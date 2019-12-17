@@ -30,12 +30,32 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 			      {field: 'gid', title: 'ID',hide: true,align:'center'},
 			      {field: 'year', title: '年份',align:'center',width:90},
 		      {field: 'szcls', title: '出栏的生猪数量',align:'center'},
-		      {field: 'rncls', title: '出栏肉牛数量）',align:'center'},
+		      {field: 'rncls', title: '出栏肉牛数量',align:'center'},
 		      {field: 'nncls', title: '存栏的奶牛数量',align:'center'},
 		      {field: 'rycls', title: '出栏的肉羊数量',align:'center'},
 		      {field: 'djcls', title: '存栏的蛋鸡数量',align:'center'},
 		      {field: 'rjcls', title: '出栏的肉鸡数量',align:'center'},
 		      {field: 'qt', title: '其他畜禽数量',align:'center'}]]
+		});
+		//文件上传
+		upload.render({
+		    elem: '#importBtn',
+		    url: '/gmhyzxx/dataImport',
+		    accept: 'file',
+		    exts: 'xls|xlsx',
+		    done: function(res){
+		    	if(res){
+		    		if(res.code==0){
+		    			dataTable.reload({//表格数据重新加载
+		    				where: {syear: $("#date_year").val(),eyear: $("#date_year1").val()},
+		  				  	page: {curr: 1}
+		    			});
+		    			layer.msg(res.msg);
+				      }else{
+				    	layer.msg(res.msg);
+				      }
+		    	}
+		    }
 		});
 	}
 	

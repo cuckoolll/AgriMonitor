@@ -56,6 +56,27 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 		      {field: 'dm_fgmj', title: '覆盖面积',align:'center',width:140}
 		    ]]
 		});
+		
+		//文件上传
+		upload.render({
+		    elem: '#importBtn',
+		    url: '/agriinputinfo/dataImport',
+		    accept: 'file',
+		    exts: 'xls|xlsx',
+		    done: function(res){
+		    	if(res){
+		    		if(res.code==0){
+		    			dataTable.reload({//表格数据重新加载
+		    				 where: {syear: $("#date_year").val(),eyear: $("#date_year1").val()},
+		  				  	page: {curr: 1}
+		    			});
+		    			layer.msg(res.msg);
+				      }else{
+				    	layer.msg(res.msg);
+				      }
+		    	}
+		    }
+		});
 	}
 	
 	function bindEvent(){

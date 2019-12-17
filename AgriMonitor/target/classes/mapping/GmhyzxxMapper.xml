@@ -31,6 +31,16 @@
     	rjcls=#{rjcls},qt=#{qt},year=#{year} where gid=#{gid}
     </update>
     
+    <insert id="batchInsert" parameterType="java.util.List">
+    	insert into t_gmhyzxx(szcls,rncls,nncls,rycls,djcls,rjcls,qt,year)
+    	values
+    	<foreach collection="list" item="item" index="index" separator=",">
+		   (#{item.szcls},#{item.rncls},#{item.nncls},
+		   #{item.rycls},#{item.djcls},
+		   #{item.rjcls},#{item.qt},#{item.year})
+		</foreach>
+    </insert>
+    
     <delete id="delete" parameterType="java.util.List">
     	delete from t_gmhyzxx where gid in
     	<foreach item="item" index="index" collection="list" open="(" separator="," close=")">

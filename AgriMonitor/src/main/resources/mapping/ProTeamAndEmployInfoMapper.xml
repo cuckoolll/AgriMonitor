@@ -27,6 +27,15 @@
 	    </if>
     </select>
 
+    <insert id="batchInsert" parameterType="java.util.List">
+    	insert into t_proteam_employ_info(county,towns,village,date_year,hs,rks_n,rks_v,nyrs,cmyrs,lyrs,fwyrs,bz,creator,modifier,create_time)
+    	values
+    	<foreach collection="list" item="item" index="index" separator=",">
+		   (#{item.county},#{item.towns},#{item.village},#{item.date_year},#{item.hs},
+		   #{item.rks_n},#{item.rks_v},#{item.nyrs},#{item.cmyrs},#{item.lyrs},#{item.fwyrs},#{item.bz},#{item.creator},#{item.modifier},now())
+		</foreach>
+    </insert>
+    
     <insert id="insert" parameterType="com.agri.monitor.entity.ProTeamAndEmployInfo">
     	insert into t_proteam_employ_info(county,towns,village,date_year,hs,rks_n,rks_v,nyrs,cmyrs,lyrs,fwyrs,bz,creator,modifier,create_time)
     	values

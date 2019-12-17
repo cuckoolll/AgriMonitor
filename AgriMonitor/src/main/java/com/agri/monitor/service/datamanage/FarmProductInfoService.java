@@ -1,19 +1,28 @@
 package com.agri.monitor.service.datamanage;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.entity.FarmProductInfo;
-import com.agri.monitor.entity.FishInfo;
+import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.enums.LogOptSatusEnum;
 import com.agri.monitor.enums.LogOptTypeEnum;
 import com.agri.monitor.mapper.FarmProductInfoMapper;
@@ -73,8 +82,62 @@ public class FarmProductInfoService {
 			}
 		} catch (Exception e) {
 			result.put("code", -1);
-			logger.error("保存农产品测数据异常" + e);
+			logger.error("保存农产品数据异常" + e);
 			LogUtil.log(LogOptTypeEnum.SAVE, LogOptSatusEnum.FAIL, userid, "保存农产品数据异常："+e.getMessage());
+		}
+		return result;
+	}
+	
+	public Map dataImport(MultipartFile file, HttpServletRequest request) {
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		final Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", 0);
+		result.put("msg", "成功");
+		Workbook wb = null; // 工作区域
+		try {
+			//获取文件名
+	        String filename=file.getOriginalFilename();
+	        // 获取文件后缀
+	        String prefix=filename.substring(filename.lastIndexOf(".")+1);
+	        if (prefix.equals("xlsx")) {
+	        	wb = new XSSFWorkbook(file.getInputStream());
+	        } else if (prefix.equals("xls")) {
+	        	wb = new HSSFWorkbook(file.getInputStream());
+	        } else {
+	        	result.put("code", -1);
+	    		result.put("msg", "不支持的文件类型");
+	    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(),"不支持的文件类型");
+	    		return result;
+	        }
+	        
+	        Sheet sheet1 = wb.getSheetAt(0);
+	        int i = 0;
+	        List<FarmProductInfo> list = new ArrayList<>();
+	        for (Row row : sheet1) {
+	           if (i >= 4) {
+	        	   FarmProductInfo info = new FarmProductInfo();
+	        	   info.setDate_year(row.getCell(0).getStringCellValue());
+	        	   info.setPlant_product_count(Double.valueOf(row.getCell(1).getStringCellValue()));
+	        	   info.setAnimal_product_count(Double.valueOf(row.getCell(2).getStringCellValue()));
+	        	   info.setFish_product_count(Double.valueOf(row.getCell(3).getStringCellValue()));
+	        	   info.setHigh_quality_plant_count(Double.valueOf(row.getCell(4).getStringCellValue()));
+	        	   info.setHigh_quality_animal_count(Double.valueOf(row.getCell(5).getStringCellValue()));
+	        	   info.setHigh_quality_fish_count(Double.valueOf(row.getCell(6).getStringCellValue()));
+	        	   info.setCreator(user.getUser_id());
+	        	   info.setModifier(user.getUser_id());
+	        	   list.add(info);
+	           }
+	           i++;
+	        }
+	        farmProductInfoMapper.batchInsert(list);
+	        LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.SUCESS, user.getUser_id(), "导入农产品数据，共导入"+list.size()+"条");
+		} catch (Exception e) {
+			if (logger.isErrorEnabled()) {
+				logger.error("农产品数据导入，解析文件异常", e);
+			}
+			result.put("code", -1);
+    		result.put("msg", "解析文件失败");
+    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(), "导入农产品数据异常："+e.getMessage());
 		}
 		return result;
 	}

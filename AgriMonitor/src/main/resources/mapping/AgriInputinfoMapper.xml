@@ -33,6 +33,18 @@
 	   ,#{k},#{fhf},#{ljf},#{dm_syl},#{dm_fgmj},#{lysyl},#{lycyl},#{bz})
     </insert>
     
+     <insert id="batchInsert" parameterType="java.util.List">
+    	insert into t_farmproduct_quality(n,p,yjf,lyqd,jgzl,zhlyjg,jgksj,lmzl,lmsyl,qcfl,qcfzl,year,
+    	k,fhf,ljf,dm_syl,dm_fgmj,lysyl,lycyl,bz)
+    	values
+    	<foreach collection="list" item="item" index="index" separator=",">
+		   (#{item.n},#{item.p},#{item.yjf},#{item.lyqd},#{item.jgzl},#{item.zhlyjg},
+		   #{item.jgksj},#{item.lmzl},#{item.lmsyl},#{item.qcfl},#{item.qcfzl},#{item.year}
+	       ,#{item.k},#{item.fhf},#{item.ljf},#{item.dm_syl},#{item.dm_fgmj},
+	       #{item.lysyl},#{item.lycyl},#{item.bz})
+		</foreach>
+    </insert>
+    
     <update id="update" parameterType="com.agri.monitor.entity.AgriInputinfo">
     	update t_agriinputinfo set n=#{n},p=#{p},yjf=#{yjf},lyqd=#{lyqd},
     	jgzl=#{jgzl},zhlyjg=#{zhlyjg},jgksj=#{jgksj},lmzl=#{lmzl},

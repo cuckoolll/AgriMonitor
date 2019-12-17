@@ -45,6 +45,27 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 			    {field: 'rjsr_fwy', title: '服务业收入', align:'center',width:150}
 			    ]]
 		});
+		
+		//文件上传
+		upload.render({
+		    elem: '#importBtn',
+		    url: '/farmerlifeinfo/dataImport',
+		    accept: 'file',
+		    exts: 'xls|xlsx',
+		    done: function(res){
+		    	if(res){
+		    		if(res.code==0){
+		    			dataTable.reload({//表格数据重新加载
+		    				where: {syear: $("#date_year").val(),eyear: $("#date_year1").val()},
+		  				  	page: {curr: 1}
+		    			});
+		    			layer.msg(res.msg);
+				      }else{
+				    	layer.msg(res.msg);
+				      }
+		    	}
+		    }
+		});
 	}
 	
 	function bindEvent(){

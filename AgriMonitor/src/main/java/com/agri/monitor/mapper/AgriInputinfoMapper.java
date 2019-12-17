@@ -25,4 +25,5 @@ public interface AgriInputinfoMapper {
 	
 	void deleteByTows(Map map);
 	
+	void batchInsert(List<AgriInputinfo> list);
 }

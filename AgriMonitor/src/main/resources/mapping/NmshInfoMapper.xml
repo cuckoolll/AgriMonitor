@@ -30,6 +30,16 @@
 	   ,#{srzzl},#{rjkzpsr},#{ljsj},#{ljcll},#{wsclxzcs},#{wscll},#{year})
     </insert>
     
+    <insert id="batchInsert" parameterType="java.util.List">
+    	insert into t_nmshinfo(county,towns,village,rjsr_ny,rjsr_cmy,rjsr_ly,rjsr_fwy,srzzl,rjkzpsr,
+    	ljsj,ljcll,wsclxzcs,wscll,year)
+    	values
+    	<foreach collection="list" item="item" index="index" separator=",">
+		   (#{item.county},#{item.towns},#{item.village},#{item.rjsr_ny},#{item.rjsr_cmy},#{item.rjsr_ly},#{item.rjsr_fwy}
+	   ,#{item.srzzl},#{item.rjkzpsr},#{item.ljsj},#{item.ljcll},#{item.wsclxzcs},#{item.wscll},#{item.year})
+		</foreach>
+    </insert>
+        
     <update id="update" parameterType="com.agri.monitor.entity.NmshInfo">
     	update t_nmshinfo set county=#{county},towns=#{towns},village=#{village},rjsr_ny=#{rjsr_ny},
     	rjsr_cmy=#{rjsr_cmy},rjsr_ly=#{rjsr_ly},rjsr_fwy=#{rjsr_fwy},

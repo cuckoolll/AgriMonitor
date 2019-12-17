@@ -54,8 +54,8 @@
 						</div>
 						
 						<a id="queryBtn" class="layui-btn" style="margin-left:15px;">检索</a>
-						<!-- <a th:if="${session.userinfo.roleinfo.role_name!='user'}" class="layui-btn" id="importBtn">导入数据</a>
-						<a class="layui-btn" th:href="@{/excel/农产品信息表.xlsx}">模板下载</a> -->
+						<a th:if="${session.userinfo.roleinfo.role_name!='user'}" type="button" class="layui-btn" id="dataImportBtn"><i class="layui-icon"></i>导入数据</a>
+						<a th:href="@{/excel/农产品信息表模板.xlsx}" class="layui-btn"><i class="layui-icon"></i>模板下载</a>
 					</div>
 				</form>
 			</div>

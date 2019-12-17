@@ -56,6 +56,24 @@
      	   and date_year = #{date_year}
     </select>
     
+    <insert id="batchInsert" parameterType="java.util.List">
+    	insert into t_farmproduct_quality(date_year, 
+			 plant_product_count,
+			 animal_product_count,
+			 fish_product_count,
+			 high_quality_plant_count, 
+			 high_quality_animal_count,
+			 high_quality_fish_count,
+			 creator,
+			 modifier)
+    	values
+    	<foreach collection="list" item="item" index="index" separator=",">
+		   (#{item.date_year},#{item.plant_product_count},#{item.animal_product_count},
+		   #{item.fish_product_count},#{item.high_quality_plant_count},
+		   #{item.high_quality_animal_count},#{item.creator},#{item.modifier})
+		</foreach>
+    </insert>
+    
     <insert id="insertInfo" parameterType="com.agri.monitor.entity.FarmProductInfo">
     	insert into t_farmproduct_quality
     		(date_year, 

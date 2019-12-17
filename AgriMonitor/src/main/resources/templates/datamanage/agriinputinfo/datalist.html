@@ -48,8 +48,8 @@
 											</table>
 										</div>
 										<a id="queryBtn" class="layui-btn">检索</a>
-										<!-- <a th:if="${session.userinfo.roleinfo.role_name!='user'}" type="button" class="layui-btn" id="dataImportBtn"><i class="layui-icon"></i>导入数据</a>
-										<a class="layui-btn"><i class="layui-icon"></i>模板下载</a> -->
+										<a th:if="${session.userinfo.roleinfo.role_name!='user'}" type="button" class="layui-btn" id="dataImportBtn"><i class="layui-icon"></i>导入数据</a>
+										<a th:href="@{/excel/农业投入品及废弃物信息表模板.xlsx}" class="layui-btn"><i class="layui-icon"></i>模板下载</a>
 									</div>
 								</form>
 							</div>
