@@ -15,7 +15,7 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 		    value:curyear
 		 });
 		//表格渲染
-		datatable=table.render({
+		datatable = table.render({
 			id:"datalist",
 		    elem: '#datalist',
 		    method:'post',
@@ -30,7 +30,7 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 			      {field: 'gid', title: 'ID',hide: true,align:'center',rowspan:2},
 			      {field: 'year', title: '年份',align:'center',rowspan:2,width:90},
 			      {title: '土地资源',align:'center',colspan:4},
-			      {title: '农作物种类及播种面积（（hm2））',align:'center',colspan:3},
+			      {title: '农作物种类及播种面积（hm2）',align:'center',colspan:3},
 			      {title: '产量',align:'center',colspan:2},
 //			      {title: '土壤理化性质',align:'center',colspan:9}
 			    ],[
@@ -53,6 +53,27 @@ layui.use(['form','layer','table','upload','laydate','util'], function(form,laye
 //		      {field: 'sxjhl', title: '速效钾含量(mg/kg)',align:'center',width:130},
 //		      {field: 'hxjhl', title: '缓效钾含量(mg/kg)',align:'center',width:130}
 		    ]]
+		});
+		
+		//文件上传
+		upload.render({
+		    elem: '#importBtn',
+		    url: '/landresource/dataImport',
+		    accept: 'file',
+		    exts: 'xls|xlsx',
+		    done: function(res){
+		    	if(res){
+		    		if(res.code==0){
+		    			datatable.reload({//表格数据重新加载
+		    				where: {"date_year":$("#date_year").val(), "date_year1":$("#date_year1").val()},
+		  				  	page: {curr: 1}
+		    			});
+		    			layer.msg(res.msg);
+		    		}else{
+				    	layer.msg(res.msg);
+		    		}
+		    	}
+		    }
 		});
 	}
 	

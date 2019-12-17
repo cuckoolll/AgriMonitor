@@ -40,4 +40,10 @@
     		#{item}
     	</foreach>
     </delete>
+    
+    <select id="queryGid" parameterType="com.agri.monitor.vo.LandResourceQueryVO" resultType="String">
+   		select gid
+     	  from t_landresource
+     	 where year = #{syear}
+    </select>
 </mapper>

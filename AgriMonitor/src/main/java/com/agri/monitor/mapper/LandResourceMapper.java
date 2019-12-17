@@ -25,4 +25,5 @@ public interface LandResourceMapper {
 	
 	void deleteByTows(Map map);
 	
+	String queryGid(final int syear);
 }
