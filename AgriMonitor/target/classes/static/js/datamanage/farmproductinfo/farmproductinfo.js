@@ -54,7 +54,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		
 		//文件上传
 		upload.render({
-		    elem: '#importBtn',
+		    elem: '#dataImportBtn',
 		    url: '/farmproductinfo/dataImport',
 		    accept: 'file',
 		    exts: 'xls|xlsx',

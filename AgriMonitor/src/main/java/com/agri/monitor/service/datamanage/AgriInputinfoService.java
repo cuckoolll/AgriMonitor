@@ -20,7 +20,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.entity.AgriInputinfo;
-import com.agri.monitor.entity.FarmProductInfo;
 import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.enums.LogOptSatusEnum;
 import com.agri.monitor.enums.LogOptTypeEnum;
@@ -115,27 +114,30 @@ public class AgriInputinfoService {
 	        List<AgriInputinfo> list = new ArrayList<>();
 	        for (Row row : sheet1) {
 	           if (i >= 5) {
+	        	   if(row.getCell(0)==null) {
+	        		   break;
+	        	   }
 	        	   AgriInputinfo info = new AgriInputinfo();
-	        	   info.setYear(Integer.valueOf(row.getCell(0).getStringCellValue()));
-	        	   info.setN(Double.valueOf(row.getCell(1).getStringCellValue()));
-	        	   info.setP(Double.valueOf(row.getCell(2).getStringCellValue()));
-	        	   info.setK(Double.valueOf(row.getCell(3).getStringCellValue()));
-	        	   info.setFhf(Double.valueOf(row.getCell(4).getStringCellValue()));
-	        	   info.setYjf(Double.valueOf(row.getCell(5).getStringCellValue()));
-	        	   info.setLjf(Double.valueOf(row.getCell(6).getStringCellValue()));
-	        	   info.setDm_syl(Double.valueOf(row.getCell(7).getStringCellValue()));
-	        	   info.setDm_fgmj(Double.valueOf(row.getCell(8).getStringCellValue()));
-	        	   info.setLyqd(Double.valueOf(row.getCell(9).getStringCellValue()));
-	        	   info.setLysyl(Double.valueOf(row.getCell(10).getStringCellValue()));
-	        	   info.setLycyl(Double.valueOf(row.getCell(11).getStringCellValue()));
-	        	   info.setJgzl(Double.valueOf(row.getCell(12).getStringCellValue()));
-	        	   info.setZhlyjg(Double.valueOf(row.getCell(13).getStringCellValue()));
-	        	   info.setJgksj(Double.valueOf(row.getCell(14).getStringCellValue()));
-	        	   info.setLmzl(Double.valueOf(row.getCell(15).getStringCellValue()));
-	        	   info.setLmsyl(Double.valueOf(row.getCell(16).getStringCellValue()));
-	        	   info.setQcfl(Double.valueOf(row.getCell(17).getStringCellValue()));
-	        	   info.setQcfzl(Double.valueOf(row.getCell(18).getStringCellValue()));
-	        	   info.setBz(row.getCell(19).getStringCellValue());
+	        	   info.setYear((int)row.getCell(0).getNumericCellValue());
+	        	   info.setN(row.getCell(1)==null?0:row.getCell(1).getNumericCellValue());
+	        	   info.setP(row.getCell(2)==null?0:row.getCell(2).getNumericCellValue());
+	        	   info.setK(row.getCell(3)==null?0:row.getCell(3).getNumericCellValue());
+	        	   info.setFhf(row.getCell(4)==null?0:row.getCell(4).getNumericCellValue());
+	        	   info.setYjf(row.getCell(5)==null?0:row.getCell(5).getNumericCellValue());
+	        	   info.setLjf(row.getCell(6)==null?0:row.getCell(6).getNumericCellValue());
+	        	   info.setDm_syl(row.getCell(7)==null?0:row.getCell(7).getNumericCellValue());
+	        	   info.setDm_fgmj(row.getCell(8)==null?0:row.getCell(8).getNumericCellValue());
+	        	   info.setLyqd(row.getCell(9)==null?0:row.getCell(9).getNumericCellValue());
+	        	   info.setLysyl(row.getCell(10)==null?0:row.getCell(10).getNumericCellValue());
+	        	   info.setLycyl(row.getCell(11)==null?0:row.getCell(11).getNumericCellValue());
+	        	   info.setJgzl(row.getCell(12)==null?0:row.getCell(12).getNumericCellValue());
+	        	   info.setZhlyjg(row.getCell(13)==null?0:row.getCell(13).getNumericCellValue());
+	        	   info.setJgksj(row.getCell(14)==null?0:row.getCell(14).getNumericCellValue());
+	        	   info.setLmzl(row.getCell(15)==null?0:row.getCell(15).getNumericCellValue());
+	        	   info.setLmsyl(row.getCell(16)==null?0:row.getCell(16).getNumericCellValue());
+	        	   info.setQcfl(row.getCell(17)==null?0:row.getCell(17).getNumericCellValue());
+	        	   info.setQcfzl(row.getCell(18)==null?0:row.getCell(18).getNumericCellValue());
+	        	   info.setBz(row.getCell(19)==null?"":row.getCell(19).getStringCellValue());
 	        	   list.add(info);
 	           }
 	           i++;

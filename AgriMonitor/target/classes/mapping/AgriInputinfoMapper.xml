@@ -34,7 +34,7 @@
     </insert>
     
      <insert id="batchInsert" parameterType="java.util.List">
-    	insert into t_farmproduct_quality(n,p,yjf,lyqd,jgzl,zhlyjg,jgksj,lmzl,lmsyl,qcfl,qcfzl,year,
+    	insert into t_agriinputinfo(n,p,yjf,lyqd,jgzl,zhlyjg,jgksj,lmzl,lmsyl,qcfl,qcfzl,year,
     	k,fhf,ljf,dm_syl,dm_fgmj,lysyl,lycyl,bz)
     	values
     	<foreach collection="list" item="item" index="index" separator=",">

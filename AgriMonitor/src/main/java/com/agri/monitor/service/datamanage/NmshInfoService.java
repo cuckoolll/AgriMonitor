@@ -115,25 +115,24 @@ public class NmshInfoService {
 	        List<NmshInfo> list = new ArrayList<>();
 	        for (Row row : sheet1) {
 	           if (i >= 3) {
-	        	   NmshInfo info = new NmshInfo();
-	        	   info.setCounty("刚察县");
-	        	   String towns = row.getCell(0).getStringCellValue();
-	        	   if(StringUtils.isEmpty(towns)) {
+	        	   if(row.getCell(0)==null || row.getCell(1)==null || row.getCell(2)==null) {
 	        		   break; 
 	        	   }
-	        	   info.setTowns(towns);
+	        	   NmshInfo info = new NmshInfo();
+	        	   info.setCounty("刚察县");
+	        	   info.setTowns(row.getCell(0).getStringCellValue());
 	        	   info.setVillage(row.getCell(1).getStringCellValue());
-	        	   info.setYear(Integer.valueOf(row.getCell(2).getStringCellValue()));
-	        	   info.setRjsr_ny(Double.valueOf(row.getCell(3).getStringCellValue())); 
-	        	   info.setRjsr_cmy(Double.valueOf(row.getCell(4).getStringCellValue()));
-	        	   info.setRjsr_ly(Double.valueOf(row.getCell(5).getStringCellValue()));
-	        	   info.setRjsr_fwy(Double.valueOf(row.getCell(6).getStringCellValue()));
-	        	   info.setRjkzpsr(Double.valueOf(row.getCell(7).getStringCellValue()));
-	        	   info.setSrzzl(Double.valueOf(row.getCell(8).getStringCellValue()));
-	        	   info.setLjsj(Integer.valueOf(row.getCell(9).getStringCellValue()));
-	        	   info.setLjcll(Double.valueOf(row.getCell(10).getStringCellValue()));
-	        	   info.setWsclxzcs(Integer.valueOf(row.getCell(11).getStringCellValue()));
-	        	   info.setWscll(Double.valueOf(row.getCell(12).getStringCellValue()));
+	        	   info.setYear((int)row.getCell(2).getNumericCellValue());
+	        	   info.setRjsr_ny(row.getCell(3)==null?0:row.getCell(3).getNumericCellValue()); 
+	        	   info.setRjsr_cmy(row.getCell(4)==null?0:row.getCell(4).getNumericCellValue());
+	        	   info.setRjsr_ly(row.getCell(5)==null?0:row.getCell(5).getNumericCellValue());
+	        	   info.setRjsr_fwy(row.getCell(6)==null?0:row.getCell(6).getNumericCellValue());
+	        	   info.setRjkzpsr(row.getCell(7)==null?0:row.getCell(7).getNumericCellValue());
+	        	   info.setSrzzl(row.getCell(8)==null?0:row.getCell(8).getNumericCellValue());
+	        	   info.setLjsj(row.getCell(9)==null?0:(int)row.getCell(9).getNumericCellValue());
+	        	   info.setLjcll(row.getCell(10)==null?0:row.getCell(10).getNumericCellValue());
+	        	   info.setWsclxzcs(row.getCell(11)==null?0:(int)row.getCell(11).getNumericCellValue());
+	        	   info.setWscll(row.getCell(12)==null?0:row.getCell(12).getNumericCellValue());
 	        	   list.add(info);
 	           }
 	           i++;

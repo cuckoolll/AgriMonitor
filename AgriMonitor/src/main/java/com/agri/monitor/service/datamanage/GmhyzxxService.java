@@ -114,15 +114,18 @@ public class GmhyzxxService {
 	        List<Gmhyzxx> list = new ArrayList<>();
 	        for (Row row : sheet1) {
 	           if (i >= 2) {
+	        	   if(row.getCell(0)==null) {
+	        		   break;
+	        	   }
 	        	   Gmhyzxx info = new Gmhyzxx();
-	        	   info.setYear(Integer.valueOf(row.getCell(0).getStringCellValue()));
-	        	   info.setSzcls(Double.valueOf(row.getCell(1).getStringCellValue()));
-	        	   info.setRncls(Double.valueOf(row.getCell(2).getStringCellValue()));
-	        	   info.setNncls(Double.valueOf(row.getCell(3).getStringCellValue()));
-	        	   info.setRycls(Double.valueOf(row.getCell(4).getStringCellValue()));
-	        	   info.setDjcls(Double.valueOf(row.getCell(5).getStringCellValue()));
-	        	   info.setRjcls(Double.valueOf(row.getCell(6).getStringCellValue()));
-	        	   info.setQt(Double.valueOf(row.getCell(7).getStringCellValue()));
+	        	   info.setYear((int)row.getCell(0).getNumericCellValue());
+	        	   info.setSzcls(row.getCell(1)==null?0:row.getCell(1).getNumericCellValue());
+	        	   info.setRncls(row.getCell(2)==null?0:row.getCell(2).getNumericCellValue());
+	        	   info.setNncls(row.getCell(3)==null?0:row.getCell(3).getNumericCellValue());
+	        	   info.setRycls(row.getCell(4)==null?0:row.getCell(4).getNumericCellValue());
+	        	   info.setDjcls(row.getCell(5)==null?0:row.getCell(5).getNumericCellValue());
+	        	   info.setRjcls(row.getCell(6)==null?0:row.getCell(6).getNumericCellValue());
+	        	   info.setQt(row.getCell(7)==null?0:row.getCell(7).getNumericCellValue());
 	        	   list.add(info);
 	           }
 	           i++;

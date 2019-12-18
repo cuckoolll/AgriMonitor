@@ -118,17 +118,13 @@ public class ProTeamAndEmployInfoService {
 	        List<ProTeamAndEmployInfo> list = new ArrayList<>();
 	        for (Row row : sheet1) {
 	           if (i >= 3) {
+	        	   if(row.getCell(0)==null || row.getCell(1)==null || row.getCell(2)==null) {
+	        		   break; 
+	        	   }
 	        	   ProTeamAndEmployInfo info = new ProTeamAndEmployInfo();
 	        	   info.setCounty("刚察县");
-	        	   String towns = row.getCell(0).getStringCellValue();
-	        	   if(StringUtils.isEmpty(towns)) {
-	        		   break; 
-	        	   }
-	        	   info.setTowns(towns);
+	        	   info.setTowns(row.getCell(0).getStringCellValue());
 	        	   info.setVillage(row.getCell(1).getStringCellValue());
-	        	   if (row.getCell(2) == null) {
-	        		   break; 
-	        	   }
 	        	   info.setDate_year((int) row.getCell(2).getNumericCellValue());
 	        	   info.setHs(row.getCell(3)==null?0:(int) row.getCell(3).getNumericCellValue()); 
 	        	   info.setRks_n(row.getCell(4)==null?0:(int) row.getCell(4).getNumericCellValue());

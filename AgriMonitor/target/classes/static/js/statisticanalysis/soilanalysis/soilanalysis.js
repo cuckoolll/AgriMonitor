@@ -26,6 +26,9 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
     			title: {
     	            text: title,
     	        },
+    	        toolbox: {
+    		        feature: {saveAsImage: {}}
+    		    },
     	        tooltip: {
 			        trigger: 'axis',
 			        axisPointer: {

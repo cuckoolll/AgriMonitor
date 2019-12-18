@@ -58,6 +58,8 @@
     
     <insert id="batchInsert" parameterType="java.util.List">
     	insert into t_farmproduct_quality(date_year, 
+			 county,
+			 towns,
 			 plant_product_count,
 			 animal_product_count,
 			 fish_product_count,
@@ -68,9 +70,17 @@
 			 modifier)
     	values
     	<foreach collection="list" item="item" index="index" separator=",">
-		   (#{item.date_year},#{item.plant_product_count},#{item.animal_product_count},
-		   #{item.fish_product_count},#{item.high_quality_plant_count},
-		   #{item.high_quality_animal_count},#{item.creator},#{item.modifier})
+		   (#{item.date_year}, 
+			#{item.county},
+			#{item.towns},
+			#{item.plant_product_count},
+			#{item.animal_product_count},
+			#{item.fish_product_count},
+			#{item.high_quality_plant_count},
+			#{item.high_quality_animal_count},
+			#{item.high_quality_fish_count},
+			#{item.creator},
+			#{item.modifier})
 		</foreach>
     </insert>
     
