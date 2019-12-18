@@ -35,7 +35,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		    		 {type: 'checkbox', fixed: 'left',rowspan:2},
 				     {field: 'gid', title: 'ID',hide: true,align:'center',rowspan:2},
 				     {field: 'date_year', title: '年份',sort: true,rowspan:2,width:80},
-				     {field: 'grass_vegetation_cover', title: '草原综合植被盖度',rowspan:2,width:150},
+				     {field: 'grass_vegetation_cover', title: '草原综合植被盖度', align:'center', rowspan:2,width:150},
 				     {title: '天然草原草畜平衡率',align:'center',colspan:2},
 				     {title: '农田林网控制率',align:'center',colspan:2},
 				     {title: '森林覆盖率',align:'center',colspan:2},
@@ -57,25 +57,25 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		  });
 		
 		//文件上传
-//		upload.render({
-//		    elem: '#importBtn',
-//		    url: '/environmentinfo/dataImport',
-//		    accept: 'file',
-//		    exts: 'xls|xlsx',
-//		    done: function(res){
-//		    	if(res){
-//		    		if(res.code==0){
-//		    			dataTable.reload({//表格数据重新加载
-//		    				where: {"date_year":$("#date_year").val(), "date_year1":$("#date_year1").val()},
-//		  				  	page: {curr: 1}
-//		    			});
-//		    			layer.msg(res.msg);
-//				      }else{
-//				    	layer.msg(res.msg);
-//				      }
-//		    	}
-//		    }
-//		});
+		upload.render({
+		    elem: '#importBtn',
+		    url: '/environmentinfo/dataImport',
+		    accept: 'file',
+		    exts: 'xls|xlsx',
+		    done: function(res){
+		    	if(res){
+		    		if(res.code==0){
+		    			dataTable.reload({//表格数据重新加载
+		    				where: {"date_year":$("#date_year").val(), "date_year1":$("#date_year1").val()},
+		  				  	page: {curr: 1}
+		    			});
+		    			layer.msg(res.msg);
+				      }else{
+				    	layer.msg(res.msg);
+				      }
+		    	}
+		    }
+		});
 	}
 	
 	function bindEvent() {
