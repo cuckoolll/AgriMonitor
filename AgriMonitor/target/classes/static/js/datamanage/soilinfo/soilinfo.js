@@ -21,7 +21,7 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		dataTable = table.render({
 			 id:'datalist',
 			 elem: '#datalist',
-			 height:winH-110,
+			 height:winH-150,
 			 toolbar: '#barDemo',
 			 url: '/soilinfo/queryInfo', //数据接口
 			 method: 'post',

@@ -29,7 +29,7 @@ layui.config({
 			id:"datalist",
 		    elem: '#datalist',
 		    url: '/animalsBreed/animalsBreedAnalysis/getYearData', //数据接口，
-		    height:winH-150,
+		    height:winH-190,
 		    where: {year: date},
 		    /*toolbar: true,*/
 		    treeColIndex: 0,
@@ -65,7 +65,7 @@ layui.config({
 			id:"datalist1",
 		    elem: '#datalist1',
 		    url: '/animalsBreed/animalsBreedAnalysis/getMonthData', //数据接口，
-		    height:winH-150,
+		    height:winH-190,
 		    where: {month: date.replace('-','')},
 		    /*toolbar: true,*/
 		    treeColIndex: 0,

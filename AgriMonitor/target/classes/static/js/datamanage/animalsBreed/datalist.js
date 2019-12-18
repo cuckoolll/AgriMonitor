@@ -29,7 +29,7 @@ layui.config({
 			id:"datalist",
 		    elem: '#datalist',
 		    url: '/animalsBreed/datalist', //数据接口，
-		    height:winH-110,
+		    height:winH-150,
 		    //where: {date_month: date,towns:$("#towns").val()},
 		    where: {date_month: date},
 		    /*toolbar: true,*/
