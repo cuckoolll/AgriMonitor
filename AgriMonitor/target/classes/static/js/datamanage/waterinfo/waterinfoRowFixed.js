@@ -20,25 +20,25 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		renderTable();
 		
 		//文件上传
-//		upload.render({
-//		    elem: '#importBtn',
-//		    url: '/waterinfo/dataImport',
-//		    accept: 'file',
-//		    exts: 'xls|xlsx',
-//		    done: function(res){
-//		    	if(res){
-//		    		if(res.code==0){
-//		    			dataTable.reload({//表格数据重新加载
-//		    				where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val(),"quality_time1":$("#quality_time1").val()},
-//		  				  	page: {curr: 1}
-//		    			});
-//		    			layer.msg(res.msg);
-//				      }else{
-//				    	layer.msg(res.msg);
-//				      }
-//		    	}
-//		    }
-//		});
+		upload.render({
+		    elem: '#importBtn',
+		    url: '/waterinfo/dataImportRowFixed',
+		    accept: 'file',
+		    exts: 'xls|xlsx',
+		    done: function(res){
+		    	if(res){
+		    		if(res.code==0){
+		    			dataTable.reload({//表格数据重新加载
+		    				where: {"quality_address":$("#quality_address").val(),"quality_time":$("#quality_time").val(),"quality_time1":$("#quality_time1").val()},
+		  				  	page: {curr: 1}
+		    			});
+		    			layer.msg(res.msg);
+				      }else{
+				    	layer.msg(res.msg);
+				      }
+		    	}
+		    }
+		});
 	}
 	
 	function renderTable() {

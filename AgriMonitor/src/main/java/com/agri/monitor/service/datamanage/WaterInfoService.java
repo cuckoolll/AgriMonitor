@@ -382,4 +382,124 @@ public class WaterInfoService {
 		}
 		return result;
 	}
+	
+	public Map dataImportRowFixed(MultipartFile file, HttpServletRequest request) {
+		if (logger.isInfoEnabled()) {
+			logger.info("导入水质监测信息-----------------开始");
+		}
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		final Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", 0);
+		result.put("msg", "成功");
+		Workbook wb = null; // 工作区域
+		try {
+			//获取文件名
+	        String filename=file.getOriginalFilename();
+	        if (logger.isInfoEnabled()) {
+				logger.info("导入水质监测信息，文件名：" + filename);
+			}
+	        
+	        // 获取文件后缀
+	        String prefix=filename.substring(filename.lastIndexOf(".")+1);
+
+	        if (prefix.equals("xlsx")) {
+	        	wb = new XSSFWorkbook(file.getInputStream());
+	        } else if (prefix.equals("xls")) {
+	        	wb = new HSSFWorkbook(file.getInputStream());
+	        } else {
+	        	result.put("code", -1);
+	    		result.put("msg", "不支持的文件类型");
+	    		if (logger.isInfoEnabled()) {
+	 				logger.info("导入水质监测信息，不支持的文件类型");
+	 			}
+	    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(),"导入水质监测信息，不支持的文件类型");
+	    		return result;
+	        }
+	        
+	        Sheet sheet1 = wb.getSheetAt(0);
+	        int i = 0;
+	        String county = null;
+	        String towns = null;
+	        
+	        for (Row row : sheet1) {
+	        	//解析所属乡镇
+	           if (i == 1) {
+	        	   county = "刚察县";
+	           }
+	           if (i >= 2) {
+	        	   final Cell cell0 = row.getCell(0);
+	        	   if (cell0 == null || StringUtils.isEmpty(cell0.toString())) {
+	        		   break;
+	        	   }
+	        	   
+	        	   String quality_address = row.getCell(0).getStringCellValue();
+	        	   String quality_time = yyyyMMdd.format(row.getCell(1).getDateCellValue());
+	        	   
+	        	   WaterInfoRowFixed waterinforowfixed = new WaterInfoRowFixed();
+	        	   waterinforowfixed.setCounty(county);
+	        	   waterinforowfixed.setTowns(towns);
+	        	   waterinforowfixed.setQuality_address(quality_address);
+	        	   waterinforowfixed.setQuality_time(quality_time);
+	        	   waterinforowfixed.setWater_temperature(row.getCell(2).getNumericCellValue());
+	        	   waterinforowfixed.setPh(row.getCell(3).getNumericCellValue());
+	        	   waterinforowfixed.setDissolved_oxygen(row.getCell(4).getNumericCellValue());
+	        	   waterinforowfixed.setPermanganate_index(row.getCell(5).getNumericCellValue());
+	        	   waterinforowfixed.setChemical_oxygen_demand(row.getCell(6).getNumericCellValue());
+	        	   waterinforowfixed.setFive_day_bod(row.getCell(7).getNumericCellValue());
+	        	   waterinforowfixed.setAmmonia_nitrogen(row.getCell(8).getNumericCellValue());
+	        	   waterinforowfixed.setTotal_phosphorus(row.getCell(9).getNumericCellValue());
+	        	   waterinforowfixed.setTotal_nitrogen(row.getCell(10).getNumericCellValue());
+	        	   waterinforowfixed.setFluoride(row.getCell(11).getNumericCellValue());
+	        	   waterinforowfixed.setCopper(row.getCell(12).getStringCellValue());
+	        	   waterinforowfixed.setPlumbum(row.getCell(13).getStringCellValue());
+	        	   waterinforowfixed.setCadmium(row.getCell(14).getStringCellValue());
+	        	   waterinforowfixed.setZinc(row.getCell(15).getStringCellValue());
+	        	   waterinforowfixed.setMercury(row.getCell(16).getStringCellValue());
+	        	   waterinforowfixed.setArsenic(row.getCell(17).getStringCellValue());
+	        	   waterinforowfixed.setSelenium(row.getCell(18).getStringCellValue());
+	        	   waterinforowfixed.setHexavalent_chromium(row.getCell(19).getStringCellValue());
+	        	   waterinforowfixed.setVolatile_penol(row.getCell(20).getStringCellValue());
+	        	   waterinforowfixed.setCyanide(row.getCell(21).getStringCellValue());
+	        	   waterinforowfixed.setPetroleum(row.getCell(22).getStringCellValue());
+	        	   waterinforowfixed.setAnionic_surfactant(row.getCell(23).getStringCellValue());
+	        	   waterinforowfixed.setSulfide(row.getCell(24).getStringCellValue());
+	        	   waterinforowfixed.setConductivity(row.getCell(25).getStringCellValue());
+	        	   waterinforowfixed.setFecal_coliform(row.getCell(26).getStringCellValue());
+	        	   
+	        	   waterinforowfixed.setCreator(String.valueOf(user.getUser_id()));
+	        	   waterinforowfixed.setModifier(String.valueOf(user.getUser_id()));
+	        	   
+	        	   String gid = waterInfoMapper.queryGidRowFixed(quality_address, quality_time);
+	        	   LogUtil.log(LogOptTypeEnum.QUERY, LogOptSatusEnum.SUCESS, user.getUser_id(), "查询水质监测，返回GID=" + gid);
+	        	   
+	        	   try {
+		        	   if (StringUtils.isEmpty(gid)) {
+	        			   waterInfoMapper.insertWaterInfoRowFixed(waterinforowfixed);
+		        	   } else {
+		        		   waterinforowfixed.setGid(gid);
+		        		   waterInfoMapper.updateWaterInfoRowFixed(waterinforowfixed);
+		        	   }
+	        	   } catch(Exception e) {
+        			   if (logger.isErrorEnabled()) {
+        					logger.error("水质监测插入数据失败", e);
+        				}
+        				result.put("code", -1);
+        	    		result.put("msg", "水质监测插入数据失败");
+        	    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(), "导入水质监测信息异常："+e.getMessage());
+        		   }
+	           }
+	           i++;
+	        }
+	        if (logger.isInfoEnabled()) {
+ 				logger.info("导入水质监测信息---------------------------成功");
+ 			}
+	        LogUtil.log(LogOptTypeEnum.ADD, LogOptSatusEnum.SUCESS, user.getUser_id(), "导入水质监测信息成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("code", -1);
+    		result.put("msg", "解析文件失败");
+    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(), "导入水质监测信息异常："+e.getMessage());
+		}
+		return result;
+	}
 }

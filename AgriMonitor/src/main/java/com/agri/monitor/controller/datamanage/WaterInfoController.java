@@ -116,6 +116,12 @@ public class WaterInfoController {
 		return waterInfoService.dataImport(file, request);
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/dataImportRowFixed",method=RequestMethod.POST)
+	public Map dataImportRowFixed(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+		return waterInfoService.dataImportRowFixed(file, request);
+	}
+	
 	@IgnoreSession
 	@RequestMapping("/update")
 	public String add(Model model) {

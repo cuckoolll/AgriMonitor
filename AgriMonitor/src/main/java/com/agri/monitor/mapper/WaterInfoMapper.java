@@ -33,7 +33,9 @@ public interface WaterInfoMapper {
 	void updateWaterInfoRowFixed(WaterInfoRowFixed waterinfo);
 	
 	String queryGid(final String quality_address, final String quality_time, final String quality_type);
-
+	
+	String queryGidRowFixed(final String quality_address, final String quality_time);
+	
 	void delInfoByGid(List<Integer> gids);
 
 	void delInfoByGidRowFixed(List<Integer> gids);

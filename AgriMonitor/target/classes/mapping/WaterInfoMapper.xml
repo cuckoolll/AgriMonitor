@@ -224,6 +224,13 @@
 			#{modifier})
     </insert>
     
+    <select id="queryGidRowFixed" parameterType="com.agri.monitor.vo.WaterQueryVO" resultType="java.lang.String">
+   		select gid
+     	  from t_water_row_quality
+     	 where quality_address = #{quality_address}
+     	   and quality_time = #{quality_time}
+    </select>
+    
     <insert id="insertWaterInfoRowFixed" parameterType="com.agri.monitor.entity.WaterInfoRowFixed">
     	insert into t_water_row_quality
     		(quality_address,

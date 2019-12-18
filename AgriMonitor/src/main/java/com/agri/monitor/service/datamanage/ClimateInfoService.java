@@ -169,7 +169,7 @@ public class ClimateInfoService {
 	           }
 	           if (i >= 2) {
 	        	   final Cell cell0 = row.getCell(0);
-	        	   if (cell0 == null) {
+	        	   if (cell0 == null || StringUtils.isEmpty(cell0.toString())) {
 	        		   break;
 	        	   }
 	        	   

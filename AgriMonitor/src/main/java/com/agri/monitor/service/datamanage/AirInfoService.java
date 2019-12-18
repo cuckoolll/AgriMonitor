@@ -167,7 +167,7 @@ public class AirInfoService {
 	           }
 	           if (i >= 3) {
 	        	   final Cell cell0 = row.getCell(0);
-	        	   if (cell0 == null) {
+	        	   if (cell0 == null || StringUtils.isEmpty(cell0.toString())) {
 	        		   break;
 	        	   }
 	        	   
