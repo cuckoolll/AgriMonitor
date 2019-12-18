@@ -11,7 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.annotation.IgnoreSession;
 import com.agri.monitor.entity.FacilityConditionInfo;
@@ -28,10 +30,7 @@ public class FacilitiesConditionInfoController {
 	@Autowired
 	private FacilitiesConditionInfoService facilitiesConditionInfoService;
 	
-	/**
-	 * 草原生态监测页面 .
-	 * @return .
-	 */
+	
 	@RequestMapping("")
 	public String facilityConditionInfo(Model model) {
 		model.addAttribute("towns", CacheUtil.getCache(CacheTypeEnum.TOWNS));
@@ -46,11 +45,11 @@ public class FacilitiesConditionInfoController {
 		return facilitiesConditionInfoService.queryInfoForPage(queryVo, user.getUser_id());
 	}
 	
-//	@ResponseBody
-//	@RequestMapping(value="/dataImport",method=RequestMethod.POST)
-//	public Map dataImport(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-//		return environmentInfoService.dataImport(file, request);
-//	}
+	@ResponseBody
+	@RequestMapping(value="/dataImport",method=RequestMethod.POST)
+	public Map dataImport(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+		return facilitiesConditionInfoService.dataImport(file, request);
+	}
 	
 	@IgnoreSession
 	@RequestMapping("/update")

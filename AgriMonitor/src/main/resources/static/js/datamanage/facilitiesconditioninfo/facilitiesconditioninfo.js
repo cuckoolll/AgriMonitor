@@ -62,25 +62,25 @@ layui.use(['table', 'form', 'laydate', 'layer', 'upload'], function(table, form,
 		  });
 		
 		//文件上传
-//		upload.render({
-//		    elem: '#importBtn',
-//		    url: '/environmentinfo/dataImport',
-//		    accept: 'file',
-//		    exts: 'xls|xlsx',
-//		    done: function(res){
-//		    	if(res){
-//		    		if(res.code==0){
-//		    			dataTable.reload({//表格数据重新加载
-//		    				where: {"date_year":$("#date_year").val(), "date_year1":$("#date_year1").val()},
-//		  				  	page: {curr: 1}
-//		    			});
-//		    			layer.msg(res.msg);
-//				      }else{
-//				    	layer.msg(res.msg);
-//				      }
-//		    	}
-//		    }
-//		});
+		upload.render({
+		    elem: '#importBtn',
+		    url: '/facilitiesconditioninfo/dataImport',
+		    accept: 'file',
+		    exts: 'xls|xlsx',
+		    done: function(res){
+		    	if(res){
+		    		if(res.code==0){
+		    			dataTable.reload({//表格数据重新加载
+		    				where: {"date_year":$("#date_year").val(), "date_year1":$("#date_year1").val(),"agri_address":$("#agri_address").val()},
+		  				  	page: {curr: 1}
+		    			});
+		    			layer.msg(res.msg);
+				      }else{
+				    	layer.msg(res.msg);
+				      }
+		    	}
+		    }
+		});
 	}
 	
 	function bindEvent() {

@@ -5,14 +5,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.agri.monitor.entity.FacilityConditionInfo;
+import com.agri.monitor.entity.GrassInfo;
+import com.agri.monitor.entity.UserInfo;
 import com.agri.monitor.enums.LogOptSatusEnum;
 import com.agri.monitor.enums.LogOptTypeEnum;
 import com.agri.monitor.mapper.FacilitiesConditionInfoMapper;
@@ -99,102 +110,109 @@ public class FacilitiesConditionInfoService {
 		return result;
 	}
 	
-//	public Map dataImport(MultipartFile file, HttpServletRequest request) {
-//		if (logger.isInfoEnabled()) {
-//			logger.info("导入草地生态监测信息-----------------开始");
-//		}
-//		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
-//		final Map<String, Object> result = new HashMap<String, Object>();
-//		result.put("code", 0);
-//		result.put("msg", "成功");
-//		Workbook wb = null; // 工作区域
-//		try {
-//			//获取文件名
-//	        String filename=file.getOriginalFilename();
-//	        if (logger.isInfoEnabled()) {
-//				logger.info("导入草地生态监测信息，文件名：" + filename);
-//			}
-//	        
-//	        // 获取文件后缀
-//	        String prefix=filename.substring(filename.lastIndexOf(".")+1);
-//
-//	        if (prefix.equals("xlsx")) {
-//	        	wb = new XSSFWorkbook(file.getInputStream());
-//	        } else if (prefix.equals("xls")) {
-//	        	wb = new HSSFWorkbook(file.getInputStream());
-//	        } else {
-//	        	result.put("code", -1);
-//	    		result.put("msg", "不支持的文件类型");
-//	    		if (logger.isInfoEnabled()) {
-//	 				logger.info("导入草地生态监测信息，不支持的文件类型");
-//	 			}
-//	    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(),"导入草地生态监测数据，不支持的文件类型");
-//	    		return result;
-//	        }
-//	        
-//	        Sheet sheet1 = wb.getSheetAt(0);
-//	        int i = 0;
-//	        String county = null;
-//        	String towns = null;
-//	        
-//	        for (Row row : sheet1) {
-//	        	//解析所属乡镇
-//	           if (i == 1) {
-//	        	   county = "刚察县";
-////	        	   towns = row.getCell(1).getStringCellValue();
-////	        	   if (!UrbanAreaUtil.isLegalTown(towns)) {
-////	        		   result.put("code", -1);
-////	        		   result.put("msg", "报表乡镇填写错误，请重新选择所属乡镇");
-////	        		   return result;
-////	        	   }
-//	           }
-//	           if (i >= 3) {
-//	        	   GrassInfo grassinfo = new GrassInfo();
-//	        	   grassinfo.setCounty(county);
-//	        	   grassinfo.setTowns(towns);
-//	        	   grassinfo.setDate_year(row.getCell(0).getStringCellValue());
-//	        	   grassinfo.setGrass_area(row.getCell(1).getNumericCellValue());
-//	        	   grassinfo.setGrass_usable_area(row.getCell(2).getNumericCellValue());
-//	        	   grassinfo.setGrass_retain_area(row.getCell(3).getNumericCellValue());
-//	        	   grassinfo.setGrass_unforage(row.getCell(4).getNumericCellValue());
-//	        	   grassinfo.setGrass_animal_balance(row.getCell(5).getNumericCellValue());
-//	        	   grassinfo.setPlateau_pika_area(row.getCell(6).getNumericCellValue());
-//	        	   grassinfo.setPlateau_zokor_area(row.getCell(7).getNumericCellValue());
-//	        	   grassinfo.setGrass_worm_area(row.getCell(8).getNumericCellValue());
-//	        	   grassinfo.setGrasshopper_area(row.getCell(9).getNumericCellValue());
-//	        	   grassinfo.setCreator(String.valueOf(user.getUser_id()));
-//	        	   grassinfo.setModifier(String.valueOf(user.getUser_id()));
-//	        	   
-//	        	   String date_year = grassinfo.getDate_year();
-//	        	   
-//	        	   try {
-//	        		   String gid = grassInfoMapper.queryGid(county, date_year);
-//		        	   if (StringUtils.isEmpty(gid)) {
-//		        		   grassInfoMapper.insertInfo(grassinfo);
-//		        	   } else {
-//		        		   grassinfo.setGid(gid);
-//		        		   grassInfoMapper.updateInfo(grassinfo);
-//		        	   }
-//	        	   } catch(Exception e) {
-//        			   if (logger.isErrorEnabled()) {
-//        					logger.error("草地生态监测插入数据失败", e);
-//        				}
-//        				result.put("code", -1);
-//        	    		result.put("msg", "草地生态监测插入数据失败");
-//        	    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(), "导入草地生态监测信息异常："+e.getMessage());
-//        		   }
-//	           }
-//	           i++;
-//	        }
-//	        LogUtil.log(LogOptTypeEnum.ADD, LogOptSatusEnum.SUCESS, user.getUser_id(), "导入草地生态监测信息成功");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			result.put("code", -1);
-//    		result.put("msg", "解析文件失败");
-//    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(), "导入草地生态监测信息异常："+e.getMessage());
-//		}
-//		return result;
-//	}
+	public Map dataImport(MultipartFile file, HttpServletRequest request) {
+		if (logger.isInfoEnabled()) {
+			logger.info("导入农业装备信息-----------------开始");
+		}
+		UserInfo user = (UserInfo) request.getSession().getAttribute("userinfo");
+		final Map<String, Object> result = new HashMap<String, Object>();
+		result.put("code", 0);
+		result.put("msg", "成功");
+		Workbook wb = null; // 工作区域
+		try {
+			//获取文件名
+	        String filename=file.getOriginalFilename();
+	        if (logger.isInfoEnabled()) {
+				logger.info("导入农业装备信息，文件名：" + filename);
+			}
+	        
+	        // 获取文件后缀
+	        String prefix=filename.substring(filename.lastIndexOf(".")+1);
+
+	        if (prefix.equals("xlsx")) {
+	        	wb = new XSSFWorkbook(file.getInputStream());
+	        } else if (prefix.equals("xls")) {
+	        	wb = new HSSFWorkbook(file.getInputStream());
+	        } else {
+	        	result.put("code", -1);
+	    		result.put("msg", "不支持的文件类型");
+	    		if (logger.isInfoEnabled()) {
+	 				logger.info("导入农业装备信息，不支持的文件类型");
+	 			}
+	    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(),"导入农业装备数据，不支持的文件类型");
+	    		return result;
+	        }
+	        
+	        Sheet sheet1 = wb.getSheetAt(0);
+	        int i = 0;
+	        String county = null;
+        	String towns = null;
+	        
+	        for (Row row : sheet1) {
+	        	//解析所属乡镇
+	           if (i == 1) {
+	        	   county = "刚察县";
+	           }
+	           if (i >= 3) {
+	        	   final Cell cell0 = row.getCell(0);
+	        	   if (cell0 == null) {
+	        		   break;
+	        	   }
+	        	   
+	        	   FacilityConditionInfo facilityconditioninfo = new FacilityConditionInfo();
+	        	   facilityconditioninfo.setCounty(county);
+	        	   facilityconditioninfo.setTowns(towns);
+	        	   facilityconditioninfo.setDate_year(row.getCell(0).getStringCellValue());
+	        	   facilityconditioninfo.setAgri_address(row.getCell(1).getStringCellValue());
+	        	   facilityconditioninfo.setLarge_medium_tractors(row.getCell(2).getNumericCellValue());
+	        	   facilityconditioninfo.setSmall_walking_tractors(row.getCell(3).getNumericCellValue());
+	        	   facilityconditioninfo.setCombine_harvester(row.getCell(4).getNumericCellValue());
+	        	   facilityconditioninfo.setMotor_thresher(row.getCell(5).getNumericCellValue());
+	        	   facilityconditioninfo.setAgricultural_carriage_car(row.getCell(6).getNumericCellValue());
+	        	   facilityconditioninfo.setRural_hydropower_stations(row.getCell(7).getNumericCellValue());
+	        	   facilityconditioninfo.setGenerating_capacity(row.getCell(8).getNumericCellValue());
+	        	   facilityconditioninfo.setElectric_energy(row.getCell(9).getNumericCellValue());
+	        	   facilityconditioninfo.setRural_power_consumption(row.getCell(10).getNumericCellValue());
+	        	   facilityconditioninfo.setEffective_irrigation_area(row.getCell(11).getNumericCellValue());
+	        	   facilityconditioninfo.setWaterlogging_drought_area(row.getCell(12).getNumericCellValue());
+	        	   facilityconditioninfo.setMechanical_irrigation_area(row.getCell(13).getNumericCellValue());
+	        	   facilityconditioninfo.setReservoir(row.getCell(14).getNumericCellValue());
+	        	   facilityconditioninfo.setChannel_area(row.getCell(15).getNumericCellValue());
+	        	   facilityconditioninfo.setRemark(row.getCell(16).getStringCellValue());
+	        	   
+	        	   facilityconditioninfo.setCreator(String.valueOf(user.getUser_id()));
+	        	   facilityconditioninfo.setModifier(String.valueOf(user.getUser_id()));
+	        	   
+	        	   String date_year = facilityconditioninfo.getDate_year();
+	        	   
+	        	   try {
+	        		   String gid = facilitiesConditionInfoMapper.queryGid(county, date_year);
+		        	   if (StringUtils.isEmpty(gid)) {
+		        		   facilitiesConditionInfoMapper.insertInfo(facilityconditioninfo);
+		        	   } else {
+		        		   facilityconditioninfo.setGid(gid);
+		        		   facilitiesConditionInfoMapper.updateInfo(facilityconditioninfo);
+		        	   }
+	        	   } catch(Exception e) {
+        			   if (logger.isErrorEnabled()) {
+        					logger.error("农业装备插入数据失败", e);
+        				}
+        				result.put("code", -1);
+        	    		result.put("msg", "农业装备插入数据失败");
+        	    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(), "导入农业装备信息异常："+e.getMessage());
+        		   }
+	           }
+	           i++;
+	        }
+	        LogUtil.log(LogOptTypeEnum.ADD, LogOptSatusEnum.SUCESS, user.getUser_id(), "导入农业装备信息成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("code", -1);
+    		result.put("msg", "解析文件失败");
+    		LogUtil.log(LogOptTypeEnum.IMPORT, LogOptSatusEnum.FAIL, user.getUser_id(), "导入农业装备信息异常："+e.getMessage());
+		}
+		return result;
+	}
 	
 //	public List<Map> getGrassIndex() {
 //		List<Map> result = new ArrayList();

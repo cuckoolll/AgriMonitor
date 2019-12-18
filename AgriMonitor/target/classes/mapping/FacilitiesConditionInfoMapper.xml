@@ -88,6 +88,13 @@
        	</if>
     </select>
     
+    <select id="queryGid" parameterType="com.agri.monitor.vo.FacilityConditionQueryVO" resultType="java.lang.String">
+   		select gid
+     	  from t_facility_condition
+     	 where county = #{county}
+     	   and date_year = #{date_year}
+    </select>
+    
     <insert id="insertInfo" parameterType="com.agri.monitor.entity.FacilityConditionInfo">
     	insert into t_facility_condition
 	   		(date_year, 
