@@ -166,8 +166,11 @@ public class AirInfoService {
 	        	   }
 	           }
 	           if (i >= 3) {
-//	        	   String city = row.getCell(0).getStringCellValue();
-//	        	   String station_name = row.getCell(1).getStringCellValue();
+	        	   final Cell cell0 = row.getCell(0);
+	        	   if (cell0 == null) {
+	        		   break;
+	        	   }
+	        	   
 	        	   Date quality_time = row.getCell(0).getDateCellValue();
 	        	   
 	        	   AirInfo airinfo = new AirInfo();

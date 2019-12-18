@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -328,6 +329,11 @@ public class WaterInfoService {
 //	        	   }
 	           }
 	           if (i >= 2) {
+	        	   final Cell cell0 = row.getCell(0);
+	        	   if (cell0 == null) {
+	        		   break;
+	        	   }
+	        	   
 	        	   String quality_address = row.getCell(0).getStringCellValue();
 	        	   String quality_time = yyyyMMdd.format(row.getCell(1).getDateCellValue());
 	        	   String quality_type = row.getCell(2).getStringCellValue();

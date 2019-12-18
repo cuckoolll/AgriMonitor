@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -159,6 +160,11 @@ public class GrassInfoService {
 //	        	   }
 	           }
 	           if (i >= 3) {
+	        	   final Cell cell0 = row.getCell(0);
+	        	   if (cell0 == null) {
+	        		   break;
+	        	   }
+	        	   
 	        	   GrassInfo grassinfo = new GrassInfo();
 	        	   grassinfo.setCounty(county);
 	        	   grassinfo.setTowns(towns);

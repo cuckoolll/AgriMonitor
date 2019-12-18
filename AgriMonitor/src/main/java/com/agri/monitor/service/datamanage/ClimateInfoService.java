@@ -13,6 +13,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -167,6 +168,11 @@ public class ClimateInfoService {
 //	        	   }
 	           }
 	           if (i >= 2) {
+	        	   final Cell cell0 = row.getCell(0);
+	        	   if (cell0 == null) {
+	        		   break;
+	        	   }
+	        	   
 	        	   ClimateInfo climateinfo = new ClimateInfo();
 	        	   climateinfo.setCounty(county);
 	        	   climateinfo.setTowns(towns);

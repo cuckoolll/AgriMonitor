@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -137,6 +138,11 @@ public class LandResourceService {
 	        	   county = "刚察县";
 	           }
 	           if (i >= 3) {
+	        	   final Cell cell0 = row.getCell(0);
+	        	   if (cell0 == null) {
+	        		   break;
+	        	   }
+	        	   
 	        	   LandResource landresource = new LandResource();
 	        	   landresource.setCounty(county);
 	        	   landresource.setTowns(towns);
