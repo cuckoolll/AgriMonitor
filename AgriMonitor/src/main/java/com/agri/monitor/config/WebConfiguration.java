@@ -52,6 +52,8 @@ public class WebConfiguration implements WebMvcConfigurer {
         factory.setMaxFileSize(DataSize.parse("100MB")); //KB,MB  
         //设置总上传数据总大小  
         factory.setMaxRequestSize(DataSize.parse("50MB"));  
+        //设置上传地址
+        factory.setLocation("/home/agrimonitor/upload");
         return factory.createMultipartConfig();  
     }  
 }
