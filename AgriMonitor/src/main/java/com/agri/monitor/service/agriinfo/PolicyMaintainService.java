@@ -29,6 +29,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ClassUtils;
@@ -54,6 +55,9 @@ public class PolicyMaintainService {
 	private static final Logger logger = LoggerFactory.getLogger(PolicyMaintainService.class);
 	
 	private SimpleDateFormat yyyyMMddHHmmss = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	
+	@Value("${file.upload.dir}")
+	private String uploadDir;
 	
 	@Autowired
 	private PolicyMaintainMapper policyMaintainMapper;
@@ -122,7 +126,8 @@ public class PolicyMaintainService {
         }
 
 	    String fileName = file.getOriginalFilename();
-	    String filePath = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/policyfile/";
+//	    String filePath = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/policyfile/";
+	    String filePath = uploadDir;
 	    String file_address = filePath + fileName;
 	    String file_name = request.getParameter("file_name");
 	    String info_type = request.getParameter("info_type");
@@ -152,6 +157,11 @@ public class PolicyMaintainService {
         if (!dest.exists()) {
         	dest.mkdirs();
         }
+        
+        if (logger.isInfoEnabled()) {
+        	logger.info("上传文件路径：" + file_address);
+        }
+        
         try {
             file.transferTo(dest);
             if (logger.isInfoEnabled()) {
