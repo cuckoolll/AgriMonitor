@@ -87,6 +87,10 @@ public class AgriBaseinfoService {
 		return agriBaseinfoMapper.findAllForPage(queryVO);
 	}
 	
+	public List<Map> findNewData() {
+		return agriBaseinfoMapper.findNewData();
+	}
+	
 	public int findAllCount(AgriBaseinfoQueryVO queryVO) {
 		return agriBaseinfoMapper.findAllCount(queryVO);
 	}

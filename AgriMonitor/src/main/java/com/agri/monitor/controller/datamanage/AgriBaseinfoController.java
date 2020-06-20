@@ -96,13 +96,7 @@ public class AgriBaseinfoController {
 		
 		final Map<String, Object> result = new HashMap<String, Object>();
 		
-		Calendar c = Calendar.getInstance();
-		AgriBaseinfoQueryVO queryVO = new AgriBaseinfoQueryVO();
-		queryVO.setPage(1);
-		queryVO.setLimit(500);
-		queryVO.setDate_year(c.get(Calendar.YEAR));
-		queryVO.setDate_year1(c.get(Calendar.YEAR));
-		List<Map> list = agriBaseinfoService.findAllForPage(queryVO, user.getUser_id());
+		List<Map> list = agriBaseinfoService.findNewData();
 		List<Map> temlist = new ArrayList<>();
 		if(null != list && list.size() > 0) {
 			//地图数据

@@ -27,4 +27,5 @@ public interface AgriBaseinfoMapper {
 	
 	void deleteByTows(Map map);
 	
+	List<Map> findNewData();
 }

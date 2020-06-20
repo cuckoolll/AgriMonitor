@@ -6,17 +6,17 @@ layui.use(['table','util'], function(table,util) {
 	var xzdata=[{name: '沙柳河镇', size:100,data:{}},{name: '伊克乌兰乡', size:100,data:{}},{name: '泉吉乡', size:100,data:{}},
 		{name: '吉尔孟乡', size:100,data:{}},{name: '哈尔盖镇', size:100,data:{}},{name: '黄玉农场', size:100,data:{}}];
 	var curyear=new Date().getFullYear();
-	var data = [{name: '新海', size:40},{name: '思乃', size:40},{name: '果洛仓贡麻', size:40},
-		{name: '潘保', size:40},{name: '红山', size:40},{name: '尕曲', size:40},
-		{name: '河东', size:40},{name: '公贡麻', size:40},{name: '亚秀麻', size:40},
-		{name: '环仓秀麻', size:40},{name: '果洛藏秀麻', size:40},
-		{name: '切察', size:40},{name: '察拉', size:40},{name: '塘渠', size:40},
-		{name: '贡麻', size:40},{name: '亚秀', size:40},{name: '亚贡麻', size:40},
-		{name: '尚木多', size:40},{name: '角什科贡麻', size:40},{name: '角什科秀麻', size:40},
-		{name: '合茂', size:40},{name: '扎苏合', size:40},{name: '年乃索麻', size:40},
-		{name: '宁夏', size:40},{name: '切吉', size:40},{name: '新泉', size:40},
-		{name: '日芒', size:40},{name: '环仓贡麻', size:40},{name: '向阳', size:40},
-		{name: '秀脑贡麻', size:40},{name: '秀脑麻', size:40}];
+	var data = [{name: '新海', size:40,data:{}},{name: '思乃', size:40,data:{}},{name: '果洛仓贡麻', size:40,data:{}},
+		{name: '潘保', size:40,data:{}},{name: '红山', size:40,data:{}},{name: '尕曲', size:40,data:{}},
+		{name: '河东', size:40,data:{}},{name: '公贡麻', size:40,data:{}},{name: '亚秀麻', size:40,data:{}},
+		{name: '环仓秀麻', size:40,data:{}},{name: '果洛藏秀麻', size:40,data:{}},
+		{name: '切察', size:40,data:{}},{name: '察拉', size:40,data:{}},{name: '塘渠', size:40,data:{}},
+		{name: '贡麻', size:40,data:{}},{name: '亚秀', size:40,data:{}},{name: '亚贡麻', size:40,data:{}},
+		{name: '尚木多', size:40,data:{}},{name: '角什科贡麻', size:40,data:{}},{name: '角什科秀麻', size:40,data:{}},
+		{name: '合茂', size:40,data:{}},{name: '扎苏合', size:40,data:{}},{name: '年乃索麻', size:40,data:{}},
+		{name: '宁夏', size:40,data:{}},{name: '切吉', size:40,data:{}},{name: '新泉', size:40,data:{}},
+		{name: '日芒', size:40,data:{}},{name: '环仓贡麻', size:40,data:{}},{name: '向阳', size:40,data:{}},
+		{name: '秀脑贡麻', size:40,data:{}},{name: '秀脑麻', size:40,data:{}}];
 	var xzCoordMap={'沙柳河镇':[100.15841,37.355063],'伊克乌兰乡':[100.09333,37.311518],'泉吉乡':[99.846799,37.294324],
 			'吉尔孟乡':[99.619424,37.188703],'哈尔盖镇':[100.417701,37.261455],'黄玉农场':[99.95554,37.250184]};
 	var geoCoordMap = {'新海':[100.143628,37.311171],'思乃':[100.129783,37.313673],'果洛仓贡麻':[100.137907,37.331978],
@@ -124,8 +124,8 @@ layui.use(['table','util'], function(table,util) {
 		        		+"人口数量(人)："+(param.data.data.rksl||'-')+"人<br/>"
 		        		+"国土面积："+(param.data.data.gtmj||'-')+"平方千米<br/>"
 		        		+"耕地面积："+(param.data.data.gdmj||'-')+"亩<br/>"
-		        		+"高标准农田面积："+(param.data.data.rksl||'-')+"亩<br/>"
-		        		+"草场面积："+(param.data.data.gbzntmj||'-')+"亩<br/>"
+		        		+"高标准农田面积："+(param.data.data.gbzntmj||'-')+"亩<br/>"
+		        		+"草场面积："+(param.data.data.ccmj||'-')+"亩<br/>"
 		        		+"农作物种类："+(param.data.data.nzwzl||'-')+"<br/>"
 		        		+"年种植面积："+(param.data.data.nzzmj||'-')+"亩<br/>"
 		        		+"种植方式："+(param.data.data.zzfs||'-');
@@ -356,6 +356,8 @@ layui.use(['table','util'], function(table,util) {
 	            		}
 		        	});
         		});
+	        }
+	        if(res && res.areainfo.length>0){
 	        	$.each(data,function(i,o){
 	        		$.each(res.areainfo,function(index,item){
 	        			if(item.xzmc==o.name){
@@ -372,19 +374,19 @@ layui.use(['table','util'], function(table,util) {
 	            		}
 		        	});
         		});
-	      	  option1.series[0].data=convertData(data);
-	          option1.series[1].data=convertData1(xzdata);
-	          
-	          chart1.dispose();
-      		  chart1 = echarts.init(document.getElementById('chart1'));
-	      	  chart1.setOption(option1); 
-		      	/*chart1.on('mousemove', function (params) {
-		    		  mousemove(params);
-			    });
-		        chart1.on('mouseout', function (params) {
-		      	  	mouseout(params);
-			    });*/
 	        }
+	        option1.series[0].data=convertData(data);
+            option1.series[1].data=convertData1(xzdata);
+          
+            chart1.dispose();
+		    chart1 = echarts.init(document.getElementById('chart1'));
+      	    chart1.setOption(option1); 
+	      	/*chart1.on('mousemove', function (params) {
+	    		  mousemove(params);
+		    });
+	        chart1.on('mouseout', function (params) {
+	      	  	mouseout(params);
+		    });*/
 	    });
 	}
 	

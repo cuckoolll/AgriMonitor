@@ -17,6 +17,12 @@
 	    </if>
 	    order by gid desc limit #{currIndex},#{limit}
     </select>
+    <select id="findNewData" resultType="map">
+        select gid,county,towns,village,date_year,IFNULL(rksl,' ') rksl,IFNULL(gtmj,' ') gtmj,
+        IFNULL(gdmj,' ') gdmj,IFNULL(gbzntmj,' ') gbzntmj,IFNULL(ccmj,' ') ccmj,
+        IFNULL(nzwzl,' ') nzwzl,IFNULL(nzzmj,' ') nzzmj,IFNULL(zzfs,' ') zzfs  
+        from t_agribase_info where date_year=(select date_year from t_agribase_info order by date_year desc LIMIT 0,1)
+    </select>
     <select id="findAllCount" parameterType="com.agri.monitor.vo.AgriBaseinfoQueryVO" resultType="int">
         select count(gid) from t_agribase_info where 1=1
         <if test="towns != null and towns != ''">
